@@ -17,3 +17,6 @@
 
 # Ignore c9 files
 /.c9/*
+
+# Ignore spring files
+/spring/*

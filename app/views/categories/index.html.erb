@@ -1,0 +1,19 @@
+<% provide(:title, '一覧 | カテゴリー') %>
+<div class="content">
+  <div class="title">
+    <h4>カテゴリー一覧</h4>
+    <div class="new">
+      <%= link_to "新規", new_category_path, class: "btn custom_btn" %>
+    </div>
+  </div>
+  <%= will_paginate %>
+  <div class="divTable">
+    <div class="header divRow">
+      <div class="divCell1">ID</div>
+      <div class="divCell2">名　称</div>
+      <div class="divCell3">&nbsp;</div>
+    </div>
+    <%= render @categories %>
+  </div>
+  <%= will_paginate %>
+</div>

@@ -1,0 +1,16 @@
+<% provide(:title, '新規 | カテゴリー') %>
+<div class="content">
+  <h4 class="title">カテゴリー新規</h4>
+  <div class="new">&nbsp;</div>
+  <div class="form">
+    <%= form_for(@category) do |f| %>
+      <%= render 'shared/error_messages' %>
+      <%= f.label :category_name, '名称' %>
+      <%= f.text_field :category_name, class: 'input' %>
+      <div class="divBtn">
+        <%= f.submit "新規", class: "btn btn-primary" %>
+        <%= link_to "戻る", categories_path, class: "btn" %>
+      </div>
+    <% end %>
+  </div>
+</div>
