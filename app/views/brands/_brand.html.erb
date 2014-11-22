@@ -1,0 +1,12 @@
+<div class="divRow">
+  <div class="divCell1">
+    <%= brand.brand_id %>
+  </div>
+  <div class="divCell2">
+    <%= brand.brand_name %>
+  </div>
+  <div class="divCell3">
+    <%= link_to "編集", edit_brand_path(brand.brand_id), class: "btn btn_primary" %>
+    <%= link_to "削除", brand, method: :delete, data: { confirm: "削除しますか?" } %>
+  </div>
+</div>

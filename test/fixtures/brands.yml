@@ -7,3 +7,9 @@ one:
 two:
   brand_id: Two2
   brand_name: MyString
+
+<% (101..200).each do |n| %>
+brand_<%= n %>:
+  brand_id: <%= "B#{n}" %>
+  brand_name: <%= "Brand Name B#{n}" %>
+<% end %>

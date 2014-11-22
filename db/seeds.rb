@@ -10,6 +10,13 @@
 # カテゴリーデータ
 (101..200).each do |n|
   category_id = "C#{n}"
-  category_name = "名称 #{n}"
+  category_name = "カテゴリー #{n}"
   Category.create!(category_id: category_id, category_name: category_name)
+end
+
+# ブランドデータ
+(101..200).each do |n|
+  brand_id = "C#{n}"
+  brand_name = "ブランド #{n}"
+  Brand.create!(brand_id: brand_id, brand_name: brand_name)
 end
