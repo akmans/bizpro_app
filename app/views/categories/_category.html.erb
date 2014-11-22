@@ -7,6 +7,6 @@
   </div>
   <div class="divCell3">
     <%= link_to "編集", edit_category_path(category.category_id), class: "btn btn_primary" %>
-    <%= link_to "削除", edit_category_path(category.category_id), class: "btn btn_primary" %>
+    <%= link_to "削除", category, method: :delete, data: { confirm: "削除しますか?" } %>
   </div>
 </div>

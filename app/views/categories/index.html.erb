@@ -6,11 +6,14 @@
       <%= link_to "新規", new_category_path, class: "btn custom_btn" %>
     </div>
   </div>
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-<%= message_type %>"><%= message %></div>
+  <% end %>
   <%= will_paginate %>
   <div class="divTable">
     <div class="header divRow">
       <div class="divCell1">ID</div>
-      <div class="divCell2">名　称</div>
+      <div class="divCell2">名称</div>
       <div class="divCell3">&nbsp;</div>
     </div>
     <%= render @categories %>

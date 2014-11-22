@@ -139,6 +139,10 @@ footer {
       }
     }
   }
+  .alert {
+    clear: both;
+    padding: 5px 10px;
+  }
   .pagination {
     float: left;
     clear: both;
@@ -146,39 +150,40 @@ footer {
   }
   .divTable {
     clear: both;
-    display:  table;
-    width:100%;
+    display: table;
+    width: 100%;
     background-color:#fff;
-    border:none;
+    border: none;
 //    border-spacing:5px;/*cellspacing:poor IE support for  this*/
     /* border-collapse:separate;*/
     .header {
       background-color:#e8e8e8;
-      text-align: center;
+//      text-align: center;
     }
     .divRow {
       display: table-row;
       width: 100%;
       .divCell1 {
-        float:left;/*fix for  buggy browsers*/
-        display:table-column;
-        width:5%;
+        float: left;/*fix for  buggy browsers*/
+        display: table-column;
+        width: 10%;
         padding: 7px 10px;
         border-bottom: 1px solid #e8e8e8;
+        text-align: center;
       }
       .divCell2 {
-        float:left;/*fix for  buggy browsers*/
-        display:table-column;
-        width:75%;
+        float: left;/*fix for  buggy browsers*/
+        display: table-column;
+        width: 70%;
 //        padding-left:10px;
         padding: 7px 0px;
         border-bottom: 1px solid #e8e8e8;
       }
       .divCell3 {
-        float:left;/*fix for  buggy browsers*/
-        display:table-column;
+        float: left;/*fix for  buggy browsers*/
+        display: table-column;
         text-align: center;
-        width:20%;
+        width: 20%;
 //        padding-right:10px;
         border-bottom: 1px solid #e8e8e8;
         a.custom_btn {
@@ -194,18 +199,31 @@ footer {
   }
   .form {
     clear: both;
-    display:  block;
+    display:  table;
     width:100%;
     background-color:#fff;
     padding: 60px 150px;
     @include box_sizing;
-    .input {
-      width: 300px;
-      margin-left: 20px;
-      margin-bottom: 40px;
-    }
-    .divBtn {
+    .formRow {
       clear: both;
+      display: table-row;
+      .formCell1 {
+        display: table-column;
+        float: left;
+        width: 20%;
+        padding: 10px 10px;
+      }
+      .formCell2 {
+        display: table-column;
+        float: left;
+        width: 80%;
+        padding: 10px 10px;
+        .input {
+          width: 300px;
+//          margin-left: 20px;
+          margin-bottom: 40px;
+        }
+      }
       .btn {
         margin-left: 30px;
         padding: 5px 10px;
