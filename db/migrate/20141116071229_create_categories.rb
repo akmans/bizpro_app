@@ -6,7 +6,7 @@ class CreateCategories < ActiveRecord::Migration
       :primary_key => :category_id
     } do |t|
       t.string :category_id, :null => false, :limit => 4
-      t.string :category_name, :null => false, :limi => 100
+      t.string :category_name, :null => false, :limit => 100
 
       t.timestamps null: false
     end
