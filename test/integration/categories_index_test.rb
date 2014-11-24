@@ -7,6 +7,7 @@ class CategoriesIndexTest < ActionDispatch::IntegrationTest
   # end
   
   def setup
+    @category = categories(:one)
   end
   
   test "index including pagination" do
@@ -15,6 +16,10 @@ class CategoriesIndexTest < ActionDispatch::IntegrationTest
     assert_select 'div.pagination'
     Category.paginate(page: 1, per_page: 15).each do |category|
       assert_select 'a[href=?]', edit_category_path(category.category_id), text: '編集'
+      assert_select 'a[href=?]', category_path(category.category_id), text: '削除', method: :delete
+    end
+    assert_difference 'Category.count', -1 do
+      delete category_path(@category)
     end
   end
 end
