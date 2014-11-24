@@ -1,0 +1,22 @@
+<% provide(:title, '一覧 | ' + subtitle('支払い方法')) %>
+<div class="content">
+  <div class="title">
+    <h4>支払い方法一覧</h4>
+    <div class="new">
+      <%= link_to "新規", new_paymethod_path, class: "btn custom_btn" %>
+    </div>
+  </div>
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-<%= message_type %>"><%= message %></div>
+  <% end %>
+  <%= will_paginate %>
+  <div class="divTable">
+    <div class="header divRow">
+      <div class="divCell1">ID</div>
+      <div class="divCell2">名称</div>
+      <div class="divCell3">&nbsp;</div>
+    </div>
+    <%= render @paymethods %>
+  </div>
+  <%= will_paginate %>
+</div>

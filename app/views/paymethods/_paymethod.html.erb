@@ -1,0 +1,12 @@
+<div class="divRow">
+  <div class="divCell1">
+    <%= paymethod.paymethod_id %>
+  </div>
+  <div class="divCell2">
+    <%= paymethod.paymethod_name %>
+  </div>
+  <div class="divCell3">
+    <%= link_to "編集", edit_paymethod_path(paymethod.paymethod_id), class: "btn btn_primary" %>
+    <%= link_to "削除", paymethod, method: :delete, data: { confirm: "削除しますか?" } %>
+  </div>
+</div>

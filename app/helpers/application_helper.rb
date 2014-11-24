@@ -12,7 +12,9 @@ module ApplicationHelper
   end
 
   def subtitle(branch = '')
-    return branch + " | マスタ管理" if branch == 'カテゴリー' or branch == 'ブランド'
+    return branch + " | マスタ管理" if (branch == 'カテゴリー' \
+                                        or branch == 'ブランド' \
+                                        or branch == '支払い方法')
     return branch
   end
 end

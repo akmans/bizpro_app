@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  paymethod_id: One1
+  paymethod_name: MyString
+
+two:
+  paymethod_id: Two2
+  paymethod_name: MyString
+
+<% (101..200).each do |n| %>
+paymethod_<%= n %>:
+  paymethod_id: <%= "B#{n}" %>
+  paymethod_name: <%= "Paymethod Name B#{n}" %>
+<% end %>

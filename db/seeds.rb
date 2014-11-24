@@ -16,7 +16,14 @@ end
 
 # ブランドデータ
 (101..200).each do |n|
-  brand_id = "C#{n}"
+  brand_id = "B#{n}"
   brand_name = "ブランド #{n}"
   Brand.create!(brand_id: brand_id, brand_name: brand_name)
+end
+
+# 支払い方法データ
+(101..200).each do |n|
+  paymethod_id = "P#{n}"
+  paymethod_name = "支払い方法 #{n}"
+  Paymethod.create!(paymethod_id: paymethod_id, paymethod_name: paymethod_name)
 end

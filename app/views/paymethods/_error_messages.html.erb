@@ -1,0 +1,9 @@
+<% if @paymethod.errors.any? %>
+  <div id="error_explanation">
+    <ul>
+    <% @paymethod.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

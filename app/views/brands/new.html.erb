@@ -1,7 +1,9 @@
 <% provide(:title, '新規 | ' + subtitle('ブランド')) %>
 <div class="content">
-  <h4 class="title">ブランド新規</h4>
-  <div class="new">&nbsp;</div>
+  <div class="title">
+    <h4>ブランド新規</h4>
+    <div class="new">&nbsp;</div>
+  </div>
   <div class="form">
     <%= form_for(@brand) do |f| %>
       <%= render 'error_messages' %>

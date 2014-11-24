@@ -30,7 +30,7 @@ class BrandTest < ActiveSupport::TestCase
     assert_not duplicate_brand.valid?
   end
   
-  test "category_name should be presence" do
+  test "brand_name should be presence" do
     @brand.brand_name = "    "
     assert_not @brand.valid?
   end
