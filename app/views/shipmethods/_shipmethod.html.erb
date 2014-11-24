@@ -1,0 +1,12 @@
+<div class="divRow">
+  <div class="divCell1">
+    <%= shipmethod.shipmethod_id %>
+  </div>
+  <div class="divCell2">
+    <%= shipmethod.shipmethod_name %>
+  </div>
+  <div class="divCell3">
+    <%= link_to "編集", edit_shipmethod_path(shipmethod.shipmethod_id), class: "btn btn_primary" %>
+    <%= link_to "削除", shipmethod, method: :delete, data: { confirm: "削除しますか?" } %>
+  </div>
+</div>

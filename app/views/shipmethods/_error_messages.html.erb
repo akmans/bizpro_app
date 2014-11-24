@@ -1,0 +1,9 @@
+<% if @shipmethod.errors.any? %>
+  <div id="error_explanation">
+    <ul>
+    <% @shipmethod.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

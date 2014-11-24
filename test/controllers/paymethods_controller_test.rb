@@ -3,7 +3,7 @@ require 'test_helper'
 
 class PaymethodsControllerTest < ActionController::TestCase
   def setup
-    @paymethod = categories(:one)
+    @paymethod = paymethods(:one)
   end
   
   test "should get index" do

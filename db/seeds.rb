@@ -27,3 +27,10 @@ end
   paymethod_name = "支払い方法 #{n}"
   Paymethod.create!(paymethod_id: paymethod_id, paymethod_name: paymethod_name)
 end
+
+# 発送方法データ
+(101..200).each do |n|
+  shipmethod_id = "S#{n}"
+  shipmethod_name = "発送方法 #{n}"
+  Shipmethod.create!(shipmethod_id: shipmethod_id, shipmethod_name: shipmethod_name)
+end
