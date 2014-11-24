@@ -9,19 +9,19 @@ class BrandsControllerTest < ActionController::TestCase
   test "should get new" do
     get :new
     assert_response :success
-    assert_select 'title', "新規 | ブランド | オーディオPRO"
+    assert_select 'title', "新規 | ブランド | マスタ管理 | オーディオPRO"
   end
 
   test "should get index" do
     get :index
     assert_response :success
-    assert_select 'title', "一覧 | ブランド | オーディオPRO"
+    assert_select 'title', "一覧 | ブランド | マスタ管理 | オーディオPRO"
   end
 
   test "should get edit" do
     get :edit, brand_id: @brand
     assert_response :success
-    assert_select 'title', "編集 | ブランド | オーディオPRO"
+    assert_select 'title', "編集 | ブランド | マスタ管理 | オーディオPRO"
   end
 
 end

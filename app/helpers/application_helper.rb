@@ -10,4 +10,9 @@ module ApplicationHelper
       "#{page_title} | #{base_title}"
     end
   end
+
+  def subtitle(branch = '')
+    return branch + " | マスタ管理" if branch == 'カテゴリー' or branch == 'ブランド'
+    return branch
+  end
 end
