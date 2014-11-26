@@ -39,4 +39,16 @@ class BrandTest < ActiveSupport::TestCase
     @brand.brand_name = "a" * 101
     assert_not @brand.valid?
   end
+  
+  test "order should be miximum ID first" do
+    assert_equal Brand.first, brands(:brand_B101)
+  end
+  
+  test "associated modus should be destroyed" do
+    @brand.save
+    @brand.modus.create!(modu_id: "M001001", modu_name: "Model Name M001001")
+    assert_difference 'Modu.count', -1 do
+      @brand.destroy
+    end
+  end
 end

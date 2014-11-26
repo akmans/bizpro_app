@@ -1,7 +1,7 @@
 class Paymethod < ActiveRecord::Base
   self.primary_key = "paymethod_id"
   
-  default_scope -> { order('paymethod_id ASC') }
+  default_scope -> { order(paymethod_id: :ASC) }
   
   validates :paymethod_id, presence: true,
                            length: { maximum: 4},

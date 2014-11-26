@@ -1,0 +1,20 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  modu_id: ZZZZZZ1
+  modu_name: MyString
+  brand_id: One1
+
+two:
+  modu_id: ZZZZZZ2
+  modu_name: MyString
+  brand_id: Two2
+
+<% (101..200).each do |n| %>
+<% (101..130).each do |m| %>
+modu_<%= "M#{n}#{m}" %>:
+  modu_id: <%= "M#{n}#{m}" %>
+  modu_name: <%= "Modu Name M#{n}" %>
+  brand_id: <%= "B#{n}" %>
+<% end %>
+<% end %>

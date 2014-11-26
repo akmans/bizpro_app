@@ -1,0 +1,12 @@
+<div class="divRow">
+  <div class="divCell1">
+    <%= modu.modu_id %>
+  </div>
+  <div class="divCell2">
+    <%= modu.modu_name %>
+  </div>
+  <div class="divCell3">
+    <%= link_to "編集", edit_brand_modu_path(modu_id: modu.modu_id), class: "btn btn_primary" %>
+    <%= link_to "削除", brand_modu_path(modu_id: modu.modu_id), method: :delete, data: { confirm: "削除しますか?" } %>
+  </div>
+</div>

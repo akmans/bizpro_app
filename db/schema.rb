@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124110949) do
+ActiveRecord::Schema.define(version: 20141124140949) do
 
   create_table "brands", id: false, force: true do |t|
     t.string   "brand_id",   limit: 4,   null: false
@@ -30,6 +30,17 @@ ActiveRecord::Schema.define(version: 20141124110949) do
   end
 
   add_index "categories", ["category_id"], name: "index_categories_on_category_id", unique: true
+
+  create_table "modus", id: false, force: true do |t|
+    t.string   "modu_id",    limit: 7,   null: false
+    t.string   "modu_name",  limit: 100, null: false
+    t.string   "brand_id",   limit: 4,   null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "modus", ["brand_id"], name: "index_modus_on_brand_id"
+  add_index "modus", ["modu_id"], name: "index_modus_on_modu_id", unique: true
 
   create_table "paymethods", id: false, force: true do |t|
     t.string   "paymethod_id",   limit: 4,   null: false

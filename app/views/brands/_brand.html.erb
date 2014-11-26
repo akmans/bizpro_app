@@ -4,6 +4,9 @@
   </div>
   <div class="divCell2">
     <%= brand.brand_name %>
+    (
+      <%= link_to "#{brand.modus.count}", brand_modus_path(brand) %>
+    )
   </div>
   <div class="divCell3">
     <%= link_to "編集", edit_brand_path(brand.brand_id), class: "btn btn_primary" %>

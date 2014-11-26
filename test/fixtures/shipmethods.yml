@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  shipmethod_id: One1
+  shipmethod_id: ZZZ1
   shipmethod_name: MyString
 
 two:
-  shipmethod_id: Two2
+  shipmethod_id: ZZZ2
   shipmethod_name: MyString
 
 <% (101..200).each do |n| %>
-shipmethod_<%= n %>:
+shipmethod_<%= "S#{n}" %>:
   shipmethod_id: <%= "S#{n}" %>
   shipmethod_name: <%= "Shipmethod Name B#{n}" %>
 <% end %>
