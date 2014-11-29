@@ -1,6 +1,7 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
     <%= link_to "オーディオPRO", root_path, id: "logo" %>
+    <% if logged_in? %>
     <nav>
       <ul class="nav navbar-nav pull-right">
         <li><%= link_to "商品管理",   '#' %></li>
@@ -17,9 +18,13 @@
             <li><%= link_to "ブランド", brands_path %></li>
             <li><%= link_to "支払い方法", paymethods_path %></li>
             <li><%= link_to "発送方法", shipmethods_path %></li>
+            <li class="divider"></li>
+            <li><%= link_to "パスワード変更", edit_user_path(current_user) %></li>
+            <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
           </ul>
         </li>
       </ul>
     </nav>
+    <% end %>
   </div>
 </header>

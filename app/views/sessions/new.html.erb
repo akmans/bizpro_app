@@ -1,0 +1,30 @@
+<% provide(:title, 'ログイン') %>
+  <div class="title">
+    <h4>ログイン</h4>
+    <div class="new">&nbsp;</div>
+  </div>
+  <div class="form">
+    <%= form_for(:session, url: login_path) do |f| %>
+
+      <div class="formRow">
+        <div class="formCell1"><%= f.label :email, 'メールアドレス' %></div>
+        <div class="formCell2"><%= f.text_field :email, class: 'input' %></div>
+      </div>
+
+      <div class="formRow">
+        <div class="formCell1"><%= f.label :password, 'パスワード' %></div>
+        <div class="formCell2"><%= f.password_field :password, class: 'input' %></div>
+      </div>
+
+      <div class="formRow">
+      <%= f.label :remember_me, class: "checkbox inline" do %>
+        <%= f.check_box :remember_me %>
+        <span>Remember me on this computer</span>
+      <% end %>
+      </div>
+      
+      <div class="formRow">
+        <%= f.submit "ログイン", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
