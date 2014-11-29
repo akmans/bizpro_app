@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124140949) do
+ActiveRecord::Schema.define(version: 20141127133222) do
 
   create_table "brands", id: false, force: true do |t|
     t.string   "brand_id",   limit: 4,   null: false
@@ -59,5 +59,15 @@ ActiveRecord::Schema.define(version: 20141124140949) do
   end
 
   add_index "shipmethods", ["shipmethod_id"], name: "index_shipmethods_on_shipmethod_id", unique: true
+
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "password_digest"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
 
 end

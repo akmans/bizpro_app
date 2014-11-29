@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
 
+  get 'signup'  => 'users#new'
+
   resources :categories, param: :category_id, :except => [:show]
   resources :brands, param: :brand_id, :except => [:show] do
     resources :modus, param: :modu_id, :except => [:show]
   end
   resources :paymethods, param: :paymethod_id, :except => [:show]
   resources :shipmethods, param: :shipmethod_id, :except => [:show]
+  resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

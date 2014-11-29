@@ -8,18 +8,18 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # カテゴリーデータ
-(101..200).each do |n|
+(101..130).each do |n|
   category_id = "C#{n}"
   category_name = "カテゴリー #{n}"
   Category.create!(category_id: category_id, category_name: category_name)
 end
 
 # ブランドデータ
-(101..200).each do |n|
+(101..130).each do |n|
   brand_id = "B#{n}"
   brand_name = "ブランド #{n}"
   brand = Brand.create!(brand_id: brand_id, brand_name: brand_name)
-  (101..150).each do |m|
+  (101..120).each do |m|
     modu_id = "M#{n}#{m}"
     modu_name = "モデル #{n}#{m}"
     brand.modus.create!(modu_id: modu_id, modu_name: modu_name)
@@ -27,14 +27,14 @@ end
 end
 
 # 支払い方法データ
-(101..200).each do |n|
+(101..130).each do |n|
   paymethod_id = "P#{n}"
   paymethod_name = "支払い方法 #{n}"
   Paymethod.create!(paymethod_id: paymethod_id, paymethod_name: paymethod_name)
 end
 
 # 発送方法データ
-(101..200).each do |n|
+(101..130).each do |n|
   shipmethod_id = "S#{n}"
   shipmethod_name = "発送方法 #{n}"
   Shipmethod.create!(shipmethod_id: shipmethod_id, shipmethod_name: shipmethod_name)

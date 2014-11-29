@@ -1,14 +1,10 @@
-<% provide(:title, '一覧 | ' + subtitle('カテゴリー')) %>
-<div class="content">
+<% provide(:title, '一覧,カテゴリー,マスタ管理') %>
   <div class="title">
     <h4>カテゴリー一覧</h4>
     <div class="new">
       <%= link_to "新規", new_category_path, class: "btn custom_btn" %>
     </div>
   </div>
-  <% flash.each do |message_type, message| %>
-    <div class="alert alert-<%= message_type %>"><%= message %></div>
-  <% end %>
   <%= will_paginate %>
   <div class="divTable">
     <div class="header divRow">
@@ -19,4 +15,3 @@
     <%= render @categories %>
   </div>
   <%= will_paginate %>
-</div>
