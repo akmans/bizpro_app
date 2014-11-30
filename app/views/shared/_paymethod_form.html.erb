@@ -1,0 +1,20 @@
+<%= form_for(@paymethod) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <div class="formRow">
+    <div class="formCell1">ID</div>
+    <div class="formCell2">
+      <%= params[:action] == 'new' || params[:action] == 'create' ? '-' : @paymethod.paymethod_id %>
+    </div>
+  </div>
+
+  <div class="formRow">
+    <div class="formCell1"><%= f.label :paymethod_name, '名称' %></div>
+    <div class="formCell2"><%= f.text_field :paymethod_name, class: 'input' %></div>
+  </div>
+
+  <div class="formRow">
+    <%= f.submit "実行", class: "btn btn-primary" %>
+    <%= link_to "戻る", paymethods_path, class: "btn" %>
+  </div>
+<% end %>
