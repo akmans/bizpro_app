@@ -1,0 +1,15 @@
+<% provide(:title, '一覧,ユーザー,マスタ管理') %>
+  <div class="title">
+    <h4>ユーザー一覧</h4>
+    <div class="new">&nbsp;</div>
+  </div>
+  <%= will_paginate %>
+  <div class="divTable">
+    <div class="header divRow">
+      <div class="divCell1">名前</div>
+      <div class="divCell2">メールアドレス</div>
+      <div class="divCell3">&nbsp;</div>
+    </div>
+    <%= render @users %>
+  </div>
+  <%= will_paginate %>

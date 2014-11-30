@@ -1,0 +1,12 @@
+<div class="divRow">
+  <div class="divCell1">
+    <%= user.name %>
+  </div>
+  <div class="divCell2">
+    <%= user.email %>
+  </div>
+  <div class="divCell3">
+    <%= link_to "表示", user_path(user), class: "btn btn_primary" %>
+    <%= link_to "削除", user, method: :delete, data: { confirm: "削除しますか?" }, class: "btn" %>
+  </div>
+</div>

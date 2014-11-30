@@ -15,11 +15,12 @@
           </a>
           <ul class="dropdown-menu">
             <li><%= link_to "カテゴリー", categories_path %></li>
-            <li><%= link_to "ブランド", brands_path %></li>
+            <li><%= link_to "ブランド＆モデル", brands_path %></li>
             <li><%= link_to "支払い方法", paymethods_path %></li>
             <li><%= link_to "発送方法", shipmethods_path %></li>
+            <li><%= link_to "ユーザー", shipmethods_path %></li>
             <li class="divider"></li>
-            <li><%= link_to "パスワード変更", edit_user_path(current_user) %></li>
+            <li><%= link_to "アカウント情報変更", edit_user_path(current_user) %></li>
             <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
           </ul>
         </li>
