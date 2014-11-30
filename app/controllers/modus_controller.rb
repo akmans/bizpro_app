@@ -1,5 +1,7 @@
 # encoding: utf-8
 class ModusController < ApplicationController
+  before_action :logged_in_user
+
   # 新規
   def new
     @brand = Brand.find(params[:brand_brand_id])

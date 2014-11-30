@@ -1,5 +1,7 @@
 # encoding: utf-8
 class BrandsController < ApplicationController
+  before_action :logged_in_user
+  
   # 新規
   def new
     # 新フォーム用

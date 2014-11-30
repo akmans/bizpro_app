@@ -2,15 +2,13 @@
 require 'test_helper'
 
 class ShipmethodsIndexTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
     @shipmethod = shipmethods(:one)
   end
   
   test "index including pagination and edit/delete links" do
+    log_in_as(@user)
     get shipmethods_path
     assert_template 'shipmethods/index'
     assert_select 'div.pagination'

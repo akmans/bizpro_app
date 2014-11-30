@@ -2,16 +2,14 @@
 require 'test_helper'
 
 class ModusIndexTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
     @brand = brands(:brand_B101)
     @modu = modus(:modu_M101101)
   end
   
   test "index including pagination and edit/delete links" do
+    log_in_as(@user)
     get brand_modus_path(brand_brand_id: @brand.brand_id)
     assert_template 'modus/index'
     assert_select 'div.pagination'

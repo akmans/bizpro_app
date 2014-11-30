@@ -2,15 +2,13 @@
 require 'test_helper'
 
 class ModusNewTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
     @brand = brands(:one)
   end
 
   test "unsuccessful create" do
+    log_in_as(@user)
     get new_brand_modu_path(brand_brand_id: @brand.brand_id)
     assert_template 'modus/new'
     post brand_modus_path, modu: { #modu_id:  "",
@@ -20,6 +18,7 @@ class ModusNewTest < ActionDispatch::IntegrationTest
   end
   
   test "successful create" do
+    log_in_as(@user)
     get new_brand_modu_path(brand_brand_id: @brand.brand_id)
     assert_template 'modus/new'
     modu_name = "てすと"

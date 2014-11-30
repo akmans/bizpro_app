@@ -2,14 +2,12 @@
 require 'test_helper'
 
 class CategoriesNewTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
   end
 
   test "unsuccessful create" do
+    log_in_as(@user)
     get new_category_path
     assert_template 'categories/new'
     post categories_path, category: { #category_id:  "",
@@ -18,6 +16,7 @@ class CategoriesNewTest < ActionDispatch::IntegrationTest
   end
   
   test "successful create" do
+    log_in_as(@user)
     get new_category_path
     assert_template 'categories/new'
     category_name = "てすと"

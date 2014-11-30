@@ -2,15 +2,13 @@
 require 'test_helper'
 
 class CategoriesEditTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
     @category = categories(:one)
   end
 
   test "unsuccessful edit" do
+    log_in_as(@user)
     get edit_category_path(@category)
     assert_template 'categories/edit'
     patch category_path(@category), category: { #category_id:  "",
@@ -19,6 +17,7 @@ class CategoriesEditTest < ActionDispatch::IntegrationTest
   end
   
   test "successful edit" do
+    log_in_as(@user)
     get edit_category_path(@category)
     assert_template 'categories/edit'
     category_name = "てすと"

@@ -2,15 +2,13 @@
 require 'test_helper'
 
 class PaymethodsEditTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
     @paymethod = paymethods(:one)
   end
 
   test "unsuccessful edit" do
+    log_in_as(@user)
     get edit_paymethod_path(@paymethod)
     assert_template 'paymethods/edit'
     patch paymethod_path(@paymethod), paymethod: { #paymethod_id:  "",
@@ -19,6 +17,7 @@ class PaymethodsEditTest < ActionDispatch::IntegrationTest
   end
   
   test "successful edit" do
+    log_in_as(@user)
     get edit_paymethod_path(@paymethod)
     assert_template 'paymethods/edit'
     paymethod_name = "てすと"

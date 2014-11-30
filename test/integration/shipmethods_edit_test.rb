@@ -2,15 +2,13 @@
 require 'test_helper'
 
 class ShipmethodsEditTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
     @shipmethod = shipmethods(:one)
   end
 
   test "unsuccessful edit" do
+    log_in_as(@user)
     get edit_shipmethod_path(@shipmethod)
     assert_template 'shipmethods/edit'
     patch shipmethod_path(@shipmethod), shipmethod: { #shipmethod_id:  "",
@@ -19,6 +17,7 @@ class ShipmethodsEditTest < ActionDispatch::IntegrationTest
   end
   
   test "successful edit" do
+    log_in_as(@user)
     get edit_shipmethod_path(@shipmethod)
     assert_template 'shipmethods/edit'
     shipmethod_name = "てすと"

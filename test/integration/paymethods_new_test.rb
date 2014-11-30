@@ -2,14 +2,12 @@
 require 'test_helper'
 
 class PaymethodsNewTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
   end
 
   test "unsuccessful create" do
+    log_in_as(@user)
     get new_paymethod_path
     assert_template 'paymethods/new'
     post paymethods_path, paymethod: { #paymethod_id:  "",
@@ -18,6 +16,7 @@ class PaymethodsNewTest < ActionDispatch::IntegrationTest
   end
   
   test "successful create" do
+    log_in_as(@user)
     get new_paymethod_path
     assert_template 'paymethods/new'
     paymethod_name = "てすと"

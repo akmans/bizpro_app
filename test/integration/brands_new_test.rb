@@ -2,14 +2,12 @@
 require 'test_helper'
 
 class BrandsNewTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
   end
 
   test "unsuccessful create" do
+    log_in_as(@user)
     get new_brand_path
     assert_template 'brands/new'
     post brands_path, brand: { #brand_id:  "",
@@ -18,6 +16,7 @@ class BrandsNewTest < ActionDispatch::IntegrationTest
   end
   
   test "successful create" do
+    log_in_as(@user)
     get new_brand_path
     assert_template 'brands/new'
     brand_name = "てすと"

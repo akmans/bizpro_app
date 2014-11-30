@@ -2,15 +2,13 @@
 require 'test_helper'
 
 class PaymethodsIndexTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
     @paymethod = paymethods(:one)
   end
   
   test "index including pagination and edit/delete links" do
+    log_in_as(@user)
     get paymethods_path
     assert_template 'paymethods/index'
     assert_select 'div.pagination'

@@ -1,5 +1,6 @@
 # encoding: utf-8
 class CategoriesController < ApplicationController
+  before_action :logged_in_user
 #  after_action :index, only: [:new, :edit]
   
   # 新規

@@ -2,16 +2,14 @@
 require 'test_helper'
 
 class ModusEditTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
     @brand = brands(:one)
     @modu = modus(:one)
   end
 
   test "unsuccessful edit" do
+    log_in_as(@user)
     get edit_brand_modu_path(@brand, @modu)
     assert_template 'modus/edit'
     patch brand_modu_path(modu_id: @modu), modu: { #modu_id:  "",
@@ -20,6 +18,7 @@ class ModusEditTest < ActionDispatch::IntegrationTest
   end
   
   test "successful edit" do
+    log_in_as(@user)
     get edit_brand_modu_path(@brand, @modu)
     assert_template 'modus/edit'
     modu_name = "てすと"

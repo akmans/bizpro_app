@@ -2,15 +2,13 @@
 require 'test_helper'
 
 class BrandsEditTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
     @brand = brands(:one)
   end
 
   test "unsuccessful edit" do
+    log_in_as(@user)
     get edit_brand_path(@brand)
     assert_template 'brands/edit'
     patch brand_path(@brand), brand: { #brand_id:  "",
@@ -19,6 +17,7 @@ class BrandsEditTest < ActionDispatch::IntegrationTest
   end
   
   test "successful edit" do
+    log_in_as(@user)
     get edit_brand_path(@brand)
     assert_template 'brands/edit'
     brand_name = "てすと"

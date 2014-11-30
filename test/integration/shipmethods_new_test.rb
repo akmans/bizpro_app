@@ -2,14 +2,12 @@
 require 'test_helper'
 
 class ShipmethodsNewTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
   end
 
   test "unsuccessful create" do
+    log_in_as(@user)
     get new_shipmethod_path
     assert_template 'shipmethods/new'
     post shipmethods_path, shipmethod: { #shipmethod_id:  "",
@@ -18,6 +16,7 @@ class ShipmethodsNewTest < ActionDispatch::IntegrationTest
   end
   
   test "successful create" do
+    log_in_as(@user)
     get new_shipmethod_path
     assert_template 'shipmethods/new'
     shipmethod_name = "てすと"

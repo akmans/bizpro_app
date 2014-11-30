@@ -2,15 +2,13 @@
 require 'test_helper'
 
 class BrandsIndexTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
     @brand = brands(:one)
   end
   
   test "index including pagination and edit/delete links" do
+    log_in_as(@user)
     get brands_path
     assert_template 'brands/index'
     assert_select 'div.pagination'

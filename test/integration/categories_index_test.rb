@@ -2,15 +2,13 @@
 require 'test_helper'
 
 class CategoriesIndexTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
+    @user = users(:one)
     @category = categories(:one)
   end
   
-  test "index including pagination" do
+  test "index including pagination and edit/delete links" do
+    log_in_as(@user)
     get categories_path
     assert_template 'categories/index'
     assert_select 'div.pagination'
