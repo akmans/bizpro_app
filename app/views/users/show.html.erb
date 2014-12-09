@@ -1,21 +1,19 @@
 <% provide(:title, '表示,ユーザー,マスタ管理') %>
-  <div class="title">
-    <h4>ユーザー表示</h4>
-    <div class="new">&nbsp;</div>
+<h3>ユーザー表示</h3>
+<div class="form-horizontal">
+  <div class="form-group">
+    <div class="col-sm-2">名前</div>
+    <div class="col-sm-10"><%= @user.name %></div>
   </div>
-  <div class="form">
 
-    <div class="formRow">
-      <div class="formCell1">名前</div>
-      <div class="formCell2"><%= @user.name %></div>
-    </div>
+  <div class="form-group">
+    <div class="col-sm-2">メールアドレス</div>
+    <div class="col-sm-10"><%= @user.email %></div>
+  </div>
 
-    <div class="formRow">
-      <div class="formCell1">メールアドレス</div>
-      <div class="formCell2"><%= @user.email %></div>
-    </div>
-      
-    <div class="formRow">
-      <%= link_to "戻る", users_path, class: "btn" %>
+  <div class="form-group">
+    <div class="col-sm-10 col-sm-offset-2">
+      <%= link_to "戻る", users_path, class: "btn btn-default" %>
     </div>
   </div>
+</div>

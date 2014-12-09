@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  auction_id: One1
+  auction_name: OneOneOneOneOne 11111
+  bidor_price: 1
+  price: 123456
+  quantity: 1
+  bids: 1
+  seller_id: OneOneOne3
+
+two:
+  auction_id: Two2
+  auction_name: TwoTwoTwoTwoTwo 22222
+  price: 0
+  quantity: 0
+  bids: 0
+  seller_id: TwoTwoTwoTwo4
+  start_time: <%= Time.zone.now %>
+  end_time: <%= Time.zone.now %>
+  url: www.example.com
+  sold_flg: 1
+  
+  
+  

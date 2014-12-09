@@ -11,7 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141129122030) do
+ActiveRecord::Schema.define(version: 20141130145023) do
+
+  create_table "auctions", id: false, force: true do |t|
+    t.string   "auction_id",   limit: 20,  null: false
+    t.string   "auction_name", limit: 200, null: false
+    t.decimal  "bidor_price"
+    t.decimal  "price"
+    t.integer  "quantity",     limit: 1
+    t.integer  "bids",         limit: 3
+    t.string   "seller_id",    limit: 50
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "url",          limit: 200
+    t.integer  "sold_flg",     limit: 1
+    t.string   "memo",         limit: 200
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "brands", id: false, force: true do |t|
     t.string   "brand_id",   limit: 4,   null: false

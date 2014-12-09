@@ -1,15 +1,12 @@
 <% provide(:title, '一覧,ユーザー,マスタ管理') %>
-  <div class="title">
-    <h4>ユーザー一覧</h4>
-    <div class="new">&nbsp;</div>
-  </div>
-  <%= will_paginate %>
-  <div class="divTable">
-    <div class="header divRow">
-      <div class="divCell1">名前</div>
-      <div class="divCell2">メールアドレス</div>
-      <div class="divCell3">&nbsp;</div>
-    </div>
-    <%= render @users %>
-  </div>
-  <%= will_paginate %>
+<h3>ユーザー一覧</h3>
+<%= will_paginate %>
+<div class="row header">
+  <div class="col-xs-2 col-md-2">名前</div>
+  <div class="col-xs-8 col-md-7">メールアドレス</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-md-3"><%= link_to "新規", new_user_path, class: "btn btn-default" %></div>
+</div>
+<%= render @users %>
+<%= will_paginate %>

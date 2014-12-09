@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class BrandTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
     @brand = Brand.new(:brand_id => 'b001', :brand_name => 'Brand Name')
   end

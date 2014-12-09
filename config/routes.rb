@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get    '/auth/:provider/callback' => 'auctions#show' #戻り先
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
   resources :paymethods, param: :paymethod_id, :except => [:show]
   resources :shipmethods, param: :shipmethod_id, :except => [:show]
   resources :users
+  resources :auctions
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

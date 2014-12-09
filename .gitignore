@@ -20,3 +20,6 @@
 
 # Ignore spring files
 /spring/*
+
+# Ignore local_env files
+/config/local_env.yml

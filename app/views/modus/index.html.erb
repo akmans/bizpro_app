@@ -1,17 +1,12 @@
 <% provide(:title, '一覧,モデル,マスタ管理') %>
-  <div class="title">
-    <h4>モデル一覧</h4>
-    <div class="new">
-      <%= link_to "新規", new_brand_modu_path, class: "btn custom_btn" %>
-    </div>
-  </div>
-  <%= will_paginate %>
-  <div class="divTable">
-    <div class="header divRow">
-      <div class="divCell1">ID</div>
-      <div class="divCell2">名称</div>
-      <div class="divCell3">&nbsp;</div>
-    </div>
-    <%= render @modus %>
-  </div>
-  <%= will_paginate %>
+<h3>モデル一覧</h3>
+<%= will_paginate %>
+<div class="row header">
+  <div class="col-xs-2 col-md-1">ID</div>
+  <div class="col-xs-8 col-md-8">名称</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-md-3"><%= link_to "新規", new_brand_modu_path, class: "btn btn-default" %></div>
+</div>
+<%= render @modus %>
+<%= will_paginate %>

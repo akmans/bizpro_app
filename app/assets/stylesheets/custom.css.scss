@@ -11,73 +11,19 @@ $gray-medium-light: #eaeaea;
   box-sizing:         border-box;
 }
 
-/* universal */
-
-html {
-  overflow-y: scroll;
+/* myform */
+.myform {
+  padding-bottom: 5px;
 }
 
-body {
-  padding-top: 60px;
-}
-
-section {
-  overflow: auto;
-}
-
-textarea {
-  resize: vertical;
-}
-
-.center {
-  text-align: center;
-  h1 {
-    margin-bottom: 10px;
-  }
-}
-
-/* typography */
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
-}
-
-h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-h2 {
-  font-size: 1.2em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: normal;
-  color: $gray-light;
-}
-
-p {
-  font-size: 1.1em;
-  line-height: 1.7em;
-}
-
-
-/* header */
-
-#logo {
-  float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-  &:hover {
-    color: white;
-    text-decoration: none;
+.container {
+  .header {
+    background-color:#e8e8e8;
+//      text-align: center;
+    }
+  .row {
+    border-bottom: 1px solid #e8e8e8;
+    padding: 5px 0px;
   }
 }
 
@@ -85,8 +31,8 @@ p {
 
 footer {
   clear: both;
-  margin-top: 45px;
-  padding-top: 5px;
+  margin: 10px 0px;
+  padding: 10px 0px;
   border-top: 1px solid $gray-medium-light;
   color: $gray-light;
   a {
@@ -105,149 +51,5 @@ footer {
       float: left;
       margin-left: 15px;
     }
-  }
-}
-
-/* miscellaneous */
-
-.debug_dump {
-  clear: both;
-  float: left;
-  width: 100%;
-  margin-top: 45px;
-  @include box_sizing;
-}
-
-/* content */
-.container {
-  clear: both;
-  width: 80% ;
-  margin-left: auto ;
-  margin-right: auto ;
-  .title {
-    clear: both;
-    margin: 0 0;
-    h4 {
-      float: left; 
-    }
-    .new {
-      float: right;
-      padding-right: 50px;
-      padding-top: 10px;
-      a.custom_btn {
-        text-align: right;
-      }
-    }
-  }
-  .alert {
-    clear: both;
-    padding: 5px 10px;
-  }
-  .pagination {
-    float: left;
-    clear: both;
-    margin: 5px 0;
-  }
-  .divTable {
-    clear: both;
-    display: table;
-    width: 100%;
-    background-color:#fff;
-    border: none;
-//    border-spacing:5px;/*cellspacing:poor IE support for  this*/
-    /* border-collapse:separate;*/
-    .header {
-      background-color:#e8e8e8;
-//      text-align: center;
-    }
-    .divRow {
-      display: table-row;
-      width: 100%;
-      .divCell1 {
-        float: left;/*fix for  buggy browsers*/
-        display: table-column;
-        width: 10%;
-        padding: 7px 10px;
-        border-bottom: 1px solid #e8e8e8;
-        text-align: center;
-      }
-      .divCell2 {
-        float: left;/*fix for  buggy browsers*/
-        display: table-column;
-        width: 70%;
-//        padding-left:10px;
-        padding: 7px 0px;
-        border-bottom: 1px solid #e8e8e8;
-      }
-      .divCell3 {
-        float: left;/*fix for  buggy browsers*/
-        display: table-column;
-        text-align: center;
-        width: 20%;
-//        padding-right:10px;
-        border-bottom: 1px solid #e8e8e8;
-        a.custom_btn {
-//          display:block;
-//          margin-left: 10px;
-          border-radius: 0px 5px 0px 5px;
-//          padding-top: 0px;
-//          background: #777777;
-//          :hover {background: #ff9900;}
-        }
-      }
-    }
-  }
-  .form {
-    clear: both;
-    display:  table;
-    width:100%;
-    background-color:#fff;
-    padding: 30px 150px;
-    @include box_sizing;
-    .formRow {
-      clear: both;
-      display: table-row;
-      text-align: center;
-      .formCell1 {
-        display: table-column;
-        float: left;
-        width: 40%;
-        padding: 10px 10px;
-        text-align: right;
-      }
-      .formCell2 {
-        display: table-column;
-        float: left;
-        width: 60%;
-        padding: 10px 10px;
-        text-align: left;
-        .input {
-          width: 300px;
-//          margin-left: 20px;
-//          margin-bottom: 40px;
-        }
-      }
-      .btn {
-        margin-left: 30px;
-        padding: 5px 10px;
-      }
-    }
-  }
-}
-
-/* error messages style */
-#error_explanation {
-  color: red;
-  ul {
-    color: red;
-//    margin: 0 0 30px 0;
-  }
-}
-
-.field_with_errors {
-  float: left;
-  @extend .has-error;
-  .form-control {
-    color: $state-danger-text;
   }
 }

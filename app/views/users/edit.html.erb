@@ -1,35 +1,5 @@
 <% provide(:title, '編集,ユーザー,マスタ管理') %>
-  <div class="title">
-    <h4>ユーザー編集</h4>
-    <div class="new">&nbsp;</div>
-  </div>
-  <div class="form">
-    <%= form_for(@user) do |f| %>
-      <%= render 'error_messages' %>
-      
-      <div class="formRow">
-        <div class="formCell1"><%= f.label :name, '名前' %></div>
-        <div class="formCell2"><%= f.text_field :name, class: 'input' %></div>
-      </div>
-      
-      <div class="formRow">
-        <div class="formCell1"><%= f.label :email, 'メールアドレス' %></div>
-        <div class="formCell2"><%= f.text_field :email, class: 'input' %></div>
-      </div>
-
-      <div class="formRow">
-        <div class="formCell1"><%= f.label :password, 'パスワード' %></div>
-        <div class="formCell2"><%= f.password_field :password, class: 'input' %></div>
-      </div>
-      
-      <div class="formRow">
-        <div class="formCell1"><%= f.label :password_confirmation, "パスワード確認" %></div>
-        <div class="formCell2"><%= f.password_field :password_confirmation, class: 'input' %></div>
-      </div>
-      
-      <div class="formRow">
-        <%= f.submit "変更", class: "btn btn-primary" %>
-        <%= link_to "戻る", users_path, class: "btn" %>
-      </div>
-    <% end %>
-  </div>
+<h3>ユーザー編集</h3>
+<div class="myform">
+  <%= render 'shared/user_form' %>
+</div>
