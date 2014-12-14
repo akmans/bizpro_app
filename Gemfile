@@ -7,7 +7,10 @@ gem 'bcrypt', '3.1.7'
 gem 'bootstrap-sass', '3.2.0'
 gem 'will_paginate', '3.0.7'
 gem 'bootstrap-will_paginate', '0.0.10'
-gem 'omniauth-yahoojp'
+gem 'omniauth-yahoojp', '0.1.1'
+gem 'faraday', '0.9.0'
+gem 'faraday_middleware', '~> 0.9.1'
+gem 'arel', '6.0.0.beta2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '5.0.0.beta1'
 # Use Uglifier as compressor for JavaScript assets

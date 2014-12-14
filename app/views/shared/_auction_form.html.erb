@@ -1,0 +1,35 @@
+<%= form_for(@auction, :html => {:class => "form-horizontal"}) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="form-group grid">
+    <div class="col-sm-1 header">ID</div>
+    <div class="col-sm-2"><%= @auction.auction_id %></div>
+    <div class="col-sm-1 header">タイトル</div>
+    <div class="col-sm-8"><%= f.text_field :auction_name, class: 'form-control form-field' %></div>
+  </div>
+
+  <div class="form-group grid">
+    <div class="col-sm-1 header">出品者ID</div>
+    <div class="col-sm-2"><%= @auction.seller_id %></div>
+    <div class="col-sm-1 header">落札価格</div>
+    <div class="col-sm-2"><%= f.text_field :price, class: 'form-control form-field' %></div>
+    <div class="col-sm-1 header">終了日時</div>
+    <div class="col-sm-2"><%= @auction.end_time.nil? ? "-" : @auction.end_time.strftime("%F %T") %></div>
+    <div class="col-sm-1 header">種類</div>
+    <div class="col-sm-2">
+      <%= collection_select :auction, :sold_flg, @auction_types, :first, :last, {}, \
+          {selected: @auction.sold_flg, :class => 'form-control form-field'} %>
+    </div>
+  </div>
+
+  <div class="form-group row-fluid grid row_last">
+    <div class="col-sm-1 header memo">メモ</div>
+    <div class="col-sm-11"><%= f.text_area :memo, class: 'form-control form-field' %></div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-11 col-sm-offset-1">
+      <%= f.submit "実行", class: "btn btn-primary" %>
+      <%= link_to "戻る", auctions_path, class: "btn btn-default" %>
+    </div>
+  </div>
+<% end %>

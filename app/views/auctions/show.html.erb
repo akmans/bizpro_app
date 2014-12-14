@@ -1,2 +1,34 @@
-<h1>Auctions#show</h1>
-<p>Find me in app/views/auctions/show.html.erb</p>
+<% provide(:title, '表示,オークション') %>
+<h3>オークション表示</h3>
+<div class="form-horizontal">
+  <div class="form-group grid">
+    <div class="col-sm-1 header">ID</div>
+    <div class="col-sm-2 data">
+      <%= link_to @auction.auction_id, @auction.url, :target => '_blank' %>
+    </div>
+    <div class="col-sm-1 header">タイトル</div>
+    <div class="col-sm-8 data"><%= @auction.auction_name %></div>
+  </div>
+
+  <div class="form-group grid">
+    <div class="col-sm-1 header">出品者ID</div>
+    <div class="col-sm-2 data"><%= @auction.seller_id %></div>
+    <div class="col-sm-1 header">落札価格</div>
+    <div class="col-sm-2 data"><%= @auction.price.to_i %>円</div>
+    <div class="col-sm-1 header">終了日時</div>
+    <div class="col-sm-2 data"><%= @auction.end_time.nil? ? "-" : @auction.end_time.strftime("%F %T") %></div>
+    <div class="col-sm-1 header">種類</div>
+    <div class="col-sm-2 data"><%= @auction.sold_flg == 0 ? "買い品" : "売り品" %></div>
+  </div>
+
+  <div class="form-group grid row_last">
+    <div class="col-sm-1 header">メモ</div>
+    <div class="col-sm-11 data"><%= @auction.memo.nil? ? "-" : @auction.memo %></div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-11 col-sm-offset-1">
+      <%= link_to "戻る", auctions_path, class: "btn btn-default" %>
+    </div>
+  </div>
+</div>

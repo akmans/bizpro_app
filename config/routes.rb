@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  get    '/auth/:provider/callback' => 'auctions#show' #戻り先
+  get    '/auth/:provider/callback' => 'auctions#callback' #戻り先
+  get    '/auth/:provider/logout'   => 'auctions#logout'   #ログアウト
+  get    '/auth/:provider/loaddata' => 'auctions#loaddata' #ロードデータ
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
@@ -13,13 +15,13 @@ Rails.application.routes.draw do
   resources :paymethods, param: :paymethod_id, :except => [:show]
   resources :shipmethods, param: :shipmethod_id, :except => [:show]
   resources :users
-  resources :auctions
+  resources :auctions, param: :auction_id
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'categories#index'
+  root 'auctions#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

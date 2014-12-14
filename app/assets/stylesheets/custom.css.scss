@@ -17,13 +17,45 @@ $gray-medium-light: #eaeaea;
 }
 
 .container {
+  .form-horizontal {
+//    background-color:#121212;
+    margin: 0px 0px;
+  }
+  .form-group {
+    line-height: 3.0em;
+  }
+  .grid {
+//    background-color:#cccccc;
+    border-top: 1px solid #e8e8e8;
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+    margin: 0px 0px;
+  }
   .header {
     background-color:#e8e8e8;
+//    display:table-cell;
+//      text-align: center;
+    }
+  .data {
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
 //      text-align: center;
     }
   .row {
     border-bottom: 1px solid #e8e8e8;
     padding: 5px 0px;
+    line-height: 3.0em;
+  }
+  
+  .row_last {
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .form-field {
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  .memo {
+    padding-bottom: 18px;
   }
 }
 

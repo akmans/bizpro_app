@@ -1,9 +1,21 @@
 <% provide(:title, 'ロード,オークション') %>
-  <div class="title">
-    <h4>オークションロード</h4>
-    <div class="new">&nbsp;</div>
+<h3>オークションロード</h3>
+<% if yahoojp_logged_in? || yahoojp_expired? %>
+  <p>利用する前に、Yahoo! JAPAN へのログインが必要となります。</p>
+  <%= link_to "Yahoo! JAPAN でlogin", "/auth/yahoojp", class: "btn btn-primary" %>
+<% else %>
+  <div class="row">
+    <div class="col-sm-8">ようこそ, <%= session[:y_user_name] %> さん</div>
+    <div class="col-sm-4 text-right">
+      セッション残期間：<%= yahoojp_expires_at %>&nbsp;
+      <%= link_to "ログアウト", '/auth/yahoojp/logout', class: "btn btn-default" %>
+    </div>
   </div>
-  <div class="form">
-    <%= render 'shared/auction_new_form' %>
+
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-2">
+      <%= link_to "ロードデータ", '/auth/yahoojp/loaddata', class: "btn btn-primary" %>
+      <%= link_to "戻る", auctions_path, class: "btn btn-default" %>
+    </div>
   </div>
-<%= link_to "Yahoo! JAPAN でlogin", "/auth/yahoojp" %>
+<% end %>
