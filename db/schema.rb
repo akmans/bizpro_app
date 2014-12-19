@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20141130145023) do
 
   create_table "shipmethods", id: false, force: true do |t|
     t.string   "shipmethod_id",   limit: 4,   null: false
+    t.integer  "ship_type",       limit: 1,   null: false
     t.string   "shipmethod_name", limit: 100, null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false

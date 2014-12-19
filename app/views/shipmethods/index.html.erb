@@ -3,10 +3,13 @@
 <%= will_paginate %>
 <div class="row header">
   <div class="col-xs-2 col-md-1">ID</div>
-  <div class="col-xs-8 col-md-8">名称</div>
+  <div class="col-xs-10 col-md-7">名称</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-md-3 text-right"><%= link_to "新規", new_shipmethod_path, class: "btn btn-default" %></div>
+  <div class="col-xs-4 col-md-2">タイプ</div>
+  <div class="col-xs-8 col-md-2 text-right">
+    <%= link_to "新規", new_shipmethod_path, class: "btn btn-default" %>
+  </div>
 </div>
 <%= render @shipmethods %>
 <%= will_paginate %>

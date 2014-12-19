@@ -11,6 +11,14 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :ship_type, 'タイプ', class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= collection_select :shipmethod, :ship_type, ship_type_hash, :first, :last, {}, \
+          {selected: @shipmethod.ship_type, :class => 'form-control form-field'} %>
+    </div>
+  </div>
+
+  <div class="form-group">
     <%= f.label :shipmethod_name, '名称', class: "col-sm-2 control-label" %>
     <div class="col-sm-10"><%= f.text_field :shipmethod_name, class: 'form-control' %></div>
   </div>

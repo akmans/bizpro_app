@@ -53,7 +53,7 @@ class AuctionsController < ApplicationController
       @paymethods.merge! pp.as_hash
     end
     @shipmethods = {"" => "(空白)"}
-    Shipmethod.all.each do |ss|
+    Shipmethod.where(ship_type: 0).each do |ss|
       @shipmethods.merge! ss.as_hash
     end
   end

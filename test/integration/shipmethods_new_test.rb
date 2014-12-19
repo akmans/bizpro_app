@@ -21,7 +21,8 @@ class ShipmethodsNewTest < ActionDispatch::IntegrationTest
     assert_template 'shipmethods/new'
     shipmethod_name = "てすと"
     post shipmethods_path, shipmethod: { #shipmethod_id:  "",
-                               shipmethod_name: shipmethod_name}
+                                        ship_type: 1,
+                                        shipmethod_name: shipmethod_name}
     assert_not flash.empty?
     assert_redirected_to shipmethods_path
   end

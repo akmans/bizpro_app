@@ -37,7 +37,7 @@ class ShipmethodsControllerTest < ActionController::TestCase
   test "should create shipmethod when logged in" do
     log_in_as(@user)
     assert_difference 'Shipmethod.count', 1 do
-      post :create, shipmethod: { shipmethod_name: "Shipmethod Name" }
+      post :create, shipmethod: { ship_type: 1, shipmethod_name: "Shipmethod Name" }
     end
     assert_redirected_to shipmethods_path
   end

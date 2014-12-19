@@ -4,8 +4,13 @@
     <div class="col-sm-1 header">ID</div>
     <div class="col-sm-2"><%= @auction.auction_id %></div>
     <div class="col-sm-1 header">タイトル</div>
-    <div class="col-sm-8">
+    <div class="col-sm-6">
       <%= f.text_field :auction_name, class: 'form-control form-field' %>
+    </div>
+    <div class="col-sm-2 line-height-22">
+      <%= f.label :is_custom, class: "checkbox check-box" do %>
+        <%= f.check_box :is_custom %>カスタム品
+      <% end %>
     </div>
   </div>
 

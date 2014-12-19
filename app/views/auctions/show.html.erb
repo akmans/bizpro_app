@@ -7,7 +7,8 @@
       <%= link_to @auction.auction_id, @auction.url, :target => '_blank' %>
     </div>
     <div class="col-sm-1 header">タイトル</div>
-    <div class="col-sm-8"><%= @auction.auction_name %></div>
+    <div class="col-sm-6"><%= @auction.auction_name %></div>
+    <div class="col-sm-2"><%= @auction.is_custom == 0 ? '-' : 'カスタム品' %></div>
   </div>
 
   <div class="form-group grid">
