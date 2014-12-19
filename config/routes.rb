@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get    '/ajax/modus'              => 'modus#ajax_modus'
   get    '/auth/:provider/callback' => 'auctions#callback' #戻り先
   get    '/auth/:provider/logout'   => 'auctions#logout'   #ログアウト
   get    '/auth/:provider/loaddata' => 'auctions#loaddata' #ロードデータ

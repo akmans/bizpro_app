@@ -9,4 +9,7 @@ class Brand < ActiveRecord::Base
                         uniqueness: {case_sensitive: false }
   validates :brand_name, presence: true, length: { maximum: 100}
   
+  def as_hash
+    {self.brand_id => self.brand_name}
+  end
 end

@@ -7,7 +7,7 @@
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-md-3">
+  <div class="col-md-3 text-right">
     <%= link_to "編集", edit_brand_modu_path(modu_id: modu.modu_id), class: "btn btn-default" %>
     <%= link_to "削除", brand_modu_path(modu_id: modu.modu_id), \
                         method: :delete, data: { confirm: "削除しますか?" }, \

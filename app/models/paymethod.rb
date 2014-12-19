@@ -8,4 +8,7 @@ class Paymethod < ActiveRecord::Base
                            uniqueness: {case_sensitive: false }
   validates :paymethod_name, presence: true, length: { maximum: 100}
   
+  def as_hash
+    {self.paymethod_id => self.paymethod_name}
+  end
 end

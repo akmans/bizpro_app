@@ -15,3 +15,21 @@
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
+
+/*$(document).on("page:change", function() {
+  return $("select#auction_brand_id").bind("change", function() {
+    return $.ajax({
+      url: "/ajax/modus",
+      dataType: "json",
+      data: 'brand_id=' + this.value,
+      type: "GET",
+      success: function(data) {
+        $("select#auction_modu_id").children('option:gt(0)').remove();
+        $.each( data, function( i, item ) {
+          $('select#auction_modu_id').append($('<option>').text(item["modu_name"]).attr('value', item["modu_id"]));
+        });
+      }
+    });
+  });
+});
+*/

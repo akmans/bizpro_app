@@ -4,20 +4,84 @@
     <div class="col-sm-1 header">ID</div>
     <div class="col-sm-2"><%= @auction.auction_id %></div>
     <div class="col-sm-1 header">タイトル</div>
-    <div class="col-sm-8"><%= f.text_field :auction_name, class: 'form-control form-field' %></div>
+    <div class="col-sm-8">
+      <%= f.text_field :auction_name, class: 'form-control form-field' %>
+    </div>
   </div>
 
   <div class="form-group grid">
+    <div class="col-sm-1 header">落札価格</div>
+    <div class="col-sm-2">
+      <%= f.text_field :price, class: 'form-control form-field text-right' %>
+    </div>
     <div class="col-sm-1 header">出品者ID</div>
     <div class="col-sm-2"><%= @auction.seller_id %></div>
-    <div class="col-sm-1 header">落札価格</div>
-    <div class="col-sm-2"><%= f.text_field :price, class: 'form-control form-field' %></div>
-    <div class="col-sm-1 header">終了日時</div>
-    <div class="col-sm-2"><%= @auction.end_time.nil? ? "-" : @auction.end_time.strftime("%F %T") %></div>
-    <div class="col-sm-1 header">種類</div>
+    <div class="col-sm-1 header">税率</div>
     <div class="col-sm-2">
-      <%= collection_select :auction, :sold_flg, @auction_types, :first, :last, {}, \
+      <%= collection_select :auction, :tax_rate, tax_rate_hash, :first, :last, {}, \
+          {selected: @auction.tax_rate, :class => 'form-control form-field'} %>
+    </div>
+    <div class="col-sm-1 header">終了日時</div>
+    <div class="col-sm-2">
+      <%= @auction.end_time.nil? ? "-" : @auction.end_time.strftime("%F %T") %>
+    </div>
+  </div>
+
+  <div class="form-group grid">
+    <div class="col-sm-1 header">手数料</div>
+    <div class="col-sm-2">
+      <%= f.text_field :payment_cost, class: 'form-control form-field text-right' %>
+    </div>
+    <div class="col-sm-1 header">カテゴリ</div>
+    <div class="col-sm-2">
+      <%= collection_select :auction, :category_id, @categories, :first, :last, {}, \
+          {selected: @auction.category_id, :class => 'form-control form-field'} %>
+    </div>
+    <div class="col-sm-1 header">ブランド</div>
+    <div class="col-sm-2">
+      <%= collection_select :auction, :brand_id, @brands, :first, :last, {}, \
+          {selected: @auction.brand_id, :class => 'form-control form-field'} %>
+    </div>
+    <div class="col-sm-1 header">モデル</div>
+    <div class="col-sm-2">
+      <%= collection_select :auction, :modu_id, @modus, :first, :last, {}, \
+          {selected: @auction.modu_id, :class => 'form-control form-field'} %>
+    </div>
+  </div>
+
+  <div class="form-group grid">
+    <div class="col-sm-1 header">送料額</div>
+    <div class="col-sm-2">
+      <%= f.text_field :shipment_cost, class: 'form-control form-field text-right' %>
+    </div>
+    <div class="col-sm-1 header">買売</div>
+    <div class="col-sm-2">
+      <%= collection_select :auction, :sold_flg, sold_type_hash, :first, :last, {}, \
           {selected: @auction.sold_flg, :class => 'form-control form-field'} %>
+    </div>
+    <div class="col-sm-1 header">支払方法</div>
+    <div class="col-sm-2">
+      <%= collection_select :auction, :paymethod_id, @paymethods, :first, :last, {}, \
+          {selected: @auction.paymethod_id, :class => 'form-control form-field'} %>
+    </div>
+    <div class="col-sm-1 header">送料払方</div>
+    <div class="col-sm-2">
+      <%= collection_select :auction, :ship_type, ship_type_hash, :first, :last, {}, \
+          {selected: @auction.ship_type, :class => 'form-control form-field'} %>
+    </div>
+  </div>
+
+  <div class="form-group grid">
+    <div class="col-sm-1 header">総額</div>
+    <div class="col-sm-2 text-right"><%= commas(total_cost.to_i) %>円</div>
+    <div class="col-sm-1 header">発送方法</div>
+    <div class="col-sm-2">
+      <%= collection_select :auction, :shipmethod_id, @shipmethods, :first, :last, {}, \
+          {selected: @auction.shipmethod_id, :class => 'form-control form-field'} %>
+    </div>
+    <div class="col-sm-1 header">問合番号</div>
+    <div class="col-sm-5">
+      <%= f.text_field :shipment_code, class: 'form-control form-field' %>
     </div>
   </div>
 

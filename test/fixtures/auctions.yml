@@ -3,23 +3,22 @@
 one:
   auction_id: One1
   auction_name: OneOneOneOneOne 11111
-  bidor_price: 1
   price: 123456
-  quantity: 1
-  bids: 1
   seller_id: OneOneOne3
+  sold_flg: 0
+  is_custom: 0
+  ship_type: 0
 
 two:
   auction_id: Two2
   auction_name: TwoTwoTwoTwoTwo 22222
   price: 0
-  quantity: 0
-  bids: 0
   seller_id: TwoTwoTwoTwo4
-  start_time: <%= Time.zone.now %>
   end_time: <%= Time.zone.now %>
   url: www.example.com
   sold_flg: 1
+  is_custom: 1
+  ship_type: 0
   
   
   

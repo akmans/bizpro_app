@@ -5,10 +5,10 @@ class AuctionTest < ActiveSupport::TestCase
     @auction = Auction.new(:auction_id => 'Auction_id',
                            :auction_name => 'Auction Name',
                            :price => 1,
-#                           :quantity => 1,
-#                           :bids => 0,
                            :seller_id => 'Seller Id',
-                           :sold_flg => 0
+                           :sold_flg => 0,
+                           :is_custom => 0,
+                           :ship_type => 0
                            )
   end
   
@@ -42,22 +42,7 @@ class AuctionTest < ActiveSupport::TestCase
     @auction.auction_name = "a" * 201
     assert_not @auction.valid?
   end
-  
-#  test "bidor_price should allow blank" do
-#    @auction.bidor_price = nil
-#    assert @auction.valid?
-#  end
-  
-#  test "bidor_price should be numericality" do
-#    @auction.bidor_price = "a"
-#    assert_not @auction.valid?
-#  end
-  
-#  test "bidor_price should be integer" do
-#    @auction.bidor_price = 1.2
-#    assert_not @auction.valid?
-#  end
-  
+
   test "price should be presence" do
     @auction.price = nil
     assert_not @auction.valid?
@@ -72,56 +57,6 @@ class AuctionTest < ActiveSupport::TestCase
     @auction.price = 1.2
     assert_not @auction.valid?
   end
-  
-#  test "quantity should be presence" do
-#    @auction.quantity = nil
-#    assert_not @auction.valid?
-#  end
-  
-#  test "quantity should be numericality" do
-#    @auction.quantity = "a"
-#    assert_not @auction.valid?
-#  end
-  
-#  test "quantity should be integer" do
-#    @auction.quantity = 1.2
-#    assert_not @auction.valid?
-#  end
-  
-#  test "quantity should be more than 0" do
-#    @auction.quantity = -1
-#    assert_not @auction.valid?
-#  end
-  
-#  test "quantity should be less than 10" do
-#    @auction.quantity = 10
-#    assert_not @auction.valid?
-#  end
-  
-#  test "bids should be presence" do
-#    @auction.bids = nil
-#    assert_not @auction.valid?
-#  end
-  
-#  test "bids should be numericality" do
-#    @auction.bids = "a"
-#    assert_not @auction.valid?
-#  end
-  
-#  test "bids should be integer" do
-#    @auction.bids = 1.2
-#    assert_not @auction.valid?
-#  end
-  
-#  test "bids should be more than 0" do
-#    @auction.bids = -1
-#    assert_not @auction.valid?
-#  end
-  
-#  test "bids should be less than 1000" do
-#    @auction.bids = 1000
-#    assert_not @auction.valid?
-#  end
   
   test "seller_id should be presence" do
     @auction.seller_id = "    "
@@ -165,6 +100,146 @@ class AuctionTest < ActiveSupport::TestCase
   
   test "sold_flg should be less than 10" do
     @auction.sold_flg = 10
+    assert_not @auction.valid?
+  end
+  
+  test "is_custom should be presence" do
+    @auction.is_custom = nil
+    assert_not @auction.valid?
+  end
+  
+  test "is_custom should be numericality" do
+    @auction.is_custom = "a"
+    assert_not @auction.valid?
+  end
+  
+  test "is_custom should be integer" do
+    @auction.is_custom = 0.2
+    assert_not @auction.valid?
+  end
+  
+  test "is_custom should be more than 0" do
+    @auction.is_custom = -1
+    assert_not @auction.valid?
+  end
+  
+  test "is_custom should be less than 2" do
+    @auction.is_custom = 2
+    assert_not @auction.valid?
+  end
+  
+  test "category_id should allow blank" do
+    @auction.category_id = nil
+    assert @auction.valid?
+  end
+  
+  test "category_id should not be too long" do
+    @auction.category_id = "a" * 5
+    assert_not @auction.valid?
+  end
+  
+  test "brand_id should allow blank" do
+    @auction.brand_id = nil
+    assert @auction.valid?
+  end
+  
+  test "brand_id should not be too long" do
+    @auction.brand_id = "a" * 5
+    assert_not @auction.valid?
+  end
+  
+  test "modu_id should allow blank" do
+    @auction.modu_id = nil
+    assert @auction.valid?
+  end
+  
+  test "modu_id should not be too long" do
+    @auction.modu_id = "a" * 8
+    assert_not @auction.valid?
+  end
+  
+  test "paymethod_id should allow blank" do
+    @auction.paymethod_id = nil
+    assert @auction.valid?
+  end
+  
+  test "paymethod_id should not be too long" do
+    @auction.paymethod_id = "a" * 5
+    assert_not @auction.valid?
+  end
+
+  test "payment_cost should be presence" do
+    @auction.payment_cost = nil
+    assert @auction.valid?
+  end
+  
+  test "payment_cost should be numericality" do
+    @auction.payment_cost = "a"
+    assert_not @auction.valid?
+  end
+  
+  test "payment_cost should be integer" do
+    @auction.payment_cost = 1.2
+    assert_not @auction.valid?
+  end
+  
+  test "ship_type should be presence" do
+    @auction.ship_type = nil
+    assert_not @auction.valid?
+  end
+  
+  test "ship_type should be numericality" do
+    @auction.ship_type = "a"
+    assert_not @auction.valid?
+  end
+  
+  test "ship_type should be integer" do
+    @auction.ship_type = 0.2
+    assert_not @auction.valid?
+  end
+  
+  test "ship_type should be more than 0" do
+    @auction.ship_type = -1
+    assert_not @auction.valid?
+  end
+  
+  test "ship_type should be less than 2" do
+    @auction.ship_type = 2
+    assert_not @auction.valid?
+  end
+  
+  test "shipmethod_id should allow blank" do
+    @auction.shipmethod_id = nil
+    assert @auction.valid?
+  end
+  
+  test "shipmethod_id should not be too long" do
+    @auction.shipmethod_id = "a" * 5
+    assert_not @auction.valid?
+  end
+
+  test "shipment_cost should be presence" do
+    @auction.shipment_cost = nil
+    assert @auction.valid?
+  end
+  
+  test "shipment_cost should be numericality" do
+    @auction.shipment_cost = "a"
+    assert_not @auction.valid?
+  end
+  
+  test "shipment_cost should be integer" do
+    @auction.shipment_cost = 1.2
+    assert_not @auction.valid?
+  end
+  
+  test "shipment_code should allow blank" do
+    @auction.shipment_code = nil
+    assert @auction.valid?
+  end
+  
+  test "shipment_code should not be too long" do
+    @auction.shipment_code = "a" * 13
     assert_not @auction.valid?
   end
   

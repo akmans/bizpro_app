@@ -14,21 +14,33 @@
 ActiveRecord::Schema.define(version: 20141130145023) do
 
   create_table "auctions", id: false, force: true do |t|
-    t.string   "auction_id",   limit: 20,  null: false
-    t.string   "auction_name", limit: 200, null: false
-    t.decimal  "bidor_price"
+    t.string   "auction_id",    limit: 20,  null: false
+    t.string   "auction_name",  limit: 200, null: false
     t.decimal  "price"
-    t.integer  "quantity",     limit: 1
-    t.integer  "bids",         limit: 3
-    t.string   "seller_id",    limit: 50
-    t.datetime "start_time"
+    t.integer  "tax_rate",      limit: 2
+    t.string   "seller_id",     limit: 50
     t.datetime "end_time"
-    t.string   "url",          limit: 200
-    t.integer  "sold_flg",     limit: 1
-    t.string   "memo",         limit: 200
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "url",           limit: 200
+    t.integer  "sold_flg",      limit: 1
+    t.integer  "is_custom",     limit: 1
+    t.string   "category_id",   limit: 4
+    t.string   "brand_id",      limit: 4
+    t.string   "modu_id",       limit: 7
+    t.string   "paymethod_id",  limit: 4
+    t.decimal  "payment_cost"
+    t.integer  "ship_type",     limit: 1
+    t.string   "shipmethod_id", limit: 4
+    t.decimal  "shipment_cost"
+    t.string   "shipment_code", limit: 12
+    t.string   "memo",          limit: 200
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
+
+  add_index "auctions", ["auction_id"], name: "index_auctions_on_auction_id", unique: true
+  add_index "auctions", ["brand_id"], name: "index_auctions_on_brand_id"
+  add_index "auctions", ["category_id"], name: "index_auctions_on_category_id"
+  add_index "auctions", ["modu_id"], name: "index_auctions_on_modu_id"
 
   create_table "brands", id: false, force: true do |t|
     t.string   "brand_id",   limit: 4,   null: false

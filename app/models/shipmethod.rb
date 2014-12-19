@@ -8,4 +8,7 @@ class Shipmethod < ActiveRecord::Base
                            uniqueness: {case_sensitive: false }
   validates :shipmethod_name, presence: true, length: { maximum: 100}
   
+  def as_hash
+    {self.shipmethod_id => self.shipmethod_name}
+  end
 end

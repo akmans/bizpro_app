@@ -10,4 +10,12 @@ class Modu < ActiveRecord::Base
   validates :modu_name, presence: true, length: { maximum: 100}
   validates :brand_id, presence: true,
                        length: { maximum: 4}
+  
+  def as_hash
+    {self.modu_id => self.modu_name}
+  end
+  
+  def as_json(options={})
+    super(:only => [:modu_id, :modu_name])
+  end
 end

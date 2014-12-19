@@ -61,6 +61,13 @@ class ModusController < ApplicationController
     redirect_to brand_modus_path
   end
   
+  # ajax modus action
+  def ajax_modus
+    # get modu data.
+    @modus = Modu.where(brand_id: params[:brand_id])
+    render :json => @modus
+  end
+  
   # プライベート関数
   private
     # パラメーター関数
