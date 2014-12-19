@@ -17,7 +17,7 @@
   <div class="form-group grid">
     <div class="col-sm-1 header">落札価格</div>
     <div class="col-sm-2">
-      <%= f.text_field :price, class: 'form-control form-field text-right' %>
+      <%= f.text_field :price, :value => @auction.price.to_i, class: 'form-control form-field text-right' %>
     </div>
     <div class="col-sm-1 header">出品者ID</div>
     <div class="col-sm-2"><%= @auction.seller_id %></div>
@@ -35,7 +35,7 @@
   <div class="form-group grid">
     <div class="col-sm-1 header">手数料</div>
     <div class="col-sm-2">
-      <%= f.text_field :payment_cost, class: 'form-control form-field text-right' %>
+      <%= f.text_field :payment_cost, :value => @auction.payment_cost.to_i, class: 'form-control form-field text-right' %>
     </div>
     <div class="col-sm-1 header">カテゴリ</div>
     <div class="col-sm-2">
@@ -57,7 +57,7 @@
   <div class="form-group grid">
     <div class="col-sm-1 header">送料額</div>
     <div class="col-sm-2">
-      <%= f.text_field :shipment_cost, class: 'form-control form-field text-right' %>
+      <%= f.text_field :shipment_cost, :value => @auction.shipment_cost.to_i, class: 'form-control form-field text-right' %>
     </div>
     <div class="col-sm-1 header">買売</div>
     <div class="col-sm-2">
