@@ -18,6 +18,9 @@ class AuctionsController < ApplicationController
   def show
     # get auction data by auction_id.
     @auction = Auction.find(params[:auction_id])
+    @auction.price = @auction.price.to_i
+    @auction.payment_cost = @auction.payment_cost.to_i
+    @auction.shipment_cost = @auction.shipment_cost.to_i
     @category_name = (Category.find(@auction.category_id).category_name \
                      if Category.exists?(@auction.category_id)) || '-'
     @brand_name = (Brand.find(@auction.brand_id).brand_name \
