@@ -1,7 +1,7 @@
 class Auction < ActiveRecord::Base
   self.primary_key = "auction_id"
   
-  default_scope -> { order(created_at: :DESC) }
+  default_scope -> { order(end_time: :DESC) }
   
   validates :auction_id , presence: true,
                           length: { maximum: 20},

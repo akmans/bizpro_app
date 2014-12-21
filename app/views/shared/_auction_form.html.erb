@@ -2,7 +2,7 @@
   <%= render 'shared/error_messages', object: f.object %>
   <div class="form-group grid">
     <div class="col-sm-1 header">ID</div>
-    <div class="col-sm-2"><%= @auction.auction_id %></div>
+    <div class="col-sm-2"><%= @auction.auction_id.blank? ? '-' : @auction.auction_id %></div>
     <div class="col-sm-1 header">タイトル</div>
     <div class="col-sm-6">
       <%= f.text_field :auction_name, class: 'form-control form-field' %>
@@ -78,7 +78,7 @@
 
   <div class="form-group grid">
     <div class="col-sm-1 header">総額</div>
-    <div class="col-sm-2 text-right"><%= commas(total_cost.to_i) %>円</div>
+    <div class="col-sm-2 text-right"><%= commas(auction_total_cost.to_i) %>円</div>
     <div class="col-sm-1 header">発送方法</div>
     <div class="col-sm-2">
       <%= collection_select :auction, :shipmethod_id, @shipmethods, :first, :last, {}, \

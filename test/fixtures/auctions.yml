@@ -5,6 +5,7 @@ one:
   auction_name: OneOneOneOneOne 11111
   price: 123456
   seller_id: OneOneOne3
+  url: www.example1.com
   sold_flg: 0
   is_custom: 0
   ship_type: 0
@@ -19,6 +20,16 @@ two:
   sold_flg: 1
   is_custom: 1
   ship_type: 0
-  
-  
-  
+
+<% (101..200).each do |n| %>
+auction_<%= "A#{n}" %>:
+  auction_id: <%= "Auction#{n}" %>
+  auction_name: <%= "Auction Name A#{n}" %>
+  price: 0
+  seller_id: TwoTwoTwoTwo4
+  end_time: <%= Time.zone.now %>
+  url: www.example.com
+  sold_flg: 1
+  is_custom: 1
+  ship_type: 0
+<% end %>

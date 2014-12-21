@@ -73,8 +73,8 @@ module AuctionsHelper
     key.blank? ? "-" : ship_type_hash[key.to_s]
   end
   
-  # total_cost
-  def total_cost
+  # auction_total_cost
+  def auction_total_cost
     total = @auction.price * (100 + (@auction.tax_rate || 0)) / 100 + \
     (@auction.payment_cost || 0) + (@auction.shipment_cost || 0)
   end
@@ -87,5 +87,9 @@ module AuctionsHelper
   def hiffen(x)
     str = x.to_s.reverse
     str.gsub(/(\d{4})(?=\d)/, '\\1-').reverse
+  end
+  
+  def auction_name(key)
+    Auction.find(key).auction_name
   end
 end

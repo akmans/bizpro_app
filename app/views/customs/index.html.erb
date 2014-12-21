@@ -1,0 +1,16 @@
+<% provide(:title, '一覧,カスタム') %>
+<h3>カスタム一覧</h3>
+<%= will_paginate %>
+<div class="row header">
+  <div class="col-xs-12 col-md-2">ID</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-12 col-md-7">カスタム</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-12 col-md-3 text-right">
+    <%= link_to "新規", new_custom_path, class: "btn btn-default" %>
+  </div>
+</div>
+<%= render @customs %>
+<%= will_paginate %>

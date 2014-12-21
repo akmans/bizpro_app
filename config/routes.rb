@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :shipmethods, param: :shipmethod_id, :except => [:show]
   resources :users
   resources :auctions, param: :auction_id
+  resources :customs, param: :custom_id
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

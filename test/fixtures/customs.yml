@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  custom_id: MyString1
+  custom_name: CustomName
+  is_auction: 0
+  net_cost: 100
+  tax_cost: 2000
+  other_cost: 30000
+
+two:
+  custom_id: MyString2
+  custom_name: CustomName
+  is_auction: 1
+  auction_id: One1
+  percentage: 50
+
+<% (101..200).each do |n| %>
+custom_<%= "C#{n}" %>:
+  custom_id: <%= "C#{n}" %>
+  custom_name: <%= "Custom Name C#{n}" %>
+  is_auction: 1
+  auction_id: One1
+  percentage: 50
+<% end %>

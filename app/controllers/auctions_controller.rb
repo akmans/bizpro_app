@@ -36,26 +36,7 @@ class AuctionsController < ApplicationController
   # edit action
   def edit
     @auction = Auction.find(params[:auction_id])
-    @categories = {"" => "(空白)"}
-    Category.all.each do |cc| 
-      @categories.merge! cc.as_hash
-    end
-    @brands = {"" => "(空白)"}
-    Brand.all.each do |bb|
-      @brands.merge! bb.as_hash
-    end
-    @modus = {"" => "(空白)"}
-    Modu.where(brand_id: @auction.brand_id).each do |mm|
-      @modus.merge! mm.as_hash
-    end
-    @paymethods = {"" => "(空白)"}
-    Paymethod.all.each do |pp|
-      @paymethods.merge! pp.as_hash
-    end
-    @shipmethods = {"" => "(空白)"}
-    Shipmethod.where(ship_type: 0).each do |ss|
-      @shipmethods.merge! ss.as_hash
-    end
+    form_select_hash
   end
   
   # update action
@@ -65,6 +46,7 @@ class AuctionsController < ApplicationController
       flash[:success] = "更新完了しました。"
       redirect_to auctions_path
     else
+      form_select_hash
       render 'edit'
     end
   end
@@ -144,5 +126,29 @@ class AuctionsController < ApplicationController
                                       :shipment_cost,
                                       :shipment_code,
                                       :memo)
+    end
+
+    # form_select_hash
+    def form_select_hash
+      @categories = {"" => "(空白)"}
+      Category.all.each do |cc| 
+        @categories.merge! cc.as_hash
+      end
+      @brands = {"" => "(空白)"}
+      Brand.all.each do |bb|
+        @brands.merge! bb.as_hash
+      end
+      @modus = {"" => "(空白)"}
+      Modu.where(brand_id: @auction.brand_id).each do |mm|
+        @modus.merge! mm.as_hash
+      end
+      @paymethods = {"" => "(空白)"}
+      Paymethod.all.each do |pp|
+        @paymethods.merge! pp.as_hash
+      end
+      @shipmethods = {"" => "(空白)"}
+      Shipmethod.where(ship_type: 0).each do |ss|
+        @shipmethods.merge! ss.as_hash
+      end
     end
 end

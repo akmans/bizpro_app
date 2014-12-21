@@ -39,18 +39,18 @@ class AuctionsHelperTest < ActionView::TestCase
     assert_equal "着払い", ship_type_name(1)
   end
 
-  test "test total cost" do
+  test "test auction total cost" do
     @auction.price = 100
     @auction.tax_rate = nil
     @auction.payment_cost = nil
     @auction.shipment_cost = nil
-    assert_equal 100 , total_cost
+    assert_equal 100 , auction_total_cost
     @auction.tax_rate = 5
-    assert_equal 105 , total_cost
+    assert_equal 105 , auction_total_cost
     @auction.payment_cost = 10
-    assert_equal 115 , total_cost
+    assert_equal 115 , auction_total_cost
     @auction.shipment_cost = 1000
-    assert_equal 1115 , total_cost
+    assert_equal 1115 , auction_total_cost
   end
   
   test "test commas" do

@@ -5,7 +5,7 @@
     <%= f.label :paymethod_id, 'ID', class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
       <p class="form-control-static">
-        <%= params[:action] == 'new' || params[:action] == 'create' ? '-' : @paymethod.paymethod_id %>
+        <%= @paymethod.paymethod_id.blank? ? '-' : @paymethod.paymethod_id %>
       </p>
     </div>
   </div>

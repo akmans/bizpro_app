@@ -5,7 +5,7 @@
     <%= f.label :shipmethod_id, 'ID', class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
       <p class="form-control-static">
-        <%=  params[:action] == 'new' || params[:action] == 'create' ? '-' : @shipmethod.shipmethod_id %>
+        <%= @shipmethod.shipmethod_id.blank? ? '-' : @shipmethod.shipmethod_id %>
       </p>
     </div>
   </div>

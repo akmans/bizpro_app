@@ -168,7 +168,7 @@ class AuctionTest < ActiveSupport::TestCase
     assert_not @auction.valid?
   end
 
-  test "payment_cost should be presence" do
+  test "payment_cost should be allow blank" do
     @auction.payment_cost = nil
     assert @auction.valid?
   end
@@ -183,7 +183,7 @@ class AuctionTest < ActiveSupport::TestCase
     assert_not @auction.valid?
   end
   
-  test "ship_type should be presence" do
+  test "ship_type should be allow blank" do
     @auction.ship_type = nil
     assert_not @auction.valid?
   end

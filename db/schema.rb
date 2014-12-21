@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141130145023) do
+ActiveRecord::Schema.define(version: 20141219200126) do
 
   create_table "auctions", id: false, force: true do |t|
     t.string   "auction_id",    limit: 20,  null: false
@@ -59,6 +59,23 @@ ActiveRecord::Schema.define(version: 20141130145023) do
   end
 
   add_index "categories", ["category_id"], name: "index_categories_on_category_id", unique: true
+
+  create_table "customs", id: false, force: true do |t|
+    t.string   "custom_id",   limit: 20,  null: false
+    t.string   "custom_name", limit: 200, null: false
+    t.integer  "is_auction",  limit: 1
+    t.integer  "percentage",  limit: 3
+    t.string   "auction_id",  limit: 20
+    t.decimal  "net_cost"
+    t.decimal  "tax_cost"
+    t.decimal  "other_cost"
+    t.string   "memo",        limit: 200
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "customs", ["auction_id"], name: "index_customs_on_auction_id"
+  add_index "customs", ["custom_id"], name: "index_customs_on_custom_id", unique: true
 
   create_table "modus", id: false, force: true do |t|
     t.string   "modu_id",    limit: 7,   null: false

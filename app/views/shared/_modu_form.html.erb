@@ -5,7 +5,7 @@
     <%= f.label :brand_id, 'ID', class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
       <p class="form-control-static">
-      <%= params[:action] == 'new' || params[:action] == 'create' ? '-' : @modu.modu_id %>
+      <%= @modu.modu_id.blank? ? '-' : @modu.modu_id %>
     </div>
   </div>
 
