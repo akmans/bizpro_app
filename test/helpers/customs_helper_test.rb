@@ -4,6 +4,7 @@ require 'test_helper'
 class CustomsHelperTest < ActionView::TestCase
   def setup
     @custom = customs(:one)
+    @custom2 = customs(:two)
     @auction = auctions(:one)
   end
 
@@ -21,6 +22,17 @@ class CustomsHelperTest < ActionView::TestCase
       "90" => "９０％"
     }
     assert_equal expected, percentage_hash
+  end
+
+  test "test auction percentage hash" do
+    expected = {
+      ""   => "(空白)",
+      "10" => "１０％",
+      "20" => "２０％",
+      "30" => "３０％",
+      "40" => "４０％",
+      "50" => "５０％"}
+    assert_equal expected, auction_percentage_hash(@custom2.auction_id)
   end
 
   test "test percentage name" do

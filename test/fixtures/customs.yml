@@ -20,6 +20,6 @@ custom_<%= "C#{n}" %>:
   custom_id: <%= "C#{n}" %>
   custom_name: <%= "Custom Name C#{n}" %>
   is_auction: 1
-  auction_id: One1
+  auction_id: One1111
   percentage: 50
 <% end %>

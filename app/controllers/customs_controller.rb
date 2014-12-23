@@ -21,6 +21,8 @@ class CustomsController < ApplicationController
 
   def create
     @custom = Custom.new(custom_params)
+    @custom.auction_id = nil if @custom.is_auction == 0
+    @custom.percentage = nil if @custom.is_auction == 0
     @custom.custom_id = generate_custom_id
     if @custom.save
       flash[:success] = "作成完了しました。"
@@ -35,12 +37,15 @@ class CustomsController < ApplicationController
   # edit action
   def edit
     @custom = Custom.find(params[:custom_id])
-    @auctions = auctions_hash
+    @auctions = auctions_hash # if @custom.is_auction == 0
+#    @auctions = auction_less_percentage_hash(@custom.percentage) if @custom.is_auction == 1
   end
   
   # update action
   def update
     @custom = Custom.find(params[:custom_id])
+    @custom.auction_id = nil if @custom.is_auction == 0
+    @custom.percentage = nil if @custom.is_auction == 0
     if @custom.update_attributes(custom_params)
       flash[:success] = "更新完了しました。"
       redirect_to customs_path
@@ -57,6 +62,11 @@ class CustomsController < ApplicationController
     redirect_to customs_path
   end
   
+  # ajax auction percentage
+  def ajax_auction_percentage
+    render :json => auction_percentage_hash(params[:auction_id])
+  end
+
   private
     # strong parameters method.
     def custom_params
@@ -68,17 +78,6 @@ class CustomsController < ApplicationController
                                      :tax_cost,
                                      :other_cost,
                                      :memo)
-    end
-    
-    def auctions_hash
-      a_hash = {"" => "(空白)"}
-      Auction.where(is_custom: 1).each do |auction|
-        akey = auction.auction_id
-        avalue = auction.auction_name
-        new_hash = { akey => avalue}
-        a_hash.merge! new_hash
-      end
-      a_hash
     end
     
     def generate_custom_id

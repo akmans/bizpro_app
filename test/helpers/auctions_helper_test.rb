@@ -70,4 +70,13 @@ class AuctionsHelperTest < ActionView::TestCase
     @auction.shipment_code = 123456789
     assert_equal "1-2345-6789", hiffen(@auction.shipment_code.to_i)
   end
+  
+  test "test auction name" do
+    assert_equal "OneOneOneOneOne 11111", auction_name(@auction.auction_id)
+  end
+  
+  test "test auction hash" do
+    expected = {"" => "(空白)", "Two2" => "TwoTwoTwoTwoTwo 22222"}
+    assert_equal expected, auctions_hash
+  end
 end

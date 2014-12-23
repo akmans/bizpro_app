@@ -75,7 +75,7 @@ module AuctionsHelper
   
   # auction_total_cost
   def auction_total_cost
-    total = @auction.price * (100 + (@auction.tax_rate || 0)) / 100 + \
+    @auction.price * (100 + (@auction.tax_rate || 0)) / 100 + \
     (@auction.payment_cost || 0) + (@auction.shipment_cost || 0)
   end
   
@@ -91,5 +91,16 @@ module AuctionsHelper
   
   def auction_name(key)
     Auction.find(key).auction_name
+  end
+    
+  def auctions_hash
+    a_hash = {"" => "(空白)"}
+    Auction.where(is_custom: 1).each do |auction|
+      akey = auction.auction_id
+      avalue = auction.auction_name
+      new_hash = { akey => avalue}
+      a_hash.merge! new_hash
+    end
+    a_hash
   end
 end

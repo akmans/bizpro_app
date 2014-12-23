@@ -30,6 +30,6 @@ auction_<%= "A#{n}" %>:
   end_time: <%= Time.zone.now %>
   url: www.example.com
   sold_flg: 1
-  is_custom: 1
+  is_custom: 0
   ship_type: 0
 <% end %>

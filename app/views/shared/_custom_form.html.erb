@@ -23,7 +23,8 @@
     </div>
     <div class="col-sm-1 header">比率</div>
     <div class="col-sm-2">
-      <%= collection_select :custom, :percentage, percentage_hash, :first, :last, {}, \
+      <%= collection_select :custom, :percentage, \
+          auction_percentage_hash(@custom.auction_id), :first, :last, {}, \
           {selected: @custom.percentage, :class => 'form-control form-field'} %>
     </div>
   </div>

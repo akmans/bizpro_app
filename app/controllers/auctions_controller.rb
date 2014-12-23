@@ -108,6 +108,12 @@ class AuctionsController < ApplicationController
     render 'new'
   end
   
+  # ajax auctions action
+  def ajax_auctions
+    # get auction data.
+    render :json => auctions_hash
+  end
+  
   private
     # strong parameters method.
     def auction_params
