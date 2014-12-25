@@ -36,7 +36,7 @@ end
 # 発送方法データ
 (101..130).each do |n|
   shipmethod_id = "S#{n}"
-  ship_type = n % 2
+  shipmethod_type = n % 2
   shipmethod_name = "発送方法 #{n}"
-  Shipmethod.create!(shipmethod_id: shipmethod_id, ship_type: ship_type, shipmethod_name: shipmethod_name)
+  Shipmethod.create!(shipmethod_id: shipmethod_id, shipmethod_type: shipmethod_type, shipmethod_name: shipmethod_name)
 end

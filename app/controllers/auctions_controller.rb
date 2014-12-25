@@ -36,17 +36,28 @@ class AuctionsController < ApplicationController
   # edit action
   def edit
     @auction = Auction.find(params[:auction_id])
-    form_select_hash
+    form_select_hash(@auction.brand_id)
   end
   
   # update action
   def update
     @auction = Auction.find(params[:auction_id])
+    if params[:auction][:is_product] == "1" and !Product.exists?(product_id: params[:auction_id])
+#    debugger
+      @product = Product.new()
+      @product.product_id = params[:auction_id]
+      @product.is_domestic = 1
+      @product.exchange_rate = 0
+      @product.category_id = params[:category_id]
+      @product.brand_id = params[:brand_id]
+      @product.modu_id = params[:modu_id]
+      @product.save
+    end
     if @auction.update_attributes(auction_params)
       flash[:success] = "更新完了しました。"
       redirect_to auctions_path
     else
-      form_select_hash
+      form_select_hash(@auction.brand_id)
       render 'edit'
     end
   end
@@ -85,7 +96,7 @@ class AuctionsController < ApplicationController
       auction.url = rs["AuctionItemUrl"]
       auction.end_time = DateTime.iso8601(rs["EndTime"])
       auction.sold_flg = 0
-      auction.is_custom = 0
+      auction.ope_flg = nil
       auction.ship_type = 0
       if !Auction.exists?(auction.auction_id)
         auction.save
@@ -117,44 +128,22 @@ class AuctionsController < ApplicationController
   private
     # strong parameters method.
     def auction_params
-      params.require(:auction).permit(:auction_name,
-                                      :price,
-                                      :tax_rate,
-                                      :category_id,
-                                      :brand_id,
-                                      :modu_id,
-                                      :sold_flg,
-                                      :is_custom,
-                                      :paymethod_id,
-                                      :payment_cost,
-                                      :ship_type,
-                                      :shipmethod_id,
-                                      :shipment_cost,
-                                      :shipment_code,
-                                      :memo)
-    end
-
-    # form_select_hash
-    def form_select_hash
-      @categories = {"" => "(空白)"}
-      Category.all.each do |cc| 
-        @categories.merge! cc.as_hash
-      end
-      @brands = {"" => "(空白)"}
-      Brand.all.each do |bb|
-        @brands.merge! bb.as_hash
-      end
-      @modus = {"" => "(空白)"}
-      Modu.where(brand_id: @auction.brand_id).each do |mm|
-        @modus.merge! mm.as_hash
-      end
-      @paymethods = {"" => "(空白)"}
-      Paymethod.all.each do |pp|
-        @paymethods.merge! pp.as_hash
-      end
-      @shipmethods = {"" => "(空白)"}
-      Shipmethod.where(ship_type: 0).each do |ss|
-        @shipmethods.merge! ss.as_hash
-      end
+      params.require(:auction).permit(
+        :auction_name,
+        :price,
+        :tax_rate,
+        :category_id,
+        :brand_id,
+        :modu_id,
+        :sold_flg,
+        :ope_flg,
+        :is_product,
+        :paymethod_id,
+        :payment_cost,
+        :ship_type,
+        :shipmethod_id,
+        :shipment_cost,
+        :shipment_code,
+        :memo)
     end
 end

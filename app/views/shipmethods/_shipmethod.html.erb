@@ -3,7 +3,7 @@
   <div class="col-xs-10 col-md-7"><%= shipmethod.shipmethod_name %></div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-4 col-md-2"><%= ship_type_name(shipmethod.ship_type)%></div>
+  <div class="col-xs-4 col-md-2"><%= shipmethod_type_name(shipmethod.shipmethod_type)%></div>
   <div class="col-xs-8 col-md-2 text-right">
     <%= link_to "編集", edit_shipmethod_path(shipmethod.shipmethod_id), class: "btn btn-default" %>
     <%= link_to "削除", shipmethod, method: :delete, data: { confirm: "削除しますか?" }, \

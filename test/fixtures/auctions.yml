@@ -7,7 +7,7 @@ one:
   seller_id: OneOneOne3
   url: www.example1.com
   sold_flg: 0
-  is_custom: 0
+  ope_flg: 0
   ship_type: 0
 
 two:
@@ -18,7 +18,7 @@ two:
   end_time: <%= Time.zone.now %>
   url: www.example.com
   sold_flg: 1
-  is_custom: 1
+  ope_flg: 1
   ship_type: 0
 
 <% (101..200).each do |n| %>
@@ -30,6 +30,6 @@ auction_<%= "A#{n}" %>:
   end_time: <%= Time.zone.now %>
   url: www.example.com
   sold_flg: 1
-  is_custom: 0
+  ope_flg: 1
   ship_type: 0
 <% end %>

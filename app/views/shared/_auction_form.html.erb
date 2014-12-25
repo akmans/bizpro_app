@@ -4,13 +4,8 @@
     <div class="col-sm-1 header">ID</div>
     <div class="col-sm-2"><%= @auction.auction_id.blank? ? '-' : @auction.auction_id %></div>
     <div class="col-sm-1 header">タイトル</div>
-    <div class="col-sm-6">
+    <div class="col-sm-8">
       <%= f.text_field :auction_name, class: 'form-control form-field' %>
-    </div>
-    <div class="col-sm-2 line-height-22">
-      <%= f.label :is_custom, class: "checkbox check-box" do %>
-        <%= f.check_box :is_custom %>カスタム品
-      <% end %>
     </div>
   </div>
 
@@ -59,6 +54,11 @@
     <div class="col-sm-2">
       <%= f.text_field :shipment_cost, :value => @auction.shipment_cost.to_i, class: 'form-control form-field text-right' %>
     </div>
+    <div class="col-sm-1 header">処置区分</div>
+    <div class="col-sm-2">
+      <%= collection_select :auction, :ope_flg, ope_flg_hash, :first, :last, {}, \
+          {selected: @auction.ope_flg, :class => 'form-control form-field'} %>
+    </div>
     <div class="col-sm-1 header">買売</div>
     <div class="col-sm-2">
       <%= collection_select :auction, :sold_flg, sold_type_hash, :first, :last, {}, \
@@ -69,23 +69,23 @@
       <%= collection_select :auction, :paymethod_id, @paymethods, :first, :last, {}, \
           {selected: @auction.paymethod_id, :class => 'form-control form-field'} %>
     </div>
-    <div class="col-sm-1 header">送料払方</div>
-    <div class="col-sm-2">
-      <%= collection_select :auction, :ship_type, ship_type_hash, :first, :last, {}, \
-          {selected: @auction.ship_type, :class => 'form-control form-field'} %>
-    </div>
   </div>
 
   <div class="form-group grid">
     <div class="col-sm-1 header">総額</div>
     <div class="col-sm-2 text-right"><%= commas(auction_total_cost.to_i) %>円</div>
+    <div class="col-sm-1 header">送料払方</div>
+    <div class="col-sm-2">
+      <%= collection_select :auction, :ship_type, ship_type_hash, :first, :last, {}, \
+          {selected: @auction.ship_type, :class => 'form-control form-field'} %>
+    </div>
     <div class="col-sm-1 header">発送方法</div>
     <div class="col-sm-2">
       <%= collection_select :auction, :shipmethod_id, @shipmethods, :first, :last, {}, \
           {selected: @auction.shipmethod_id, :class => 'form-control form-field'} %>
     </div>
     <div class="col-sm-1 header">問合番号</div>
-    <div class="col-sm-5">
+    <div class="col-sm-2">
       <%= f.text_field :shipment_code, class: 'form-control form-field' %>
     </div>
   </div>

@@ -1,0 +1,34 @@
+<% provide(:title, '表示,商品') %>
+<h3>商品表示</h3>
+<div class="form-horizontal">
+  <div class="form-group grid">
+    <div class="col-sm-1 header">ID</div>
+    <div class="col-sm-2"><%= @product.product_id %></div>
+    <div class="col-sm-1 header">名称</div>
+    <div class="col-sm-8"><%= @product.product_name %></div>
+  </div>
+
+  <div class="form-group grid">
+    <div class="col-sm-1 header">処理区分</div>
+    <div class="col-sm-2"><%= is_domestic_name(@product.is_domestic) %></div>
+    <div class="col-sm-1 header">カテゴリ</div>
+    <div class="col-sm-2"><%= @category_name %></div>
+    <div class="col-sm-1 header">ブランド</div>
+    <div class="col-sm-2"><%= @brand_name %></div>
+    <div class="col-sm-1 header">モデル</div>
+    <div class="col-sm-2"><%= @modu_name %></div>
+  </div>
+
+  <div class="form-group grid row_last">
+    <div class="col-sm-1 header memo">メモ</div>
+    <div class="col-sm-11">
+      <%= @product.memo.blank? ? "-" : simple_format(@product.memo, class: 'memo-data') %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-11 col-sm-offset-1">
+      <%= link_to "戻る", products_path, class: "btn btn-default" %>
+    </div>
+  </div>
+</div>

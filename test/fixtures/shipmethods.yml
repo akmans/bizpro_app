@@ -2,17 +2,17 @@
 
 one:
   shipmethod_id: ZZZ1
-  ship_type: 0
+  shipmethod_type: 0
   shipmethod_name: MyString
 
 two:
   shipmethod_id: ZZZ2
-  ship_type: 1
+  shipmethod_type: 1
   shipmethod_name: MyString
 
 <% (101..200).each do |n| %>
 shipmethod_<%= "S#{n}" %>:
   shipmethod_id: <%= "S#{n}" %>
-  ship_type: 0
+  shipmethod_type: 0
   shipmethod_name: <%= "Shipmethod Name B#{n}" %>
 <% end %>

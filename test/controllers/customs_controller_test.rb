@@ -33,6 +33,24 @@ class CustomsControllerTest < ActionController::TestCase
     assert_redirected_to login_url
   end
 
+  # test action create
+  test "should create custom when logged in" do
+    log_in_as(@user)
+    assert_difference 'Custom.count', 1 do
+      post :create, custom: { custom_name: "Custom Name",
+                              is_auction: 0}
+    end
+    assert_redirected_to customs_path
+  end
+
+  test "should redirect create when not logged in" do
+    assert_no_difference 'Custom.count' do
+      post :create, custom: { custom_name: "Custom Name",
+                              is_auction: 0}
+    end
+    assert_redirected_to login_url
+  end
+
   # test action edit
   test "should get edit when logged in" do
     log_in_as(@user)

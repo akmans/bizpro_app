@@ -10,7 +10,7 @@ class ShipmethodTest < ActiveSupport::TestCase
   
   def setup
     @shipmethod = Shipmethod.new(:shipmethod_id => 'p001',
-                                 :ship_type => 0,
+                                 :shipmethod_type => 0,
                                  :shipmethod_name => 'Shipmethod Name')
   end
   
@@ -35,28 +35,28 @@ class ShipmethodTest < ActiveSupport::TestCase
     assert_not duplicate_shipmethod.valid?
   end
   
-  test "ship_type should be presence" do
-    @shipmethod.ship_type = nil
+  test "shipmethod_type should be presence" do
+    @shipmethod.shipmethod_type = nil
     assert_not @shipmethod.valid?
   end
   
-  test "ship_type should be numericality" do
-    @shipmethod.ship_type = "a"
+  test "shipmethod_type should be numericality" do
+    @shipmethod.shipmethod_type = "a"
     assert_not @shipmethod.valid?
   end
   
-  test "ship_type should be integer" do
-    @shipmethod.ship_type = 1.2
+  test "shipmethod_type should be integer" do
+    @shipmethod.shipmethod_type = 1.2
     assert_not @shipmethod.valid?
   end
   
-  test "ship_type should be more than 0" do
-    @shipmethod.ship_type = -1
+  test "shipmethod_type should be more than 0" do
+    @shipmethod.shipmethod_type = -1
     assert_not @shipmethod.valid?
   end
   
-  test "ship_type should be less than 2" do
-    @shipmethod.ship_type = 2
+  test "shipmethod_type should be less than 2" do
+    @shipmethod.shipmethod_type = 2
     assert_not @shipmethod.valid?
   end
   

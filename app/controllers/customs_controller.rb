@@ -23,7 +23,7 @@ class CustomsController < ApplicationController
     @custom = Custom.new(custom_params)
     @custom.auction_id = nil if @custom.is_auction == 0
     @custom.percentage = nil if @custom.is_auction == 0
-    @custom.custom_id = generate_custom_id
+#    @custom.custom_id = generate_custom_id
     if @custom.save
       flash[:success] = "作成完了しました。"
       # カテゴリー全体
@@ -37,8 +37,7 @@ class CustomsController < ApplicationController
   # edit action
   def edit
     @custom = Custom.find(params[:custom_id])
-    @auctions = auctions_hash # if @custom.is_auction == 0
-#    @auctions = auction_less_percentage_hash(@custom.percentage) if @custom.is_auction == 1
+    @auctions = auctions_hash
   end
   
   # update action
@@ -78,13 +77,5 @@ class CustomsController < ApplicationController
                                      :tax_cost,
                                      :other_cost,
                                      :memo)
-    end
-    
-    def generate_custom_id
-      o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
-      begin
-        string = (0...12).map { o[rand(o.length)] }.join
-      end until !Custom.exists?(:custom_id => string)
-      string
     end
 end

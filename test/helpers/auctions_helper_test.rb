@@ -19,6 +19,24 @@ class AuctionsHelperTest < ActionView::TestCase
     assert_equal "１０％", tax_rate_name(10)
   end
 
+  test "test ope flg hash" do
+    expected = {"" => "(空白)", "0" => "カス品", "1" => "商品"}
+    assert_equal expected, ope_flg_hash
+  end
+
+  test "test ope flg name" do
+    assert_equal "-", ope_flg_name(nil)
+    assert_equal "-", ope_flg_name("")
+    assert_equal "カス品", ope_flg_name(0)
+    assert_equal "商品", ope_flg_name(1)
+  end
+
+  test "test custom percentage" do
+    assert_equal nil, custom_percentage(nil)
+    assert_equal nil, custom_percentage("Two2")
+    assert_equal "(50%)", custom_percentage("One1")
+  end
+
   test "test sold type hash" do
     expected = {"0" => "買い品", "1" => "売り品"}
     assert_equal expected, sold_type_hash
@@ -76,7 +94,27 @@ class AuctionsHelperTest < ActionView::TestCase
   end
   
   test "test auction hash" do
-    expected = {"" => "(空白)", "Two2" => "TwoTwoTwoTwoTwo 22222"}
+    expected = {"" => "(空白)", "One1" => "OneOneOneOneOne 11111"}
     assert_equal expected, auctions_hash
+  end
+  
+  test "test form select hash 1" do
+    form_select_hash(nil)
+    expected = {"" => "(空白)"}
+    assert_not_nil @categories
+    assert_not_nil @brands
+    assert_equal expected, @modus
+    assert_not_nil @paymethods
+    assert_not_nil @shipmethods
+  end
+  
+  test "test form select hash 2" do
+    form_select_hash("Two2")
+    expected = {"" => "(空白)", "ZZZZZZ2" => "MyString"}
+    assert_not_nil @categories
+    assert_not_nil @brands
+    assert_equal expected, @modus
+    assert_not_nil @paymethods
+    assert_not_nil @shipmethods
   end
 end

@@ -18,7 +18,7 @@ class CustomTest < ActiveSupport::TestCase
   
   test "custom_id should be presence" do
     @custom.custom_id = "    "
-    assert_not @custom.valid?
+    assert @custom.valid?
   end
   
   test "custom_id should not be too long" do

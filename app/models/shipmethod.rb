@@ -6,10 +6,10 @@ class Shipmethod < ActiveRecord::Base
   validates :shipmethod_id, presence: true,
                            length: { maximum: 4},
                            uniqueness: {case_sensitive: false }
-  validates :ship_type, presence: true,
-                        :numericality => { :only_integer => true,
-                                           :greater_than_or_equal_to => 0,
-                                           :less_than_or_equal_to => 1 }
+  validates :shipmethod_type, presence: true,
+                              :numericality => { :only_integer => true,
+                                                 :greater_than_or_equal_to => 0,
+                                                 :less_than_or_equal_to => 1 }
   validates :shipmethod_name, presence: true, length: { maximum: 100}
   
   def as_hash

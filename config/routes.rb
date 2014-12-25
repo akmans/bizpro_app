@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'products/index'
+
   get    '/ajax/modus'              => 'modus#ajax_modus'
   get    '/ajax/auctions'           => 'auctions#ajax_auctions'
   get    '/ajax/auction_percentage' => 'customs#ajax_auction_percentage'
@@ -20,6 +22,7 @@ Rails.application.routes.draw do
   resources :users
   resources :auctions, param: :auction_id
   resources :customs, param: :custom_id
+  resources :products, param: :product_id
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

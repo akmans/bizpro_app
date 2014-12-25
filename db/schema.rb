@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141219200126) do
+ActiveRecord::Schema.define(version: 20141223060550) do
 
   create_table "auctions", id: false, force: true do |t|
     t.string   "auction_id",    limit: 20,  null: false
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20141219200126) do
     t.datetime "end_time"
     t.string   "url",           limit: 200
     t.integer  "sold_flg",      limit: 1
-    t.integer  "is_custom",     limit: 1
+    t.integer  "ope_flg",       limit: 1
     t.string   "category_id",   limit: 4
     t.string   "brand_id",      limit: 4
     t.string   "modu_id",       limit: 7
@@ -38,9 +38,12 @@ ActiveRecord::Schema.define(version: 20141219200126) do
   end
 
   add_index "auctions", ["auction_id"], name: "index_auctions_on_auction_id", unique: true
+  add_index "auctions", ["auction_name"], name: "index_auctions_on_auction_name"
   add_index "auctions", ["brand_id"], name: "index_auctions_on_brand_id"
   add_index "auctions", ["category_id"], name: "index_auctions_on_category_id"
   add_index "auctions", ["modu_id"], name: "index_auctions_on_modu_id"
+  add_index "auctions", ["paymethod_id"], name: "index_auctions_on_paymethod_id"
+  add_index "auctions", ["shipmethod_id"], name: "index_auctions_on_shipmethod_id"
 
   create_table "brands", id: false, force: true do |t|
     t.string   "brand_id",   limit: 4,   null: false
@@ -76,6 +79,7 @@ ActiveRecord::Schema.define(version: 20141219200126) do
 
   add_index "customs", ["auction_id"], name: "index_customs_on_auction_id"
   add_index "customs", ["custom_id"], name: "index_customs_on_custom_id", unique: true
+  add_index "customs", ["custom_name"], name: "index_customs_on_custom_name"
 
   create_table "modus", id: false, force: true do |t|
     t.string   "modu_id",    limit: 7,   null: false
@@ -97,9 +101,28 @@ ActiveRecord::Schema.define(version: 20141219200126) do
 
   add_index "paymethods", ["paymethod_id"], name: "index_paymethods_on_paymethod_id", unique: true
 
+  create_table "products", id: false, force: true do |t|
+    t.string   "product_id",    limit: 20,  null: false
+    t.string   "product_name",  limit: 200, null: false
+    t.integer  "is_domestic",   limit: 1
+    t.decimal  "exchange_rate"
+    t.string   "category_id",   limit: 4
+    t.string   "brand_id",      limit: 4
+    t.string   "modu_id",       limit: 7
+    t.string   "memo",          limit: 200
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "products", ["brand_id"], name: "index_products_on_brand_id"
+  add_index "products", ["category_id"], name: "index_products_on_category_id"
+  add_index "products", ["modu_id"], name: "index_products_on_modu_id"
+  add_index "products", ["product_id"], name: "index_products_on_product_id", unique: true
+  add_index "products", ["product_name"], name: "index_products_on_product_name"
+
   create_table "shipmethods", id: false, force: true do |t|
     t.string   "shipmethod_id",   limit: 4,   null: false
-    t.integer  "ship_type",       limit: 1,   null: false
+    t.integer  "shipmethod_type", limit: 1,   null: false
     t.string   "shipmethod_name", limit: 100, null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false

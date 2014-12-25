@@ -3,7 +3,7 @@ class Custom < ActiveRecord::Base
   
   default_scope -> { order(created_at: :DESC) }
   
-  validates :custom_id , presence: true,
+  validates :custom_id , # presence: true,
                          length: { maximum: 20},
                          uniqueness: {case_sensitive: false }
   validates :custom_name, presence: true, length: { maximum: 200}
@@ -16,4 +16,17 @@ class Custom < ActiveRecord::Base
   validates :tax_cost, numericality: { only_integer: true }, allow_blank: true
   validates :other_cost, numericality: { only_integer: true }, allow_blank: true
   validates :memo, length: { maximum: 200}, allow_blank: true
+
+  before_create do
+    self.custom_id = generate_custom_id if custom_id.blank?
+  end
+
+  private
+    def generate_custom_id
+      o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+      begin
+        string = (0...12).map { o[rand(o.length)] }.join
+      end until !Custom.exists?(:custom_id => string)
+      string
+    end
 end

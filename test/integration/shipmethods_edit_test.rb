@@ -22,6 +22,7 @@ class ShipmethodsEditTest < ActionDispatch::IntegrationTest
     assert_template 'shipmethods/edit'
     shipmethod_name = "てすと"
     patch shipmethod_path(@shipmethod), shipmethod: { #shipmethod_id:  "",
+                                        shipmethod_type: 1,
                                        shipmethod_name: shipmethod_name}
     assert_not flash.empty?
     assert_redirected_to shipmethods_path

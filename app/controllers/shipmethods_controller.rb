@@ -58,7 +58,7 @@ class ShipmethodsController < ApplicationController
   private
     # パラメーター関数
     def shipmethod_params
-      params.require(:shipmethod).permit(:ship_type, :shipmethod_name)
+      params.require(:shipmethod).permit(:shipmethod_type, :shipmethod_name)
     end
     
     # カテゴリーID生成関数

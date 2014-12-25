@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-xs-12 col-md-2"><%= product.product_id %></div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-12 col-md-5"><%= product.product_name %></div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-12 col-md-2">
+    <%= is_domestic_name(product.is_domestic) %>
+  </div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-12 col-md-3 text-right">
+    <%= link_to "表示", product_path(product.product_id), class: "btn btn-default" %>
+    <%= link_to "編集", edit_product_path(product.product_id), class: "btn btn-default" %>
+    <%= link_to "削除", product, method: :delete, \
+                data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
+  </div>
+</div>

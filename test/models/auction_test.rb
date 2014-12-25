@@ -7,7 +7,7 @@ class AuctionTest < ActiveSupport::TestCase
                            :price => 1,
                            :seller_id => 'Seller Id',
                            :sold_flg => 0,
-                           :is_custom => 0,
+                           :ope_flg => 0,
                            :ship_type => 0
                            )
   end
@@ -103,28 +103,28 @@ class AuctionTest < ActiveSupport::TestCase
     assert_not @auction.valid?
   end
   
-  test "is_custom should be presence" do
-    @auction.is_custom = nil
+  test "ope_flg should be presence" do
+    @auction.ope_flg = nil
+    assert @auction.valid?
+  end
+  
+  test "ope_flg should be numericality" do
+    @auction.ope_flg = "a"
     assert_not @auction.valid?
   end
   
-  test "is_custom should be numericality" do
-    @auction.is_custom = "a"
+  test "ope_flg should be integer" do
+    @auction.ope_flg = 0.2
     assert_not @auction.valid?
   end
   
-  test "is_custom should be integer" do
-    @auction.is_custom = 0.2
+  test "ope_flg should be more than 0" do
+    @auction.ope_flg = -1
     assert_not @auction.valid?
   end
   
-  test "is_custom should be more than 0" do
-    @auction.is_custom = -1
-    assert_not @auction.valid?
-  end
-  
-  test "is_custom should be less than 2" do
-    @auction.is_custom = 2
+  test "ope_flg should be less than 2" do
+    @auction.ope_flg = 2
     assert_not @auction.valid?
   end
   
