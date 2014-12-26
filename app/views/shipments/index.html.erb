@@ -1,0 +1,18 @@
+<% provide(:title, '一覧,発送') %>
+<h3>発送一覧</h3>
+<%= will_paginate %>
+<div class="row header">
+  <div class="col-xs-6 col-md-2">ID</div>
+  <div class="col-xs-6 col-md-3">発送方法</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-6 col-md-2">発送日</div>
+  <div class="col-xs-6 col-md-2">到着日</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-12 col-md-3 text-right">
+    <%= link_to "新規", new_shipment_path, class: "btn btn-default" %>
+  </div>
+</div>
+<%= render @shipments %>
+<%= will_paginate %>

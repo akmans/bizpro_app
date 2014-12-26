@@ -1,12 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  shipmethod_id: ZZZ1
+  shipmethod_id: One1
   shipmethod_type: 0
   shipmethod_name: MyString
 
 two:
-  shipmethod_id: ZZZ2
+  shipmethod_id: Two2
   shipmethod_type: 1
   shipmethod_name: MyString
 

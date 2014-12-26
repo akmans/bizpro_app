@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141223060550) do
+ActiveRecord::Schema.define(version: 20141226091828) do
 
   create_table "auctions", id: false, force: true do |t|
     t.string   "auction_id",    limit: 20,  null: false
@@ -119,6 +119,19 @@ ActiveRecord::Schema.define(version: 20141223060550) do
   add_index "products", ["modu_id"], name: "index_products_on_modu_id"
   add_index "products", ["product_id"], name: "index_products_on_product_id", unique: true
   add_index "products", ["product_name"], name: "index_products_on_product_name"
+
+  create_table "shipments", id: false, force: true do |t|
+    t.string   "shipment_id",   limit: 20,  null: false
+    t.string   "shipmethod_id", limit: 4
+    t.date     "sent_date"
+    t.date     "arrived_date"
+    t.string   "memo",          limit: 200
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "shipments", ["shipment_id"], name: "index_shipments_on_shipment_id", unique: true
+  add_index "shipments", ["shipmethod_id"], name: "index_shipments_on_shipmethod_id"
 
   create_table "shipmethods", id: false, force: true do |t|
     t.string   "shipmethod_id",   limit: 4,   null: false

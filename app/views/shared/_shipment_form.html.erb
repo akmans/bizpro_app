@@ -1,0 +1,43 @@
+<%= form_for(@shipment, :html => {:class => "form-horizontal"}) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="form-group grid">
+    <div class="col-sm-1 header">ID</div>
+    <div class="col-sm-2"><%= @shipment.shipment_id.blank? ? '-' : @shipment.shipment_id %></div>
+    <div class="col-sm-1 header">発送方法</div>
+    <div class="col-sm-2">
+      <%= collection_select :shipment, :shipmethod_id, @shipmethods, :first, :last, {}, \
+          {selected: @shipment.shipmethod_id, :class => 'form-control form-field'} %>
+    </div>
+    <div class="col-sm-1 header">発着日</div>
+    <div class="col-sm-5">
+      <%= f.date_select :sent_date,
+        options = { :order => [:year, :month, :day],
+                    :prompt => { :day => '(D)', :month => '(M)', :year => '(Y)' },
+                    :use_two_digit_numbers => true,
+                    :start_year => 2011, :end_year => 2015
+        },
+        html_options = {:class => "form-control form-field select-inline"}
+      %>(発)〜
+      <%= f.date_select :arrived_date,
+        options = { :order => [:year, :month, :day],
+                    :prompt => { :day => '(D)', :month => '(M)', :year => '(Y)' },
+                    :use_two_digit_numbers => true,
+                    :start_year => 2011, :end_year => 2015
+        },
+        html_options = {:class => "form-control form-field select-inline"}
+      %>(着)
+    </div>
+  </div>
+
+  <div class="form-group row-fluid grid row_last">
+    <div class="col-sm-1 header memo">メモ</div>
+    <div class="col-sm-11"><%= f.text_area :memo, class: 'form-control form-field' %></div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-11 col-sm-offset-1">
+      <%= f.submit "実行", class: "btn btn-primary" %>
+      <%= link_to "戻る", :back, class: "btn btn-default" %>
+    </div>
+  </div>
+<% end %>

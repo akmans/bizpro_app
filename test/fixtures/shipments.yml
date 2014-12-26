@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  shipment_id: One1
+  shipmethod_id: One1
+  memo: メモ絵も
+
+two:
+  shipment_id: Two2
+  shipmethod_id: Two2
+  memo: メモ絵も
+
+<% (101..200).each do |n| %>
+shipment_<%= "S#{n}" %>:
+  shipment_id: <%= "S#{n}" %>
+  shipmethod_id: <%= "S#{n}" %>
+<% end %>

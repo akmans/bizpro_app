@@ -1,0 +1,27 @@
+<% provide(:title, '表示,発送') %>
+<h3>発送表示</h3>
+<div class="form-horizontal">
+  <div class="form-group grid">
+    <div class="col-sm-1 header">ID</div>
+    <div class="col-sm-2"><%= @shipment.shipment_id %></div>
+    <div class="col-sm-1 header">発送方法</div>
+    <div class="col-sm-2"><%= shipmethod_name_help(@shipment.shipmethod_id) %></div>
+    <div class="col-sm-1 header">発送日</div>
+    <div class="col-sm-2"><%= @shipment.sent_date %></div>
+    <div class="col-sm-1 header">到着日</div>
+    <div class="col-sm-2"><%= @shipment.arrived_date %></div>
+  </div>
+
+  <div class="form-group grid row_last">
+    <div class="col-sm-1 header memo">メモ</div>
+    <div class="col-sm-11">
+      <%= @shipment.memo.blank? ? "-" : simple_format(@shipment.memo, class: 'memo-data') %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-11 col-sm-offset-1">
+      <%= link_to "戻る", shipments_path, class: "btn btn-default" %>
+    </div>
+  </div>
+</div>

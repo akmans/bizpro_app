@@ -10,4 +10,9 @@ module ShipmethodsHelper
   def shipmethod_type_name(key)
     key.blank? ? "-" : shipmethod_type_hash[key.to_s]
   end
+  
+  # shipmethod name help
+  def shipmethod_name_help(key)
+    (Shipmethod.find(key).shipmethod_name if Shipmethod.exists?(key)) || '-'
+  end
 end
