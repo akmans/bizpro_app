@@ -252,4 +252,8 @@ class AuctionTest < ActiveSupport::TestCase
     @auction.memo = "a" * 201
     assert_not @auction.valid?
   end
+  
+  test "order should be the newest end_time data first" do
+    assert_equal Auction.first, auctions(:one)
+  end
 end

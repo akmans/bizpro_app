@@ -1,12 +1,6 @@
 #encoding: utf-8
 class CustomsController < ApplicationController
   before_action :logged_in_user
-  
-  # new action
-  def new
-    @custom = Custom.new
-    @auctions = auctions_hash
-  end
 
   # index action
   def index
@@ -18,12 +12,17 @@ class CustomsController < ApplicationController
     # get custom data by custom_id.
     @custom = Custom.find(params[:custom_id])
   end
+  
+  # new action
+  def new
+    @custom = Custom.new
+    @auctions = auctions_hash
+  end
 
   def create
     @custom = Custom.new(custom_params)
     @custom.auction_id = nil if @custom.is_auction == 0
     @custom.percentage = nil if @custom.is_auction == 0
-#    @custom.custom_id = generate_custom_id
     if @custom.save
       flash[:success] = "作成完了しました。"
       # カテゴリー全体
@@ -69,13 +68,14 @@ class CustomsController < ApplicationController
   private
     # strong parameters method.
     def custom_params
-      params.require(:custom).permit(:custom_name,
-                                     :is_auction,
-                                     :auction_id,
-                                     :percentage,
-                                     :net_cost,
-                                     :tax_cost,
-                                     :other_cost,
-                                     :memo)
+      params.require(:custom)
+            .permit(:custom_name,
+                    :is_auction,
+                    :auction_id,
+                    :percentage,
+                    :net_cost,
+                    :tax_cost,
+                    :other_cost,
+                    :memo)
     end
 end

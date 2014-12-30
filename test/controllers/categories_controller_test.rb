@@ -7,6 +7,42 @@ class CategoriesControllerTest < ActionController::TestCase
     @user = users(:one)
     @category = categories(:one)
   end
+
+  # test routes
+  test "should route to index" do
+    assert_routing "/categories",
+                   { controller: "categories", action: "index" }
+  end
+ 
+#  test "should route to show" do
+#    assert_routing "/categories/#{@category.category_id}",
+#                   { controller: "categories", action: "show", category_id: "#{@category.category_id}" }
+#  end
+ 
+  test "should route to new" do
+    assert_routing "/categories/new",
+                   { controller: "categories", action: "new" }
+  end
+ 
+  test "should route to create" do
+    assert_routing({ method: 'post', path: '/categories' },
+                   { controller: "categories", action: "create" })
+  end
+ 
+  test "should route to edit" do
+    assert_routing "/categories/#{@category.category_id}/edit",
+                   { controller: "categories", action: "edit", category_id: "#{@category.category_id}" }
+  end
+ 
+  test "should route to update" do
+    assert_routing({ method: 'patch', path: "/categories/#{@category.category_id}" },
+                   { controller: "categories", action: "update", category_id: "#{@category.category_id}" })
+  end
+ 
+  test "should route to destroy" do
+    assert_routing({ method: 'delete', path: "/categories/#{@category.category_id}" },
+                   { controller: "categories", action: "destroy", category_id: "#{@category.category_id}" })
+  end
   
   # test action index
   test "should get index when logged in" do
@@ -14,6 +50,7 @@ class CategoriesControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert_select 'title', full_title('一覧,カテゴリー,マスタ管理')
+    assert_not_nil assigns(:categories)
   end
   
   test "should redirect index when not logged in" do
@@ -27,6 +64,7 @@ class CategoriesControllerTest < ActionController::TestCase
     get :new
     assert_response :success
     assert_select 'title', full_title('新規,カテゴリー,マスタ管理')
+    assert_not_nil assigns(:category)
   end
   
   test "should redirect new when not logged in" do
@@ -56,6 +94,7 @@ class CategoriesControllerTest < ActionController::TestCase
     get :edit, category_id: @category
     assert_response :success
     assert_select 'title', full_title('編集,カテゴリー,マスタ管理')
+    assert_not_nil assigns(:category)
   end
 
   test "should redirect edit when not logged in" do

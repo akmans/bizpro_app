@@ -7,6 +7,7 @@ one:
   net_cost: 100
   tax_cost: 2000
   other_cost: 30000
+  created_at: <%= Time.zone.now %>
 
 two:
   custom_id: MyString2
@@ -14,6 +15,7 @@ two:
   is_auction: 1
   auction_id: One1
   percentage: 50
+  created_at: <%= Time.zone.now - 1 %>
 
 <% (101..200).each do |n| %>
 custom_<%= "C#{n}" %>:
@@ -22,4 +24,5 @@ custom_<%= "C#{n}" %>:
   is_auction: 1
   auction_id: One1111
   percentage: 50
+  created_at: <%= Time.zone.now - 1 %>
 <% end %>

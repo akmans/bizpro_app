@@ -10,9 +10,9 @@ module AuctionsHelper
     session[:y_email] = auth.info.email
   end
   
-  # Returns true if the user is logged in Yahoo!Japan, false otherwise.
+  # Returns true if the user islogged in Yahoo!Japan, false otherwise.
   def yahoojp_logged_in?
-    session[:y_user_id].nil?
+    !session[:y_user_id].nil?
   end
   
   # Logs out the current user.
@@ -34,7 +34,7 @@ module AuctionsHelper
   # session will expire?
   def yahoojp_will_expire?
     diff = session[:y_expires_at] - DateTime.now.to_i
-    diff > 60 ? true : false
+    diff > 60 ? false : true
   end
   
   # session will expire?

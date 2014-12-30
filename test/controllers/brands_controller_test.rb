@@ -7,25 +7,63 @@ class BrandsControllerTest < ActionController::TestCase
     @brand = brands(:one)
   end
 
+  # test routes
+  test "should route to index" do
+    assert_routing "/brands",
+                   { controller: "brands", action: "index" }
+  end
+ 
+#  test "should route to show" do
+#    assert_routing "/brands/#{@brand.brand_id}",
+#                   { controller: "brands", action: "show", brand_id: "#{@brand.brand_id}" }
+#  end
+ 
+  test "should route to new" do
+    assert_routing "/brands/new",
+                   { controller: "brands", action: "new" }
+  end
+ 
+  test "should route to create" do
+    assert_routing({ method: 'post', path: '/brands' },
+                   { controller: "brands", action: "create" })
+  end
+ 
+  test "should route to edit" do
+    assert_routing "/brands/#{@brand.brand_id}/edit",
+                   { controller: "brands", action: "edit", brand_id: "#{@brand.brand_id}" }
+  end
+ 
+  test "should route to update" do
+    assert_routing({ method: 'patch', path: "/brands/#{@brand.brand_id}" },
+                   { controller: "brands", action: "update", brand_id: "#{@brand.brand_id}" })
+  end
+ 
+  test "should route to destroy" do
+    assert_routing({ method: 'delete', path: "/brands/#{@brand.brand_id}" },
+                   { controller: "brands", action: "destroy", brand_id: "#{@brand.brand_id}" })
+  end
+
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)
     get :index
     assert_response :success
     assert_select 'title', full_title('一覧,ブランド,マスタ管理')
+    assert_not_nil assigns(:brands)
   end
   
   test "should redirect index when not logged in" do
     get :index
     assert_redirected_to login_url
   end
-  
+
   # test action new
   test "should get new when logged in" do
     log_in_as(@user)
     get :new
     assert_response :success
     assert_select 'title', full_title('新規,ブランド,マスタ管理')
+    assert_not_nil assigns(:brand)
   end
   
   test "should redirect new when not logged in" do
@@ -36,8 +74,9 @@ class BrandsControllerTest < ActionController::TestCase
   # test action create
   test "should create brand when logged in" do
     log_in_as(@user)
+    brand_name = "Brand Name"
     assert_difference 'Brand.count', 1 do
-      post :create, brand: { brand_name: "Brand Name" }
+      post :create, brand: { brand_name: brand_name}
     end
     assert_redirected_to brands_path
   end
@@ -55,6 +94,7 @@ class BrandsControllerTest < ActionController::TestCase
     get :edit, brand_id: @brand
     assert_response :success
     assert_select 'title', full_title('編集,ブランド,マスタ管理')
+    assert_not_nil assigns(:brand)
   end
 
   test "should redirect edit when not logged in" do

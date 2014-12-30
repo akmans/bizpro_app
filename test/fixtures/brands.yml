@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  brand_id: ZZZ1
-  brand_name: MyString
+  brand_id: One1
+  brand_name: First Name
 
 two:
-  brand_id: ZZZ2
-  brand_name: MyString
+  brand_id: Two2
+  brand_name: Second Name
 
 <% (101..200).each do |n| %>
 brand_<%= "B#{n}" %>:
-  brand_id: <%= "B#{n}" %>
+  brand_id: <%= "Z#{n}" %>
   brand_name: <%= "Brand Name B#{n}" %>
 <% end %>

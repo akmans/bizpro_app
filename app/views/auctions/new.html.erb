@@ -1,6 +1,6 @@
 <% provide(:title, 'ロード,オークション') %>
 <h3>オークションロード</h3>
-<% if yahoojp_logged_in? || yahoojp_expired? %>
+<% if !yahoojp_logged_in? || yahoojp_expired? %>
   <p>利用する前に、Yahoo! JAPAN へのログインが必要となります。</p>
   <%= link_to "Yahoo! JAPAN でlogin", "/auth/yahoojp", class: "btn btn-primary" %>
   <%= link_to "戻る", auctions_path, class: "btn btn-default" %>

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CustomTest < ActiveSupport::TestCase
   def setup
-    @custom = Custom.new(:custom_id => 'Custom_id',
+    @custom = Custom.new( # :custom_id => 'Custom_id',
                          :custom_name => 'Custom Name',
                          :is_auction => 1,
                          :auction_id => 'Auction Id',
@@ -27,6 +27,7 @@ class CustomTest < ActiveSupport::TestCase
   end
   
   test "custom_id should be unique" do
+    @custom.custom_id = "test"
     duplicate_custom = @custom.dup
     duplicate_custom.custom_id = @custom.custom_id.upcase
     @custom.save
@@ -131,5 +132,15 @@ class CustomTest < ActiveSupport::TestCase
   test "memo should not be too long" do
     @custom.memo = "a" * 201
     assert_not @custom.valid?
+  end
+  
+  test "order should be newest ID first" do
+    assert_equal Custom.first, customs(:one)
+  end
+  
+  test "should auto generate custom id when id not presence" do
+    @custom.save
+    @custom.reload
+    assert_not_nil @custom.custom_id
   end
 end

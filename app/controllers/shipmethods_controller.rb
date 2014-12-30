@@ -21,7 +21,6 @@ class ShipmethodsController < ApplicationController
   # 作成
   def create
     @shipmethod = Shipmethod.new(shipmethod_params)
-    @shipmethod.shipmethod_id = generate_shipmethod_id
     if @shipmethod.save
       flash[:success] = "作成完了しました。"
       # カテゴリー全体
@@ -59,15 +58,5 @@ class ShipmethodsController < ApplicationController
     # パラメーター関数
     def shipmethod_params
       params.require(:shipmethod).permit(:shipmethod_type, :shipmethod_name)
-    end
-    
-    # カテゴリーID生成関数
-    def generate_shipmethod_id
-      max_id = Shipmethod.maximum(:shipmethod_id)
-      return "S001" if max_id.nil?
-      next_id = max_id[1,3].to_i + 1
-      return max_id[0] + "00" + next_id.to_s if next_id < 10
-      return max_id[0] + "0" + next_id.to_s if next_id < 100
-      return max_id[0] + next_id.to_s
     end
 end

@@ -49,4 +49,14 @@ class ShipmentTest < ActiveSupport::TestCase
     @shipment.memo = "a" * 201
     assert_not @shipment.valid?
   end
+  
+  test "order should be newest ID first" do
+    assert_equal Shipment.first, shipments(:one)
+  end
+  
+  test "should auto generate shipment id when id not presence" do
+    @shipment.save
+    @shipment.reload
+    assert_not_nil @shipment.shipment_id
+  end
 end

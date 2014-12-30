@@ -8,14 +8,20 @@ one:
   url: www.example1.com
   sold_flg: 0
   ope_flg: 0
+  end_time: <%= Time.zone.now %>
+  category_id: One1
+  brand_id: One1
+  modu_id: OneOne1
+  shipmethod_id: One1
   ship_type: 0
+  paymethod_id: One1
 
 two:
   auction_id: Two2
   auction_name: TwoTwoTwoTwoTwo 22222
   price: 0
   seller_id: TwoTwoTwoTwo4
-  end_time: <%= Time.zone.now %>
+  end_time: <%= Time.zone.now - 1 %>
   url: www.example.com
   sold_flg: 1
   ope_flg: 1
@@ -27,7 +33,7 @@ auction_<%= "A#{n}" %>:
   auction_name: <%= "Auction Name A#{n}" %>
   price: 0
   seller_id: TwoTwoTwoTwo4
-  end_time: <%= Time.zone.now %>
+  end_time: <%= Time.zone.now - n %>
   url: www.example.com
   sold_flg: 1
   ope_flg: 1

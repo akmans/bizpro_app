@@ -11,5 +11,4 @@ module ApplicationHelper
       title.join(' | ')
     end
   end
-  
 end

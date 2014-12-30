@@ -3,10 +3,6 @@ require 'faraday'
 
 class AuctionsController < ApplicationController
   before_action :logged_in_user
-  
-  # new action
-  def new
-  end
 
   # index action
   def index
@@ -30,6 +26,10 @@ class AuctionsController < ApplicationController
                  if Paymethod.exists?(@auction.paymethod_id)) || '-'
   end
   
+  # new action
+  def new
+  end
+  
 #  def create
 #  end
 
@@ -42,17 +42,16 @@ class AuctionsController < ApplicationController
   # update action
   def update
     @auction = Auction.find(params[:auction_id])
-    if params[:auction][:is_product] == "1" and !Product.exists?(product_id: params[:auction_id])
-#    debugger
-      @product = Product.new()
-      @product.product_id = params[:auction_id]
-      @product.is_domestic = 1
-      @product.exchange_rate = 0
-      @product.category_id = params[:category_id]
-      @product.brand_id = params[:brand_id]
-      @product.modu_id = params[:modu_id]
-      @product.save
-    end
+#    if params[:auction][:is_product] == "1" and !Product.exists?(product_id: params[:auction_id])
+#      @product = Product.new()
+#      @product.product_id = params[:auction_id]
+#      @product.is_domestic = 1
+#      @product.exchange_rate = 0
+#      @product.category_id = params[:category_id]
+#      @product.brand_id = params[:brand_id]
+#      @product.modu_id = params[:modu_id]
+#      @product.save
+#    end
     if @auction.update_attributes(auction_params)
       flash[:success] = "更新完了しました。"
       redirect_to auctions_path
@@ -62,7 +61,7 @@ class AuctionsController < ApplicationController
     end
   end
   
-  # delete action
+  # destroy action
   def destroy
     Auction.find(params[:auction_id]).destroy
     flash[:success] = "削除完了しました。"
@@ -128,22 +127,21 @@ class AuctionsController < ApplicationController
   private
     # strong parameters method.
     def auction_params
-      params.require(:auction).permit(
-        :auction_name,
-        :price,
-        :tax_rate,
-        :category_id,
-        :brand_id,
-        :modu_id,
-        :sold_flg,
-        :ope_flg,
-        :is_product,
-        :paymethod_id,
-        :payment_cost,
-        :ship_type,
-        :shipmethod_id,
-        :shipment_cost,
-        :shipment_code,
-        :memo)
+      params.require(:auction)
+            .permit(:auction_name,
+                    :price,
+                    :tax_rate,
+                    :category_id,
+                    :brand_id,
+                    :modu_id,
+                    :sold_flg,
+                    :ope_flg,
+                    :paymethod_id,
+                    :payment_cost,
+                    :ship_type,
+                    :shipmethod_id,
+                    :shipment_cost,
+                    :shipment_code,
+                    :memo)
     end
 end

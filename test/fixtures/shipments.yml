@@ -8,14 +8,17 @@ one:
   shipment_id: One1
   shipmethod_id: One1
   memo: メモ絵も
+  sent_date: <%= Time.zone.now %>
 
 two:
   shipment_id: Two2
   shipmethod_id: Two2
   memo: メモ絵も
+  sent_date: <%= Time.zone.now - 1 %>
 
 <% (101..200).each do |n| %>
 shipment_<%= "S#{n}" %>:
   shipment_id: <%= "S#{n}" %>
   shipmethod_id: <%= "S#{n}" %>
+  sent_date: <%= Time.zone.now - 1 %>
 <% end %>

@@ -7,16 +7,19 @@ one:
   category_id: ZZZ1
   brand_id: ZZZ1
   modu_id: ZZZZZZ1
+  created_at: <%= Time.zone.now %>
 
 two:
   product_id: Two2
   product_name: MyString
   is_domestic: 1
   exchange_rate: 8.8
+  created_at: <%= Time.zone.now - 1 %>
 
 <% (101..200).each do |n| %>
 product_<%= "P#{n}" %>:
   product_id: <%= "P#{n}" %>
   product_name: <%= "Product Name P#{n}" %>
   is_domestic: 0
+  created_at: <%= Time.zone.now - 1 %>
 <% end %>

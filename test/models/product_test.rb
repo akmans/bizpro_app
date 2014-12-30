@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ProductTest < ActiveSupport::TestCase
   def setup
-    @product = Product.new(:product_id => 'Product_id',
+    @product = Product.new(# :product_id => 'Product_id',
                            :product_name => 'Product Name',
                            :is_domestic => 1
                            )
@@ -23,6 +23,7 @@ class ProductTest < ActiveSupport::TestCase
   end
   
   test "product_id should be unique" do
+    @product.product_id = "test"
     duplicate_product = @product.dup
     duplicate_product.product_id = @product.product_id.upcase
     @product.save
@@ -102,5 +103,15 @@ class ProductTest < ActiveSupport::TestCase
   test "memo should not be too long" do
     @product.memo = "a" * 201
     assert_not @product.valid?
+  end
+  
+  test "order should be newest ID first" do
+    assert_equal Product.first, products(:one)
+  end
+  
+  test "should auto generate product id when id not presence" do
+    @product.save
+    @product.reload
+    assert_not_nil @product.product_id
   end
 end

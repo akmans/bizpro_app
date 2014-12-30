@@ -1,22 +1,18 @@
 require 'test_helper'
 
 class ModuTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-
   def setup
     @brand = brands(:one)
-    @modu = @brand.modus.build(modu_id: 'M001001', modu_name: 'Modu Name 001001')
+    @modu = @brand.modus.build(modu_name: 'Modu Name 001001')
   end
 
   test "should be valid" do
     assert @modu.valid?
   end
   
-  test "modu_id should be presence" do
+  test "modu_id should be allow blank" do
     @modu.modu_id = "    "
-    assert_not @modu.valid?
+    assert @modu.valid?
   end
   
   test "modu_id should not be too long" do
@@ -25,6 +21,7 @@ class ModuTest < ActiveSupport::TestCase
   end
   
   test "modu_id should be unique" do
+    @modu.modu_id = 'testtes'
     duplicate_modu = @modu.dup
     duplicate_modu.modu_id = @modu.modu_id.upcase
     @modu.save
@@ -52,6 +49,24 @@ class ModuTest < ActiveSupport::TestCase
   end
   
   test "order should be miximum ID first" do
-    assert_equal Modu.first, modus(:modu_M101101)
+    assert_equal Modu.first, modus(:one)
+  end
+  
+  test "should get data as hash" do
+    @modu.modu_id = 'TEST'
+    expected = {'TEST' => 'Modu Name 001001'}
+    assert_equal expected, @modu.as_hash
+  end
+  
+  test "should auto generate modu id when id not presence" do
+    @modu.save
+    @modu.reload
+    assert_not_nil @modu.modu_id
+  end
+  
+  test "should get data as json include modu_id and modu_name" do
+    @modu.modu_id = 'TEST'
+    expected = {'modu_id' => 'TEST', 'modu_name' => 'Modu Name 001001'}
+    assert_equal expected, @modu.as_json
   end
 end

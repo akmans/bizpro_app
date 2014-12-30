@@ -1,15 +1,8 @@
 require 'test_helper'
 
 class ShipmethodTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-  # test "the truth" do
-  #   assert true
-  # end
-  
   def setup
-    @shipmethod = Shipmethod.new(:shipmethod_id => 'p001',
+    @shipmethod = Shipmethod.new( # :shipmethod_id => 'p001',
                                  :shipmethod_type => 0,
                                  :shipmethod_name => 'Shipmethod Name')
   end
@@ -18,9 +11,9 @@ class ShipmethodTest < ActiveSupport::TestCase
     assert @shipmethod.valid?
   end
   
-  test "shipmethod_id should be presence" do
+  test "shipmethod_id should be allow blank" do
     @shipmethod.shipmethod_id = "    "
-    assert_not @shipmethod.valid?
+    assert @shipmethod.valid?
   end
   
   test "shipmethod_id should not be too long" do
@@ -29,6 +22,7 @@ class ShipmethodTest < ActiveSupport::TestCase
   end
   
   test "shipmethod_id should be unique" do
+    @shipmethod.shipmethod_id = "test"
     duplicate_shipmethod = @shipmethod.dup
     duplicate_shipmethod.shipmethod_id = @shipmethod.shipmethod_id.upcase
     @shipmethod.save
@@ -68,5 +62,21 @@ class ShipmethodTest < ActiveSupport::TestCase
   test "shipmethod_name should not be too long" do
     @shipmethod.shipmethod_name = "a" * 101
     assert_not @shipmethod.valid?
+  end
+  
+  test "order should be miximum ID first" do
+    assert_equal Shipmethod.first, shipmethods(:one)
+  end
+  
+  test "should get data as hash" do
+    @shipmethod.shipmethod_id = 'TEST'
+    expected = {'TEST' => 'Shipmethod Name'}
+    assert_equal expected, @shipmethod.as_hash
+  end
+  
+  test "should auto generate shipmethod id when id not presence" do
+    @shipmethod.save
+    @shipmethod.reload
+    assert_not_nil @shipmethod.shipmethod_id
   end
 end

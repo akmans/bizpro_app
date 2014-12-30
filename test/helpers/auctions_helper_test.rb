@@ -4,7 +4,71 @@ require 'test_helper'
 class AuctionsHelperTest < ActionView::TestCase
 
   def setup
+    OmniAuth.config.test_mode = true
+    OmniAuth.config.mock_auth[:yahoojp] = OmniAuth::AuthHash.new({
+      :provider => 'yahoojp',
+      :uid => 'UID',
+      :credentials => {
+        :token => "TOKEN",
+        :refresh_token => "REFRESH_TOKEN",
+        :expires_at => DateTime.now.to_i + 3600},
+      :info => {
+        :name => "NAME",
+        :email => "EMAIL"}
+    })
+    @auth = OmniAuth.config.mock_auth[:yahoojp]
     @auction = auctions(:one)
+  end
+
+  def teardown
+    OmniAuth.config.mock_auth[:yahoojp] = nil
+    yahoojp_log_out
+  end
+
+  test "test yahoojp log in" do
+    yahoojp_log_in(OmniAuth.config.mock_auth[:yahoojp])
+    assert_equal @auth.uid, session[:y_user_id]
+    assert_equal @auth.credentials.token, session[:y_token]
+    assert_equal @auth.credentials.refresh_token, session[:y_refresh_token]
+    assert_equal @auth.credentials.expires_at, session[:y_expires_at]
+    assert_equal @auth.info.name, session[:y_user_name]
+    assert_equal @auth.info.email, session[:y_email]
+  end
+
+  test "test yahoojp loged in?" do
+    assert_equal false, yahoojp_logged_in?
+    yahoojp_log_in(OmniAuth.config.mock_auth[:yahoojp])
+    assert_equal true, yahoojp_logged_in?
+  end
+
+  test "test yahoojp log out" do
+    yahoojp_log_in(OmniAuth.config.mock_auth[:yahoojp])
+    yahoojp_log_out
+    assert_nil session[:y_user_id]
+    assert_nil session[:y_token]
+    assert_nil session[:y_refresh_token]
+    assert_nil session[:y_expires_at]
+    assert_nil session[:y_user_name]
+    assert_nil session[:y_email]
+  end
+
+  test "test yahoojp expires at" do
+    yahoojp_log_in(OmniAuth.config.mock_auth[:yahoojp])
+    assert_not_nil yahoojp_expires_at
+  end
+
+  test "test yahoojp will expire?" do
+    session[:y_expires_at] = DateTime.now.to_i + 61
+    assert_equal false, yahoojp_will_expire?
+    session[:y_expires_at] = DateTime.now.to_i + 59
+    assert_equal true, yahoojp_will_expire?
+  end
+
+  test "test yahoojp expired?" do
+    session[:y_expires_at] = DateTime.now.to_i - 1
+    assert_equal true, yahoojp_expired?
+    session[:y_expires_at] = DateTime.now.to_i + 1
+    assert_equal false, yahoojp_expired?
   end
 
   test "test tax rate hash" do
@@ -110,7 +174,7 @@ class AuctionsHelperTest < ActionView::TestCase
   
   test "test form select hash 2" do
     form_select_hash("Two2")
-    expected = {"" => "(空白)", "ZZZZZZ2" => "MyString"}
+    expected = {"" => "(空白)", "TwoTwo2" => "Second Name"}
     assert_not_nil @categories
     assert_not_nil @brands
     assert_equal expected, @modus

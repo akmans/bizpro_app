@@ -3,16 +3,16 @@
 one:
   shipmethod_id: One1
   shipmethod_type: 0
-  shipmethod_name: MyString
+  shipmethod_name: First Name
 
 two:
   shipmethod_id: Two2
   shipmethod_type: 1
-  shipmethod_name: MyString
+  shipmethod_name: Second Name
 
 <% (101..200).each do |n| %>
 shipmethod_<%= "S#{n}" %>:
-  shipmethod_id: <%= "S#{n}" %>
+  shipmethod_id: <%= "Z#{n}" %>
   shipmethod_type: 0
   shipmethod_name: <%= "Shipmethod Name B#{n}" %>
 <% end %>

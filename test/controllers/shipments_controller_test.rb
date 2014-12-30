@@ -7,12 +7,49 @@ class ShipmentsControllerTest < ActionController::TestCase
     @shipment = shipments(:two)
   end
 
+  # test routes
+  test "should route to index" do
+    assert_routing "/shipments",
+                   { controller: "shipments", action: "index" }
+  end
+ 
+  test "should route to show" do
+    assert_routing "/shipments/#{@shipment.shipment_id}",
+                   { controller: "shipments", action: "show", shipment_id: "#{@shipment.shipment_id}" }
+  end
+ 
+  test "should route to new" do
+    assert_routing "/shipments/new",
+                   { controller: "shipments", action: "new" }
+  end
+ 
+  test "should route to create" do
+    assert_routing({ method: 'post', path: '/shipments' },
+                   { controller: "shipments", action: "create" })
+  end
+ 
+  test "should route to edit" do
+    assert_routing "/shipments/#{@shipment.shipment_id}/edit",
+                   { controller: "shipments", action: "edit", shipment_id: "#{@shipment.shipment_id}" }
+  end
+ 
+  test "should route to update" do
+    assert_routing({ method: 'patch', path: "/shipments/#{@shipment.shipment_id}" },
+                   { controller: "shipments", action: "update", shipment_id: "#{@shipment.shipment_id}" })
+  end
+ 
+  test "should route to destroy" do
+    assert_routing({ method: 'delete', path: "/shipments/#{@shipment.shipment_id}" },
+                   { controller: "shipments", action: "destroy", shipment_id: "#{@shipment.shipment_id}" })
+  end
+
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)
     get :index
     assert_response :success
     assert_select 'title', full_title('一覧,発送')
+    assert_not_nil assigns(:shipments)
   end
   
   test "should redirect index when not logged in" do
@@ -26,6 +63,7 @@ class ShipmentsControllerTest < ActionController::TestCase
     get :new
     assert_response :success
     assert_select 'title', full_title('新規,発送')
+    assert_not_nil assigns(:shipment)
   end
  
   test "should redirect new when not logged in" do
@@ -57,6 +95,7 @@ class ShipmentsControllerTest < ActionController::TestCase
     get :edit, shipment_id: @shipment
     assert_response :success
     assert_select 'title', full_title('編集,発送')
+    assert_not_nil assigns(:shipment)
   end
 
   test "should redirect edit when not logged in" do

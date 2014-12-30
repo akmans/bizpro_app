@@ -2,16 +2,16 @@ require 'test_helper'
 
 class BrandTest < ActiveSupport::TestCase
   def setup
-    @brand = Brand.new(:brand_id => 'b001', :brand_name => 'Brand Name')
+    @brand = Brand.new(:brand_name => 'Brand Name')
   end
   
   test "should be valid" do
     assert @brand.valid?
   end
   
-  test "brand_id should be presence" do
+  test "brand_id should be allow blank" do
     @brand.brand_id = "    "
-    assert_not @brand.valid?
+    assert @brand.valid?
   end
   
   test "brand_id should not be too long" do
@@ -20,6 +20,7 @@ class BrandTest < ActiveSupport::TestCase
   end
   
   test "brand_id should be unique" do
+    @brand.brand_id = "b001"
     duplicate_brand = @brand.dup
     duplicate_brand.brand_id = @brand.brand_id.upcase
     @brand.save
@@ -37,7 +38,7 @@ class BrandTest < ActiveSupport::TestCase
   end
   
   test "order should be miximum ID first" do
-    assert_equal Brand.first, brands(:brand_B101)
+    assert_equal Brand.first, brands(:one)
   end
   
   test "associated modus should be destroyed" do
@@ -46,5 +47,17 @@ class BrandTest < ActiveSupport::TestCase
     assert_difference 'Modu.count', -1 do
       @brand.destroy
     end
+  end
+  
+  test "should get data as hash" do
+    @brand.brand_id = 'TEST'
+    expected = {'TEST' => 'Brand Name'}
+    assert_equal expected, @brand.as_hash
+  end
+  
+  test "should auto generate brand id when id not presence" do
+    @brand.save
+    @brand.reload
+    assert_not_nil @brand.brand_id
   end
 end
