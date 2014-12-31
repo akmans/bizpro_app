@@ -2,7 +2,7 @@
 include AuctionsHelper
 
 module CustomsHelper
-  
+
   # percentage_hash
   def percentage_hash
     {""   => "(空白)",
@@ -17,7 +17,7 @@ module CustomsHelper
      "90" => "９０％"
     }
   end
-  
+
   def auction_percentage_hash(k)
     rtn = {"" => "(空白)"}
     i = 10
@@ -34,12 +34,12 @@ module CustomsHelper
   def percentage_name(key)
     key.blank? ? "-" : percentage_hash[key.to_s]
   end
-  
+
   # is_auction_name
   def is_auction_name(key)
      key.blank? ? "-" : (key == 1 ? "オークション品" : "-")
   end
-  
+
   # custom_total_cost
   def custom_total_cost
     return (@custom.net_cost + @custom.tax_cost + @custom.other_cost).to_i if @custom.is_auction == 0

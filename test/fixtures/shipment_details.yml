@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shipment_id: One1
+  product_id: One1
+  memo: MyString
+
+two:
+  shipment_id: Two2
+  product_id: Two2
+  memo: MyString

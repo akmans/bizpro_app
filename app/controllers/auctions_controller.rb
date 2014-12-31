@@ -127,21 +127,24 @@ class AuctionsController < ApplicationController
   private
     # strong parameters method.
     def auction_params
-      params.require(:auction)
-            .permit(:auction_name,
-                    :price,
-                    :tax_rate,
-                    :category_id,
-                    :brand_id,
-                    :modu_id,
-                    :sold_flg,
-                    :ope_flg,
-                    :paymethod_id,
-                    :payment_cost,
-                    :ship_type,
-                    :shipmethod_id,
-                    :shipment_cost,
-                    :shipment_code,
-                    :memo)
+      params
+        .require(:auction)
+        .permit(
+          :auction_name,
+          :price,
+          :tax_rate,
+          :category_id,
+          :brand_id,
+          :modu_id,
+          :sold_flg,
+          :ope_flg,
+          :paymethod_id,
+          :payment_cost,
+          :ship_type,
+          :shipmethod_id,
+          :shipment_cost,
+          :shipment_code,
+          :memo
+        )
     end
 end

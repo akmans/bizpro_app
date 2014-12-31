@@ -5,7 +5,7 @@ class ShipmentsController < ApplicationController
 
   # new action
   def new
-    @shipment = Shipment.new()
+    @shipment = Shipment.new
     shipmethod_hash
   end
 
@@ -20,7 +20,7 @@ class ShipmentsController < ApplicationController
     # get shipment data by shipment_id.
     @shipment = Shipment.find(params[:shipment_id])
   end
-  
+
   # create action
   def create
     @shipment = Shipment.new(shipment_params)
@@ -33,13 +33,13 @@ class ShipmentsController < ApplicationController
       render 'new'
     end
   end
-  
+
   # edit action
   def edit
     @shipment = Shipment.find(params[:shipment_id])
     shipmethod_hash
   end
-  
+
   # update action
   def update
     @shipment = Shipment.find(params[:shipment_id])
@@ -51,14 +51,14 @@ class ShipmentsController < ApplicationController
       render 'edit'
     end
   end
-  
+
   # delete action
   def destroy
     Shipment.find(params[:shipment_id]).destroy
     flash[:success] = "削除完了しました。"
     redirect_to shipments_path
   end
-  
+
   private
     # strong parameters method.
     def shipment_params
@@ -68,7 +68,7 @@ class ShipmentsController < ApplicationController
         :arrived_date,
         :memo)
     end
-    
+
     # shipmethod hash method
     def shipmethod_hash
       @shipmethods = {"" => "(空白)"}

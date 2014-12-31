@@ -1,13 +1,13 @@
 class Category < ActiveRecord::Base
   self.primary_key = "category_id"
-  
+
   default_scope -> { order(category_id: :ASC) }
-  
+
   validates :category_id , # presence: true,
                            length: { maximum: 4},
                            uniqueness: {case_sensitive: false }
   validates :category_name, presence: true, length: { maximum: 100}
-  
+
   def as_hash
     {self.category_id => self.category_name}
   end
@@ -15,7 +15,7 @@ class Category < ActiveRecord::Base
   before_create do
     self.category_id = generate_category_id if category_id.blank?
   end
-  
+
   private
     # generate category id
     def generate_category_id

@@ -7,17 +7,17 @@ class ShipmethodsController < ApplicationController
     # 新フォーム用
     @shipmethod = Shipmethod.new
   end
-  
+
   def index
     # カテゴリー全体
     @shipmethods = Shipmethod.paginate(page: params[:page], :per_page => 15)
   end
-  
+
 #  # 表示
 #  def show
 #    @shipmethod = Shipmethod.find(params[:shipmethod_id])
 #  end
-  
+
   # 作成
   def create
     @shipmethod = Shipmethod.new(shipmethod_params)
@@ -29,12 +29,12 @@ class ShipmethodsController < ApplicationController
       render 'new'
     end
   end
-  
+
   # 編集
   def edit
     @shipmethod = Shipmethod.find(params[:shipmethod_id])
   end
-  
+
   # 更新
   def update
     @shipmethod = Shipmethod.find(params[:shipmethod_id])
@@ -45,14 +45,14 @@ class ShipmethodsController < ApplicationController
       render 'edit'
     end
   end
-  
+
   # 削除
   def destroy
     Shipmethod.find(params[:shipmethod_id]).destroy
     flash[:success] = "削除完了しました。"
     redirect_to shipmethods_path
   end
-  
+
   # プライベート関数
   private
     # パラメーター関数

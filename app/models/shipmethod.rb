@@ -1,8 +1,8 @@
 class Shipmethod < ActiveRecord::Base
   self.primary_key = "shipmethod_id"
-  
+
   default_scope -> { order(shipmethod_id: :ASC) }
-  
+
   validates :shipmethod_id, # presence: true,
                            length: { maximum: 4},
                            uniqueness: {case_sensitive: false }
@@ -11,7 +11,7 @@ class Shipmethod < ActiveRecord::Base
                                                  :greater_than_or_equal_to => 0,
                                                  :less_than_or_equal_to => 1 }
   validates :shipmethod_name, presence: true, length: { maximum: 100}
-  
+
   def as_hash
     {self.shipmethod_id => self.shipmethod_name}
   end
@@ -19,7 +19,7 @@ class Shipmethod < ActiveRecord::Base
   before_create do
     self.shipmethod_id = generate_shipmethod_id if shipmethod_id.blank?
   end
-  
+
   private
     # generate shipmethod id
     def generate_shipmethod_id

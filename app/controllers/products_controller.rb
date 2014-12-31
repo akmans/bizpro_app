@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
     @modu_name = (Modu.find(@product.modu_id).modu_name \
                  if Modu.exists?(@product.modu_id)) || '-'
   end
-  
+
   # 作成
   def create
     @product = Product.new(product_params)
@@ -38,13 +38,13 @@ class ProductsController < ApplicationController
       render 'new'
     end
   end
-  
+
   # edit action
   def edit
     @product = Product.find(params[:product_id])
     form_select_hash(@product.brand_id)
   end
-  
+
   # update action
   def update
     @product = Product.find(params[:product_id])
@@ -56,14 +56,14 @@ class ProductsController < ApplicationController
       render 'edit'
     end
   end
-  
+
   # delete action
   def destroy
     Product.find(params[:product_id]).destroy
     flash[:success] = "削除完了しました。"
     redirect_to products_path
   end
-  
+
   private
     # strong parameters method.
     def product_params

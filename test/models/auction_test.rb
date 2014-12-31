@@ -2,14 +2,15 @@ require 'test_helper'
 
 class AuctionTest < ActiveSupport::TestCase
   def setup
-    @auction = Auction.new(:auction_id => 'Auction_id',
-                           :auction_name => 'Auction Name',
-                           :price => 1,
-                           :seller_id => 'Seller Id',
-                           :sold_flg => 0,
-                           :ope_flg => 0,
-                           :ship_type => 0
-                           )
+    @auction = Auction.new(
+      :auction_id => 'Auction_id',
+      :auction_name => 'Auction Name',
+      :price => 1,
+      :seller_id => 'Seller Id',
+      :sold_flg => 0,
+      :ope_flg => 0,
+      :ship_type => 0
+    )
   end
   
   test "should be valid" do

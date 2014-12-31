@@ -1,13 +1,14 @@
 <div class="row">
-  <div class="col-xs-6 col-md-2"><%= shipment.shipment_id %></div>
+  <div class="col-xs-6 col-md-2"><%= shipment.sent_date %></div>
   <div class="col-xs-6 col-md-3"><%= shipmethod_name_help(shipment.shipmethod_id) %></div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-6 col-md-2"><%= shipment.sent_date %></div>
+  <div class="col-xs-6 col-md-2"><%= shipment_detail_count(shipment.shipment_id) %></div>
   <div class="col-xs-6 col-md-2"><%= shipment.arrived_date %></div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-12 col-md-3 text-right">
+    <%= link_to "商品編集", shipment_shipment_details_path(shipment.shipment_id), class: "btn btn-default" %>
     <%= link_to "表示", shipment_path(shipment.shipment_id), class: "btn btn-default" %>
     <%= link_to "編集", edit_shipment_path(shipment.shipment_id), class: "btn btn-default" %>
     <%= link_to "削除", shipment, method: :delete, \

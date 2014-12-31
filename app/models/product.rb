@@ -1,8 +1,8 @@
 class Product < ActiveRecord::Base
   self.primary_key = "product_id"
-  
+
   default_scope -> { order(created_at: :DESC) }
-  
+
   validates :product_id , # presence: true,
                           length: { maximum: 20},
                           uniqueness: {case_sensitive: false }
@@ -16,10 +16,14 @@ class Product < ActiveRecord::Base
   validates :modu_id , length: { maximum: 7}
   validates :memo, length: { maximum: 200}, allow_blank: true
 
+  def as_hash
+    {self.product_id => self.product_name}
+  end
+
   before_create do
     self.product_id = generate_product_id if product_id.blank?
   end
-  
+
   private
     def generate_product_id
       o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten

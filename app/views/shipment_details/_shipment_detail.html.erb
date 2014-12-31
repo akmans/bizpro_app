@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-xs-4 col-md-2"><%= shipment_detail.product_id %></div>
+  <div class="col-xs-8 col-md-6"><%= shipment_detail_product_name(shipment_detail.product_id) %></div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-4 col-md-2"><%= shipment_detail_total_cost(shipment_detail.id) %></div>
+  <div class="col-xs-8 col-md-2 text-right">
+    <%= link_to "編集", edit_shipment_shipment_detail_path(id: shipment_detail.id), class: "btn btn-default" %>
+    <%= link_to "削除", shipment_shipment_detail_path(id: shipment_detail.id), method: :delete, \
+                data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
+  </div>
+</div>
