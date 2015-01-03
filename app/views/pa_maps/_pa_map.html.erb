@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-sm-1"><%= pa_map.auction_id %></div>
+  <div class="col-sm-9"><%= auction_name_help(pa_map.auction_id) %></div>
+  <div class="col-sm-2 text-right">
+    <%= link_to "削除", product_pa_map_path(auction_id: pa_map.auction_id), method: :delete,
+                 remote: true, data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
+  </div>
+</div>

@@ -15,6 +15,7 @@ custom_form_change = (flg) ->
       if flg == 1
         $.ajax
           url: "/ajax/auctions"
+          data: 'ope_flg=0'
           dataType: "json"
           type: "GET"
           success: (data) ->

@@ -11,6 +11,5 @@ class ProductsShowTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get product_path(@product)
     assert_template 'products/show'
-    assert_select 'a[href=?]', products_path, text: '戻る'
   end
 end

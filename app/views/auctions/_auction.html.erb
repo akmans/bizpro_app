@@ -8,7 +8,7 @@
     <%= auction.end_time.nil? ? "-" : auction.end_time.strftime("%F %T") %>
   </div>
   <div class="col-xs-12 col-md-2">
-    <%= ope_flg_name(auction.ope_flg) %><%= custom_percentage(auction.auction_id) %>
+    <%= ope_flg_name_help(auction.ope_flg) %><%= custom_percentage_help(auction.auction_id) %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>

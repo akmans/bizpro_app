@@ -3,12 +3,6 @@
 class ProductsController < ApplicationController
   before_action :logged_in_user
 
-  # new action
-  def new
-    @product = Product.new()
-    form_select_hash(@product.product_id)
-  end
-
   # index action
   def index
     # get product data list with pagination.
@@ -18,15 +12,17 @@ class ProductsController < ApplicationController
   def show
     # get product data by product_id.
     @product = Product.find(params[:product_id])
-    @category_name = (Category.find(@product.category_id).category_name \
-                     if Category.exists?(@product.category_id)) || '-'
-    @brand_name = (Brand.find(@product.brand_id).brand_name \
-                  if Brand.exists?(@product.brand_id)) || '-'
-    @modu_name = (Modu.find(@product.modu_id).modu_name \
-                 if Modu.exists?(@product.modu_id)) || '-'
+    @pa_maps = PaMap.where(product_id: params[:product_id])
+#    debugger
+#    a = 1
   end
 
-  # 作成
+  # new action
+  def new
+    @product = Product.new()
+  end
+
+  # create action
   def create
     @product = Product.new(product_params)
     if @product.save
@@ -34,7 +30,6 @@ class ProductsController < ApplicationController
       # カテゴリー全体
       redirect_to products_path
     else
-      form_select_hash(@product.product_id)
       render 'new'
     end
   end
@@ -42,7 +37,6 @@ class ProductsController < ApplicationController
   # edit action
   def edit
     @product = Product.find(params[:product_id])
-    form_select_hash(@product.brand_id)
   end
 
   # update action
@@ -52,7 +46,6 @@ class ProductsController < ApplicationController
       flash[:success] = "更新完了しました。"
       redirect_to products_path
     else
-      form_select_hash(@product.product_id)
       render 'edit'
     end
   end

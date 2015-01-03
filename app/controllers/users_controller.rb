@@ -3,27 +3,26 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user,   only: [:edit, :update]
 
-  # 新規
-  def new
-    @user = User.new
-  end
-
+  # index action
   def index
     @users = User.paginate(page: params[:page])
   end
 
+  # show action
   def show
     @user = User.find(params[:id])
   end
 
-  def edit
-    @user = User.find(params[:id])
+  # new action
+  def new
+    @user = User.new
   end
 
+  # create action
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
+      log_in_help @user
       flash[:success] = "ようこそ!"
       redirect_to @user
     else
@@ -31,6 +30,12 @@ class UsersController < ApplicationController
     end
   end
 
+  # edit action
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  # update action
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
@@ -41,6 +46,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # destroy action
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "削除しました。"
@@ -48,6 +54,7 @@ class UsersController < ApplicationController
   end
 
   private
+    # user params
     def user_params
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation)
@@ -56,6 +63,6 @@ class UsersController < ApplicationController
     # Confirms the correct user.
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
+      redirect_to(root_url) unless current_user_help?(@user)
     end
 end

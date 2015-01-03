@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   get    '/ajax/modus'              => 'modus#ajax_modus'
   get    '/ajax/auctions'           => 'auctions#ajax_auctions'
+  get    '/ajax/customs'            => 'customs#ajax_customs'
   get    '/ajax/auction_percentage' => 'customs#ajax_auction_percentage'
   get    '/auth/:provider/callback' => 'auctions#callback' #戻り先
   get    '/auth/:provider/logout'   => 'auctions#logout'   #ログアウト
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
+#  post   '/ajax/create_pa_map'      => 'pa_maps#create'
   delete 'logout'  => 'sessions#destroy'
 
   resources :categories, param: :category_id, :except => [:show]
@@ -20,7 +22,9 @@ Rails.application.routes.draw do
   resources :users
   resources :auctions, param: :auction_id
   resources :customs, param: :custom_id
-  resources :products, param: :product_id
+  resources :products, param: :product_id do
+    resources :pa_maps, param: :auction_id, :except => [:edit, :update, :show]
+  end
   resources :shipments, param: :shipment_id do
     resources :shipment_details, param: :id, :except => [:show]
   end

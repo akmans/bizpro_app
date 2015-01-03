@@ -11,22 +11,22 @@
   <div class="form-group grid">
     <div class="col-sm-1 header">処理区分</div>
     <div class="col-sm-2">
-      <%= collection_select :product, :is_domestic, is_domestic_hash, :first, :last, {}, \
+      <%= collection_select :product, :is_domestic, is_domestic_hash_help, :first, :last, {}, \
           {selected: @product.is_domestic, :class => 'form-control form-field'} %>
     </div>
     <div class="col-sm-1 header">カテゴリ</div>
     <div class="col-sm-2">
-      <%= collection_select :product, :category_id, @categories, :first, :last, {}, \
+      <%= collection_select :product, :category_id, category_hash_help, :first, :last, {}, \
           {selected: @product.category_id, :class => 'form-control form-field'} %>
     </div>
     <div class="col-sm-1 header">ブランド</div>
     <div class="col-sm-2">
-      <%= collection_select :product, :brand_id, @brands, :first, :last, {}, \
+      <%= collection_select :product, :brand_id, brand_hash_help, :first, :last, {}, \
           {selected: @product.brand_id, :class => 'form-control form-field'} %>
     </div>
     <div class="col-sm-1 header">モデル</div>
     <div class="col-sm-2">
-      <%= collection_select :product, :modu_id, @modus, :first, :last, {}, \
+      <%= collection_select :product, :modu_id, modu_hash_help, :first, :last, {}, \
           {selected: @product.modu_id, :class => 'form-control form-field'} %>
     </div>
   </div>

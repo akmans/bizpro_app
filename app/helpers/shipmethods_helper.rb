@@ -12,7 +12,16 @@ module ShipmethodsHelper
   end
 
   # shipmethod name help
-  def shipmethod_name_help(key)
-    (Shipmethod.find(key).shipmethod_name if Shipmethod.exists?(key)) || '-'
+  def shipmethod_name_help(shipmethod_id)
+    (Shipmethod.find(shipmethod_id).shipmethod_name if Shipmethod.exists?(shipmethod_id)) || '-'
+  end
+
+  # shipmethod hash help
+  def shipmethod_hash_help
+    shipmethods = {"" => "(空白)"}
+    Shipmethod.all.each do |ss| 
+      shipmethods.merge! ss.as_hash
+    end
+    return shipmethods
   end
 end

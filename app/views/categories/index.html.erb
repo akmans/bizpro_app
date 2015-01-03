@@ -1,12 +1,15 @@
 <% provide(:title, '一覧,カテゴリー,マスタ管理') %>
 <h3>カテゴリー一覧</h3>
-<%= will_paginate %>
 <div class="row header">
   <div class="col-xs-2 col-md-1">ID</div>
   <div class="col-xs-10 col-md-8">名称</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-md-3 text-right"><%= link_to "新規", new_category_path, class: "btn btn-default" %></div>
+  <div class="col-md-3 text-right">
+    <%= link_to "新規", new_category_path, remote: true, class: "btn btn-default" %>
+  </div>
 </div>
+<div class="row" id="category-form" style="display:none;"></div>
+<div id="categories">
 <%= render @categories %>
-<%= will_paginate %>
+</div>

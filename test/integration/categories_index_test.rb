@@ -11,14 +11,13 @@ class CategoriesIndexTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get categories_path
     assert_template 'categories/index'
-    assert_select 'div.pagination'
-    assert_select 'a[href=?]', new_category_path, text: '新規'
-    Category.paginate(page: 1, per_page: 15).each do |category|
-      assert_select 'a[href=?]', edit_category_path(category.category_id), text: '編集'
-      assert_select 'a[href=?]', category_path(category.category_id), text: '削除', method: :delete
+    assert_select 'a[href=?]', new_category_path, remote: true, text: '新規'
+    Category.all.each do |category|
+      assert_select 'a[href=?]', edit_category_path(category.category_id), remote: true, text: '編集'
+      assert_select 'a[href=?]', category_path(category.category_id), remote: true, text: '削除', method: :delete
     end
     assert_difference 'Category.count', -1 do
-      delete category_path(@category)
+      xhr :delete, category_path(@category)
     end
   end
 end

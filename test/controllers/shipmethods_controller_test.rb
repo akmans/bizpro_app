@@ -43,13 +43,12 @@ class ShipmethodsControllerTest < ActionController::TestCase
                    { controller: "shipmethods", action: "destroy", shipmethod_id: "#{@shipmethod.shipmethod_id}" })
   end
 
-  
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)
     get :index
     assert_response :success
-    assert_select 'title', full_title("一覧,発送方法,マスタ管理")
+    assert_select 'title', full_title_help("一覧,発送方法,マスタ管理")
     assert_not_nil assigns(:shipmethods)
   end
   
@@ -61,14 +60,13 @@ class ShipmethodsControllerTest < ActionController::TestCase
   # test action new
   test "should get new when logged in" do
     log_in_as(@user)
-    get :new
+    xhr :get, :new
     assert_response :success
-    assert_select 'title', full_title("新規,発送方法,マスタ管理")
     assert_not_nil assigns(:shipmethod)
   end
   
   test "should redirect new when not logged in" do
-    get :new
+    xhr :get, :new
     assert_redirected_to login_url
   end
 
@@ -76,9 +74,10 @@ class ShipmethodsControllerTest < ActionController::TestCase
   test "should create shipmethod when logged in" do
     log_in_as(@user)
     assert_difference 'Shipmethod.count', 1 do
-      post :create, shipmethod: { shipmethod_type: 1, shipmethod_name: "Shipmethod Name" }
+      xhr :post, :create, shipmethod: { shipmethod_type: 1, shipmethod_name: "Shipmethod Name" }
     end
-    assert_redirected_to shipmethods_path
+    assert_not_nil assigns(:shipmethods)
+    assert_not flash.empty?
   end
 
   test "should redirect create when not logged in" do
@@ -91,9 +90,8 @@ class ShipmethodsControllerTest < ActionController::TestCase
   # test action edit
   test "should get edit when logged in" do
     log_in_as(@user)
-    get :edit, shipmethod_id: @shipmethod
+    xhr :get, :edit, shipmethod_id: @shipmethod
     assert_response :success
-    assert_select 'title', full_title("編集,発送方法,マスタ管理")
     assert_not_nil assigns(:shipmethod)
   end
 
@@ -107,15 +105,16 @@ class ShipmethodsControllerTest < ActionController::TestCase
   test "should update shipmethod when logged in" do
     log_in_as(@user)
     shipmethod_name = "てすと"
-    patch :update, shipmethod_id: @shipmethod, shipmethod: { shipmethod_name: shipmethod_name }
+    xhr :patch, :update, shipmethod_id: @shipmethod, shipmethod: { shipmethod_name: shipmethod_name }
     @shipmethod.reload
     assert_equal @shipmethod.shipmethod_name, shipmethod_name
-    assert_redirected_to shipmethods_path
+    assert_not_nil assigns(:shipmethods)
+    assert_not flash.empty?
   end
 
   test "should redirect update when not logged in" do
     shipmethod_name = "てすと"
-    patch :update, shipmethod_id: @shipmethod, shipmethod: { shipmethod_name: shipmethod_name }
+    xhr :patch, :update, shipmethod_id: @shipmethod, shipmethod: { shipmethod_name: shipmethod_name }
     assert_not flash.empty?
     assert_redirected_to login_url
   end
@@ -124,14 +123,15 @@ class ShipmethodsControllerTest < ActionController::TestCase
   test "should destroy shipmethod when logged in" do
     log_in_as(@user)
     assert_difference 'Shipmethod.count', -1 do
-      delete :destroy, shipmethod_id: @shipmethod
+      xhr :delete, :destroy, shipmethod_id: @shipmethod
     end
-    assert_redirected_to shipmethods_path
+    assert_not_nil assigns(:shipmethods)
+    assert_not flash.empty?
   end
 
   test "should redirect destroy when not logged in" do
     assert_no_difference 'Shipmethod.count' do
-      delete :destroy, shipmethod_id: @shipmethod
+      xhr :delete, :destroy, shipmethod_id: @shipmethod
     end
     assert_redirected_to login_url
   end

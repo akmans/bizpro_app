@@ -48,7 +48,7 @@ class BrandsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :index
     assert_response :success
-    assert_select 'title', full_title('一覧,ブランド,マスタ管理')
+    assert_select 'title', full_title_help('一覧,ブランド,マスタ管理')
     assert_not_nil assigns(:brands)
   end
   
@@ -62,7 +62,7 @@ class BrandsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :new
     assert_response :success
-    assert_select 'title', full_title('新規,ブランド,マスタ管理')
+    assert_select 'title', full_title_help('新規,ブランド,マスタ管理')
     assert_not_nil assigns(:brand)
   end
   
@@ -93,7 +93,7 @@ class BrandsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :edit, brand_id: @brand
     assert_response :success
-    assert_select 'title', full_title('編集,ブランド,マスタ管理')
+    assert_select 'title', full_title_help('編集,ブランド,マスタ管理')
     assert_not_nil assigns(:brand)
   end
 

@@ -9,24 +9,21 @@ class ShipmethodsEditTest < ActionDispatch::IntegrationTest
 
   test "unsuccessful edit" do
     log_in_as(@user)
-    get edit_shipmethod_path(@shipmethod)
+    xhr :get, edit_shipmethod_path(@shipmethod)
     assert_template 'shipmethods/edit'
-    patch shipmethod_path(@shipmethod), shipmethod: { #shipmethod_id:  "",
-                                                      shipmethod_name: ""}
+    xhr :patch, shipmethod_path(@shipmethod), shipmethod: { shipmethod_type: 1, shipmethod_name: ""}
     assert_template 'shipmethods/edit'
   end
   
   test "successful edit" do
     log_in_as(@user)
-    get edit_shipmethod_path(@shipmethod)
+    xhr :get, edit_shipmethod_path(@shipmethod)
     assert_template 'shipmethods/edit'
     shipmethod_name = "てすと"
-    patch shipmethod_path(@shipmethod), shipmethod: { #shipmethod_id:  "",
-                                        shipmethod_type: 1,
-                                       shipmethod_name: shipmethod_name}
+    xhr :patch, shipmethod_path(@shipmethod), shipmethod: { shipmethod_type: 1, shipmethod_name: shipmethod_name}
     assert_not flash.empty?
-    assert_redirected_to shipmethods_path
     @shipmethod.reload
     assert_equal @shipmethod.shipmethod_name, shipmethod_name
+    assert_not_nil assigns(:shipmethods)
   end
 end

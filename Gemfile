@@ -11,6 +11,7 @@ gem 'omniauth-yahoojp', '0.1.1'
 gem 'faraday', '0.9.0'
 gem 'faraday_middleware', '~> 0.9.1'
 gem 'arel', '6.0.0.beta2'
+gem 'responders', '~> 2.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '5.0.0.beta1'
 # Use Uglifier as compressor for JavaScript assets

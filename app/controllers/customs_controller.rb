@@ -8,6 +8,7 @@ class CustomsController < ApplicationController
     @customs = Custom.paginate(page: params[:page], :per_page => 15)
   end
 
+  # show action
   def show
     # get custom data by custom_id.
     @custom = Custom.find(params[:custom_id])
@@ -16,9 +17,9 @@ class CustomsController < ApplicationController
   # new action
   def new
     @custom = Custom.new
-    @auctions = auctions_hash
   end
 
+  # create action
   def create
     @custom = Custom.new(custom_params)
     @custom.auction_id = nil if @custom.is_auction == 0
@@ -28,7 +29,6 @@ class CustomsController < ApplicationController
       # カテゴリー全体
       redirect_to customs_path
     else
-      @auctions = auctions_hash
       render 'new'
     end
   end
@@ -36,7 +36,6 @@ class CustomsController < ApplicationController
   # edit action
   def edit
     @custom = Custom.find(params[:custom_id])
-    @auctions = auctions_hash
   end
   
   # update action
@@ -48,7 +47,6 @@ class CustomsController < ApplicationController
       flash[:success] = "更新完了しました。"
       redirect_to customs_path
     else
-      @auctions = auctions_hash
       render 'edit'
     end
   end
@@ -60,6 +58,12 @@ class CustomsController < ApplicationController
     redirect_to customs_path
   end
   
+  # ajax customs action
+  def ajax_customs
+    # get custom data.
+    render :json => customs_hash_help
+  end
+  
   # ajax auction percentage
   def ajax_auction_percentage
     render :json => auction_percentage_hash(params[:auction_id])
@@ -69,13 +73,14 @@ class CustomsController < ApplicationController
     # strong parameters method.
     def custom_params
       params.require(:custom)
-            .permit(:custom_name,
-                    :is_auction,
-                    :auction_id,
-                    :percentage,
-                    :net_cost,
-                    :tax_cost,
-                    :other_cost,
-                    :memo)
+            .permit(
+              :custom_name,
+              :is_auction,
+              :auction_id,
+              :percentage,
+              :net_cost,
+              :tax_cost,
+              :other_cost,
+              :memo)
     end
 end

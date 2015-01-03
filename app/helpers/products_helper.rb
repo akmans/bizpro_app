@@ -1,17 +1,18 @@
 #encoding: utf-8
 module ProductsHelper
 
-  # is_domestic_hash
-  def is_domestic_hash
+  # return is domestic hash
+  def is_domestic_hash_help
     {"0" => "海外", "1" => "国内"}
   end
 
-  # is_domestic_name
-  def is_domestic_name(key)
-    key.blank? ? "-" : is_domestic_hash[key.to_s]
+  # return is domestic name by key
+  def is_domestic_name_help(key)
+    key.blank? ? "-" : is_domestic_hash_help[key.to_s]
   end
 
-  def products_hash
+  # return products hash
+  def products_hash_help
     p_hash = {"" => "(空白)"}
     Product.all.each do |product|
       akey = product.product_id

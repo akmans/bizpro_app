@@ -21,7 +21,7 @@ class AuctionsNewTest < ActionDispatch::IntegrationTest
 
   def teardown
     OmniAuth.config.mock_auth[:yahoojp] = nil
-    yahoojp_log_out if yahoojp_logged_in?
+    yahoojp_log_out_help if yahoojp_logged_in_help?
   end
 
   test "should show yahoojp login button if not log in yahoojp" do

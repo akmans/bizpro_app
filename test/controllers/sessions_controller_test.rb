@@ -1,3 +1,4 @@
+#encoding: utf-8
 require 'test_helper'
 
 class SessionsControllerTest < ActionController::TestCase
@@ -25,6 +26,7 @@ class SessionsControllerTest < ActionController::TestCase
   test "should get new" do
     get :new
     assert_response :success
+    assert_select 'title', full_title_help('ログイン')
   end
 
   # test create action

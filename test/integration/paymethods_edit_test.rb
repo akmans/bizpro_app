@@ -9,22 +9,19 @@ class PaymethodsEditTest < ActionDispatch::IntegrationTest
 
   test "unsuccessful edit" do
     log_in_as(@user)
-    get edit_paymethod_path(@paymethod)
+    xhr :get, edit_paymethod_path(@paymethod)
     assert_template 'paymethods/edit'
-    patch paymethod_path(@paymethod), paymethod: { #paymethod_id:  "",
-                                       paymethod_name: ""}
+    xhr :patch, paymethod_path(@paymethod), paymethod: { paymethod_name: ""}
     assert_template 'paymethods/edit'
   end
   
   test "successful edit" do
     log_in_as(@user)
-    get edit_paymethod_path(@paymethod)
+    xhr :get, edit_paymethod_path(@paymethod)
     assert_template 'paymethods/edit'
     paymethod_name = "てすと"
-    patch paymethod_path(@paymethod), paymethod: { #paymethod_id:  "",
-                                       paymethod_name: paymethod_name}
+    xhr :patch, paymethod_path(@paymethod), paymethod: { paymethod_name: paymethod_name}
     assert_not flash.empty?
-    assert_redirected_to paymethods_path
     @paymethod.reload
     assert_equal @paymethod.paymethod_name, paymethod_name
   end

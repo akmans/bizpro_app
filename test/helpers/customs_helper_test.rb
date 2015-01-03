@@ -8,7 +8,7 @@ class CustomsHelperTest < ActionView::TestCase
     @auction = auctions(:one)
   end
 
-  test "test percentage hash" do
+  test "test percentage hash help" do
     expected = {
       ""   => "(空白)",
       "10" => "１０％",
@@ -21,10 +21,10 @@ class CustomsHelperTest < ActionView::TestCase
       "80" => "８０％",
       "90" => "９０％"
     }
-    assert_equal expected, percentage_hash
+    assert_equal expected, percentage_hash_help
   end
 
-  test "test auction percentage hash" do
+  test "test auction percentage hash help" do
     expected = {
       ""   => "(空白)",
       "10" => "１０％",
@@ -32,25 +32,25 @@ class CustomsHelperTest < ActionView::TestCase
       "30" => "３０％",
       "40" => "４０％",
       "50" => "５０％"}
-    assert_equal expected, auction_percentage_hash(@custom2.auction_id)
+    assert_equal expected, auction_percentage_hash_help(@custom2.auction_id)
   end
 
-  test "test percentage name" do
-    assert_equal "１０％", percentage_name(10)
-    assert_equal "２０％", percentage_name(20)
-    assert_equal "３０％", percentage_name(30)
-    assert_equal "４０％", percentage_name(40)
-    assert_equal "５０％", percentage_name(50)
-    assert_equal "６０％", percentage_name(60)
-    assert_equal "７０％", percentage_name(70)
-    assert_equal "８０％", percentage_name(80)
-    assert_equal "９０％", percentage_name(90)
+  test "test percentage name help" do
+    assert_equal "１０％", percentage_name_help(10)
+    assert_equal "２０％", percentage_name_help(20)
+    assert_equal "３０％", percentage_name_help(30)
+    assert_equal "４０％", percentage_name_help(40)
+    assert_equal "５０％", percentage_name_help(50)
+    assert_equal "６０％", percentage_name_help(60)
+    assert_equal "７０％", percentage_name_help(70)
+    assert_equal "８０％", percentage_name_help(80)
+    assert_equal "９０％", percentage_name_help(90)
   end
 
   test "test is auction name" do
-    assert_equal "-", is_auction_name(nil)
-    assert_equal "-", is_auction_name(0)
-    assert_equal "オークション品", is_auction_name(1)
+    assert_equal "-", is_auction_name_help(nil)
+    assert_equal "-", is_auction_name_help(0)
+    assert_equal "オークション品", is_auction_name_help(1)
   end
 
   test "test custom total cost" do
@@ -58,12 +58,12 @@ class CustomsHelperTest < ActionView::TestCase
     @custom.net_cost = 1000
     @custom.tax_cost = 100
     @custom.other_cost = 10
-    assert_equal 1110, custom_total_cost
+    assert_equal 1110, custom_total_cost_help
     @custom.is_auction = nil
-    assert_equal 0, custom_total_cost
+    assert_equal 0, custom_total_cost_help
     @custom.is_auction = 1
     @custom.auction_id = "One1"
     @custom.percentage = 100
-    assert_equal 123456, custom_total_cost
+    assert_equal 123456, custom_total_cost_help
   end
 end

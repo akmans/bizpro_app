@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-static" role="navigation">
   <div class="container">
     <%= link_to "オーディオPRO", root_path, id: "logo", class: "navbar-brand" %>
-    <% if logged_in? %>
+    <% if logged_in_help? %>
     <button class="navbar-toggle collapsed" type="button"
             data-toggle="collapse" data-target="#navbar-main">
       <span class="sr-only">Toggle navigation</span>
@@ -27,7 +27,7 @@
             <li><%= link_to "発送方法", shipmethods_path %></li>
             <li><%= link_to "ユーザー", users_path %></li>
             <li class="divider"></li>
-            <li><%= link_to "アカウント情報変更", edit_user_path(current_user) %></li>
+            <li><%= link_to "アカウント情報変更", edit_user_path(current_user_help) %></li>
             <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
           </ul>
         </li>

@@ -22,7 +22,7 @@ class AuctionsControllerTest < ActionController::TestCase
 
   def teardown
     OmniAuth.config.mock_auth[:yahoojp] = nil
-    yahoojp_log_out if yahoojp_logged_in?
+    yahoojp_log_out if yahoojp_logged_in_help?
   end
 
   # test routes
@@ -86,7 +86,7 @@ class AuctionsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :index
     assert_response :success
-    assert_select 'title', full_title('一覧,オークション')
+    assert_select 'title', full_title_help('一覧,オークション')
     assert_not_nil assigns(:auctions)
   end
   
@@ -100,13 +100,8 @@ class AuctionsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :show, auction_id: @auction
     assert_response :success
-    assert_select 'title', full_title('表示,オークション')
+    assert_select 'title', full_title_help('表示,オークション')
     assert_not_nil assigns(:auction)
-    assert_equal "First Name", assigns(:category_name)
-    assert_equal "First Name", assigns(:brand_name)
-    assert_equal "First Name", assigns(:modu_name)
-    assert_equal "First Name", assigns(:shipmethod_name)
-    assert_equal "First Name", assigns(:paymethod_name)
   end
   
   test "should redirect show when not logged in" do
@@ -119,7 +114,7 @@ class AuctionsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :new
     assert_response :success
-    assert_select 'title', full_title('ロード,オークション')
+    assert_select 'title', full_title_help('ロード,オークション')
     assert_nil assigns(:auction)
   end
  
@@ -133,13 +128,8 @@ class AuctionsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :edit, auction_id: @auction
     assert_response :success
-    assert_select 'title', full_title('編集,オークション')
+    assert_select 'title', full_title_help('編集,オークション')
     assert_not_nil assigns(:auction)
-    assert_not_nil assigns(:categories)
-    assert_not_nil assigns(:brands)
-    assert_not_nil assigns(:modus)
-    assert_not_nil assigns(:paymethods)
-    assert_not_nil assigns(:shipmethods)
   end
 
   test "should redirect edit when not logged in" do

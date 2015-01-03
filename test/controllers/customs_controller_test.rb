@@ -53,7 +53,7 @@ class CustomsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :index
     assert_response :success
-    assert_select 'title', full_title('一覧,カスタム')
+    assert_select 'title', full_title_help('一覧,カスタム')
     assert_not_nil assigns(:customs)
   end
   
@@ -67,7 +67,7 @@ class CustomsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :new
     assert_response :success
-    assert_select 'title', full_title('新規,カスタム')
+    assert_select 'title', full_title_help('新規,カスタム')
     assert_not_nil assigns(:custom)
   end
  
@@ -99,7 +99,7 @@ class CustomsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :edit, custom_id: @custom
     assert_response :success
-    assert_select 'title', full_title('編集,カスタム')
+    assert_select 'title', full_title_help('編集,カスタム')
     assert_not_nil assigns(:custom)
   end
 

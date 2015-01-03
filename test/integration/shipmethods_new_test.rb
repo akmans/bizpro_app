@@ -8,22 +8,19 @@ class ShipmethodsNewTest < ActionDispatch::IntegrationTest
 
   test "unsuccessful create" do
     log_in_as(@user)
-    get new_shipmethod_path
+    xhr :get, new_shipmethod_path
     assert_template 'shipmethods/new'
-    post shipmethods_path, shipmethod: { #shipmethod_id:  "",
-                               shipmethod_name: ""}
+    xhr :post, shipmethods_path, shipmethod: { shipmethod_type: 0, shipmethod_name: ""}
     assert_template 'shipmethods/new'
   end
   
   test "successful create" do
     log_in_as(@user)
-    get new_shipmethod_path
+    xhr :get, new_shipmethod_path
     assert_template 'shipmethods/new'
     shipmethod_name = "てすと"
-    post shipmethods_path, shipmethod: { #shipmethod_id:  "",
-                                        shipmethod_type: 1,
-                                        shipmethod_name: shipmethod_name}
+    xhr :post, shipmethods_path, shipmethod: { shipmethod_type: 1, shipmethod_name: shipmethod_name}
     assert_not flash.empty?
-    assert_redirected_to shipmethods_path
+    assert_not_nil assigns(:shipmethods)
   end
 end

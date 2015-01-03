@@ -14,16 +14,6 @@ class AuctionsController < ApplicationController
   def show
     # get auction data by auction_id.
     @auction = Auction.find(params[:auction_id])
-    @category_name = (Category.find(@auction.category_id).category_name \
-                     if Category.exists?(@auction.category_id)) || '-'
-    @brand_name = (Brand.find(@auction.brand_id).brand_name \
-                  if Brand.exists?(@auction.brand_id)) || '-'
-    @modu_name = (Modu.find(@auction.modu_id).modu_name \
-                 if Modu.exists?(@auction.modu_id)) || '-'
-    @shipmethod_name = (Shipmethod.find(@auction.shipmethod_id).shipmethod_name \
-                 if Shipmethod.exists?(@auction.shipmethod_id)) || '-'
-    @paymethod_name = (Paymethod.find(@auction.paymethod_id).paymethod_name \
-                 if Paymethod.exists?(@auction.paymethod_id)) || '-'
   end
   
   # new action
@@ -36,7 +26,6 @@ class AuctionsController < ApplicationController
   # edit action
   def edit
     @auction = Auction.find(params[:auction_id])
-    form_select_hash(@auction.brand_id)
   end
   
   # update action
@@ -56,7 +45,6 @@ class AuctionsController < ApplicationController
       flash[:success] = "更新完了しました。"
       redirect_to auctions_path
     else
-      form_select_hash(@auction.brand_id)
       render 'edit'
     end
   end
@@ -108,20 +96,20 @@ class AuctionsController < ApplicationController
   # callback action.
   def callback
     auth = request.env['omniauth.auth']
-    yahoojp_log_in auth
+    yahoojp_log_in_help auth
     render 'new'
   end
   
   # logout action.
   def logout
-    yahoojp_log_out
+    yahoojp_log_out_help
     render 'new'
   end
   
   # ajax auctions action
   def ajax_auctions
     # get auction data.
-    render :json => auctions_hash
+    render :json => auctions_hash_help(params[:ope_flg])
   end
   
   private

@@ -49,7 +49,7 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :index, shipment_shipment_id: @shipment.shipment_id
     assert_response :success
-    assert_select 'title', full_title('一覧,発送詳細')
+    assert_select 'title', full_title_help('一覧,発送詳細')
     assert_not_nil assigns(:shipment_details)
   end
   
@@ -63,7 +63,7 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :new, shipment_shipment_id: @shipment.shipment_id
     assert_response :success
-    assert_select 'title', full_title('新規,発送詳細')
+    assert_select 'title', full_title_help('新規,発送詳細')
     assert_not_nil assigns(:shipment_detail)
   end
   
@@ -103,7 +103,7 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :edit, shipment_shipment_id: @shipment.shipment_id, id: @shipment_detail
     assert_response :success
-    assert_select 'title', full_title('編集,発送詳細')
+    assert_select 'title', full_title_help('編集,発送詳細')
     assert_not_nil assigns(:shipment_detail)
   end
 

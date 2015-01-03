@@ -12,9 +12,9 @@
 
   <div class="form-group grid">
     <div class="col-sm-1 header">落札価格</div>
-    <div class="col-sm-2 text-right"><%= commas(@auction.price.to_i) %>円</div>
+    <div class="col-sm-2 text-right"><%= commas_help(@auction.price.to_i) %>円</div>
     <div class="col-sm-1 header">消費税率</div>
-    <div class="col-sm-2"><%= tax_rate_name(@auction.tax_rate) %></div>
+    <div class="col-sm-2"><%= tax_rate_name_help(@auction.tax_rate) %></div>
     <div class="col-sm-1 header">出品者ID</div>
     <div class="col-sm-2"><%= @auction.seller_id %></div>
     <div class="col-sm-1 header">終了日時</div>
@@ -23,36 +23,36 @@
 
   <div class="form-group grid">
     <div class="col-sm-1 header">手数料</div>
-    <div class="col-sm-2 text-right"><%= commas(@auction.payment_cost.to_i) %>円</div>
+    <div class="col-sm-2 text-right"><%= commas_help(@auction.payment_cost.to_i) %>円</div>
     <div class="col-sm-1 header">カテゴリ</div>
-    <div class="col-sm-2"><%= @category_name %></div>
+    <div class="col-sm-2"><%= category_name_help(@auction.category_id) %></div>
     <div class="col-sm-1 header">ブランド</div>
-    <div class="col-sm-2"><%= @brand_name %></div>
+    <div class="col-sm-2"><%= brand_name_help(@auction.brand_id) %></div>
     <div class="col-sm-1 header">モデル</div>
-    <div class="col-sm-2"><%= @modu_name %></div>
+    <div class="col-sm-2"><%= modu_name_help(@auction.modu_id) %></div>
   </div>
 
   <div class="form-group grid">
     <div class="col-sm-1 header">送料額</div>
-    <div class="col-sm-2 text-right"><%= commas(@auction.shipment_cost.to_i) %>円</div>
+    <div class="col-sm-2 text-right"><%= commas_help(@auction.shipment_cost.to_i) %>円</div>
     <div class="col-sm-1 header">処置区分</div>
-    <div class="col-sm-2"><%= ope_flg_name(@auction.ope_flg) %></div>
+    <div class="col-sm-2"><%= ope_flg_name_help(@auction.ope_flg) %></div>
     <div class="col-sm-1 header">買売</div>
-    <div class="col-sm-2"><%= sold_type_name(@auction.sold_flg) %></div>
+    <div class="col-sm-2"><%= sold_type_name_help(@auction.sold_flg) %></div>
     <div class="col-sm-1 header">支払方法</div>
-    <div class="col-sm-2"><%= @paymethod_name %></div>
+    <div class="col-sm-2"><%= paymethod_name_help(@auction.paymethod_id) %></div>
   </div>
 
   <div class="form-group grid">
     <div class="col-sm-1 header">総額</div>
-    <div class="col-sm-2 text-right"><%= commas(auction_total_cost.to_i) %>円</div>
+    <div class="col-sm-2 text-right"><%= commas_help(auction_total_cost_help.to_i) %>円</div>
     <div class="col-sm-1 header">送料払方</div>
-    <div class="col-sm-2"><%= ship_type_name(@auction.ship_type) %></div>
+    <div class="col-sm-2"><%= ship_type_name_help(@auction.ship_type) %></div>
     <div class="col-sm-1 header">発送方法</div>
-    <div class="col-sm-2"><%= @shipmethod_name %></div>
+    <div class="col-sm-2"><%= shipmethod_name_help(@auction.shipmethod_id)%></div>
     <div class="col-sm-1 header">問合番号</div>
     <div class="col-sm-2">
-      <%= @auction.shipment_code.blank? ? "-" : hiffen(@auction.shipment_code) %>
+      <%= @auction.shipment_code.blank? ? "-" : hiffen_help(@auction.shipment_code) %>
     </div>
   </div>
 

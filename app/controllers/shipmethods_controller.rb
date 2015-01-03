@@ -1,61 +1,53 @@
 # encoding: utf-8
 class ShipmethodsController < ApplicationController
   before_action :logged_in_user
+  before_action :set_shipmethods, only: [:edit, :update, :destroy]
+  before_action :all_shipmethods, only: [:index, :create, :update, :destroy]
+  respond_to :html, :js
 
-  # 新規
+  # new action
   def new
-    # 新フォーム用
+    # new instance
     @shipmethod = Shipmethod.new
   end
 
-  def index
-    # カテゴリー全体
-    @shipmethods = Shipmethod.paginate(page: params[:page], :per_page => 15)
-  end
-
-#  # 表示
-#  def show
-#    @shipmethod = Shipmethod.find(params[:shipmethod_id])
-#  end
-
-  # 作成
+  # create action
   def create
     @shipmethod = Shipmethod.new(shipmethod_params)
     if @shipmethod.save
-      flash[:success] = "作成完了しました。"
-      # カテゴリー全体
-      redirect_to shipmethods_path
+      flash.now[:success] = "作成完了しました。"
     else
       render 'new'
     end
   end
 
-  # 編集
-  def edit
-    @shipmethod = Shipmethod.find(params[:shipmethod_id])
-  end
-
-  # 更新
+  # update action
   def update
-    @shipmethod = Shipmethod.find(params[:shipmethod_id])
     if @shipmethod.update_attributes(shipmethod_params)
-      flash[:success] = "更新完了しました。"
-      redirect_to shipmethods_path
+      flash.now[:success] = "更新完了しました。"
     else
       render 'edit'
     end
   end
 
-  # 削除
+  # destroy action
   def destroy
-    Shipmethod.find(params[:shipmethod_id]).destroy
-    flash[:success] = "削除完了しました。"
-    redirect_to shipmethods_path
+    @shipmethod.destroy
+    flash.now[:success] = "削除完了しました。"
   end
 
-  # プライベート関数
   private
-    # パラメーター関数
+    # all shipmethods
+    def all_shipmethods
+      @shipmethods = Shipmethod.all
+    end
+
+    # set shipmethods
+    def set_shipmethods
+      @shipmethod = Shipmethod.find(params[:shipmethod_id])
+    end
+
+    # shipmethod params
     def shipmethod_params
       params.require(:shipmethod).permit(:shipmethod_type, :shipmethod_name)
     end

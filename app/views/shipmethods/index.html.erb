@@ -1,6 +1,5 @@
 <% provide(:title, '一覧,発送方法,マスタ管理') %>
 <h3>発送方法一覧</h3>
-<%= will_paginate %>
 <div class="row header">
   <div class="col-xs-2 col-md-1">ID</div>
   <div class="col-xs-10 col-md-7">名称</div>
@@ -8,8 +7,10 @@
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-4 col-md-2">タイプ</div>
   <div class="col-xs-8 col-md-2 text-right">
-    <%= link_to "新規", new_shipmethod_path, class: "btn btn-default" %>
+    <%= link_to "新規", new_shipmethod_path, remote: true, class: "btn btn-default" %>
   </div>
 </div>
+<div class="row" id="shipmethod-form" style="display:none;"></div>
+<div id="shipmethods">
 <%= render @shipmethods %>
-<%= will_paginate %>
+</div>

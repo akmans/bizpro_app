@@ -4,9 +4,9 @@ one:
   product_id: One1
   product_name: MyString
   is_domestic: 0
-  category_id: ZZZ1
-  brand_id: ZZZ1
-  modu_id: ZZZZZZ1
+  category_id: One1
+  brand_id: One1
+  modu_id: OneOne1
   created_at: <%= Time.zone.now %>
 
 two:

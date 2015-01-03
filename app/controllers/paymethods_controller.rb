@@ -1,17 +1,9 @@
 # encoding: utf-8
 class PaymethodsController < ApplicationController
   before_action :logged_in_user
-  
-  # index action
-  def index
-    # get all paymethod data with pagination
-    @paymethods = Paymethod.paginate(page: params[:page], :per_page => 15)
-  end
-  
-#  # show action
-#  def show
-#    @paymethod = Paymethod.find(params[:paymethod_id])
-#  end
+  before_action :set_paymethods, only: [:edit, :update, :destroy]
+  before_action :all_paymethods, only: [:index, :create, :update, :destroy]
+  respond_to :html, :js
   
   # new action
   def new
@@ -23,25 +15,16 @@ class PaymethodsController < ApplicationController
   def create
     @paymethod = Paymethod.new(paymethod_params)
     if @paymethod.save
-      flash[:success] = "作成完了しました。"
-      # redirct to paymethod list
-      redirect_to paymethods_path
+      flash.now[:success] = "作成完了しました。"
     else
       render 'new'
     end
   end
-  
-  # edit action
-  def edit
-    @paymethod = Paymethod.find(params[:paymethod_id])
-  end
-  
+
   # update action
   def update
-    @paymethod = Paymethod.find(params[:paymethod_id])
     if @paymethod.update_attributes(paymethod_params)
-      flash[:success] = "更新完了しました。"
-      redirect_to paymethods_path
+      flash.now[:success] = "更新完了しました。"
     else
       render 'edit'
     end
@@ -49,12 +32,21 @@ class PaymethodsController < ApplicationController
   
   # destory action
   def destroy
-    Paymethod.find(params[:paymethod_id]).destroy
-    flash[:success] = "削除完了しました。"
-    redirect_to paymethods_path
+    @paymethod.destroy
+    flash.now[:success] = "削除完了しました。"
   end
   
   private
+    # all paymethods
+    def all_paymethods
+      @paymethods = Paymethod.all
+    end
+
+    # set paymethods
+    def set_paymethods
+      @paymethod = Paymethod.find(params[:paymethod_id])
+    end
+
     # paymethod params
     def paymethod_params
       params.require(:paymethod).permit(:paymethod_name)

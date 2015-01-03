@@ -18,13 +18,13 @@
     </div>
     <div class="col-sm-1 header">オーク名</div>
     <div class="col-sm-5">
-      <%= collection_select :custom, :auction_id, @auctions, :first, :last, {}, \
+      <%= collection_select :custom, :auction_id, auctions_hash_help(0), :first, :last, {}, \
           {selected: @custom.auction_id, :class => 'form-control form-field'} %>
     </div>
     <div class="col-sm-1 header">比率</div>
     <div class="col-sm-2">
       <%= collection_select :custom, :percentage, \
-          auction_percentage_hash(@custom.auction_id), :first, :last, {}, \
+          auction_percentage_hash_help(@custom.auction_id), :first, :last, {}, \
           {selected: @custom.percentage, :class => 'form-control form-field'} %>
     </div>
   </div>
@@ -46,7 +46,7 @@
           class: 'form-control form-field text-right' %>
     </div>
     <div class="col-sm-1 header">総額</div>
-    <div class="col-sm-2"><%= custom_total_cost %>円</div>
+    <div class="col-sm-2"><%= custom_total_cost_help %>円</div>
   </div>
 
   <div class="form-group row-fluid grid row_last">

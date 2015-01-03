@@ -9,22 +9,20 @@ class CategoriesEditTest < ActionDispatch::IntegrationTest
 
   test "unsuccessful edit" do
     log_in_as(@user)
-    get edit_category_path(@category)
+    xhr :get, edit_category_path(@category)
     assert_template 'categories/edit'
-    patch category_path(@category), category: { #category_id:  "",
-                                                category_name: ""}
+    xhr :patch, category_path(@category), category: { category_name: ""}
     assert_template 'categories/edit'
   end
   
   test "successful edit" do
     log_in_as(@user)
-    get edit_category_path(@category)
+    xhr :get, edit_category_path(@category)
     assert_template 'categories/edit'
     category_name = "てすと"
-    patch category_path(@category), category: { #category_id:  "",
-                                                category_name: category_name}
+    xhr :patch, category_path(@category), category: { category_name: category_name}
     assert_not flash.empty?
-    assert_redirected_to categories_path
+    assert_not_nil assigns(:categories)
     @category.reload
     assert_equal @category.category_name, category_name
   end

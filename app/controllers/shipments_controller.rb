@@ -3,12 +3,6 @@
 class ShipmentsController < ApplicationController
   before_action :logged_in_user
 
-  # new action
-  def new
-    @shipment = Shipment.new
-    shipmethod_hash
-  end
-
   # index action
   def index
     # get shipment data list with pagination.
@@ -19,6 +13,12 @@ class ShipmentsController < ApplicationController
   def show
     # get shipment data by shipment_id.
     @shipment = Shipment.find(params[:shipment_id])
+  end
+
+  # new action
+  def new
+    @shipment = Shipment.new
+    shipmethod_hash
   end
 
   # create action
@@ -52,7 +52,7 @@ class ShipmentsController < ApplicationController
     end
   end
 
-  # delete action
+  # destroy action
   def destroy
     Shipment.find(params[:shipment_id]).destroy
     flash[:success] = "削除完了しました。"

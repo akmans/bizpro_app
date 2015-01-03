@@ -48,12 +48,27 @@ class ProductsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :index
     assert_response :success
-    assert_select 'title', full_title('一覧,商品')
+    assert_select 'title', full_title_help('一覧,商品')
     assert_not_nil assigns(:products)
   end
   
   test "should redirect index when not logged in" do
     get :index
+    assert_redirected_to login_url
+  end
+
+  # test action show
+  test "should get show when logged in" do
+    log_in_as(@user)
+    get :show, product_id: @product
+    assert_response :success
+    assert_select 'title', full_title_help('表示,商品')
+    assert_not_nil assigns(:product)
+    assert_not_nil assigns(:pa_maps)
+  end
+  
+  test "should redirect show when not logged in" do
+    get :show, product_id: @product
     assert_redirected_to login_url
   end
   
@@ -62,7 +77,7 @@ class ProductsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :new
     assert_response :success
-    assert_select 'title', full_title('新規,商品')
+    assert_select 'title', full_title_help('新規,商品')
     assert_not_nil assigns(:product)
   end
  
@@ -94,7 +109,7 @@ class ProductsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :edit, product_id: @product
     assert_response :success
-    assert_select 'title', full_title('編集,商品')
+    assert_select 'title', full_title_help('編集,商品')
     assert_not_nil assigns(:product)
   end
 

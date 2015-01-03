@@ -43,13 +43,18 @@ class ModusControllerTest < ActionController::TestCase
     assert_routing({ method: 'delete', path: "/brands/#{@brand.brand_id}/modus/#{@modu.modu_id}" },
                    { controller: "modus", action: "destroy", brand_brand_id: "#{@brand.brand_id}", modu_id: "#{@modu.modu_id}" })
   end
+ 
+  test "should route to ajax_modus" do
+    assert_routing "/ajax/modus",
+                   { controller: "modus", action: "ajax_modus" }
+  end
 
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)
     get :index, :brand_brand_id => @brand.brand_id
     assert_response :success
-    assert_select 'title', full_title('一覧,モデル,マスタ管理')
+    assert_select 'title', full_title_help('一覧,モデル,マスタ管理')
     assert_not_nil assigns(:modus)
   end
   
@@ -63,7 +68,7 @@ class ModusControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :new, :brand_brand_id => @brand.brand_id
     assert_response :success
-    assert_select 'title', full_title('新規,モデル,マスタ管理')
+    assert_select 'title', full_title_help('新規,モデル,マスタ管理')
     assert_not_nil assigns(:modu)
   end
   
@@ -93,7 +98,7 @@ class ModusControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :edit, :brand_brand_id => @brand.brand_id, modu_id: @modu
     assert_response :success
-    assert_select 'title', full_title('編集,モデル,マスタ管理')
+    assert_select 'title', full_title_help('編集,モデル,マスタ管理')
     assert_not_nil assigns(:modu)
   end
 
@@ -133,6 +138,17 @@ class ModusControllerTest < ActionController::TestCase
     assert_no_difference 'Modu.count' do
       delete :destroy, brand_brand_id: @brand, modu_id: @modu
     end
+    assert_redirected_to login_url
+  end
+
+  test "should get json data when logged in" do
+    log_in_as(@user)
+    get :ajax_modus, brand_id: @brand
+    assert_equal [@modu.as_json], JSON.parse(response.body)
+  end
+
+  test "should redirect to login page when not logged in" do
+    get :ajax_modus, brand_id: @brand
     assert_redirected_to login_url
   end
 end
