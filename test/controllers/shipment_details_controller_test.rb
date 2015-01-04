@@ -61,14 +61,14 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
   # test action new
   test "should get new when logged in" do
     log_in_as(@user)
-    get :new, shipment_shipment_id: @shipment.shipment_id
+    xhr :get, :new, shipment_shipment_id: @shipment.shipment_id
     assert_response :success
-    assert_select 'title', full_title_help('新規,発送詳細')
+    assert_not_nil assigns(:shipment)
     assert_not_nil assigns(:shipment_detail)
   end
   
   test "should redirect new when not logged in" do
-    get :new, shipment_shipment_id: @shipment.shipment_id
+    xhr :get, :new, shipment_shipment_id: @shipment.shipment_id
     assert_redirected_to login_url
   end
 
@@ -76,19 +76,20 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
   test "should create shipment detail when logged in" do
     log_in_as(@user)
     assert_difference 'ShipmentDetail.count', 1 do
-      post :create, shipment_shipment_id: @shipment.shipment_id,
+      xhr :post, :create, shipment_shipment_id: @shipment.shipment_id,
            shipment_detail: { product_id: "test",
              ship_cost: 100,
              insured_cost: 10,
              custom_cost: 1,
              memo: "メモメモ"}
     end
-    assert_redirected_to shipment_shipment_details_path
+    assert_not flash.empty?
+    assert_not_nil assigns(:shipment_details)
   end
 
   test "should redirect create when not logged in" do
     assert_no_difference 'ShipmentDetail.count' do
-      post :create, shipment_shipment_id: @shipment.shipment_id,
+      xhr :post, :create, shipment_shipment_id: @shipment.shipment_id,
            shipment_detail: { product_id: "test",
              ship_cost: 100,
              insured_cost: 10,
@@ -101,14 +102,13 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
   # test action edit
   test "should get edit when logged in" do
     log_in_as(@user)
-    get :edit, shipment_shipment_id: @shipment.shipment_id, id: @shipment_detail
+    xhr :get, :edit, shipment_shipment_id: @shipment.shipment_id, id: @shipment_detail
     assert_response :success
-    assert_select 'title', full_title_help('編集,発送詳細')
     assert_not_nil assigns(:shipment_detail)
   end
 
   test "should redirect edit when not logged in" do
-    get :edit, shipment_shipment_id: @shipment.shipment_id, id: @shipment_detail
+    xhr :get, :edit, shipment_shipment_id: @shipment.shipment_id, id: @shipment_detail
     assert_not flash.empty?
     assert_redirected_to login_url
   end
@@ -121,7 +121,7 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     insured_cost = 10
     custom_cost = 1
     memo = "メモメモ"
-    patch :update, shipment_shipment_id: @shipment, id: @shipment_detail,
+    xhr :patch, :update, shipment_shipment_id: @shipment, id: @shipment_detail,
           shipment_detail: { product_id: product_id,
           ship_cost: ship_cost,
           insured_cost: insured_cost,
@@ -133,7 +133,8 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     assert_equal @shipment_detail.insured_cost, insured_cost
     assert_equal @shipment_detail.custom_cost, custom_cost
     assert_equal @shipment_detail.memo, memo
-    assert_redirected_to shipment_shipment_details_path
+    assert_not flash.empty?
+    assert_not_nil assigns(:shipment_details)
   end
 
   test "should redirect update when not logged in" do
@@ -142,7 +143,7 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     insured_cost = 10
     custom_cost = 1
     memo = "メモメモ"
-    patch :update, shipment_shipment_id: @shipment, id: @shipment_detail,
+    xhr :patch, :update, shipment_shipment_id: @shipment, id: @shipment_detail,
           shipment_detail: { product_id: product_id,
           ship_cost: ship_cost,
           insured_cost: insured_cost,
@@ -156,14 +157,15 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
   test "should destroy shipment detail when logged in" do
     log_in_as(@user)
     assert_difference 'ShipmentDetail.count', -1 do
-      delete :destroy, shipment_shipment_id: @shipment, id: @shipment_detail
+      xhr :delete, :destroy, shipment_shipment_id: @shipment, id: @shipment_detail
     end
-    assert_redirected_to shipment_shipment_details_path
+    assert_not_nil assigns(:shipment_details)
+    assert_not flash.empty?
   end
 
   test "should redirect destroy when not logged in" do
     assert_no_difference 'ShipmentDetail.count' do
-      delete :destroy, shipment_shipment_id: @shipment, id: @shipment_detail
+      xhr :delete, :destroy, shipment_shipment_id: @shipment, id: @shipment_detail
     end
     assert_redirected_to login_url
   end

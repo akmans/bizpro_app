@@ -1,0 +1,21 @@
+<%= form_for [@shipment, @shipment_detail], remote: true do |f|   %>
+  <%= render 'shared/error_messages', object: f.object %>
+<div class="col-xs-12 col-md-7">
+  <%= collection_select :shipment_detail, :product_id, products_hash_help, :first, :last, {},
+      {selected: @shipment_detail.product_id, :class => 'form-control form-field'} %>
+</div>
+<div class="col-xs-4 col-md-1">
+  <%= f.text_field  :ship_cost, class: 'form-control' %>
+</div>
+<div class="col-xs-4 col-md-1">
+  <%= f.text_field  :insured_cost, class: 'form-control' %>
+</div>
+<div class="col-xs-4 col-md-1">
+  <%= f.text_field  :custom_cost, class: 'form-control' %>
+</div>
+<!-- Add the extra clearfix for only the required viewport -->
+<div class="clearfix visible-xs-block"></div>
+<div class="col-xs-12 col-md-2 text-right">
+  <%= f.submit "実行", class: "btn btn-default" %>
+</div>
+<% end %>

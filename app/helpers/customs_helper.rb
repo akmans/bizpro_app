@@ -18,10 +18,11 @@ module CustomsHelper
   end
 
   # return action percentage hash
-  def auction_percentage_hash_help(k)
+  def auction_percentage_hash_help(custom)
     rtn = {"" => "(空白)"}
     i = 10
-    per = 100 - Custom.where(auction_id: k).sum(:percentage).to_i
+    per = 100 - Custom.where(auction_id: custom.auction_id).sum(:percentage).to_i
+    per = per > (custom.percentage || 0) ? per : (custom.percentage || 0)
     while i <= per and i < 100 do
       thash = {i.to_s => percentage_hash_help[i.to_s]}
       rtn.merge! thash
@@ -45,7 +46,7 @@ module CustomsHelper
     return (@custom.net_cost + @custom.tax_cost + @custom.other_cost).to_i if @custom.is_auction == 0
     return 0 if @custom.auction_id.blank?
     @auction = Auction.find(@custom.auction_id)
-    (auction_total_cost_help * @custom.percentage / 100).to_i
+    (auction_total_cost_help * (@custom.percentage || 0) / 100).to_i
   end
 
   # return custom name by custom id

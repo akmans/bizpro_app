@@ -1,12 +1,15 @@
 #encoding: utf-8
 class ShipmentDetailsController < ApplicationController
   before_action :logged_in_user
+  before_action :set_shipment_details, only: [:edit, :update, :destroy]
+  before_action :all_shipment_details, only: [:index, :create, :update, :destroy]
+  respond_to :html, :js
 
-  def index
-    # shipment detail data with pagination
-    @shipment_details = ShipmentDetail.where(shipment_id: params[:shipment_shipment_id])
-              .paginate(page: params[:page], :per_page => 15)
-  end
+#  def index
+#    # shipment detail data with pagination
+#    @shipment_details = ShipmentDetail.where(shipment_id: params[:shipment_shipment_id])
+#              .paginate(page: params[:page], :per_page => 15)
+#  end
 
 #  # show action
 #  def show
@@ -16,17 +19,19 @@ class ShipmentDetailsController < ApplicationController
   # new action
   def new
     @shipment = Shipment.find(params[:shipment_shipment_id])
+#    debugger
     # shipment_detail instance
     @shipment_detail = ShipmentDetail.new
+#    @shipment_detail.shipment_id = params[:shipment_shipment_id]
   end
 
   def create
     @shipment_detail = ShipmentDetail.new(shipment_detail_params)
     @shipment_detail.shipment_id = params[:shipment_shipment_id]
     if @shipment_detail.save
-      flash[:success] = "作成完了しました。"
-      # shipment detail list
-      redirect_to shipment_shipment_details_path
+      flash.now[:success] = "作成完了しました。"
+#      # shipment detail list
+#      redirect_to shipment_shipment_details_path
     else
       render 'new'
     end
@@ -43,8 +48,8 @@ class ShipmentDetailsController < ApplicationController
     @shipment = Shipment.find(params[:shipment_shipment_id])
     @shipment_detail = ShipmentDetail.find(params[:id])
     if @shipment_detail.update_attributes(shipment_detail_params)
-      flash[:success] = "更新完了しました。"
-      redirect_to shipment_shipment_details_path
+      flash.now[:success] = "更新完了しました。"
+#      redirect_to shipment_shipment_details_path
     else
       render 'edit'
     end
@@ -53,11 +58,21 @@ class ShipmentDetailsController < ApplicationController
   # destroy action
   def destroy
     ShipmentDetail.find(params[:id]).destroy
-    flash[:success] = "削除完了しました。"
-    redirect_to shipment_shipment_details_path
+    flash.now[:success] = "削除完了しました。"
+#    redirect_to shipment_shipment_details_path
   end
 
   private
+    # all shipment_details
+    def all_shipment_details
+      @shipment_details = ShipmentDetail.where(shipment_id: params[:shipment_shipment_id])
+    end
+
+    # set shipment_details
+    def set_shipment_details
+      @shipment_detail = ShipmentDetail.find(params[:id])
+    end
+
     # strong parameters method.
     def shipment_detail_params
       params.require(:shipment_detail).permit(

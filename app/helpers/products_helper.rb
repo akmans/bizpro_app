@@ -3,7 +3,7 @@ module ProductsHelper
 
   # return is domestic hash
   def is_domestic_hash_help
-    {"0" => "海外", "1" => "国内"}
+    {"0" => "海外", "1" => "国内", "2" => "発送中"}
   end
 
   # return is domestic name by key
@@ -11,10 +11,15 @@ module ProductsHelper
     key.blank? ? "-" : is_domestic_hash_help[key.to_s]
   end
 
+  # return product name by product id
+  def product_name_help(product_id)
+    (Product.find(product_id).product_name if Product.exists?(product_id)) || '-'
+  end
+
   # return products hash
   def products_hash_help
     p_hash = {"" => "(空白)"}
-    Product.all.each do |product|
+    Product.where(is_domestic: 2).each do |product|
       akey = product.product_id
       avalue = product.product_name
       new_hash = { akey => avalue}

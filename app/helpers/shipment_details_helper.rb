@@ -1,13 +1,10 @@
 module ShipmentDetailsHelper
-  def shipment_detail_total_cost(key)
-    0
-  end
+#  def shipment_detail_total_cost_help(id)
+#    detail = ShipmentDetail.find(id)
+#    ((detail.ship_cost || 0) + (detail.insured_cost || 0) + (detail.custom_cost || 0)).to_i
+#  end
 
-  def shipment_detail_count(key)
-    ShipmentDetail.count(shipment_id: key)
-  end
-
-  def shipment_detail_product_name(key)
-    (Product.find(key).product_name if Product.exists?(key)) || '-'
+  def shipment_detail_cnt_help(shipment_id)
+    ShipmentDetail.where(shipment_id: shipment_id).count
   end
 end

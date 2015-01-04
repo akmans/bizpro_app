@@ -66,7 +66,7 @@ class CustomsController < ApplicationController
   
   # ajax auction percentage
   def ajax_auction_percentage
-    render :json => auction_percentage_hash(params[:auction_id])
+    render :json => auction_percentage_hash_help(params[:auction_id])
   end
 
   private

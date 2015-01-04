@@ -1,15 +1,25 @@
 <% provide(:title, '一覧,発送詳細') %>
 <h3>発送詳細一覧</h3>
-<%= will_paginate %>
 <div class="row header">
-  <div class="col-xs-4 col-md-2">商品ID</div>
-  <div class="col-xs-8 col-md-6">商品名</div>
+  <div class="col-xs-12 col-md-7">商品名</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-4 col-md-2">コスト</div>
-  <div class="col-xs-8 col-md-2 text-right">
-    <%= link_to "新規", new_shipment_shipment_detail_path, class: "btn btn-default" %>
+  <div class="col-xs-4 col-md-1">送料</div>
+  <div class="col-xs-4 col-md-1">保険料</div>
+  <div class="col-xs-4 col-md-1">関税</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-12 col-md-2 text-right">
+    <%= link_to "新規", new_shipment_shipment_detail_path, remote: true, class: "btn btn-default" %>
   </div>
 </div>
+<div class="row" id="shipment_detail-form" style="display:none;"></div>
+<div id="shipment_details">
 <%= render @shipment_details %>
-<%= will_paginate %>
+</div>
+
+<div class="form-group">
+  <div class="col-sm-11 col-sm-offset-1">
+    <%= link_to "戻る", :back, class: "btn btn-default" %>
+  </div>
+</div>

@@ -32,7 +32,7 @@ class CustomsHelperTest < ActionView::TestCase
       "30" => "３０％",
       "40" => "４０％",
       "50" => "５０％"}
-    assert_equal expected, auction_percentage_hash_help(@custom2.auction_id)
+    assert_equal expected, auction_percentage_hash_help(@custom2)
   end
 
   test "test percentage name help" do
