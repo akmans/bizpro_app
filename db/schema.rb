@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150101091122) do
+ActiveRecord::Schema.define(version: 20150104030817) do
 
   create_table "auctions", id: false, force: true do |t|
     t.string   "auction_id",    limit: 20,  null: false
@@ -110,6 +110,16 @@ ActiveRecord::Schema.define(version: 20150101091122) do
   end
 
   add_index "paymethods", ["paymethod_id"], name: "index_paymethods_on_paymethod_id", unique: true
+
+  create_table "pc_maps", id: false, force: true do |t|
+    t.string   "custom_id",  limit: 20, null: false
+    t.string   "product_id", limit: 20, null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "pc_maps", ["custom_id"], name: "index_pc_maps_on_custom_id", unique: true
+  add_index "pc_maps", ["product_id"], name: "index_pc_maps_on_product_id"
 
   create_table "products", id: false, force: true do |t|
     t.string   "product_id",    limit: 20,  null: false

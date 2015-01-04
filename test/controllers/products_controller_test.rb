@@ -65,6 +65,7 @@ class ProductsControllerTest < ActionController::TestCase
     assert_select 'title', full_title_help('表示,商品')
     assert_not_nil assigns(:product)
     assert_not_nil assigns(:pa_maps)
+    assert_not_nil assigns(:pc_maps)
   end
   
   test "should redirect show when not logged in" do

@@ -13,8 +13,7 @@ class ProductsController < ApplicationController
     # get product data by product_id.
     @product = Product.find(params[:product_id])
     @pa_maps = PaMap.where(product_id: params[:product_id])
-#    debugger
-#    a = 1
+    @pc_maps = PcMap.where(product_id: params[:product_id])
   end
 
   # new action

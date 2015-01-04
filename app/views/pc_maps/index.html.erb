@@ -1,0 +1,21 @@
+<% provide(:title, 'カスタムリスト,商品') %>
+<h3>カスタムリスト</h3>
+<div class="row header">
+  <div class="col-xs-12 col-md-1">ID</div>
+  <div class="col-xs-12 col-md-9">名称</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-12 col-md-2 text-right">
+    <%= link_to "新規", new_product_pc_map_path, remote: true, class: "btn btn-default" %>
+  </div>
+</div>
+<div class="row" id="pc_map-form" style="display:none;"></div>
+<div id="pc_maps">
+<%= render @pc_maps %>
+</div>
+
+<div class="form-group">
+  <div class="col-sm-11 col-sm-offset-1">
+    <%= link_to "戻る", :back, class: "btn btn-default" %>
+  </div>
+</div>

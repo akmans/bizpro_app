@@ -48,10 +48,15 @@ module CustomsHelper
     (auction_total_cost_help * @custom.percentage / 100).to_i
   end
 
+  # return custom name by custom id
+  def custom_name_help(custom_id)
+    Custom.find(custom_id).custom_name
+  end
+
   # return custom hash
   def customs_hash_help
     c_hash = {"" => "(空白)"}
-    Custom.all.each do |custom|
+    Custom.where.not(custom_id: PcMap.all).each do |custom|
       akey = custom.custom_id
       avalue = custom.custom_name
       new_hash = { akey => avalue}

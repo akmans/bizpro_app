@@ -1,0 +1,15 @@
+<%= form_for [@product, @pc_map], remote: true do |f|   %>
+  <%= render 'shared/error_messages', object: f.object %>
+<div class="col-xs-2 col-md-1">
+  <%= @pc_map.custom_id.blank? ? '-' : @pc_map.custom_id %>
+</div>
+<div class="col-xs-10 col-md-9">
+  <%= collection_select :pc_map, :custom_id, customs_hash_help, :first, :last, {},
+      {selected: @pc_map.custom_id, :class => 'form-control form-field'} %>
+</div>
+<!-- Add the extra clearfix for only the required viewport -->
+<div class="clearfix visible-xs-block"></div>
+<div class="col-xs-8 col-md-2 text-right">
+  <%= f.submit "実行", class: "btn btn-default" %>
+</div>
+<% end %>

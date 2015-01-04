@@ -6,7 +6,10 @@
     <%= link_to pa_map_auction_cnt_help(product.product_id),
                 product_pa_maps_path(product_product_id: product.product_id) %>
   </div>
-  <div class="col-xs-6 col-md-1">－－－</div>
+  <div class="col-xs-6 col-md-1">
+    <%= link_to pc_map_custom_cnt_help(product.product_id),
+                product_pc_maps_path(product_product_id: product.product_id) %>
+  </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-12 col-md-1">

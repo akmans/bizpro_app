@@ -47,13 +47,13 @@ class CustomsHelperTest < ActionView::TestCase
     assert_equal "９０％", percentage_name_help(90)
   end
 
-  test "test is auction name" do
+  test "test is auction name help" do
     assert_equal "-", is_auction_name_help(nil)
     assert_equal "-", is_auction_name_help(0)
     assert_equal "オークション品", is_auction_name_help(1)
   end
 
-  test "test custom total cost" do
+  test "test custom total cost help" do
     @custom.is_auction = 0
     @custom.net_cost = 1000
     @custom.tax_cost = 100
@@ -65,5 +65,13 @@ class CustomsHelperTest < ActionView::TestCase
     @custom.auction_id = "One1"
     @custom.percentage = 100
     assert_equal 123456, custom_total_cost_help
+  end
+  
+  test "test custom name help" do
+    assert_equal @custom.custom_name, custom_name_help(@custom.custom_id)
+  end
+  
+  test "test custom hash help" do
+    assert_not_nil customs_hash_help
   end
 end

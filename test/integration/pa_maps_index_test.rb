@@ -5,7 +5,6 @@ class PaMapsIndexTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:one)
     @product = products(:one)
-#    @pa_map = pa_maps(:one)
   end
   
   test "index including delete links" do
