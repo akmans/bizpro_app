@@ -39,7 +39,9 @@ class CategoriesController < ApplicationController
   private
     # all categories
     def all_categories
-      @categories = Category.all
+      par = Rack::Utils.parse_query URI(request.env['HTTP_REFERER']).query if request.env['HTTP_REFERER']
+      page = par["page"] if par
+      @categories = Category.paginate(page: params[:page] || page, :per_page => 15)
     end
 
     # set categories

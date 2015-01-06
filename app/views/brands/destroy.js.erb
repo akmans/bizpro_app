@@ -1,0 +1,6 @@
+$('#brands').html("<%= j (render @brands) %>");
+
+$('#messages').html("<%= j (render 'layouts/messages') %>");
+
+$('#pagination_top').html("<%= j (will_paginate(@brands, :params => { :controller => "brands", :action => "index" })) %>");
+$('#pagination_bottom').html("<%= j (will_paginate(@brands, :params => { :controller => "brands", :action => "index" })) %>");

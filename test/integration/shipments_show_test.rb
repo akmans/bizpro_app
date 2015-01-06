@@ -11,6 +11,6 @@ class ShipmentsShowTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get shipment_path(@shipment)
     assert_template 'shipments/show'
-    assert_select 'a[href=?]', shipments_path, text: '戻る'
+#    assert_select 'a[href=?]', shipments_path, text: '戻る'
   end
 end

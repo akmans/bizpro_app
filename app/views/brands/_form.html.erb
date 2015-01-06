@@ -1,0 +1,12 @@
+<%= form_for @brand, remote: true do |f|   %>
+  <%= render 'shared/error_messages', object: f.object %>
+<div class="col-md-1">
+  <%= @brand.brand_id.blank? ? '-' : @brand.brand_id %>
+</div>
+<div class="col-md-8">
+  <%= f.text_field  :brand_name, class: 'form-control' %>
+</div>
+<div class="col-md-3 text-right">
+  <%= f.submit "実行", class: "btn btn-default" %>
+</div>
+<% end %>

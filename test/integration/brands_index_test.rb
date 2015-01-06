@@ -18,7 +18,7 @@ class BrandsIndexTest < ActionDispatch::IntegrationTest
       assert_select 'a[href=?]', brand_path(brand.brand_id), text: '削除', method: :delete
     end
     assert_difference 'Brand.count', -1 do
-      delete brand_path(@brand)
+      xhr :delete, brand_path(@brand)
     end
   end
 end

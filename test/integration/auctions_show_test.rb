@@ -12,6 +12,6 @@ class AuctionsShowTest < ActionDispatch::IntegrationTest
     get auction_path(@auction)
     assert_template 'auctions/show'
     assert_select 'a[href=?]', @auction.url, text: @auction.auction_id
-    assert_select 'a[href=?]', auctions_path, text: '戻る'
+#    assert_select 'a[href=?]', auctions_path, text: '戻る'
   end
 end

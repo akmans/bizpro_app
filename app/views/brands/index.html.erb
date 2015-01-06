@@ -1,12 +1,21 @@
 <% provide(:title, '一覧,ブランド,マスタ管理') %>
 <h3>ブランド一覧</h3>
+<div id="pagination_top">
 <%= will_paginate %>
+</div>
 <div class="row header">
   <div class="col-xs-2 col-md-1">ID</div>
   <div class="col-xs-10 col-md-8">名称</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-md-3 text-right"><%= link_to "新規", new_brand_path, class: "btn btn-default" %></div>
+  <div class="col-md-3 text-right">
+    <%= link_to "新規", new_brand_path, remote: true, class: "btn btn-default" %>
+  </div>
 </div>
+<div class="row" id="brand-form" style="display:none;"></div>
+<div id="brands">
 <%= render @brands %>
-<%= will_paginate %>
+</div>
+<div id="pagination_bottom">
+  <%= will_paginate %>
+</div>

@@ -27,7 +27,7 @@ class Modu < ActiveRecord::Base
     # generate modu id
     def generate_modu_id
       max_id = Modu.where(brand_id: self.brand_id).maximum(:modu_id)
-      return "M" + self.brand_id + "001" if max_id.nil?
+      return "M" + self.brand_id[1..3] + "001" if max_id.nil?
       next_id = max_id[4,6].to_i + 1
       return max_id[0..3] + next_id.to_s.rjust(3, '0')
     end

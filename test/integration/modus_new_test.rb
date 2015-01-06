@@ -9,9 +9,9 @@ class ModusNewTest < ActionDispatch::IntegrationTest
 
   test "unsuccessful create" do
     log_in_as(@user)
-    get new_brand_modu_path(brand_brand_id: @brand.brand_id)
+    xhr :get, new_brand_modu_path(brand_brand_id: @brand.brand_id)
     assert_template 'modus/new'
-    post brand_modus_path, modu: { #modu_id:  "",
+    xhr :post, brand_modus_path, modu: { #modu_id:  "",
 #                                   brand_id: @brand.brand_id,
                                    modu_name: ""}
     assert_template 'modus/new'
@@ -19,13 +19,13 @@ class ModusNewTest < ActionDispatch::IntegrationTest
   
   test "successful create" do
     log_in_as(@user)
-    get new_brand_modu_path(brand_brand_id: @brand.brand_id)
+    xhr :get, new_brand_modu_path(brand_brand_id: @brand.brand_id)
     assert_template 'modus/new'
     modu_name = "てすと"
-    post brand_modus_path, modu: { #modu_id:  "",
+    xhr :post, brand_modus_path, modu: { #modu_id:  "",
 #                                   brand_id: @brand.brand_id,
                                    modu_name: modu_name}
     assert_not flash.empty?
-    assert_redirected_to brand_modus_path(brand_brand_id: @brand.brand_id)
+    assert_not_nil assigns(:modus)
   end
 end

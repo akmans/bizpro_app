@@ -1,0 +1,12 @@
+<%= form_for [@brand, @modu], remote: true do |f|   %>
+  <%= render 'shared/error_messages', object: f.object %>
+<div class="col-xs-2 col-md-1">
+  <%= @modu.modu_id.blank? ? '-' : @modu.modu_id %>
+</div>
+<div class="col-xs-10 col-md-9"><%= f.text_field :modu_name, class: 'form-control' %></div>
+<!-- Add the extra clearfix for only the required viewport -->
+<div class="clearfix visible-xs-block"></div>
+<div class="col-xs-8 col-md-2 text-right">
+  <%= f.submit "実行", class: "btn btn-default" %>
+</div>
+<% end %>

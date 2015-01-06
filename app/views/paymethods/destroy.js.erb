@@ -1,3 +1,6 @@
 $('#paymethods').html("<%= j (render @paymethods) %>");
 
 $('#messages').html("<%= j (render 'layouts/messages') %>");
+
+$('#pagination_top').html("<%= j (will_paginate(@paymethods, :params => { :controller => "paymethods", :action => "index" })) %>");
+$('#pagination_bottom').html("<%= j (will_paginate(@paymethods, :params => { :controller => "paymethods", :action => "index" })) %>");
