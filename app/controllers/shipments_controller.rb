@@ -13,6 +13,8 @@ class ShipmentsController < ApplicationController
   def show
     # get shipment data by shipment_id.
     @shipment = Shipment.find(params[:shipment_id])
+    # get shipment detail data by shipment_id
+    @shipment_details = ShipmentDetail.where(shipment_id: params[:shipment_id])
   end
 
   # new action

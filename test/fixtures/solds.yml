@@ -1,0 +1,18 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product_id: One1
+  sold_price: 100
+  sold_date: <%= Time.zone.now %>
+
+two:
+  product_id: Two2
+  sold_price: 200
+  sold_date: <%= Time.zone.now - 1 %>
+
+<% (101..200).each do |n| %>
+sold_<%= "B#{n}" %>:
+  product_id: <%= "Z#{n}" %>
+  sold_price: <%= "#{n}" %> * 100
+  sold_date: <%= Time.zone.now - n %>
+<% end %>

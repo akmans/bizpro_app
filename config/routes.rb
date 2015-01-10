@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :products, param: :product_id do
     resources :pa_maps, param: :auction_id, :except => [:edit, :update, :show]
     resources :pc_maps, param: :custom_id, :except => [:edit, :update, :show]
+    resources :solds
   end
   resources :shipments, param: :shipment_id do
     resources :shipment_details, param: :id, :except => [:show]

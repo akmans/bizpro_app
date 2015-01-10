@@ -12,7 +12,7 @@ class ProductTest < ActiveSupport::TestCase
     assert @product.valid?
   end
   
-  test "product_id should be presence" do
+  test "product_id should be allow blank" do
     @product.product_id = "    "
     assert @product.valid?
   end

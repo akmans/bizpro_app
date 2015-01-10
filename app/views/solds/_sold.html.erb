@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-xs-12 col-md-3">
+    <%= sold.sold_date %>
+  </div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-4 col-md-1">
+    <%= sold.sold_price.to_i %>
+  </div>
+  <div class="col-xs-4 col-md-1">
+    <%= sold.ship_charge.to_i %>
+  </div>
+  <div class="col-xs-4 col-md-1">
+    <%= sold.other_charge.to_i %>
+  </div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-6 col-md-4">
+    <%= sold.memo %>
+  </div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-12 col-md-2 text-right">
+    <%= link_to "編集", edit_product_sold_path(id: sold.id), remote: true, class: "btn btn-default" %>
+    <%= link_to "削除", product_sold_path(id: sold.id), method: :delete, remote: true, \
+                data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
+  </div>
+</div>

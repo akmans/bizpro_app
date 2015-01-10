@@ -1,7 +1,8 @@
 <%= form_for [@shipment, @shipment_detail], remote: true do |f|   %>
   <%= render 'shared/error_messages', object: f.object %>
 <div class="col-xs-12 col-md-7">
-  <%= collection_select :shipment_detail, :product_id, products_hash_help, :first, :last, {},
+  <%= collection_select :shipment_detail, :product_id, \
+      products_hash_help(@shipment_detail.product_id), :first, :last, {}, \
       {selected: @shipment_detail.product_id, :class => 'form-control form-field'} %>
 </div>
 <div class="col-xs-4 col-md-1">

@@ -20,14 +20,14 @@ class ModusController < ApplicationController
 
   # new action
   def new
-    @brand = Brand.find(params[:brand_brand_id])
+#    @brand = Brand.find(params[:brand_brand_id])
     # modu instance
     @modu = Modu.new
   end
 
   # create action
   def create
-    @brand = Brand.find(params[:brand_brand_id])
+#    @brand = Brand.find(params[:brand_brand_id])
     @modu = Modu.new(modu_params)
     @modu.brand_id = @brand.brand_id
     if @modu.save
@@ -39,15 +39,15 @@ class ModusController < ApplicationController
     end
   end
 
-  # edit action
-  def edit
-    @brand = Brand.find(params[:brand_brand_id])
-    @modu = Modu.find(params[:modu_id])
-  end
+#  # edit action
+#  def edit
+#    @brand = Brand.find(params[:brand_brand_id])
+#    @modu = Modu.find(params[:modu_id])
+#  end
 
   # upadte action
   def update
-    @brand = Brand.find(params[:brand_brand_id])
+#    @brand = Brand.find(params[:brand_brand_id])
     @modu = Modu.find(params[:modu_id])
     if @modu.update_attributes(modu_params)
       flash.now[:success] = "更新完了しました。"

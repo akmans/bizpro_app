@@ -21,11 +21,11 @@ class ShipmentDetailsController < ApplicationController
     end
   end
 
-  # edit action
-  def edit
+#  # edit action
+#  def edit
 #    @shipment = Shipment.find(params[:shipment_shipment_id])
-    @shipment_detail = ShipmentDetail.find(params[:id])
-  end
+#    @shipment_detail = ShipmentDetail.find(params[:id])
+#  end
 
   # upadte action
   def update

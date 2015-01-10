@@ -17,7 +17,7 @@ module ProductsHelper
   end
 
   # return products hash
-  def products_hash_help
+  def products_hash_help(product_id = nil)
     p_hash = {"" => "(空白)"}
     Product.where(is_domestic: 2).each do |product|
       akey = product.product_id
@@ -25,6 +25,10 @@ module ProductsHelper
       new_hash = { akey => avalue}
       p_hash.merge! new_hash
     end
-    p_hash
+    if !product_id.nil? && !p_hash.has_key?(product_id)
+      exist_hash = { product_id => Product.find(product_id).product_name }
+    end
+    p_hash.merge! exist_hash unless exist_hash.nil?
+    return p_hash
   end
 end

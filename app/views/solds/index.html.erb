@@ -1,0 +1,30 @@
+<% provide(:title, '一覧,売上情報,商品') %>
+<h3>商品 > 売上情報一覧</h3>
+<%= will_paginate %>
+<div class="row header">
+  <div class="col-xs-8 col-md-3">売出日</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-4 col-md-1">売値</div>
+  <div class="col-xs-4 col-md-1">送料</div>
+  <div class="col-xs-4 col-md-1">他料金</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-6 col-md-4">メモ</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-12 col-md-2 text-right">
+    <%= link_to "新規", new_product_sold_path, remote: true, class: "btn btn-default" %>
+  </div>
+</div>
+<div class="row" id="sold-form" style="display:none;"></div>
+<div id="solds">
+  <%= render @solds %>
+</div>
+<%= will_paginate %>
+
+<div class="form-group">
+  <div class="col-sm-11 col-sm-offset-1">
+    <%= link_to "戻る", :back, class: "btn btn-default" %>
+  </div>
+</div>

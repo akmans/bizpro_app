@@ -8,7 +8,8 @@
     </div>
     <div class="col-sm-1 header">名称</div>
     <div class="col-sm-8">
-      <%= collection_select :shipment_detail, :product_id, products_hash_help, :first, :last, {}, \
+      <%= collection_select :shipment_detail, :product_id, \
+          products_hash_help(@shipment_detail.product_id), :first, :last, {}, \
           {selected: @shipment_detail.product_id, :class => 'form-control form-field'} %>
     </div>
   </div>

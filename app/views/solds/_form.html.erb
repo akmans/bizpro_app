@@ -1,0 +1,34 @@
+<%= form_for [@product, @sold], remote: true do |f|   %>
+  <%= render 'shared/error_messages', object: f.object %>
+<div class="col-xs-12 col-md-3">
+  <%= f.date_select :sold_date,
+      options = { :order => [:year, :month, :day],
+                  :prompt => { :day => '(D)', :month => '(M)', :year => '(Y)' },
+                  :use_two_digit_numbers => true,
+                  :start_year => 2011, :end_year => 2015
+      },
+      html_options = {:class => "form-control form-field select-inline"}
+  %>
+</div>
+<!-- Add the extra clearfix for only the required viewport -->
+<div class="clearfix visible-xs-block"></div>
+<div class="col-xs-4 col-md-1">
+  <%= f.text_field :sold_price, class: 'form-control form-field' %>
+</div>
+<div class="col-xs-4 col-md-1">
+  <%= f.text_field :ship_charge, class: 'form-control form-field' %>
+</div>
+<div class="col-xs-4 col-md-1">
+  <%= f.text_field :other_charge, class: 'form-control form-field' %>
+</div>
+<!-- Add the extra clearfix for only the required viewport -->
+<div class="clearfix visible-xs-block"></div>
+<div class="col-xs-6 col-md-4">
+  <%= f.text_field :memo, class: 'form-control form-field' %>
+</div>
+<!-- Add the extra clearfix for only the required viewport -->
+<div class="clearfix visible-xs-block"></div>
+<div class="col-xs-12 col-md-2 text-right">
+  <%= f.submit "実行", class: "btn btn-default" %>
+</div>
+<% end %>

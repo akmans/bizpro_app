@@ -49,7 +49,7 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :index, shipment_shipment_id: @shipment.shipment_id
     assert_response :success
-    assert_select 'title', full_title_help('一覧,発送詳細')
+    assert_select 'title', full_title_help('詳細一覧,発送')
     assert_not_nil assigns(:shipment_details)
   end
   
