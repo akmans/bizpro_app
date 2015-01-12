@@ -45,7 +45,7 @@
 
   <div class="form-group grid">
     <div class="col-sm-1 header">総額</div>
-    <div class="col-sm-2 text-right"><%= commas_help(auction_total_cost_help.to_i) %>円</div>
+    <div class="col-sm-2 text-right"><%= commas_help(auction_total_cost_help(@auction).to_i) %>円</div>
     <div class="col-sm-1 header">送料払方</div>
     <div class="col-sm-2"><%= ship_type_name_help(@auction.ship_type) %></div>
     <div class="col-sm-1 header">発送方法</div>

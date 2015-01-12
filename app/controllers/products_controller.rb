@@ -12,8 +12,9 @@ class ProductsController < ApplicationController
   def show
     # get product data by product_id.
     @product = Product.find(params[:product_id])
-    @pa_maps = PaMap.where(product_id: params[:product_id])
-    @pc_maps = PcMap.where(product_id: params[:product_id])
+    @auctions = Auction.where(:auction_id => PaMap.where(product_id: params[:product_id]))
+    @customs = Custom.where(:custom_id => PcMap.where(product_id: params[:product_id]))
+    @solds = Sold.where(product_id: @product.product_id)
   end
 
   # new action

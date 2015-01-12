@@ -1,9 +1,9 @@
 <%= form_for [@product, @pc_map], remote: true do |f|   %>
   <%= render 'shared/error_messages', object: f.object %>
-<div class="col-xs-2 col-md-1">
+<div class="col-xs-2 col-md-2">
   <%= @pc_map.custom_id.blank? ? '-' : @pc_map.custom_id %>
 </div>
-<div class="col-xs-10 col-md-9">
+<div class="col-xs-10 col-md-8">
   <%= collection_select :pc_map, :custom_id, customs_hash_help, :first, :last, {},
       {selected: @pc_map.custom_id, :class => 'form-control form-field'} %>
 </div>

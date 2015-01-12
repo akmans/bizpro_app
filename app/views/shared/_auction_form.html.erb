@@ -73,7 +73,7 @@
 
   <div class="form-group grid">
     <div class="col-sm-1 header">総額</div>
-    <div class="col-sm-2 text-right"><%= commas_help(auction_total_cost_help.to_i) %>円</div>
+    <div class="col-sm-2 text-right"><%= commas_help(auction_total_cost_help(@auction).to_i) %>円</div>
     <div class="col-sm-1 header">送料払方</div>
     <div class="col-sm-2">
       <%= collection_select :auction, :ship_type, ship_type_hash_help, :first, :last, {}, \

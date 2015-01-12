@@ -2,10 +2,10 @@
   <%= render 'shared/error_messages', object: f.object %>
 
   <div class="form-group grid">
-    <div class="col-sm-1 header">ID</div>
-    <div class="col-sm-2"><%= @product.product_id.blank? ? '-' : @product.product_id %></div>
     <div class="col-sm-1 header">名称</div>
     <div class="col-sm-8"><%= f.text_field :product_name, class: 'form-control form-field' %></div>
+    <div class="col-sm-1 header">為替RATE</div>
+    <div class="col-sm-2"><%= f.text_field :exchange_rate, class: 'form-control form-field' %></div>
   </div>
 
   <div class="form-group grid">

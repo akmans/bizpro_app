@@ -91,9 +91,9 @@ module AuctionsHelper
   end
 
   # auction_total_cost
-  def auction_total_cost_help
-    @auction.price * (100 + (@auction.tax_rate || 0)) / 100 + \
-    (@auction.payment_cost || 0) + (@auction.shipment_cost || 0)
+  def auction_total_cost_help(auction)
+    auction.price * (100 + (auction.tax_rate || 0)) / 100 + \
+    (auction.payment_cost || 0) + (auction.shipment_cost || 0)
   end
 
   # return auction name by auction id

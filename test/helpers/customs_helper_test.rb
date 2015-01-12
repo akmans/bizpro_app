@@ -58,13 +58,13 @@ class CustomsHelperTest < ActionView::TestCase
     @custom.net_cost = 1000
     @custom.tax_cost = 100
     @custom.other_cost = 10
-    assert_equal 1110, custom_total_cost_help
+    assert_equal 1110, custom_total_cost_help(@custom)
     @custom.is_auction = nil
-    assert_equal 0, custom_total_cost_help
+    assert_equal 0, custom_total_cost_help(@custom)
     @custom.is_auction = 1
     @custom.auction_id = "One1"
     @custom.percentage = 100
-    assert_equal 123456, custom_total_cost_help
+    assert_equal 123456, custom_total_cost_help(@custom)
   end
   
   test "test custom name help" do

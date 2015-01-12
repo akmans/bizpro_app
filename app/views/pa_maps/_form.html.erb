@@ -1,9 +1,9 @@
 <%= form_for [@product, @pa_map], remote: true do |f|   %>
   <%= render 'shared/error_messages', object: f.object %>
-<div class="col-xs-2 col-md-1">
+<div class="col-xs-2 col-md-2">
   <%= @pa_map.auction_id.blank? ? '-' : @pa_map.auction_id %>
 </div>
-<div class="col-xs-10 col-md-9">
+<div class="col-xs-10 col-md-8">
   <%= collection_select :pa_map, :auction_id, auctions_hash_help(1), :first, :last, {},
       {selected: @pa_map.auction_id, :class => 'form-control form-field'} %>
 </div>

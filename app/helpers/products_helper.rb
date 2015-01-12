@@ -31,4 +31,39 @@ module ProductsHelper
     p_hash.merge! exist_hash unless exist_hash.nil?
     return p_hash
   end
+  
+  def product_total_cost_help(auctions, customs)
+    total = 0
+    if !auctions.nil?
+      auctions.each do |a|
+        total += auction_total_cost_help(a)
+      end
+    end
+    if !customs.nil?
+      customs.each do |c|
+        total += custom_total_cost_help(c)
+      end
+    end
+    return total
+  end
+  
+  def product_total_sold_price_help(solds)
+    total = 0
+    if !solds.nil?
+      solds.each do |s|
+        total += sold_total_price_help(s)
+      end
+    end
+    return total
+  end
+  
+  def profit_help(product, auctions, customs, solds)
+    (product_total_sold_price_help(solds) - product_total_cost_help(auctions, customs) * \
+    (product.exchange_rate || 8.3)) / 100
+  end
+  
+  def profit_rate_help(product, auctions, customs, solds)
+    ((product_total_sold_price_help(solds) - product_total_cost_help(auctions, customs) * \
+    (product.exchange_rate || 8.3)) / 100) / product_total_cost_help(auctions, customs) * 100
+  end
 end

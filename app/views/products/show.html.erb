@@ -27,19 +27,62 @@
   </div>
 </div>
 
+<% unless @auctions.empty? %>
 <h4>オークションリスト</h4>
 <div class="row header">
-  <div class="col-xs-2 col-md-2">ID</div>
-  <div class="col-xs-10 col-md-10">名称</div>
+  <div class="col-xs-2 col-md-2">終了日時</div>
+  <div class="col-xs-8 col-md-8">名称</div>
+  <div class="col-xs-2 col-md-2 text-center">総額</div>
 </div>
-<%= render :partial => 'shared/pa_map', :collection => @pa_maps %>
+<%= render :partial => 'shared/auction', :collection => @auctions %>
+<% end %>
 
+<% unless @customs.empty? %>
 <h4>カスタムリスト</h4>
 <div class="row header">
-  <div class="col-xs-2 col-md-2">ID</div>
-  <div class="col-xs-10 col-md-10">名称</div>
+  <div class="col-xs-2 col-md-2">オーク品</div>
+  <div class="col-xs-8 col-md-8">名称</div>
+  <div class="col-xs-2 col-md-2 text-center">総額</div>
 </div>
-<%= render :partial => 'shared/pc_map', :collection => @pc_maps %>
+<%= render :partial => 'shared/custom', :collection => @customs %>
+<% end %>
+
+<h4>発送情報</h4>
+<div class="row header">
+  <div class="col-xs-2 col-md-2">発送日</div>
+  <div class="col-xs-8 col-md-8">到着日</div>
+  <div class="col-xs-2 col-md-2 text-center">総額</div>
+</div>
+
+<% unless @solds.empty? %>
+<h4>売り情報</h4>
+<div class="row header">
+  <div class="col-xs-12 col-md-2">売出日</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-4 col-md-2">売値</div>
+  <div class="col-xs-4 col-md-2">送料</div>
+  <div class="col-xs-4 col-md-2">他料金</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-6 col-md-2">メモ</div>
+  <div class="col-xs-6 col-md-2 text-center">総額</div>
+</div>
+<%= render :partial => 'shared/sold', :collection => @solds %>
+<% end %>
+
+<h4>取引まとめ</h4>
+<div class="row header">
+  <div class="col-xs-4 col-md-2">円支出</div>
+  <div class="col-xs-4 col-md-2">為替レート</div>
+  <div class="col-xs-4 col-md-2">元支出</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-4 col-md-2">売値</div>
+  <div class="col-xs-4 col-md-2">利潤</div>
+  <div class="col-xs-4 col-md-2 text-center">利潤率</div>
+</div>
+<%= render :partial => 'shared/summary' %>
 
 <div class="form-group">
   <div class="col-sm-11 col-sm-offset-1">

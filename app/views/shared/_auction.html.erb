@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-sm-2">
+    <%= auction.end_time.nil? ? "-" : auction.end_time.strftime("%F %T") %>
+  </div>
+  <div class="col-sm-8">
+    <%= link_to auction.auction_name, auction.url, :target => '_blank' %>
+  </div>
+  <div class="col-sm-2 text-right">
+    <%= commas_help(auction_total_cost_help(auction).to_i) %>円
+  </div>
+</div>

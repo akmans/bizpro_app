@@ -27,7 +27,7 @@
     <div class="col-sm-1 header">その他</div>
     <div class="col-sm-2 text-right"><%= commas_help(@custom.other_cost.to_i) %>円</div>
     <div class="col-sm-1 header">総額</div>
-    <div class="col-sm-2 text-right"><%= commas_help(custom_total_cost_help) %>円</div>
+    <div class="col-sm-2 text-right"><%= commas_help(custom_total_cost_help(@custom)) %>円</div>
   </div>
 
   <div class="form-group grid row_last">

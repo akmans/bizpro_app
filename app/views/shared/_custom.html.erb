@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-sm-2">
+    <%= custom.is_auction == 1 ? "◯" : "-" %>
+  </div>
+  <div class="col-sm-8">
+    <%= link_to custom.custom_name, custom_path(custom) %>
+  </div>
+  <div class="col-sm-2 text-right">
+    <%= custom_total_cost_help(custom) %>円
+  </div>
+</div>

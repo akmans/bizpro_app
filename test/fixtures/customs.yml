@@ -22,7 +22,7 @@ custom_<%= "C#{n}" %>:
   custom_id: <%= "C#{n}" %>
   custom_name: <%= "Custom Name C#{n}" %>
   is_auction: 1
-  auction_id: One1111
+  auction_id: <%= "Auction#{n}" %>
   percentage: 50
   created_at: <%= Time.zone.now - 1 %>
 <% end %>

@@ -126,13 +126,13 @@ class AuctionsHelperTest < ActionView::TestCase
     @auction.tax_rate = nil
     @auction.payment_cost = nil
     @auction.shipment_cost = nil
-    assert_equal 100 , auction_total_cost_help
+    assert_equal 100 , auction_total_cost_help(@auction)
     @auction.tax_rate = 5
-    assert_equal 105 , auction_total_cost_help
+    assert_equal 105 , auction_total_cost_help(@auction)
     @auction.payment_cost = 10
-    assert_equal 115 , auction_total_cost_help
+    assert_equal 115 , auction_total_cost_help(@auction)
     @auction.shipment_cost = 1000
-    assert_equal 1115 , auction_total_cost_help
+    assert_equal 1115 , auction_total_cost_help(@auction)
   end
   
   test "test auction name help" do
