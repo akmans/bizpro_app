@@ -5,8 +5,9 @@ class ShipmentsController < ApplicationController
 
   # index action
   def index
+    page = page_ix_help(params[:page])
     # get shipment data list with pagination.
-    @shipments = Shipment.paginate(page: params[:page], :per_page => 15)
+    @shipments = Shipment.paginate(page: page, per_page: 15)
   end
 
   # show action

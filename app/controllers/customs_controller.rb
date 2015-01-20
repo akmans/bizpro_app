@@ -4,8 +4,9 @@ class CustomsController < ApplicationController
 
   # index action
   def index
+    page = page_ix_help(params[:page])
     # get auction data list with pagination.
-    @customs = Custom.paginate(page: params[:page], :per_page => 15)
+    @customs = Custom.paginate(page: page, per_page: 15)
   end
 
   # show action

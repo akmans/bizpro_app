@@ -5,8 +5,9 @@ class ProductsController < ApplicationController
 
   # index action
   def index
+    page = page_ix_help(params[:page])
     # get product data list with pagination.
-    @products = Product.paginate(page: params[:page], :per_page => 15)
+    @products = Product.paginate(page: page, per_page: 15)
   end
 
   def show

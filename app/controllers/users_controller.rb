@@ -5,7 +5,8 @@ class UsersController < ApplicationController
 
   # index action
   def index
-    @users = User.paginate(page: params[:page])
+    page = page_ix_help(params[:page])
+    @users = User.paginate(page: page, per_page: 15)
   end
 
   # show action

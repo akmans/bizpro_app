@@ -6,8 +6,9 @@ class AuctionsController < ApplicationController
 
   # index action
   def index
+    page = page_ix_help(params[:page])
     # get auction data list with pagination.
-    @auctions = Auction.paginate(page: params[:page], :per_page => 15)
+    @auctions = Auction.paginate(page: page, per_page: 15)
   end
 
   # show action
