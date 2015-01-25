@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   include SessionsHelper, ApplicationHelper
-  
+
   private
-  
+
     # Confirms a logged-in user.
     def logged_in_user
       unless logged_in_help?
@@ -14,10 +14,17 @@ class ApplicationController < ActionController::Base
         redirect_to login_url
       end
     end
-  
+
     # Redirects to stored location (or to the default).
     def redirect_back_or(default)
       redirect_to(session[:forwarding_url] || default)
       session.delete(:forwarding_url)
+    end
+
+    # remember page index
+    def page_ix_help(page)
+      return (session[:page_ix] = page) unless page.nil?
+      return session[:page_ix] unless session[:page_ix].nil?
+      return 1
     end
 end

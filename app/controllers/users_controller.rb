@@ -5,7 +5,9 @@ class UsersController < ApplicationController
 
   # index action
   def index
+    # page index
     page = page_ix_help(params[:page])
+    # get user data
     @users = User.paginate(page: page, per_page: 15)
   end
 
@@ -22,8 +24,11 @@ class UsersController < ApplicationController
   # create action
   def create
     @user = User.new(user_params)
+    # save user
     if @user.save
+      # login
       log_in_help @user
+      # flash message
       flash[:success] = "ようこそ!"
       redirect_to @user
     else
@@ -39,7 +44,9 @@ class UsersController < ApplicationController
   # update action
   def update
     @user = User.find(params[:id])
+    # update attribute
     if @user.update_attributes(user_params)
+      # flash message
       flash[:success] = "Profile updated"
       redirect_to @user
     else
@@ -49,7 +56,9 @@ class UsersController < ApplicationController
 
   # destroy action
   def destroy
+    # delete user
     User.find(params[:id]).destroy
+    # flash message
     flash[:success] = "削除しました。"
     redirect_to users_url
   end
@@ -57,8 +66,7 @@ class UsersController < ApplicationController
   private
     # user params
     def user_params
-      params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 
     # Confirms the correct user.

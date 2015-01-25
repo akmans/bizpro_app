@@ -16,7 +16,7 @@ class AuctionsIndexTest < ActionDispatch::IntegrationTest
     Auction.paginate(page: 1, per_page: 15).each do |auction|
       assert_select 'a[href=?]', auction_path(auction.auction_id), text: '表示'
       assert_select 'a[href=?]', edit_auction_path(auction.auction_id), text: '編集'
-      assert_select 'a[href=?]', auction_path(auction.auction_id), text: '削除', method: :delete
+      assert_select 'a[href=?]', auction_path(auction.auction_id), text: 'ー', method: :delete
     end
     assert_difference 'Auction.count', -1 do
       delete auction_path(@auction)

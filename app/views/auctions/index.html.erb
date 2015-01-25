@@ -2,14 +2,14 @@
 <h3>オークション一覧</h3>
 <%= will_paginate %>
 <div class="row header">
-  <div class="col-xs-12 col-md-5">オークション</div>
+  <div class="col-xs-12 col-md-6">オークション</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-12 col-md-2">終了日時</div>
-  <div class="col-xs-12 col-md-2">処置区分</div>
+  <div class="col-xs-6 col-md-2">カテゴリ</div>
+  <div class="col-xs-6 col-md-2">処置区分</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-12 col-md-3 text-right">
+  <div class="col-xs-12 col-md-2 text-right">
     <%= link_to "新規", new_auction_path, class: "btn btn-default" %>
   </div>
 </div>

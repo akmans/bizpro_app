@@ -7,42 +7,6 @@ class ShipmethodsControllerTest < ActionController::TestCase
     @shipmethod = shipmethods(:one)
   end
 
-  # test routes
-  test "should route to index" do
-    assert_routing "/shipmethods",
-                   { controller: "shipmethods", action: "index" }
-  end
- 
-#  test "should route to show" do
-#    assert_routing "/shipmethods/#{@shipmethod.shipmethod_id}",
-#                   { controller: "shipmethods", action: "show", shipmethod_id: "#{@shipmethod.shipmethod_id}" }
-#  end
- 
-  test "should route to new" do
-    assert_routing "/shipmethods/new",
-                   { controller: "shipmethods", action: "new" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: '/shipmethods' },
-                   { controller: "shipmethods", action: "create" })
-  end
- 
-  test "should route to edit" do
-    assert_routing "/shipmethods/#{@shipmethod.shipmethod_id}/edit",
-                   { controller: "shipmethods", action: "edit", shipmethod_id: "#{@shipmethod.shipmethod_id}" }
-  end
- 
-  test "should route to update" do
-    assert_routing({ method: 'patch', path: "/shipmethods/#{@shipmethod.shipmethod_id}" },
-                   { controller: "shipmethods", action: "update", shipmethod_id: "#{@shipmethod.shipmethod_id}" })
-  end
- 
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/shipmethods/#{@shipmethod.shipmethod_id}" },
-                   { controller: "shipmethods", action: "destroy", shipmethod_id: "#{@shipmethod.shipmethod_id}" })
-  end
-
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)

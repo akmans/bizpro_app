@@ -2,68 +2,72 @@
 class BrandsController < ApplicationController
   before_action :logged_in_user
   before_action :set_brands, only: [:edit, :update, :destroy]
-  before_action :all_brands, only: [:index, :create, :update, :destroy]
   respond_to :html, :js
-  
-#  # index action
-#  def index
-#    # get all brand data with pagination
-#    @brands = Brand.paginate(page: params[:page], :per_page => 15)
-#  end
-  
-#  # show action
-#  def show
-#    @brand = Brand.find(params[:brand_id])
-#  end
-  
+
+  # index action
+  def index
+    # get brand data
+    all_brands
+  end
+
+  # show action
+  # nil
+
   # new action
   def new
     # brand instance
     @brand = Brand.new
   end
-  
+
   # create action
   def create
     @brand = Brand.new(brand_params)
     # save brand
     if @brand.save
+      # flash message
       flash.now[:success] = "作成完了しました。"
-#      # redirct to brand list
-#      redirect_to brands_path
+      # get brand data
+      all_brands
     else
       render 'new'
     end
   end
-  
-#  # edit action
-#  def edit
-#    @brand = Brand.find(params[:brand_id])
-#  end
-  
+
+  # edit action
+  # nil
+
   # update action
   def update
-    @brand = Brand.find(params[:brand_id])
+    # update attribute
     if @brand.update_attributes(brand_params)
+      # falsh message
       flash.now[:success] = "更新完了しました。"
-#      redirect_to brands_path
+      # get brand data
+      all_brands
     else
       render 'edit'
     end
   end
-  
+
   # destroy action
   def destroy
-    Brand.find(params[:brand_id]).destroy
+    # delete brand
+    @brand.destroy
+    # flash message
     flash.now[:success] = "削除完了しました。"
-#    redirect_to brands_path
+    # get brand data
+    all_brands
   end
-  
+
   private
     # all brands
     def all_brands
-      par = Rack::Utils.parse_query URI(request.env['HTTP_REFERER']).query if request.env['HTTP_REFERER']
-      page = par["page"] if par
-      @brands = Brand.paginate(page: params[:page] || page, :per_page => 15)
+      # page index
+      page = page_ix_help(params[:page]).to_i
+      per_page = 15
+      page = page - 1 if (Brand.all.count < (page - 1) * per_page + 1 && page > 1)
+      # brand data for list
+      @brands = Brand.paginate(page: page, per_page: per_page)
     end
 
     # set brands

@@ -6,22 +6,6 @@ class SessionsControllerTest < ActionController::TestCase
     @user = users(:one)
   end
 
-  # test routes
-  test "should route to new" do
-    assert_routing "/login",
-                   { controller: "sessions", action: "new" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: '/login' },
-                   { controller: "sessions", action: "create" })
-  end
-
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/logout" },
-                   { controller: "sessions", action: "destroy" })
-  end
-
   # test new action
   test "should get new" do
     get :new

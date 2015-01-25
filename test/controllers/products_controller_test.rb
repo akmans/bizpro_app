@@ -7,42 +7,6 @@ class ProductsControllerTest < ActionController::TestCase
     @product = products(:one)
   end
 
-  # test routes
-  test "should route to index" do
-    assert_routing "/products",
-                   { controller: "products", action: "index" }
-  end
- 
-  test "should route to show" do
-    assert_routing "/products/#{@product.product_id}",
-                   { controller: "products", action: "show", product_id: "#{@product.product_id}" }
-  end
- 
-  test "should route to new" do
-    assert_routing "/products/new",
-                   { controller: "products", action: "new" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: '/products' },
-                   { controller: "products", action: "create" })
-  end
- 
-  test "should route to edit" do
-    assert_routing "/products/#{@product.product_id}/edit",
-                   { controller: "products", action: "edit", product_id: "#{@product.product_id}" }
-  end
- 
-  test "should route to update" do
-    assert_routing({ method: 'patch', path: "/products/#{@product.product_id}" },
-                   { controller: "products", action: "update", product_id: "#{@product.product_id}" })
-  end
- 
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/products/#{@product.product_id}" },
-                   { controller: "products", action: "destroy", product_id: "#{@product.product_id}" })
-  end
-
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)

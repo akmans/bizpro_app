@@ -16,11 +16,11 @@ class AuctionsController < ApplicationController
     # get auction data by auction_id.
     @auction = Auction.find(params[:auction_id])
   end
-  
+
   # new action
   def new
   end
-  
+
 #  def create
 #  end
 
@@ -28,7 +28,7 @@ class AuctionsController < ApplicationController
   def edit
     @auction = Auction.find(params[:auction_id])
   end
-  
+
   # update action
   def update
     @auction = Auction.find(params[:auction_id])
@@ -49,14 +49,14 @@ class AuctionsController < ApplicationController
       render 'edit'
     end
   end
-  
+
   # destroy action
   def destroy
     Auction.find(params[:auction_id]).destroy
     flash[:success] = "削除完了しました。"
     redirect_to auctions_path
   end
-  
+
   # loaddata action.
   def loaddata
     # faraday options.
@@ -90,50 +90,37 @@ class AuctionsController < ApplicationController
         auction.save
       end
     end
-    # redirect to auction list page.
+    # redirect to auction list page
     redirect_to auctions_path
   end
-  
+
   # callback action.
   def callback
     auth = request.env['omniauth.auth']
     yahoojp_log_in_help auth
     render 'new'
   end
-  
+
   # logout action.
   def logout
     yahoojp_log_out_help
     render 'new'
   end
-  
+
   # ajax auctions action
   def ajax_auctions
     # get auction data.
     render :json => auctions_hash_help(params[:ope_flg])
   end
-  
+
   private
     # strong parameters method.
     def auction_params
       params
         .require(:auction)
-        .permit(
-          :auction_name,
-          :price,
-          :tax_rate,
-          :category_id,
-          :brand_id,
-          :modu_id,
-          :sold_flg,
-          :ope_flg,
-          :paymethod_id,
-          :payment_cost,
-          :ship_type,
-          :shipmethod_id,
-          :shipment_cost,
-          :shipment_code,
-          :memo
+        .permit(:auction_name, :price, :tax_rate, :category_id, :brand_id, :modu_id,
+                :sold_flg, :ope_flg, :paymethod_id, :payment_cost, :ship_type,
+                :shipmethod_id, :shipment_cost, :shipment_code, :memo
         )
     end
 end

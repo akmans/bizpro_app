@@ -7,27 +7,6 @@ class SoldsControllerTest < ActionController::TestCase
     @sold = solds(:one)
   end
 
-  # test routes
-  test "should route to index" do
-    assert_routing "/products/#{@product.product_id}/solds",
-                   { controller: "solds", action: "index", product_product_id: "#{@product.product_id}" }
-  end
-
-  test "should route to new" do
-    assert_routing "/products/#{@product.product_id}/solds/new",
-                   { controller: "solds", action: "new", product_product_id: "#{@product.product_id}" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: "/products/#{@product.product_id}/solds", product_product_id: "#{@product.product_id}" },
-                   { controller: "solds", action: "create", product_product_id: "#{@product.product_id}" })
-  end
-
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/products/#{@product.product_id}/solds/#{@sold.id}" },
-                   { controller: "solds", action: "destroy", product_product_id: "#{@product.product_id}", id: "#{@sold.id}" })
-  end
-
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)

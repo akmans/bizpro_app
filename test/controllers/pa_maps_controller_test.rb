@@ -8,27 +8,6 @@ class PaMapsControllerTest < ActionController::TestCase
     @pa_map = pa_maps(:one)
   end
 
-  # test routes
-  test "should route to index" do
-    assert_routing "/products/#{@product.product_id}/pa_maps",
-                   { controller: "pa_maps", action: "index", product_product_id: "#{@product.product_id}" }
-  end
-
-  test "should route to new" do
-    assert_routing "/products/#{@product.product_id}/pa_maps/new",
-                   { controller: "pa_maps", action: "new", product_product_id: "#{@product.product_id}" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: "/products/#{@product.product_id}/pa_maps", product_product_id: "#{@product.product_id}" },
-                   { controller: "pa_maps", action: "create", product_product_id: "#{@product.product_id}" })
-  end
-
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/products/#{@product.product_id}/pa_maps/#{@pa_map.auction_id}" },
-                   { controller: "pa_maps", action: "destroy", product_product_id: "#{@product.product_id}", auction_id: "#{@pa_map.auction_id}" })
-  end
-
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)

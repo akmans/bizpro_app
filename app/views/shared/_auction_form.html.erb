@@ -81,7 +81,7 @@
     </div>
     <div class="col-sm-1 header">発送方法</div>
     <div class="col-sm-2">
-      <%= collection_select :auction, :shipmethod_id, shipmethod_hash_help, :first, :last, {}, \
+      <%= collection_select :auction, :shipmethod_id, shipmethod_hash_help(0), :first, :last, {}, \
           {selected: @auction.shipmethod_id, :class => 'form-control form-field'} %>
     </div>
     <div class="col-sm-1 header">問合番号</div>

@@ -5,42 +5,6 @@ class UsersControllerTest < ActionController::TestCase
     @user = users(:one)
     @other_user = users(:two)
   end
-
-  # test routes
-  test "should route to index" do
-    assert_routing "/users",
-                   { controller: "users", action: "index" }
-  end
- 
-  test "should route to show" do
-    assert_routing "/users/#{@user.id}",
-                   { controller: "users", action: "show", id: "#{@user.id}" }
-  end
- 
-  test "should route to new" do
-    assert_routing "/signup",
-                   { controller: "users", action: "new" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: '/users' },
-                   { controller: "users", action: "create" })
-  end
- 
-  test "should route to edit" do
-    assert_routing "/users/#{@user.id}/edit",
-                   { controller: "users", action: "edit", id: "#{@user.id}" }
-  end
- 
-  test "should route to update" do
-    assert_routing({ method: 'patch', path: "/users/#{@user.id}" },
-                   { controller: "users", action: "update", id: "#{@user.id}" })
-  end
- 
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/users/#{@user.id}" },
-                   { controller: "users", action: "destroy", id: "#{@user.id}" })
-  end
   
   # test index action
   test "should redirect index when not logged in" do

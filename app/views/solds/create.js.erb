@@ -2,6 +2,3 @@ $('#solds').html("<%= j (render @solds) %>");
 $('#sold-form').slideUp(350);
 
 $('#messages').html("<%= j (render 'layouts/messages') %>");
-
-$('#pagination_top').html("<%= j (will_paginate(@solds, :params => { :controller => "solds", :action => "index" })) %>");
-$('#pagination_bottom').html("<%= j (will_paginate(@solds, :params => { :controller => "solds", :action => "index" })) %>");

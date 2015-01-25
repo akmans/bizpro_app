@@ -3,55 +3,50 @@ class ModusController < ApplicationController
   before_action :logged_in_user
   before_action :set_brands, except: [:ajax_modus]
   before_action :set_modus, only: [:edit, :update, :destroy]
-  before_action :all_modus, only: [:index, :create, :update, :destroy]
   respond_to :html, :js
 
-#  # index action
-#  def index
-#    @brand = Brand.find(params[:brand_brand_id])
-#    # modu data with pagination
-#    @modus = Modu.where(brand_id: @brand.brand_id).paginate(page: params[:page], :per_page => 15)
-#  end
+  # index action
+  def index
+    # get modu data
+    all_modus
+  end
 
-#  # show action
-#  def show
-#    @modu = Modu.find(params[:modu_id])
-#  end
+  # show action
+  # nil
 
   # new action
   def new
-#    @brand = Brand.find(params[:brand_brand_id])
     # modu instance
     @modu = Modu.new
   end
 
   # create action
   def create
-#    @brand = Brand.find(params[:brand_brand_id])
     @modu = Modu.new(modu_params)
     @modu.brand_id = @brand.brand_id
+    # save modu
     if @modu.save
+      # flash message
       flash.now[:success] = "作成完了しました。"
-#      # modu list
-#      redirect_to brand_modus_path
+      # get modu data
+      all_modus
     else
       render 'new'
     end
   end
 
-#  # edit action
-#  def edit
-#    @brand = Brand.find(params[:brand_brand_id])
-#    @modu = Modu.find(params[:modu_id])
-#  end
+  # edit action
+  # nil
 
   # upadte action
   def update
-#    @brand = Brand.find(params[:brand_brand_id])
     @modu = Modu.find(params[:modu_id])
+    # update attribute
     if @modu.update_attributes(modu_params)
+      # flash message
       flash.now[:success] = "更新完了しました。"
-#      redirect_to brand_modus_path
+      # get modu data
+      all_modus
     else
       render 'edit'
     end
@@ -59,10 +54,12 @@ class ModusController < ApplicationController
 
   # destroy action
   def destroy
-    Modu.find(params[:modu_id]).destroy
+    # delete modu
+    @modu.destroy
+    # flash message
     flash.now[:success] = "削除完了しました。"
-#    debugger
-#    redirect_to brand_modus_path
+    # get modu data
+    all_modus
   end
 
   # ajax modus action
@@ -75,9 +72,12 @@ class ModusController < ApplicationController
   private
     # all modus
     def all_modus
-      par = Rack::Utils.parse_query URI(request.env['HTTP_REFERER']).query if request.env['HTTP_REFERER']
-      page = par["page"] if par
-      @modus = Modu.where(brand_id: @brand.brand_id).paginate(page: params[:page] || page, :per_page => 15)
+      # page index
+      page = page_ix_help(params[:page]).to_i
+      per_page = 15
+      page = page - 1 if (Modu.where(brand_id: @brand.brand_id).count < (page - 1) * per_page + 1 && page > 1)
+      # modu data for list
+      @modus = Modu.where(brand_id: @brand.brand_id).paginate(page: page, per_page: 15)
     end
 
     # set brands

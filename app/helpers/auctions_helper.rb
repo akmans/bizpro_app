@@ -31,12 +31,6 @@ module AuctionsHelper
     '%d:%02d:%02d' % [ diff / 3600, (diff / 60) % 60, diff % 60 ]
   end
 
-#  # session will expire?
-#  def yahoojp_will_expire?
-#    diff = session[:y_expires_at] - DateTime.now.to_i
-#    diff > 60 ? false : true
-#  end
-
   # check session expired? or not
   def yahoojp_expired_help?
     diff = session[:y_expires_at] - DateTime.now.to_i

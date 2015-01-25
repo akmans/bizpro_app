@@ -17,9 +17,9 @@ module ShipmethodsHelper
   end
 
   # shipmethod hash help
-  def shipmethod_hash_help
+  def shipmethod_hash_help(shipmethod_type)
     shipmethods = {"" => "(空白)"}
-    Shipmethod.all.each do |ss| 
+    Shipmethod.where(shipmethod_type: shipmethod_type).each do |ss| 
       shipmethods.merge! ss.as_hash
     end
     return shipmethods

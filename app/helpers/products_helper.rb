@@ -31,7 +31,8 @@ module ProductsHelper
     p_hash.merge! exist_hash unless exist_hash.nil?
     return p_hash
   end
-  
+
+  # return product total cost
   def product_total_cost_help(auctions, customs)
     total = 0
     if !auctions.nil?
@@ -46,7 +47,8 @@ module ProductsHelper
     end
     return total
   end
-  
+
+  # return product total sold price
   def product_total_sold_price_help(solds)
     total = 0
     if !solds.nil?
@@ -56,12 +58,14 @@ module ProductsHelper
     end
     return total
   end
-  
+
+  # return profit
   def profit_help(product, auctions, customs, solds)
     (product_total_sold_price_help(solds) - product_total_cost_help(auctions, customs) * \
     (product.exchange_rate || 8.3)) / 100
   end
-  
+
+  # return profit rate
   def profit_rate_help(product, auctions, customs, solds)
     ((product_total_sold_price_help(solds) - product_total_cost_help(auctions, customs) * \
     (product.exchange_rate || 8.3)) / 100) / product_total_cost_help(auctions, customs) * 100

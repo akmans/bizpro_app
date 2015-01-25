@@ -7,42 +7,6 @@ class CategoriesControllerTest < ActionController::TestCase
     @user = users(:one)
     @category = categories(:one)
   end
-
-  # test routes
-  test "should route to index" do
-    assert_routing "/categories",
-                   { controller: "categories", action: "index" }
-  end
- 
-#  test "should route to show" do
-#    assert_routing "/categories/#{@category.category_id}",
-#                   { controller: "categories", action: "show", category_id: "#{@category.category_id}" }
-#  end
- 
-  test "should route to new" do
-    assert_routing "/categories/new",
-                   { controller: "categories", action: "new" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: '/categories' },
-                   { controller: "categories", action: "create" })
-  end
- 
-  test "should route to edit" do
-    assert_routing "/categories/#{@category.category_id}/edit",
-                   { controller: "categories", action: "edit", category_id: "#{@category.category_id}" }
-  end
- 
-  test "should route to update" do
-    assert_routing({ method: 'patch', path: "/categories/#{@category.category_id}" },
-                   { controller: "categories", action: "update", category_id: "#{@category.category_id}" })
-  end
- 
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/categories/#{@category.category_id}" },
-                   { controller: "categories", action: "destroy", category_id: "#{@category.category_id}" })
-  end
   
   # test action index
   test "should get index when logged in" do

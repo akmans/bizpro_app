@@ -7,42 +7,6 @@ class PaymethodsControllerTest < ActionController::TestCase
     @paymethod = paymethods(:one)
   end
 
-  # test routes
-  test "should route to index" do
-    assert_routing "/paymethods",
-                   { controller: "paymethods", action: "index" }
-  end
- 
-#  test "should route to show" do
-#    assert_routing "/paymethods/#{@paymethod.paymethod_id}",
-#                   { controller: "paymethods", action: "show", paymethod_id: "#{@paymethod.paymethod_id}" }
-#  end
- 
-  test "should route to new" do
-    assert_routing "/paymethods/new",
-                   { controller: "paymethods", action: "new" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: '/paymethods' },
-                   { controller: "paymethods", action: "create" })
-  end
- 
-  test "should route to edit" do
-    assert_routing "/paymethods/#{@paymethod.paymethod_id}/edit",
-                   { controller: "paymethods", action: "edit", paymethod_id: "#{@paymethod.paymethod_id}" }
-  end
- 
-  test "should route to update" do
-    assert_routing({ method: 'patch', path: "/paymethods/#{@paymethod.paymethod_id}" },
-                   { controller: "paymethods", action: "update", paymethod_id: "#{@paymethod.paymethod_id}" })
-  end
- 
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/paymethods/#{@paymethod.paymethod_id}" },
-                   { controller: "paymethods", action: "destroy", paymethod_id: "#{@paymethod.paymethod_id}" })
-  end
-
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)

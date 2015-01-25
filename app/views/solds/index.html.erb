@@ -1,6 +1,5 @@
 <% provide(:title, '一覧,売上情報,商品') %>
 <h3>商品 > 売上情報一覧</h3>
-<%= will_paginate %>
 <div class="row header">
   <div class="col-xs-8 col-md-3">売出日</div>
   <!-- Add the extra clearfix for only the required viewport -->
@@ -21,7 +20,6 @@
 <div id="solds">
   <%= render @solds %>
 </div>
-<%= will_paginate %>
 
 <div class="form-group">
   <div class="col-sm-11 col-sm-offset-1">

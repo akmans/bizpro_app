@@ -21,4 +21,9 @@ class ShipmethodsHelperTest < ActionView::TestCase
     assert_equal "-", shipmethod_name_help(nil)
     assert_equal "First Name", shipmethod_name_help(@shipmethod.shipmethod_id)
   end
+  
+  test "shipmethod_hash_help" do
+    expected = {"" => "(空白)", "Two2" => "Second Name"}
+    assert_equal expected, shipmethod_hash_help(1)
+  end
 end

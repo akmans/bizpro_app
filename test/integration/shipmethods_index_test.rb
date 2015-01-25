@@ -12,7 +12,7 @@ class ShipmethodsIndexTest < ActionDispatch::IntegrationTest
     get shipmethods_path
     assert_template 'shipmethods/index'
     assert_select 'a[href=?]', new_shipmethod_path, text: '新規'
-    Shipmethod.all.each do |shipmethod|
+    Shipmethod.paginate(page: 1, per_page: 15).each do |shipmethod|
       assert_select 'a[href=?]', edit_shipmethod_path(shipmethod.shipmethod_id), text: '編集', remote: true
       assert_select 'a[href=?]', shipmethod_path(shipmethod.shipmethod_id), text: '削除', remote: true, method: :delete
     end

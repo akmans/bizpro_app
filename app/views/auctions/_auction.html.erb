@@ -1,20 +1,21 @@
 <div class="row">
-  <div class="col-xs-12 col-md-5">
+  <div class="col-xs-12 col-md-6">
+    【<%= auction.end_time.nil? ? "-" : auction.end_time.strftime("%m/%d/%y") %>】
     <%= link_to auction.auction_name, auction.url, :target => '_blank' %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-12 col-md-2">
-    <%= auction.end_time.nil? ? "-" : auction.end_time.strftime("%F %T") %>
+  <div class="col-xs-6 col-md-2">
+    <%= category_name_help(auction.category_id) %>
   </div>
-  <div class="col-xs-12 col-md-2">
+  <div class="col-xs-6 col-md-2">
     <%= ope_flg_name_help(auction.ope_flg) %><%= custom_percentage_help(auction.auction_id) %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-12 col-md-3 text-right">
+  <div class="col-xs-12 col-md-2 text-right">
     <%= link_to "表示", auction_path(auction.auction_id), class: "btn btn-default" %>
     <%= link_to "編集", edit_auction_path(auction.auction_id), class: "btn btn-default" %>
-    <%= link_to "削除", auction, method: :delete, data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
+    <%= link_to "ー", auction, method: :delete, data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
   </div>
 </div>

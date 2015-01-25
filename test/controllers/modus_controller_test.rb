@@ -8,47 +8,6 @@ class ModusControllerTest < ActionController::TestCase
     @modu = modus(:one)
   end
 
-  # test routes
-  test "should route to index" do
-    assert_routing "/brands/#{@brand.brand_id}/modus",
-                   { controller: "modus", action: "index", brand_brand_id: "#{@brand.brand_id}" }
-  end
- 
-#  test "should route to show" do
-#    assert_routing "/brands/#{@brand.brand_id}/modus/#{@modu.modu_id}",
-#                   { controller: "modus", action: "show", modu_id: "#{@modu.modu_id}" }
-#  end
- 
-  test "should route to new" do
-    assert_routing "/brands/#{@brand.brand_id}/modus/new",
-                   { controller: "modus", action: "new", brand_brand_id: "#{@brand.brand_id}" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: "/brands/#{@brand.brand_id}/modus", brand_brand_id: "#{@brand.brand_id}" },
-                   { controller: "modus", action: "create", brand_brand_id: "#{@brand.brand_id}" })
-  end
- 
-  test "should route to edit" do
-    assert_routing "/brands/#{@brand.brand_id}/modus/#{@modu.modu_id}/edit",
-                   { controller: "modus", action: "edit", brand_brand_id: "#{@brand.brand_id}", modu_id: "#{@modu.modu_id}" }
-  end
- 
-  test "should route to update" do
-    assert_routing({ method: 'patch', path: "/brands/#{@brand.brand_id}/modus/#{@modu.modu_id}" },
-                   { controller: "modus", action: "update", brand_brand_id: "#{@brand.brand_id}", modu_id: "#{@modu.modu_id}" })
-  end
- 
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/brands/#{@brand.brand_id}/modus/#{@modu.modu_id}" },
-                   { controller: "modus", action: "destroy", brand_brand_id: "#{@brand.brand_id}", modu_id: "#{@modu.modu_id}" })
-  end
- 
-  test "should route to ajax_modus" do
-    assert_routing "/ajax/modus",
-                   { controller: "modus", action: "ajax_modus" }
-  end
-
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)

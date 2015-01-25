@@ -14,7 +14,7 @@ class CustomsController < ApplicationController
     # get custom data by custom_id.
     @custom = Custom.find(params[:custom_id])
   end
-  
+
   # new action
   def new
     @custom = Custom.new
@@ -33,12 +33,12 @@ class CustomsController < ApplicationController
       render 'new'
     end
   end
-  
+
   # edit action
   def edit
     @custom = Custom.find(params[:custom_id])
   end
-  
+
   # update action
   def update
     @custom = Custom.find(params[:custom_id])
@@ -51,37 +51,30 @@ class CustomsController < ApplicationController
       render 'edit'
     end
   end
-  
+
   # delete action
   def destroy
     Custom.find(params[:custom_id]).destroy
     flash[:success] = "削除完了しました。"
     redirect_to customs_path
   end
-  
+
   # ajax customs action
   def ajax_customs
     # get custom data.
-    render :json => customs_hash_help
+    render json: customs_hash_help
   end
-  
+
   # ajax auction percentage
   def ajax_auction_percentage
-    render :json => auction_percentage_hash_help(params[:auction_id])
+    render json: auction_percentage_hash_help(params[:auction_id])
   end
 
   private
     # strong parameters method.
     def custom_params
       params.require(:custom)
-            .permit(
-              :custom_name,
-              :is_auction,
-              :auction_id,
-              :percentage,
-              :net_cost,
-              :tax_cost,
-              :other_cost,
-              :memo)
+            .permit(:custom_name, :is_auction, :auction_id,:percentage,
+                    :net_cost, :tax_cost, :other_cost, :memo)
     end
 end

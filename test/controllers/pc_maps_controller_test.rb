@@ -8,27 +8,6 @@ class PcMapsControllerTest < ActionController::TestCase
     @pc_map = pc_maps(:one)
   end
 
-  # test routes
-  test "should route to index" do
-    assert_routing "/products/#{@product.product_id}/pc_maps",
-                   { controller: "pc_maps", action: "index", product_product_id: "#{@product.product_id}" }
-  end
-
-  test "should route to new" do
-    assert_routing "/products/#{@product.product_id}/pc_maps/new",
-                   { controller: "pc_maps", action: "new", product_product_id: "#{@product.product_id}" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: "/products/#{@product.product_id}/pc_maps", product_product_id: "#{@product.product_id}" },
-                   { controller: "pc_maps", action: "create", product_product_id: "#{@product.product_id}" })
-  end
-
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/products/#{@product.product_id}/pc_maps/#{@pc_map.custom_id}" },
-                   { controller: "pc_maps", action: "destroy", product_product_id: "#{@product.product_id}", custom_id: "#{@pc_map.custom_id}" })
-  end
-
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)

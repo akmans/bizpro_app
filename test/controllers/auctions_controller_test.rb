@@ -25,62 +25,6 @@ class AuctionsControllerTest < ActionController::TestCase
     yahoojp_log_out if yahoojp_logged_in_help?
   end
 
-  # test routes
-  test "should route to index" do
-    assert_routing "/auctions",
-                   { controller: "auctions", action: "index" }
-  end
- 
-  test "should route to show" do
-    assert_routing "/auctions/#{@auction.auction_id}",
-                   { controller: "auctions", action: "show", auction_id: "#{@auction.auction_id}" }
-  end
- 
-  test "should route to new" do
-    assert_routing "/auctions/new",
-                   { controller: "auctions", action: "new" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: '/auctions' },
-                   { controller: "auctions", action: "create" })
-  end
- 
-  test "should route to edit" do
-    assert_routing "/auctions/#{@auction.auction_id}/edit",
-                   { controller: "auctions", action: "edit", auction_id: "#{@auction.auction_id}" }
-  end
- 
-  test "should route to update" do
-    assert_routing({ method: 'patch', path: "/auctions/#{@auction.auction_id}" },
-                   { controller: "auctions", action: "update", auction_id: "#{@auction.auction_id}" })
-  end
- 
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/auctions/#{@auction.auction_id}" },
-                   { controller: "auctions", action: "destroy", auction_id: "#{@auction.auction_id}" })
-  end
- 
-  test "should route to ajax_auctions" do
-    assert_routing "/ajax/auctions",
-                   { controller: "auctions", action: "ajax_auctions" }
-  end
- 
-  test "should route to callback" do
-    assert_routing "/auth/yahoojp/callback",
-                   { controller: "auctions", action: "callback", provider: "yahoojp" }
-  end
- 
-  test "should route to logout" do
-    assert_routing "/auth/yahoojp/logout",
-                   { controller: "auctions", action: "logout", provider: "yahoojp" }
-  end
- 
-  test "should route to loaddata" do
-    assert_routing "/auth/yahoojp/loaddata",
-                   { controller: "auctions", action: "loaddata", provider: "yahoojp" }
-  end
-
   # test index action
   test "should get index when logged in" do
     log_in_as(@user)
@@ -89,12 +33,12 @@ class AuctionsControllerTest < ActionController::TestCase
     assert_select 'title', full_title_help('一覧,オークション')
     assert_not_nil assigns(:auctions)
   end
-  
+
   test "should redirect index when not logged in" do
     get :index
     assert_redirected_to login_url
   end
-  
+
   # test show action
   test "should get show when logged in" do
     log_in_as(@user)
@@ -103,12 +47,12 @@ class AuctionsControllerTest < ActionController::TestCase
     assert_select 'title', full_title_help('表示,オークション')
     assert_not_nil assigns(:auction)
   end
-  
+
   test "should redirect show when not logged in" do
     get :show, auction_id: @auction
     assert_redirected_to login_url
   end
-  
+
   # test new action
   test "should get new when logged in" do
     log_in_as(@user)
@@ -117,7 +61,7 @@ class AuctionsControllerTest < ActionController::TestCase
     assert_select 'title', full_title_help('ロード,オークション')
     assert_nil assigns(:auction)
   end
- 
+
   test "should redirect new when not logged in" do
     get :new
     assert_redirected_to login_url
@@ -137,7 +81,7 @@ class AuctionsControllerTest < ActionController::TestCase
     assert_not flash.empty?
     assert_redirected_to login_url
   end
- 
+
   # test update action
   test "should update auction when logged in" do
     log_in_as(@user)

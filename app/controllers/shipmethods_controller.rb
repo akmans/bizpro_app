@@ -2,8 +2,16 @@
 class ShipmethodsController < ApplicationController
   before_action :logged_in_user
   before_action :set_shipmethods, only: [:edit, :update, :destroy]
-  before_action :all_shipmethods, only: [:index, :create, :update, :destroy]
   respond_to :html, :js
+
+  # index action
+  def index
+    # get shipmethod data
+    all_shipmethods
+  end
+
+  # show action
+  # nil
 
   # new action
   def new
@@ -14,17 +22,28 @@ class ShipmethodsController < ApplicationController
   # create action
   def create
     @shipmethod = Shipmethod.new(shipmethod_params)
+    # save shipmethod
     if @shipmethod.save
+      # flash message
       flash.now[:success] = "作成完了しました。"
+      # get shipmethod data
+      all_shipmethods
     else
       render 'new'
     end
   end
 
+  # edit action
+  # nil
+
   # update action
   def update
+    # update attribute
     if @shipmethod.update_attributes(shipmethod_params)
+      # flash message
       flash.now[:success] = "更新完了しました。"
+      # get shipmethod data
+      all_shipmethods
     else
       render 'edit'
     end
@@ -32,14 +51,23 @@ class ShipmethodsController < ApplicationController
 
   # destroy action
   def destroy
+    # delete shipmethod
     @shipmethod.destroy
+    # flash message
     flash.now[:success] = "削除完了しました。"
+    # get shipmethod data
+    all_shipmethods
   end
 
   private
     # all shipmethods
     def all_shipmethods
-      @shipmethods = Shipmethod.all
+      # page index
+      page = page_ix_help(params[:page]).to_i
+      per_page = 15
+      page = page - 1 if (Shipmethod.all.count < (page - 1) * per_page + 1 && page > 1)
+      # shipmethod data for list
+      @shipmethods = Shipmethod.paginate(page: page, per_page: 15)
     end
 
     # set shipmethods

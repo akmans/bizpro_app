@@ -5,46 +5,41 @@ class SoldsController < ApplicationController
   before_action :all_solds, only: [:index, :create, :update, :destroy]
   respond_to :html, :js
 
-#  # index action
-#  def index
-#    # get sold data list with pagination.
-#    @solds = Sold.paginate(page: params[:page], :per_page => 15)
-#  end
-  
+  # index action
+  # nil
+
+  # show action
+  # nil
+
   # new action
   def new
-#    @product = Product.find(params[:product_product_id])
     # sold instance
     @sold = Sold.new
   end
 
   # create action
   def create
-#    @product = Product.find(params[:product_product_id])
     @sold = Sold.new(sold_params)
     @sold.product_id = params[:product_product_id]
+    # save sold
     if @sold.save
+      # flash message
       flash.now[:success] = "作成完了しました。"
-#      # modu list
-#      redirect_to brand_modus_path
     else
       render 'new'
     end
   end
 
-#  # edit action
-#  def edit
-#    @brand = Brand.find(params[:brand_brand_id])
-#    @sold = Sold.find(params[:sold_id])
-#  end
+  # edit action
+  # nil
 
   # upadte action
   def update
-#    @brand = Brand.find(params[:brand_brand_id])
     @sold = Sold.find(params[:id])
+    # update attribute
     if @sold.update_attributes(sold_params)
+      # flash message
       flash.now[:success] = "更新完了しました。"
-#      redirect_to brand_modus_path
     else
       render 'edit'
     end
@@ -52,18 +47,17 @@ class SoldsController < ApplicationController
 
   # destroy action
   def destroy
+    # delete sold
     Sold.find(params[:id]).destroy
+    # flash message
     flash.now[:success] = "削除完了しました。"
-#    debugger
-#    redirect_to brand_modus_path
   end
 
   private
     # all solds
     def all_solds
-      par = Rack::Utils.parse_query URI(request.env['HTTP_REFERER']).query if request.env['HTTP_REFERER']
-      page = par["page"] if par
-      @solds = Sold.where(product_id: @product.product_id).paginate(page: params[:page] || page, :per_page => 15)
+      # get sold data
+      @solds = Sold.where(product_id: @product.product_id)
     end
 
     # set products

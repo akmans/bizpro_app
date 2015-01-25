@@ -8,42 +8,6 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     @shipment_detail = shipment_details(:one)
   end
 
-  # test routes
-  test "should route to index" do
-    assert_routing "/shipments/#{@shipment.shipment_id}/shipment_details",
-                   { controller: "shipment_details", action: "index", shipment_shipment_id: "#{@shipment.shipment_id}" }
-  end
- 
-#  test "should route to show" do
-#    assert_routing "/shipments/#{@shipment.shipment_id}/shipment_details/#{@shipment_detail.id}",
-#                   { controller: "shipment_details", action: "show", id: "#{@shipment_detail.id}" }
-#  end
- 
-  test "should route to new" do
-    assert_routing "/shipments/#{@shipment.shipment_id}/shipment_details/new",
-                   { controller: "shipment_details", action: "new", shipment_shipment_id: "#{@shipment.shipment_id}" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: "/shipments/#{@shipment.shipment_id}/shipment_details", id: "#{@shipment.shipment_id}" },
-                   { controller: "shipment_details", action: "create", shipment_shipment_id: "#{@shipment.shipment_id}" })
-  end
- 
-  test "should route to edit" do
-    assert_routing "/shipments/#{@shipment.shipment_id}/shipment_details/#{@shipment_detail.id}/edit",
-                   { controller: "shipment_details", action: "edit", shipment_shipment_id: "#{@shipment.shipment_id}", id: "#{@shipment_detail.id}" }
-  end
- 
-  test "should route to update" do
-    assert_routing({ method: 'patch', path: "/shipments/#{@shipment.shipment_id}/shipment_details/#{@shipment_detail.id}" },
-                   { controller: "shipment_details", action: "update", shipment_shipment_id: "#{@shipment.shipment_id}", id: "#{@shipment_detail.id}" })
-  end
- 
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/shipments/#{@shipment.shipment_id}/shipment_details/#{@shipment_detail.id}" },
-                   { controller: "shipment_details", action: "destroy", shipment_shipment_id: "#{@shipment.shipment_id}", id: "#{@shipment_detail.id}" })
-  end
-
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)

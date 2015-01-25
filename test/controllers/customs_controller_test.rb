@@ -7,47 +7,6 @@ class CustomsControllerTest < ActionController::TestCase
     @custom = customs(:two)
   end
 
-  # test routes
-  test "should route to index" do
-    assert_routing "/customs",
-                   { controller: "customs", action: "index" }
-  end
- 
-  test "should route to show" do
-    assert_routing "/customs/#{@custom.custom_id}",
-                   { controller: "customs", action: "show", custom_id: "#{@custom.custom_id}" }
-  end
- 
-  test "should route to new" do
-    assert_routing "/customs/new",
-                   { controller: "customs", action: "new" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: '/customs' },
-                   { controller: "customs", action: "create" })
-  end
- 
-  test "should route to edit" do
-    assert_routing "/customs/#{@custom.custom_id}/edit",
-                   { controller: "customs", action: "edit", custom_id: "#{@custom.custom_id}" }
-  end
- 
-  test "should route to update" do
-    assert_routing({ method: 'patch', path: "/customs/#{@custom.custom_id}" },
-                   { controller: "customs", action: "update", custom_id: "#{@custom.custom_id}" })
-  end
- 
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/customs/#{@custom.custom_id}" },
-                   { controller: "customs", action: "destroy", custom_id: "#{@custom.custom_id}" })
-  end
- 
-  test "should route to ajax_auction_percentage" do
-    assert_routing "/ajax/auction_percentage",
-                   { controller: "customs", action: "ajax_auction_percentage" }
-  end
-
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)

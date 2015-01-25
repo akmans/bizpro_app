@@ -5,6 +5,7 @@ class ShipmentsController < ApplicationController
 
   # index action
   def index
+    # page index
     page = page_ix_help(params[:page])
     # get shipment data list with pagination.
     @shipments = Shipment.paginate(page: page, per_page: 15)
@@ -65,11 +66,7 @@ class ShipmentsController < ApplicationController
   private
     # strong parameters method.
     def shipment_params
-      params.require(:shipment).permit(
-        :shipmethod_id,
-        :sent_date,
-        :arrived_date,
-        :memo)
+      params.require(:shipment).permit(:shipmethod_id, :sent_date, :arrived_date, :memo)
     end
 
     # shipmethod hash method

@@ -2,13 +2,17 @@
 class PaymethodsController < ApplicationController
   before_action :logged_in_user
   before_action :set_paymethods, only: [:edit, :update, :destroy]
-#  after_action :all_paymethods, only: [:index, :create, :update, :destroy]
   respond_to :html, :js
-  
+
+  # index action
   def index
+    # get paymethod data
     all_paymethods
   end
-  
+
+  # show action
+  # nil
+
   # new action
   def new
     # paymethod instance
@@ -18,38 +22,52 @@ class PaymethodsController < ApplicationController
   # create action
   def create
     @paymethod = Paymethod.new(paymethod_params)
+    # save paymethod
     if @paymethod.save
+      # flash message
       flash.now[:success] = "作成完了しました。"
+      # get paymethod data
       all_paymethods
     else
       render 'new'
     end
   end
 
+  # edit action
+  # nil
+
   # update action
   def update
+    # update attribute
     if @paymethod.update_attributes(paymethod_params)
+      # flash message
       flash.now[:success] = "更新完了しました。"
+      # get paymethod data
       all_paymethods
     else
       render 'edit'
     end
   end
-  
+
   # destory action
   def destroy
+    # delete paymethod
     @paymethod.destroy
+    # flash message
     flash.now[:success] = "削除完了しました。"
+    # get paymethod data
     all_paymethods
   end
   
   private
     # all paymethods
     def all_paymethods
-      par = Rack::Utils.parse_query URI(request.env['HTTP_REFERER']).query if request.env['HTTP_REFERER']
-      page = (params[:page] || (par["page"] if par) || 1).to_i
-      @paymethods = Paymethod.paginate(page: page, :per_page => 15)
-      @paymethods = Paymethod.paginate(page: (page - 1), :per_page => 15) if (@paymethods.size == 0 && page > 1)
+      # page index
+      page = page_ix_help(params[:page]).to_i
+      per_page = 15
+      page = page - 1 if (Paymethod.all.count < (page - 1) * per_page + 1 && page > 1)
+      # paymethod data for list
+      @paymethods = Paymethod.paginate(page: page, per_page: per_page)
     end
 
     # set paymethods

@@ -7,42 +7,6 @@ class BrandsControllerTest < ActionController::TestCase
     @brand = brands(:one)
   end
 
-  # test routes
-  test "should route to index" do
-    assert_routing "/brands",
-                   { controller: "brands", action: "index" }
-  end
- 
-#  test "should route to show" do
-#    assert_routing "/brands/#{@brand.brand_id}",
-#                   { controller: "brands", action: "show", brand_id: "#{@brand.brand_id}" }
-#  end
- 
-  test "should route to new" do
-    assert_routing "/brands/new",
-                   { controller: "brands", action: "new" }
-  end
- 
-  test "should route to create" do
-    assert_routing({ method: 'post', path: '/brands' },
-                   { controller: "brands", action: "create" })
-  end
- 
-  test "should route to edit" do
-    assert_routing "/brands/#{@brand.brand_id}/edit",
-                   { controller: "brands", action: "edit", brand_id: "#{@brand.brand_id}" }
-  end
- 
-  test "should route to update" do
-    assert_routing({ method: 'patch', path: "/brands/#{@brand.brand_id}" },
-                   { controller: "brands", action: "update", brand_id: "#{@brand.brand_id}" })
-  end
- 
-  test "should route to destroy" do
-    assert_routing({ method: 'delete', path: "/brands/#{@brand.brand_id}" },
-                   { controller: "brands", action: "destroy", brand_id: "#{@brand.brand_id}" })
-  end
-
   # test action index
   test "should get index when logged in" do
     log_in_as(@user)

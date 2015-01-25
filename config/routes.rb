@@ -10,18 +10,15 @@ Rails.application.routes.draw do
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
-#  post   '/ajax/create_pa_map'      => 'pa_maps#create'
   delete 'logout'  => 'sessions#destroy'
 
-  resources :categories, param: :category_id, :except => [:show]
+  resources :auctions, param: :auction_id
   resources :brands, param: :brand_id, :except => [:show] do
     resources :modus, param: :modu_id, :except => [:show]
   end
-  resources :paymethods, param: :paymethod_id, :except => [:show]
-  resources :shipmethods, param: :shipmethod_id, :except => [:show]
-  resources :users
-  resources :auctions, param: :auction_id
+  resources :categories, param: :category_id, :except => [:show]
   resources :customs, param: :custom_id
+  resources :paymethods, param: :paymethod_id, :except => [:show]
   resources :products, param: :product_id do
     resources :pa_maps, param: :auction_id, :except => [:edit, :update, :show]
     resources :pc_maps, param: :custom_id, :except => [:edit, :update, :show]
@@ -30,6 +27,8 @@ Rails.application.routes.draw do
   resources :shipments, param: :shipment_id do
     resources :shipment_details, param: :id, :except => [:show]
   end
+  resources :shipmethods, param: :shipmethod_id, :except => [:show]
+  resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
