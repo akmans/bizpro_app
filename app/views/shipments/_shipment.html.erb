@@ -15,9 +15,9 @@
                 class: "btn btn-default"%>
   </div>
   <div class="col-xs-12 col-md-3 text-right">
-    <%= link_to "表示", shipment_path(shipment.shipment_id), class: "btn btn-default" %>
-    <%= link_to "編集", edit_shipment_path(shipment.shipment_id), class: "btn btn-default" %>
-    <%= link_to "削除", shipment, method: :delete, \
+    <%= link_to "Dis", shipment_path(shipment.shipment_id), class: "btn btn-default" %>
+    <%= link_to "Edi", edit_shipment_path(shipment.shipment_id), class: "btn btn-default" %>
+    <%= link_to "Del", shipment, method: :delete, \
                 data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
   </div>
 </div>

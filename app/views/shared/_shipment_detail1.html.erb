@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-sm-7">
+    【<%= shipment_detail1.product_id %>】
+    <%= product_name_help(shipment_detail1.product_id) %>
+  </div>
+  <div class="col-sm-1 text-right">
+    <%= commas_help(shipment_detail1.ship_cost.to_i) %>円
+  </div>
+  <div class="col-sm-1 text-right">
+    <%= commas_help(shipment_detail1.insured_cost.to_i) %>円
+  </div>
+  <div class="col-sm-1 text-right">
+    <%= commas_help(shipment_detail1.custom_cost || 0) %>元
+  </div>
+  <div class="col-sm-2">
+    <%= shipment_detail1.memo %>
+  </div>
+</div>

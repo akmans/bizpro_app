@@ -12,11 +12,11 @@ class CustomsIndexTest < ActionDispatch::IntegrationTest
     get customs_path
     assert_template 'customs/index'
     assert_select 'div.pagination'
-    assert_select 'a[href=?]', new_custom_path, text: '新規'
+    assert_select 'a[href=?]', new_custom_path, text: 'New'
     Custom.paginate(page: 1, per_page: 15).each do |custom|
-      assert_select 'a[href=?]', custom_path(custom.custom_id), text: '表示'
-      assert_select 'a[href=?]', edit_custom_path(custom.custom_id), text: '編集'
-      assert_select 'a[href=?]', custom_path(custom.custom_id), text: '削除', method: :delete
+      assert_select 'a[href=?]', custom_path(custom.custom_id), text: 'Dis'
+      assert_select 'a[href=?]', edit_custom_path(custom.custom_id), text: 'Edi'
+      assert_select 'a[href=?]', custom_path(custom.custom_id), text: 'Del', method: :delete
     end
     assert_difference 'Custom.count', -1 do
       delete custom_path(@custom)

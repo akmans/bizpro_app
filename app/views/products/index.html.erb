@@ -10,9 +10,10 @@
   <div class="col-xs-4 col-md-1 text-center">国内売</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-4 col-md-1 text-center">海外発送</div>
   <div class="col-xs-6 col-md-1">内外区分</div>
-  <div class="col-xs-6 col-md-3 text-right">
-    <%= link_to "新規", new_product_path, class: "btn btn-default" %>
+  <div class="col-xs-6 col-md-2 text-right">
+    <%= link_to "New", new_product_path, class: "btn btn-default" %>
   </div>
 </div>
 <%= render @products %>

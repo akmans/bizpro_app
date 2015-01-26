@@ -2,7 +2,7 @@
   <div class="col-sm-2"><%= pc_map.custom_id %></div>
   <div class="col-sm-8"><%= custom_name_help(pc_map.custom_id) %></div>
   <div class="col-sm-2 text-right">
-    <%= link_to "削除", product_pc_map_path(custom_id: pc_map.custom_id), method: :delete,
+    <%= link_to "Del", product_pc_map_path(custom_id: pc_map.custom_id), method: :delete,
                  remote: true, data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
   </div>
 </div>

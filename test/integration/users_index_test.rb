@@ -17,8 +17,8 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     assert_select 'div.pagination'
     first_page_of_users = User.paginate(page: 1, per_page: 15)
     first_page_of_users.each do |user|
-      assert_select 'a[href=?]', user_path(user), text: '表示'
-      assert_select 'a[href=?]', user_path(user), text: '削除', method: :delete
+      assert_select 'a[href=?]', user_path(user), text: 'Dis'
+      assert_select 'a[href=?]', user_path(user), text: 'Del', method: :delete
     end
     assert_difference 'User.count', -1 do
       delete user_path(@other_user)

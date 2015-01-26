@@ -47,12 +47,21 @@
 <%= render :partial => 'shared/custom', :collection => @customs %>
 <% end %>
 
+<% unless @shipment_details.empty? %>
 <h4>発送情報</h4>
 <div class="row header">
-  <div class="col-xs-2 col-md-2">発送日</div>
-  <div class="col-xs-8 col-md-8">到着日</div>
-  <div class="col-xs-2 col-md-2 text-center">総額</div>
+  <div class="col-xs-4 col-md-2">発送日</div>
+  <div class="col-xs-4 col-md-3">発送方法</div>
+  <div class="col-xs-4 col-md-2">到着日</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-3 col-md-1">発送料金</div>
+  <div class="col-xs-3 col-md-1">保険料金</div>
+  <div class="col-xs-3 col-md-1">関税</div>
+  <div class="col-xs-3 col-md-2 text-center">総額</div>
 </div>
+<%= render :partial => 'shared/shipment_detail2', :collection => @shipment_details %>
+<% end %>
 
 <% unless @solds.empty? %>
 <h4>売り情報</h4>
@@ -85,7 +94,7 @@
 <%= render :partial => 'shared/summary' %>
 
 <div class="form-group">
-  <div class="col-sm-11 col-sm-offset-1">
+  <div class="col-sm-12 text-right">
     <%= link_to "戻る", :back, class: "btn btn-default" %>
   </div>
 </div>

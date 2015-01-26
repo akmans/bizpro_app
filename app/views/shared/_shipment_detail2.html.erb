@@ -1,0 +1,20 @@
+<% shipment = Shipment.find(shipment_detail2.shipment_id) %>
+<div class="row">
+  <div class="col-xs-4 col-md-2"><%= shipment.sent_date %></div>
+  <div class="col-xs-4 col-md-3"><%= shipmethod_name_help(shipment.shipmethod_id) %></div>
+  <div class="col-xs-4 col-md-2"><%= shipment.arrived_date %></div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-3 col-md-1 text-right">
+    <%= commas_help((shipment_detail2.ship_cost || 0).to_i) %>円
+  </div>
+  <div class="col-xs-3 col-md-1 text-right">
+    <%= commas_help((shipment_detail2.insured_cost || 0).to_i) %>円
+  </div>
+  <div class="col-xs-3 col-md-1 text-right">
+    <%= commas_help(shipment_detail2.custom_cost || 0) %>元
+  </div>
+  <div class="col-xs-3 col-md-2 text-right">
+    <%= commas_help(shipment_product_cost_help(shipment_detail2)) %>円
+  </div>
+</div>

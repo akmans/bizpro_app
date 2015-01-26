@@ -2,7 +2,7 @@
   <div class="col-xs-12 col-md-2"><%= custom.custom_id %></div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-12 col-md-5"><%= custom.custom_name %></div>
+  <div class="col-xs-12 col-md-6"><%= custom.custom_name %></div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-12 col-md-2">
@@ -10,10 +10,10 @@
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-12 col-md-3 text-right">
-    <%= link_to "表示", custom_path(custom.custom_id), class: "btn btn-default" %>
-    <%= link_to "編集", edit_custom_path(custom.custom_id), class: "btn btn-default" %>
-    <%= link_to "削除", custom, method: :delete, \
+  <div class="col-xs-12 col-md-2 text-right">
+    <%= link_to "Dis", custom_path(custom.custom_id), class: "btn btn-default" %>
+    <%= link_to "Edi", edit_custom_path(custom.custom_id), class: "btn btn-default" %>
+    <%= link_to "Del", custom, method: :delete, \
                 data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
   </div>
 </div>

@@ -4,9 +4,9 @@
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-md-3 text-right">
-    <%= link_to "編集", edit_paymethod_path(paymethod.paymethod_id),
+    <%= link_to "Edi", edit_paymethod_path(paymethod.paymethod_id),
                 remote: true, class: "btn btn-default" %>
-    <%= link_to "削除", paymethod, remote: true, method: :delete,
+    <%= link_to "Del", paymethod, remote: true, method: :delete,
                 data: { confirm: "削除しますか?" }, class: "btn btn-default"%>
   </div>
 </div>

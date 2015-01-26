@@ -12,11 +12,11 @@ class ShipmentsIndexTest < ActionDispatch::IntegrationTest
     get shipments_path
     assert_template 'shipments/index'
     assert_select 'div.pagination'
-    assert_select 'a[href=?]', new_shipment_path, text: '新規'
+    assert_select 'a[href=?]', new_shipment_path, text: 'New'
     Shipment.paginate(page: 1, per_page: 15).each do |shipment|
-      assert_select 'a[href=?]', shipment_path(shipment.shipment_id), text: '表示'
-      assert_select 'a[href=?]', edit_shipment_path(shipment.shipment_id), text: '編集'
-      assert_select 'a[href=?]', shipment_path(shipment.shipment_id), text: '削除', method: :delete
+      assert_select 'a[href=?]', shipment_path(shipment.shipment_id), text: 'Dis'
+      assert_select 'a[href=?]', edit_shipment_path(shipment.shipment_id), text: 'Edi'
+      assert_select 'a[href=?]', shipment_path(shipment.shipment_id), text: 'Del', method: :delete
     end
     assert_difference 'Shipment.count', -1 do
       delete shipment_path(@shipment)

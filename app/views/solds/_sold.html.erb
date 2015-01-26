@@ -21,8 +21,8 @@
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-12 col-md-2 text-right">
-    <%= link_to "編集", edit_product_sold_path(id: sold.id), remote: true, class: "btn btn-default" %>
-    <%= link_to "削除", product_sold_path(id: sold.id), method: :delete, remote: true, \
+    <%= link_to "Edi", edit_product_sold_path(id: sold.id), remote: true, class: "btn btn-default" %>
+    <%= link_to "Del", product_sold_path(id: sold.id), method: :delete, remote: true, \
                 data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
   </div>
 </div>

@@ -14,8 +14,8 @@
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-12 col-md-2 text-right">
-    <%= link_to "表示", auction_path(auction.auction_id), class: "btn btn-default" %>
-    <%= link_to "編集", edit_auction_path(auction.auction_id), class: "btn btn-default" %>
-    <%= link_to "ー", auction, method: :delete, data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
+    <%= link_to "Dis", auction_path(auction.auction_id), class: "btn btn-default" %>
+    <%= link_to "Edi", edit_auction_path(auction.auction_id), class: "btn btn-default" %>
+    <%= link_to "Del", auction, method: :delete, data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
   </div>
 </div>

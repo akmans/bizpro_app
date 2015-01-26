@@ -11,10 +11,10 @@ class ShipmethodsIndexTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get shipmethods_path
     assert_template 'shipmethods/index'
-    assert_select 'a[href=?]', new_shipmethod_path, text: '新規'
+    assert_select 'a[href=?]', new_shipmethod_path, text: 'New'
     Shipmethod.paginate(page: 1, per_page: 15).each do |shipmethod|
-      assert_select 'a[href=?]', edit_shipmethod_path(shipmethod.shipmethod_id), text: '編集', remote: true
-      assert_select 'a[href=?]', shipmethod_path(shipmethod.shipmethod_id), text: '削除', remote: true, method: :delete
+      assert_select 'a[href=?]', edit_shipmethod_path(shipmethod.shipmethod_id), text: 'Edi', remote: true
+      assert_select 'a[href=?]', shipmethod_path(shipmethod.shipmethod_id), text: 'Del', remote: true, method: :delete
     end
     assert_difference 'Shipmethod.count', -1 do
       xhr :delete, shipmethod_path(@shipmethod)
