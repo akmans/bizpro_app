@@ -10,8 +10,9 @@ class ApplicationController < ActionController::Base
     def logged_in_user
       unless logged_in_help?
         store_location_help
-        flash[:danger] = "Please log in."
-        redirect_to login_url
+        flash.now[:danger] = "Please log in."
+        render :partial => '/shared/ajax_message' if request.xhr?
+        redirect_to login_url unless request.xhr?
       end
     end
 

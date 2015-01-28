@@ -33,7 +33,7 @@ module ProductsHelper
   end
 
   # return product total cost
-  def product_total_cost_help(auctions, customs)
+  def product_total_cost_help(auctions, customs, shipment_details)
     total = 0
     if !auctions.nil?
       auctions.each do |a|
@@ -43,6 +43,11 @@ module ProductsHelper
     if !customs.nil?
       customs.each do |c|
         total += custom_total_cost_help(c)
+      end
+    end
+    if !shipment_details.nil?
+      shipment_details.each do |sd|
+        total += shipment_product_cost_help(sd)
       end
     end
     return total
@@ -60,14 +65,14 @@ module ProductsHelper
   end
 
   # return profit
-  def profit_help(product, auctions, customs, solds)
-    (product_total_sold_price_help(solds) - product_total_cost_help(auctions, customs) * \
+  def profit_help(product, auctions, customs, shipment_details, solds)
+    (product_total_sold_price_help(solds) - product_total_cost_help(auctions, customs, shipment_details) * \
     (product.exchange_rate || 8.3)) / 100
   end
 
   # return profit rate
-  def profit_rate_help(product, auctions, customs, solds)
-    ((product_total_sold_price_help(solds) - product_total_cost_help(auctions, customs) * \
-    (product.exchange_rate || 8.3)) / 100) / product_total_cost_help(auctions, customs) * 100
+  def profit_rate_help(product, auctions, customs, shipment_details, solds)
+    ((product_total_sold_price_help(solds) - product_total_cost_help(auctions, customs, shipment_details) * \
+    (product.exchange_rate || 8.3)) / 100) / product_total_cost_help(auctions, customs, shipment_details) * 100
   end
 end

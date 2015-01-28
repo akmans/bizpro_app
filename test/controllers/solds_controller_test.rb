@@ -7,7 +7,7 @@ class SoldsControllerTest < ActionController::TestCase
     @sold = solds(:one)
   end
 
-  # test action index
+  # test index action
   test "should get index when logged in" do
     log_in_as(@user)
     get :index, :product_product_id => @product.product_id
@@ -15,26 +15,29 @@ class SoldsControllerTest < ActionController::TestCase
     assert_select 'title', full_title_help('一覧,売上情報,商品')
     assert_not_nil assigns(:solds)
   end
-  
+
   test "should redirect index when not logged in" do
     get :index, :product_product_id => @product.product_id
     assert_redirected_to login_url
   end
 
-  # test action new
+  # test show action
+  # nil
+
+  # test new action
   test "should get new when logged in" do
     log_in_as(@user)
     xhr :get, :new, :product_product_id => @product.product_id
     assert_response :success
     assert_not_nil assigns(:sold)
   end
-  
+
   test "should redirect new when not logged in" do
     xhr :get, :new, :product_product_id => @product.product_id
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 
-  # test action create
+  # test create action
   test "should create sold when logged in" do
     log_in_as(@user)
     sold_date = Time.zone.now
@@ -62,23 +65,23 @@ class SoldsControllerTest < ActionController::TestCase
         sold: { sold_date: sold_date, sold_price: sold_price,
                 ship_charge: ship_charge, other_charge: other_charge, memo: memo }
     end
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 
-  # test action edit
+  # test edit action
   test "should get edit when logged in" do
     log_in_as(@user)
     xhr :get, :edit, :product_product_id => @product.product_id, :id => @sold.id
     assert_response :success
     assert_not_nil assigns(:sold)
   end
-  
+
   test "should redirect edit when not logged in" do
     xhr :get, :edit, :product_product_id => @product.product_id, :id => @sold.id
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 
-  # test action update
+  # test update action
   test "should update sold when logged in" do
     log_in_as(@user)
     sold_date = Date.today
@@ -108,10 +111,10 @@ class SoldsControllerTest < ActionController::TestCase
     xhr :post, :update, product_product_id: @product.product_id, id: @sold,
         sold: { sold_date: sold_date, sold_price: sold_price,
                 ship_charge: ship_charge, other_charge: other_charge, memo: memo }
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 
-  # test action destory
+  # test destory action
   test "should destroy sold when logged in" do
     log_in_as(@user)
     assert_difference 'Sold.count', -1 do
@@ -125,6 +128,6 @@ class SoldsControllerTest < ActionController::TestCase
     assert_no_difference 'Sold.count' do
       xhr :delete, :destroy, product_product_id: @product, id: @sold
     end
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 end

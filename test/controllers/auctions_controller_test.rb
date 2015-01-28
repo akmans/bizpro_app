@@ -32,6 +32,14 @@ class AuctionsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'title', full_title_help('一覧,オークション')
     assert_not_nil assigns(:auctions)
+    assert_template 'auctions/index'
+    assert_select 'div.pagination'
+    assert_select 'a[href=?]', new_auction_path, text: 'New'
+    Auction.paginate(page: 1, per_page: 15).each do |auction|
+      assert_select 'a[href=?]', auction_path(auction.auction_id), text: 'Dis'
+      assert_select 'a[href=?]', edit_auction_path(auction.auction_id), text: 'Edi'
+      assert_select 'a[href=?]', auction_path(auction.auction_id), text: 'Del', method: :delete
+    end
   end
 
   test "should redirect index when not logged in" do
@@ -67,6 +75,9 @@ class AuctionsControllerTest < ActionController::TestCase
     assert_redirected_to login_url
   end
 
+  # test create action
+  # nil
+
   # test edit action
   test "should get edit when logged in" do
     log_in_as(@user)
@@ -97,17 +108,18 @@ class AuctionsControllerTest < ActionController::TestCase
     paymethod_id = "Two2"
     memo = 'メモメモメモ'
     patch :update, auction_id: @auction.auction_id,
-          auction: { auction_name: auction_name,
-                     price: price,
-                     sold_flg: sold_flg,
-                     ope_flg: ope_flg,
-                     category_id: category_id,
-                     brand_id: brand_id,
-                     modu_id: modu_id,
-                     shipmethod_id: shipmethod_id,
-                     ship_type: ship_type,
-                     paymethod_id: paymethod_id,
-                     memo: memo
+          auction: {
+            auction_name: auction_name,
+            price: price,
+            sold_flg: sold_flg,
+            ope_flg: ope_flg,
+            category_id: category_id,
+            brand_id: brand_id,
+            modu_id: modu_id,
+            shipmethod_id: shipmethod_id,
+            ship_type: ship_type,
+            paymethod_id: paymethod_id,
+            memo: memo
           }
     @auction.reload
     assert_equal @auction.auction_name, auction_name
@@ -130,10 +142,11 @@ class AuctionsControllerTest < ActionController::TestCase
     sold_flg = 1
     memo = 'メモメモメモ'
     patch :update, auction_id: @auction,
-          auction: { auction_name: auction_name,
-                     price: price,
-                     sold_flg: sold_flg,
-                     memo: memo
+          auction: {
+            auction_name: auction_name,
+            price: price,
+            sold_flg: sold_flg,
+            memo: memo
           }
     assert_not flash.empty?
     assert_redirected_to login_url

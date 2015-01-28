@@ -8,7 +8,7 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     @shipment_detail = shipment_details(:one)
   end
 
-  # test action index
+  # test index action
   test "should get index when logged in" do
     log_in_as(@user)
     get :index, shipment_shipment_id: @shipment.shipment_id
@@ -16,13 +16,16 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     assert_select 'title', full_title_help('詳細一覧,発送')
     assert_not_nil assigns(:shipment_details)
   end
-  
+
   test "should redirect index when not logged in" do
     get :index, shipment_shipment_id: @shipment.shipment_id
     assert_redirected_to login_url
   end
 
-  # test action new
+  # test show action
+  # nil
+
+  # test new action
   test "should get new when logged in" do
     log_in_as(@user)
     xhr :get, :new, shipment_shipment_id: @shipment.shipment_id
@@ -30,13 +33,13 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:shipment)
     assert_not_nil assigns(:shipment_detail)
   end
-  
-  test "should redirect new when not logged in" do
+
+  test "get new should show message when not logged in" do
     xhr :get, :new, shipment_shipment_id: @shipment.shipment_id
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 
-  # test action create
+  # test create action
   test "should create shipment detail when logged in" do
     log_in_as(@user)
     assert_difference 'ShipmentDetail.count', 1 do
@@ -51,7 +54,7 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:shipment_details)
   end
 
-  test "should redirect create when not logged in" do
+  test "post create should show message when not logged in" do
     assert_no_difference 'ShipmentDetail.count' do
       xhr :post, :create, shipment_shipment_id: @shipment.shipment_id,
            shipment_detail: { product_id: "test",
@@ -60,10 +63,10 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
              custom_cost: 1,
              memo: "メモメモ"}
     end
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 
-  # test action edit
+  # test edit action
   test "should get edit when logged in" do
     log_in_as(@user)
     xhr :get, :edit, shipment_shipment_id: @shipment.shipment_id, id: @shipment_detail
@@ -71,13 +74,12 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:shipment_detail)
   end
 
-  test "should redirect edit when not logged in" do
+  test "get edit should show message when not logged in" do
     xhr :get, :edit, shipment_shipment_id: @shipment.shipment_id, id: @shipment_detail
-    assert_not flash.empty?
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 
-  # test action update
+  # test update action
   test "should update shipment detail when logged in" do
     log_in_as(@user)
     product_id = "test"
@@ -101,7 +103,7 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:shipment_details)
   end
 
-  test "should redirect update when not logged in" do
+  test "patch update should show message when not logged in" do
     product_id = "test"
     ship_cost = 100
     insured_cost = 10
@@ -113,11 +115,10 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
           insured_cost: insured_cost,
           custom_cost: custom_cost,
           memo: memo}
-    assert_not flash.empty?
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 
-  # test action destory
+  # test destory action
   test "should destroy shipment detail when logged in" do
     log_in_as(@user)
     assert_difference 'ShipmentDetail.count', -1 do
@@ -127,10 +128,10 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     assert_not flash.empty?
   end
 
-  test "should redirect destroy when not logged in" do
+  test "delete destroy should show message when not logged in" do
     assert_no_difference 'ShipmentDetail.count' do
       xhr :delete, :destroy, shipment_shipment_id: @shipment, id: @shipment_detail
     end
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 end

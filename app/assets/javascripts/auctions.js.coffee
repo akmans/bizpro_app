@@ -6,7 +6,7 @@ $(document).on "page:change", ->
   $("select#auction_brand_id").bind "change", ->
     $.ajax
       url: "/ajax/modus"
-      dataType: "json"
+#      dataType: "json"
       data: "brand_id=" + @value
       type: "GET"
       success: (data) ->

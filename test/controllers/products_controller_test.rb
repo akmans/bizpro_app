@@ -7,7 +7,7 @@ class ProductsControllerTest < ActionController::TestCase
     @product = products(:one)
   end
 
-  # test action index
+  # test index action
   test "should get index when logged in" do
     log_in_as(@user)
     get :index
@@ -15,13 +15,13 @@ class ProductsControllerTest < ActionController::TestCase
     assert_select 'title', full_title_help('一覧,商品')
     assert_not_nil assigns(:products)
   end
-  
+
   test "should redirect index when not logged in" do
     get :index
     assert_redirected_to login_url
   end
 
-  # test action show
+  # test show action
   test "should get show when logged in" do
     log_in_as(@user)
     get :show, product_id: @product
@@ -31,13 +31,13 @@ class ProductsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:auctions)
     assert_not_nil assigns(:customs)
   end
-  
+
   test "should redirect show when not logged in" do
     get :show, product_id: @product
     assert_redirected_to login_url
   end
-  
-  # test action new
+
+  # test new action
   test "should get new when logged in" do
     log_in_as(@user)
     get :new
@@ -45,13 +45,13 @@ class ProductsControllerTest < ActionController::TestCase
     assert_select 'title', full_title_help('新規,商品')
     assert_not_nil assigns(:product)
   end
- 
+
   test "should redirect new when not logged in" do
     get :new
     assert_redirected_to login_url
   end
 
-  # test action create
+  # test create action
   test "should create product when logged in" do
     log_in_as(@user)
     assert_difference 'Product.count', 1 do
@@ -69,7 +69,7 @@ class ProductsControllerTest < ActionController::TestCase
     assert_redirected_to login_url
   end
 
-  # test action edit
+  # test edit action
   test "should get edit when logged in" do
     log_in_as(@user)
     get :edit, product_id: @product
@@ -83,8 +83,8 @@ class ProductsControllerTest < ActionController::TestCase
     assert_not flash.empty?
     assert_redirected_to login_url
   end
- 
-  # test action update
+
+  # test update action
   test "should update product when logged in" do
     log_in_as(@user)
     product_name = "てすと"
@@ -135,7 +135,7 @@ class ProductsControllerTest < ActionController::TestCase
     assert_redirected_to login_url
   end
 
-  # test action destory
+  # test destory action
   test "should destroy product when logged in" do
     log_in_as(@user)
     assert_difference 'Product.count', -1 do

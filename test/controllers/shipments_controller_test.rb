@@ -7,7 +7,7 @@ class ShipmentsControllerTest < ActionController::TestCase
     @shipment = shipments(:two)
   end
 
-  # test action index
+  # test index action
   test "should get index when logged in" do
     log_in_as(@user)
     get :index
@@ -15,13 +15,16 @@ class ShipmentsControllerTest < ActionController::TestCase
     assert_select 'title', full_title_help('一覧,発送')
     assert_not_nil assigns(:shipments)
   end
-  
+
   test "should redirect index when not logged in" do
     get :index
     assert_redirected_to login_url
   end
-  
-  # test action new
+
+  # test show action
+  # nil
+
+  # test new action
   test "should get new when logged in" do
     log_in_as(@user)
     get :new
@@ -29,13 +32,13 @@ class ShipmentsControllerTest < ActionController::TestCase
     assert_select 'title', full_title_help('新規,発送')
     assert_not_nil assigns(:shipment)
   end
- 
+
   test "should redirect new when not logged in" do
     get :new
     assert_redirected_to login_url
   end
 
-  # test action create
+  # test create action
   test "should create shipment when logged in" do
     log_in_as(@user)
     assert_difference 'Shipment.count', 1 do
@@ -53,7 +56,7 @@ class ShipmentsControllerTest < ActionController::TestCase
     assert_redirected_to login_url
   end
 
-  # test action edit
+  # test edit action
   test "should get edit when logged in" do
     log_in_as(@user)
     get :edit, shipment_id: @shipment
@@ -67,8 +70,8 @@ class ShipmentsControllerTest < ActionController::TestCase
     assert_not flash.empty?
     assert_redirected_to login_url
   end
- 
-  # test action update
+
+  # test update action
   test "should update shipment when logged in" do
     log_in_as(@user)
     shipmethod_id = "ZZZ1"
@@ -104,7 +107,7 @@ class ShipmentsControllerTest < ActionController::TestCase
     assert_redirected_to login_url
   end
 
-  # test action destory
+  # test destory action
   test "should destroy shipment when logged in" do
     log_in_as(@user)
     assert_difference 'Shipment.count', -1 do
@@ -119,5 +122,4 @@ class ShipmentsControllerTest < ActionController::TestCase
     end
     assert_redirected_to login_url
   end
-
 end

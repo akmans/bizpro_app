@@ -7,7 +7,7 @@ class PaymethodsControllerTest < ActionController::TestCase
     @paymethod = paymethods(:one)
   end
 
-  # test action index
+  # test index action
   test "should get index when logged in" do
     log_in_as(@user)
     get :index
@@ -21,7 +21,10 @@ class PaymethodsControllerTest < ActionController::TestCase
     assert_redirected_to login_url
   end
 
-  # test action new
+  # test show action
+  # nil
+
+  # test new action
   test "should get new when logged in" do
     log_in_as(@user)
     xhr :get, :new
@@ -29,12 +32,12 @@ class PaymethodsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:paymethod)
   end
   
-  test "should redirect new when not logged in" do
+  test "get new should show message when not logged in" do
     xhr :get, :new
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 
-  # test action create
+  # test create action
   test "should create paymethod when logged in" do
     log_in_as(@user)
     assert_difference 'Paymethod.count', 1 do
@@ -43,14 +46,14 @@ class PaymethodsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:paymethods)
   end
 
-  test "should redirect create when not logged in" do
+  test "post create should show message when not logged in" do
     assert_no_difference 'Paymethod.count' do
       xhr :post, :create, paymethod: { paymethod_name: "Paymethod Name" }
     end
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 
-  # test action edit
+  # test edit action
   test "should get edit when logged in" do
     log_in_as(@user)
     xhr :get, :edit, paymethod_id: @paymethod
@@ -58,13 +61,12 @@ class PaymethodsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:paymethod)
   end
 
-  test "should redirect edit when not logged in" do
+  test "get edit should show message when not logged in" do
     xhr :get, :edit, paymethod_id: @paymethod
-    assert_not flash.empty?
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 
-  # test action update
+  # test update action
   test "should update paymethod when logged in" do
     log_in_as(@user)
     paymethod_name = "てすと"
@@ -74,14 +76,13 @@ class PaymethodsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:paymethods)
   end
 
-  test "should redirect update when not logged in" do
+  test "patch update should show message when not logged in" do
     paymethod_name = "てすと"
     xhr :patch, :update, paymethod_id: @paymethod, paymethod: { paymethod_name: paymethod_name }
-    assert_not flash.empty?
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 
-  # test action destory
+  # test destory action
   test "should destroy paymethod when logged in" do
     log_in_as(@user)
     assert_difference 'Paymethod.count', -1 do
@@ -90,10 +91,10 @@ class PaymethodsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:paymethods)
   end
 
-  test "should redirect destroy when not logged in" do
+  test "delete destroy should show message when not logged in" do
     assert_no_difference 'Paymethod.count' do
       xhr :delete, :destroy, paymethod_id: @paymethod
     end
-    assert_redirected_to login_url
+    assert_equal 'Please log in.', flash[:danger]
   end
 end

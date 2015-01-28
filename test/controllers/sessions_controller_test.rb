@@ -6,6 +6,12 @@ class SessionsControllerTest < ActionController::TestCase
     @user = users(:one)
   end
 
+  # test index action
+  # nil
+
+  # test show action
+  # nil
+
   # test new action
   test "should get new" do
     get :new
@@ -23,6 +29,12 @@ class SessionsControllerTest < ActionController::TestCase
     post :create, session: { email: @user.email, password: "wrong password" }
     assert_template 'sessions/new'
   end
+
+  # test edit action
+  # nil
+
+  # test update action
+  # nil
 
   # test destroy action
   test "should redirect to login path if log out" do
