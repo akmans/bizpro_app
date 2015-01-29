@@ -16,7 +16,7 @@ custom_form_change = (flg) ->
         $.ajax
           url: "/ajax/auctions"
           data: 'ope_flg=0'
-          dataType: "json"
+#          dataType: "json"
           type: "GET"
           success: (data) ->
             $("select#custom_auction_id").children("option").remove()
@@ -40,8 +40,8 @@ $(document).on "page:change", ->
     $("#custom_custom_name").val($( "#custom_auction_id option:selected" ).text())
     $.ajax
       url: "/ajax/auction_percentage"
-      dataType: "json"
-      data: "auction_id=" + @value
+#      dataType: "json"
+      data: "custom_id=" + $("#custom_custom_id").text()
       type: "GET"
       success: (data) ->
         $("select#custom_percentage").children("option:gt(0)").remove()

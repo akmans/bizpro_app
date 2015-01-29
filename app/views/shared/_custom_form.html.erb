@@ -2,7 +2,7 @@
   <%= render 'shared/error_messages', object: f.object %>
   <div class="form-group grid">
     <div class="col-sm-1 header">ID</div>
-    <div class="col-sm-2"><%= @custom.custom_id.blank? ? '-' : @custom.custom_id %></div>
+    <div class="col-sm-2" id="custom_custom_id"><%= @custom.custom_id.blank? ? '-' : @custom.custom_id %></div>
     <div class="col-sm-1 header">名称</div>
     <div class="col-sm-8">
       <%= f.text_field :custom_name, class: 'form-control form-field' %>

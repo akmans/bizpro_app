@@ -11,5 +11,12 @@ one:
 
 two:
   product_id: Two2
-  custom_id: Two2
+  custom_id: C102
   created_at: <%= Time.zone.now - 1 %>
+
+<% (103..200).each do |n| %>
+custom_<%= "C#{n}" %>:
+  product_id: <%= "P#{n}" %>
+  custom_id: <%= "C#{n}" %>
+  created_at: <%= Time.zone.now - 1 %>
+<% end %>

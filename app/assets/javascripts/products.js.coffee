@@ -6,7 +6,7 @@ $(document).on "page:change", ->
   $("select#product_brand_id").bind "change", ->
     $.ajax
       url: "/ajax/modus"
-      dataType: "json"
+#      dataType: "json"
       data: "brand_id=" + @value
       type: "GET"
       success: (data) ->
@@ -25,7 +25,7 @@ $(document).on "page:change", ->
     $.ajax
       url: url
       data: data
-      dataType: "json"
+#      dataType: "json"
       type: "GET"
       success: (data) ->
         $.each data, (k, v) ->

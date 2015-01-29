@@ -52,7 +52,7 @@ class CustomsController < ApplicationController
     end
   end
 
-  # delete action
+  # destroy action
   def destroy
     Custom.find(params[:custom_id]).destroy
     flash[:success] = "削除完了しました。"
@@ -67,7 +67,8 @@ class CustomsController < ApplicationController
 
   # ajax auction percentage
   def ajax_auction_percentage
-    render json: auction_percentage_hash_help(params[:auction_id])
+    custom = Custom.find(params[:custom_id])
+    render json: auction_percentage_hash_help(custom)
   end
 
   private

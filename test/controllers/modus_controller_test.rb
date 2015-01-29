@@ -103,7 +103,7 @@ class ModusControllerTest < ActionController::TestCase
   end
 
   # test ajax_modus action
-  test "should get json data when logged in" do
+  test "get ajax_modus should get json data when logged in" do
     log_in_as(@user)
     xhr :get, :ajax_modus, brand_id: @brand
     assert_equal [@modu.as_json], JSON.parse(response.body)

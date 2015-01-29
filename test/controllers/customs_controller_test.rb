@@ -142,4 +142,36 @@ class CustomsControllerTest < ActionController::TestCase
     end
     assert_redirected_to login_url
   end
+
+  # test ajax_customs action
+  test "get ajax_customs should get json data when logged in" do
+    log_in_as(@user)
+    xhr :get, :ajax_customs
+    expected = {"" => "(空白)", "One1" => "CustomName", "Two2" => "CustomName"}
+    assert_equal expected, JSON.parse(response.body)
+  end
+
+  test "get ajax_customs should show message when not logged in" do
+    xhr :get, :ajax_customs
+    assert_equal 'Please log in.', flash[:danger]
+  end
+
+  # test ajax_auction_percentage action
+  test "get ajax_auction_percentage should get json data when logged in" do
+    log_in_as(@user)
+    xhr :get, :ajax_auction_percentage, :custom_id => @custom
+    expected = {""   => "(空白)",
+     "10" => "１０％",
+     "20" => "２０％",
+     "30" => "３０％",
+     "40" => "４０％",
+     "50" => "５０％"
+    }
+    assert_equal expected, JSON.parse(response.body)
+  end
+
+  test "get ajax_auction_percentage should show message when not logged in" do
+    xhr :get, :ajax_auction_percentage, :custom_id => @custom
+    assert_equal 'Please log in.', flash[:danger]
+  end
 end

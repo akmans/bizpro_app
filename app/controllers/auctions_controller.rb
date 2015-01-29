@@ -21,8 +21,8 @@ class AuctionsController < ApplicationController
   def new
   end
 
-#  def create
-#  end
+  # create action
+  # nil
 
   # edit action
   def edit

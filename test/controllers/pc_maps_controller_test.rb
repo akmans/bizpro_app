@@ -42,7 +42,7 @@ class PcMapsControllerTest < ActionController::TestCase
   test "should create pc_map when logged in" do
     log_in_as(@user)
     assert_difference 'PcMap.count', 1 do
-      xhr :post, :create, product_product_id: @product.product_id, pc_map: { custom_id: "C105" }
+      xhr :post, :create, product_product_id: @product.product_id, pc_map: { custom_id: "Two2" }
     end
     assert_not flash.empty?
     assert_not_nil assigns(:pc_maps)
@@ -50,7 +50,7 @@ class PcMapsControllerTest < ActionController::TestCase
 
   test "post create should show message when not logged in" do
     assert_no_difference 'PcMap.count' do
-      xhr :post, :create, product_product_id: @product.product_id, modu: { custom_id: "C105" }
+      xhr :post, :create, product_product_id: @product.product_id, modu: { custom_id: "Two2" }
     end
     assert_equal 'Please log in.', flash[:danger]
   end

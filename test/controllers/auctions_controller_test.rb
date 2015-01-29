@@ -22,7 +22,7 @@ class AuctionsControllerTest < ActionController::TestCase
 
   def teardown
     OmniAuth.config.mock_auth[:yahoojp] = nil
-    yahoojp_log_out if yahoojp_logged_in_help?
+    yahoojp_log_out_help if yahoojp_logged_in_help?
   end
 
   # test index action
@@ -166,5 +166,52 @@ class AuctionsControllerTest < ActionController::TestCase
       delete :destroy, auction_id: @auction
     end
     assert_redirected_to login_url
+  end
+
+  # test loaddata action
+  # nil
+
+  # test callback action
+  test "should do callback when logged in" do
+    log_in_as(@user)
+    request.env['omniauth.auth'] = @auth
+    get :callback, :provider => 'yahoojp'
+    assert_template 'auctions/new'
+    assert_select 'a[href=?]', "/auth/yahoojp/logout", text: 'ログアウト'
+    assert_select 'a[href=?]', "/auth/yahoojp/loaddata", text: 'ロードデータ'
+    assert_select 'a[href=?]', auctions_path, text: '戻る'
+  end
+
+  test "should redirect callback when not logged in" do
+    request.env['omniauth.auth'] = @auth
+    get :callback, :provider => 'yahoojp'
+    assert_redirected_to login_url
+  end
+
+  # test logout action
+  test "should do logout when logged in" do
+    log_in_as(@user)
+    get :logout, :provider => 'yahoojp'
+    assert_template 'auctions/new'
+    assert_select 'a[href=?]', "/auth/yahoojp", text: 'Yahoo! JAPAN でlogin'
+    assert_select 'a[href=?]', auctions_path, text: '戻る'
+  end
+
+  test "should redirect logout when not logged in" do
+    get :logout, :provider => 'yahoojp'
+    assert_redirected_to login_url
+  end
+
+  # test ajax_auctions action
+  test "get ajax_auctions should get json data when logged in" do
+    log_in_as(@user)
+    expected = {""=>"(空白)", "One1"=>"OneOneOneOneOne 11111"}
+    xhr :get, :ajax_auctions, ope_flg: 0
+    assert_equal expected, JSON.parse(response.body)
+  end
+
+  test "get ajax_auctions should show message when not logged in" do
+    xhr :get, :ajax_auctions, ope_flg: 0
+    assert_equal 'Please log in.', flash[:danger]
   end
 end
