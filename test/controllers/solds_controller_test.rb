@@ -14,6 +14,12 @@ class SoldsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'title', full_title_help('一覧,売上情報,商品')
     assert_not_nil assigns(:solds)
+    assert_template 'solds/index'
+    assert_select 'a[href=?]', new_product_sold_path, text: 'New'
+    Sold.where(product_id: @product.product_id).all.each do |sold|
+      assert_select 'a[href=?]', edit_product_sold_path(id: sold.id), text: 'Edi', remote: true
+      assert_select 'a[href=?]', product_sold_path(id: sold.id), text: 'Del', remote: true, method: :delete
+    end
   end
 
   test "should redirect index when not logged in" do
@@ -52,6 +58,7 @@ class SoldsControllerTest < ActionController::TestCase
     end
     assert_not flash.empty?
     assert_not_nil assigns(:solds)
+    assert_equal '作成完了しました。', flash[:success]
   end
 
   test "should redirect create when not logged in" do
@@ -100,6 +107,7 @@ class SoldsControllerTest < ActionController::TestCase
     assert_equal other_charge, @sold.other_charge
     assert_equal memo, @sold.memo
     assert_not_nil assigns(:solds)
+    assert_equal '更新完了しました。', flash[:success]
   end
 
   test "should redirect update when not logged in" do
@@ -122,6 +130,7 @@ class SoldsControllerTest < ActionController::TestCase
     end
     assert_not flash.empty?
     assert_not_nil assigns(:solds)
+    assert_equal '削除完了しました。', flash[:success]
   end
 
   test "should redirect destroy when not logged in" do

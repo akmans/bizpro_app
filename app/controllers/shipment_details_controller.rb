@@ -55,7 +55,7 @@ class ShipmentDetailsController < ApplicationController
   private
     # all shipment_details
     def all_shipment_details
-      @shipment_details = ShipmentDetail.where(shipment_id: params[:shipment_shipment_id])
+      @shipment_details = ShipmentDetail.where(shipment_id: params[:shipment_shipment_id]).all
     end
 
     # set shipment_details

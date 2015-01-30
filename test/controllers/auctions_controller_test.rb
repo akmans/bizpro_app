@@ -134,6 +134,7 @@ class AuctionsControllerTest < ActionController::TestCase
     assert_equal @auction.paymethod_id, paymethod_id
     assert_equal @auction.memo, memo
     assert_redirected_to auctions_path
+    assert_equal '更新完了しました。', flash[:success]
   end
 
   test "should redirect update when not logged in" do
@@ -159,6 +160,7 @@ class AuctionsControllerTest < ActionController::TestCase
       delete :destroy, auction_id: @auction
     end
     assert_redirected_to auctions_path
+    assert_equal '削除完了しました。', flash[:success]
   end
 
   test "should redirect destroy when not logged in" do

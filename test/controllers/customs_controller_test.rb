@@ -14,6 +14,13 @@ class CustomsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'title', full_title_help('一覧,カスタム')
     assert_not_nil assigns(:customs)
+    assert_select 'div.pagination'
+    assert_select 'a[href=?]', new_custom_path, text: 'New'
+    Custom.paginate(page: 1, per_page: 15).each do |custom|
+      assert_select 'a[href=?]', custom_path(custom.custom_id), text: 'Dis'
+      assert_select 'a[href=?]', edit_custom_path(custom.custom_id), text: 'Edi'
+      assert_select 'a[href=?]', custom_path(custom.custom_id), text: 'Del', method: :delete
+    end
   end
 
   test "should redirect index when not logged in" do
@@ -22,7 +29,18 @@ class CustomsControllerTest < ActionController::TestCase
   end
 
   # test show action
-  # nil
+  test "should get show when logged in" do
+    log_in_as(@user)
+    get :show, custom_id: @custom
+    assert_response :success
+    assert_select 'title', full_title_help('表示,カスタム')
+    assert_not_nil assigns(:custom)
+  end
+
+  test "should redirect show when not logged in" do
+    get :show, custom_id: @custom
+    assert_redirected_to login_url
+  end
 
   # test new action
   test "should get new when logged in" do
@@ -46,6 +64,7 @@ class CustomsControllerTest < ActionController::TestCase
                               is_auction: 0}
     end
     assert_redirected_to customs_path
+    assert_equal '作成完了しました。', flash[:success]
   end
 
   test "should redirect create when not logged in" do
@@ -102,6 +121,7 @@ class CustomsControllerTest < ActionController::TestCase
     assert_equal @custom.other_cost, other_cost
     assert_equal @custom.memo, memo
     assert_redirected_to customs_path
+    assert_equal '更新完了しました。', flash[:success]
   end
 
   test "should redirect update when not logged in" do
@@ -134,6 +154,7 @@ class CustomsControllerTest < ActionController::TestCase
       delete :destroy, custom_id: @custom
     end
     assert_redirected_to customs_path
+    assert_equal '削除完了しました。', flash[:success]
   end
 
   test "should redirect destroy when not logged in" do

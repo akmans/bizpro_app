@@ -15,6 +15,12 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'title', full_title_help('詳細一覧,発送')
     assert_not_nil assigns(:shipment_details)
+    assert_template 'shipment_details/index'
+    assert_select 'a[href=?]', new_shipment_shipment_detail_path, text: 'New'
+    ShipmentDetail.where(shipment_id: @shipment.shipment_id).all.each do |sd|
+      assert_select 'a[href=?]', edit_shipment_shipment_detail_path(id: sd.id), text: 'Edi'
+      assert_select 'a[href=?]', shipment_shipment_detail_path(id: sd.id), text: 'Del', method: :delete
+    end
   end
 
   test "should redirect index when not logged in" do
@@ -52,6 +58,7 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     end
     assert_not flash.empty?
     assert_not_nil assigns(:shipment_details)
+    assert_equal '作成完了しました。', flash[:success]
   end
 
   test "post create should show message when not logged in" do
@@ -101,6 +108,7 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     assert_equal @shipment_detail.memo, memo
     assert_not flash.empty?
     assert_not_nil assigns(:shipment_details)
+    assert_equal '更新完了しました。', flash[:success]
   end
 
   test "patch update should show message when not logged in" do
@@ -126,6 +134,7 @@ class ShipmentDetailsControllerTest < ActionController::TestCase
     end
     assert_not_nil assigns(:shipment_details)
     assert_not flash.empty?
+    assert_equal '削除完了しました。', flash[:success]
   end
 
   test "delete destroy should show message when not logged in" do

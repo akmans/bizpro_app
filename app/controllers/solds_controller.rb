@@ -57,7 +57,7 @@ class SoldsController < ApplicationController
     # all solds
     def all_solds
       # get sold data
-      @solds = Sold.where(product_id: @product.product_id)
+      @solds = Sold.where(product_id: @product.product_id).all
     end
 
     # set products

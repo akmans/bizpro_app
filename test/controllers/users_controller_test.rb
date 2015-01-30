@@ -7,13 +7,37 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   # test index action
+  test "should get index when logged in" do
+    log_in_as(@user)
+    get :index
+    assert_template 'users/index'
+    assert_select 'div.pagination'
+    first_page_of_users = User.paginate(page: 1, per_page: 15)
+    first_page_of_users.each do |user|
+      assert_select 'a[href=?]', user_path(user), text: 'Dis'
+      assert_select 'a[href=?]', edit_user_path(user), text: 'Edi'
+      assert_select 'a[href=?]', user_path(user), text: 'Del', method: :delete
+    end
+  end
+
   test "should redirect index when not logged in" do
     get :index
     assert_redirected_to login_url
   end
 
   # test show action
-  # nil
+  test "should get show when logged in" do
+    log_in_as(@user)
+    get :show, id: @user
+    assert_response :success
+    assert_select 'title', full_title_help('表示,ユーザー,マスタ管理')
+    assert_not_nil assigns(:user)
+  end
+
+  test "should redirect show when not logged in" do
+    get :show, id: @user
+    assert_redirected_to login_url
+  end
 
   # test new action
   test "should get new" do

@@ -15,6 +15,11 @@ class ModusControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'title', full_title_help('一覧,モデル,マスタ管理')
     assert_not_nil assigns(:modus)
+    assert_select 'a[href=?]', new_brand_modu_path, text: 'New'
+    Modu.where(brand_id: @brand.brand_id).paginate(page: 1, per_page: 15).each do |modu|
+      assert_select 'a[href=?]', edit_brand_modu_path(modu_id: modu.modu_id), text: 'Edi'
+      assert_select 'a[href=?]', brand_modu_path(modu_id: modu.modu_id), text: 'Del', method: :delete
+    end
   end
 
   test "should redirect index when not logged in" do
@@ -46,6 +51,7 @@ class ModusControllerTest < ActionController::TestCase
     end
     assert_not flash.empty?
     assert_not_nil assigns(:modus)
+    assert_equal '作成完了しました。', flash[:success]
   end
 
   test "post create should show message when not logged in" do
@@ -77,6 +83,7 @@ class ModusControllerTest < ActionController::TestCase
     assert_equal @modu.modu_name, modu_name
     assert_not flash.empty?
     assert_not_nil assigns(:modus)
+    assert_equal '更新完了しました。', flash[:success]
   end
 
   test "patch update should show message when not logged in" do
@@ -93,6 +100,7 @@ class ModusControllerTest < ActionController::TestCase
     end
     assert_not flash.empty?
     assert_not_nil assigns(:modus)
+    assert_equal '削除完了しました。', flash[:success]
   end
 
   test "delete destroy should show message when not logged in" do

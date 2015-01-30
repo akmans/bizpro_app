@@ -15,6 +15,11 @@ class PcMapsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'title', full_title_help('カスタムリスト,商品')
     assert_not_nil assigns(:pc_maps)
+    assert_template 'pc_maps/index'
+    assert_select 'a[href=?]', new_product_pc_map_path, remote: true, text: 'New'
+    PcMap.where(product_id: @product_id).each do |pc_map|
+      assert_select 'a[href=?]', product_pc_map_path(pc_map.custom_id), text: 'Del', remote: true, method: :delete
+    end
   end
 
   test "should redirect index when not logged in" do
@@ -46,6 +51,7 @@ class PcMapsControllerTest < ActionController::TestCase
     end
     assert_not flash.empty?
     assert_not_nil assigns(:pc_maps)
+    assert_equal '作成完了しました。', flash[:success]
   end
 
   test "post create should show message when not logged in" do
@@ -69,6 +75,7 @@ class PcMapsControllerTest < ActionController::TestCase
     end
     assert_not flash.empty?
     assert_not_nil assigns(:pc_maps)
+    assert_equal '削除完了しました。', flash[:success]
   end
 
   test "delete destroy should show message when not logged in" do

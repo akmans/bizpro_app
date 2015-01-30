@@ -14,6 +14,14 @@ class ShipmentsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'title', full_title_help('一覧,発送')
     assert_not_nil assigns(:shipments)
+    assert_template 'shipments/index'
+    assert_select 'div.pagination'
+    assert_select 'a[href=?]', new_shipment_path, text: 'New'
+    Shipment.paginate(page: 1, per_page: 15).each do |shipment|
+      assert_select 'a[href=?]', shipment_path(shipment.shipment_id), text: 'Dis'
+      assert_select 'a[href=?]', edit_shipment_path(shipment.shipment_id), text: 'Edi'
+      assert_select 'a[href=?]', shipment_path(shipment.shipment_id), text: 'Del', method: :delete
+    end
   end
 
   test "should redirect index when not logged in" do
@@ -46,6 +54,7 @@ class ShipmentsControllerTest < ActionController::TestCase
                               shipmethod_id: "ZZZ1"}
     end
     assert_redirected_to shipments_path
+    assert_equal '作成完了しました。', flash[:success]
   end
 
   test "should redirect create when not logged in" do
@@ -90,6 +99,7 @@ class ShipmentsControllerTest < ActionController::TestCase
     assert_equal @shipment.arrived_date, arrived_date
     assert_equal @shipment.memo, memo
     assert_redirected_to shipments_path
+    assert_equal '更新完了しました。', flash[:success]
   end
 
   test "should redirect update when not logged in" do
@@ -114,6 +124,7 @@ class ShipmentsControllerTest < ActionController::TestCase
       delete :destroy, shipment_id: @shipment
     end
     assert_redirected_to shipments_path
+    assert_equal '削除完了しました。', flash[:success]
   end
 
   test "should redirect destroy when not logged in" do

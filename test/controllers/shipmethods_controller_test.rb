@@ -14,6 +14,12 @@ class ShipmethodsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'title', full_title_help("一覧,発送方法,マスタ管理")
     assert_not_nil assigns(:shipmethods)
+    assert_template 'shipmethods/index'
+    assert_select 'a[href=?]', new_shipmethod_path, text: 'New'
+    Shipmethod.paginate(page: 1, per_page: 15).each do |shipmethod|
+      assert_select 'a[href=?]', edit_shipmethod_path(shipmethod.shipmethod_id), text: 'Edi', remote: true
+      assert_select 'a[href=?]', shipmethod_path(shipmethod.shipmethod_id), text: 'Del', remote: true, method: :delete
+    end
   end
 
   test "should redirect index when not logged in" do
@@ -45,6 +51,7 @@ class ShipmethodsControllerTest < ActionController::TestCase
     end
     assert_not_nil assigns(:shipmethods)
     assert_not flash.empty?
+    assert_equal '作成完了しました。', flash[:success]
   end
 
   test "should redirect create when not logged in" do
@@ -76,6 +83,7 @@ class ShipmethodsControllerTest < ActionController::TestCase
     assert_equal @shipmethod.shipmethod_name, shipmethod_name
     assert_not_nil assigns(:shipmethods)
     assert_not flash.empty?
+    assert_equal '更新完了しました。', flash[:success]
   end
 
   test "should redirect update when not logged in" do
@@ -92,6 +100,7 @@ class ShipmethodsControllerTest < ActionController::TestCase
     end
     assert_not_nil assigns(:shipmethods)
     assert_not flash.empty?
+    assert_equal '削除完了しました。', flash[:success]
   end
 
   test "should redirect destroy when not logged in" do

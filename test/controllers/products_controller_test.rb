@@ -14,6 +14,14 @@ class ProductsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'title', full_title_help('一覧,商品')
     assert_not_nil assigns(:products)
+    assert_template 'products/index'
+    assert_select 'div.pagination'
+    assert_select 'a[href=?]', new_product_path, text: 'New'
+    Product.paginate(page: 1, per_page: 15).each do |product|
+      assert_select 'a[href=?]', product_path(product.product_id), text: 'Dis'
+      assert_select 'a[href=?]', edit_product_path(product.product_id), text: 'Edi'
+      assert_select 'a[href=?]', product_path(product.product_id), text: 'Del', method: :delete
+    end
   end
 
   test "should redirect index when not logged in" do
@@ -30,6 +38,8 @@ class ProductsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:product)
     assert_not_nil assigns(:auctions)
     assert_not_nil assigns(:customs)
+    assert_not_nil assigns(:shipment_details)
+    assert_not_nil assigns(:solds)
   end
 
   test "should redirect show when not logged in" do
@@ -59,6 +69,7 @@ class ProductsControllerTest < ActionController::TestCase
                                is_domestic: 0}
     end
     assert_redirected_to products_path
+    assert_equal '作成完了しました。', flash[:success]
   end
 
   test "should redirect create when not logged in" do
@@ -112,6 +123,7 @@ class ProductsControllerTest < ActionController::TestCase
     assert_equal @product.modu_id, modu_id
     assert_equal @product.memo, memo
     assert_redirected_to products_path
+    assert_equal '更新完了しました。', flash[:success]
   end
 
   test "should redirect update when not logged in" do
@@ -142,6 +154,7 @@ class ProductsControllerTest < ActionController::TestCase
       delete :destroy, product_id: @product
     end
     assert_redirected_to products_path
+    assert_equal '削除完了しました。', flash[:success]
   end
 
   test "should redirect destroy when not logged in" do

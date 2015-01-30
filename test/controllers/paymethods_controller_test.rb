@@ -14,6 +14,12 @@ class PaymethodsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'title', full_title_help("一覧,支払い方法,マスタ管理")
     assert_not_nil assigns(:paymethods)
+    assert_template 'paymethods/index'
+    assert_select 'a[href=?]', new_paymethod_path, text: 'New'
+    Paymethod.paginate(page: 1, :per_page => 15).each do |paymethod|
+      assert_select 'a[href=?]', edit_paymethod_path(paymethod.paymethod_id), text: 'Edi', remote: true
+      assert_select 'a[href=?]', paymethod_path(paymethod.paymethod_id), text: 'Del', remote: true, method: :delete
+    end
   end
   
   test "should redirect index when not logged in" do
@@ -44,6 +50,7 @@ class PaymethodsControllerTest < ActionController::TestCase
       xhr :post, :create, paymethod: { paymethod_name: "Paymethod Name" }
     end
     assert_not_nil assigns(:paymethods)
+    assert_equal '作成完了しました。', flash[:success]
   end
 
   test "post create should show message when not logged in" do
@@ -74,6 +81,7 @@ class PaymethodsControllerTest < ActionController::TestCase
     @paymethod.reload
     assert_equal @paymethod.paymethod_name, paymethod_name
     assert_not_nil assigns(:paymethods)
+    assert_equal '更新完了しました。', flash[:success]
   end
 
   test "patch update should show message when not logged in" do
@@ -89,6 +97,7 @@ class PaymethodsControllerTest < ActionController::TestCase
       xhr :delete, :destroy, paymethod_id: @paymethod
     end
     assert_not_nil assigns(:paymethods)
+    assert_equal '削除完了しました。', flash[:success]
   end
 
   test "delete destroy should show message when not logged in" do
