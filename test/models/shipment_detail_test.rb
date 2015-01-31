@@ -8,10 +8,12 @@ class ShipmentDetailTest < ActiveSupport::TestCase
     )
   end
 
+  # test @shipmentdetail
   test "should be valid" do
     assert @shipmentdetail.valid?
   end
 
+  # test field shipment_id
   test "shipment_id should be presence" do
     @shipmentdetail.shipment_id = "    "
     assert_not @shipmentdetail.valid?
@@ -22,6 +24,7 @@ class ShipmentDetailTest < ActiveSupport::TestCase
     assert_not @shipmentdetail.valid?
   end
 
+  # test field product_id
   test "product_id should be presence" do
     @shipmentdetail.product_id = "    "
     assert_not @shipmentdetail.valid?
@@ -32,6 +35,7 @@ class ShipmentDetailTest < ActiveSupport::TestCase
     assert_not @shipmentdetail.valid?
   end
 
+  # test field memo
   test "memo should allow blank" do
     @shipmentdetail.memo = nil
     assert @shipmentdetail.valid?
@@ -42,6 +46,7 @@ class ShipmentDetailTest < ActiveSupport::TestCase
     assert_not @shipmentdetail.valid?
   end
 
+  # test ORDER BY
   test "order should be the minimum product_id data first" do
     assert_equal ShipmentDetail.first, shipment_details(:one)
   end

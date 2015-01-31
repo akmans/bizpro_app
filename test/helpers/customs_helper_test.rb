@@ -8,6 +8,7 @@ class CustomsHelperTest < ActionView::TestCase
     @auction = auctions(:one)
   end
 
+  # test percentage_hash_help
   test "test percentage hash help" do
     expected = {
       ""   => "(空白)",
@@ -24,6 +25,7 @@ class CustomsHelperTest < ActionView::TestCase
     assert_equal expected, percentage_hash_help
   end
 
+  # test auction_percentage_hash_help
   test "test auction percentage hash help" do
     expected = {
       ""   => "(空白)",
@@ -35,7 +37,9 @@ class CustomsHelperTest < ActionView::TestCase
     assert_equal expected, auction_percentage_hash_help(@custom2)
   end
 
+  # test percentage_name_help
   test "test percentage name help" do
+    assert_equal "-", percentage_name_help(nil)
     assert_equal "１０％", percentage_name_help(10)
     assert_equal "２０％", percentage_name_help(20)
     assert_equal "３０％", percentage_name_help(30)
@@ -47,12 +51,14 @@ class CustomsHelperTest < ActionView::TestCase
     assert_equal "９０％", percentage_name_help(90)
   end
 
+  # test is_auction_name_help
   test "test is auction name help" do
     assert_equal "-", is_auction_name_help(nil)
     assert_equal "-", is_auction_name_help(0)
     assert_equal "オークション品", is_auction_name_help(1)
   end
 
+  # test custom_total_cost_help
   test "test custom total cost help" do
     @custom.is_auction = 0
     @custom.net_cost = 1000
@@ -66,11 +72,13 @@ class CustomsHelperTest < ActionView::TestCase
     @custom.percentage = 100
     assert_equal 123456, custom_total_cost_help(@custom)
   end
-  
+
+  # test custom_name_help
   test "test custom name help" do
     assert_equal @custom.custom_name, custom_name_help(@custom.custom_id)
   end
-  
+
+  # test customs_hash_help
   test "test custom hash help" do
     assert_not_nil customs_hash_help
   end

@@ -43,10 +43,36 @@ class UsersControllerTest < ActionController::TestCase
   test "should get new" do
     get :new
     assert_response :success
+    assert_select 'title', full_title_help('新規,ユーザー,マスタ管理')
+    assert_not_nil assigns(:user)
   end
 
   # test create action
-  # nil
+  test "should create user when logged in" do
+    email = "test1@testtest1.com"
+    assert_difference 'User.count', 1 do
+      post :create, user: { name: "User Name", 
+        email: email,
+        password: "Aa123456",
+        password_confirmation: "Aa123456"
+      }
+    end
+    user = User.where(email: email).first
+    assert_redirected_to user_path(id: user.id)
+    assert_equal 'ようこそ!', flash[:success]
+  end
+
+  test "should render new when invalid form data" do
+    email = "test1@testtest1.com"
+    assert_no_difference 'User.count' do
+      post :create, user: { name: "User Name", 
+        email: email,
+        password: nil,
+        password_confirmation: nil
+      }
+    end
+    assert_template 'users/new'
+  end
 
   # test edit action
   test "should redirect edit when not logged in" do
@@ -63,6 +89,20 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   # test update action
+  test "should update when logged in with correct user" do
+    log_in_as(@user)
+    name = "New Name"
+    email = "new@email.com"
+    password = "newPassword"
+    patch :update, id: @user, \
+      user: { name: name, email: email, password: password, password_confirmation: password }
+    assert_equal "Profile updated", flash[:success]
+    @user.reload
+    assert_equal name, @user.name
+    assert_equal email, @user.email
+#    assert_equal password, @user.password
+  end
+
   test "should redirect update when not logged in" do
     patch :update, id: @user, user: { name: @user.name, email: @user.email }
     assert_not flash.empty?
@@ -77,6 +117,14 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   # test destroy action
+  test "should destroy when logged in" do
+    log_in_as(@user)
+    assert_difference 'User.count', -1 do
+      delete :destroy, id: @other_user
+    end
+    assert_equal "削除しました。", flash[:success]
+  end
+
   test "should redirect destroy when not logged in" do
     assert_no_difference 'User.count' do
       delete :destroy, id: @user

@@ -6,12 +6,14 @@ class BrandsHelperTest < ActionView::TestCase
     @brand = brands(:one)
   end
 
+  # test brand_name_help
   test "test brand name help" do
     assert_equal "-", brand_name_help(nil)
     assert_equal "-", brand_name_help("    ")
     assert_equal @brand.brand_name, brand_name_help(@brand.brand_id)
   end
-  
+
+  # test brand_hash_help
   test "test brand hash help" do
     assert_not_nil brand_hash_help
   end
