@@ -66,13 +66,13 @@ module ProductsHelper
 
   # return profit
   def profit_help(product, auctions, customs, shipment_details, solds)
-    (product_total_sold_price_help(solds) - product_total_cost_help(auctions, customs, shipment_details) * \
-    (product.exchange_rate || 8.3)) / 100
+    product_total_sold_price_help(solds) + product_total_cost_help(auctions, customs, shipment_details) * \
+    (product.exchange_rate || 8.3) / 100
   end
 
   # return profit rate
   def profit_rate_help(product, auctions, customs, shipment_details, solds)
-    ((product_total_sold_price_help(solds) - product_total_cost_help(auctions, customs, shipment_details) * \
-    (product.exchange_rate || 8.3)) / 100) / product_total_cost_help(auctions, customs, shipment_details) * 100
+    profit_help(product, auctions, customs, shipment_details, solds) * (product.exchange_rate || 8.3) / \
+      product_total_cost_help(auctions, customs, shipment_details) * -100
   end
 end

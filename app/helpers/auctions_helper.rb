@@ -93,7 +93,7 @@ module AuctionsHelper
       total_cost -= (auction.shipment_cost || 0) if auction.ship_type == 0
     else
       total_cost = -auction.price * (100 + (auction.tax_rate || 0)) / 100 - (auction.payment_cost || 0)
-      total_cost -= (auction.shipment_cost || 0) if auction.ship_type == 1
+      total_cost -= (auction.shipment_cost || 0)
     end
     return total_cost.to_i
   end
