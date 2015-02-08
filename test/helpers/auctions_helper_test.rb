@@ -101,7 +101,7 @@ class AuctionsHelperTest < ActionView::TestCase
   test "test custom percentage help" do
     assert_equal nil, custom_percentage_help(nil)
     assert_equal nil, custom_percentage_help("Two2")
-    assert_equal "(50%)", custom_percentage_help("One1")
+    assert_equal "(50)", custom_percentage_help("One1")
   end
 
   # test sold_type_hash_help
@@ -134,13 +134,14 @@ class AuctionsHelperTest < ActionView::TestCase
     @auction.tax_rate = nil
     @auction.payment_cost = nil
     @auction.shipment_cost = nil
-    assert_equal 100 , auction_total_cost_help(@auction)
+    assert_equal 100 * -1, auction_total_cost_help(@auction)
     @auction.tax_rate = 5
-    assert_equal 105 , auction_total_cost_help(@auction)
+    assert_equal 105 * -1, auction_total_cost_help(@auction)
     @auction.payment_cost = 10
-    assert_equal 115 , auction_total_cost_help(@auction)
+    assert_equal 115 * -1, auction_total_cost_help(@auction)
     @auction.shipment_cost = 1000
-    assert_equal 1115 , auction_total_cost_help(@auction)
+    @auction.ship_type = 1
+    assert_equal 1115 * -1, auction_total_cost_help(@auction)
   end
 
   # test auction_name_help

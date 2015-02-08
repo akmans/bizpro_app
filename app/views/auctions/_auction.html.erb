@@ -1,15 +1,23 @@
 <div class="row">
-  <div class="col-xs-12 col-md-6">
+  <div class="col-xs-12 col-md-5">
     【<%= auction.end_time.nil? ? "-" : auction.end_time.strftime("%m/%d/%y") %>】
     <%= link_to auction.auction_name, auction.url, :target => '_blank' %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-6 col-md-1">
+    <%= sold_type_name_help(auction.sold_flg) %>
+  </div>
   <div class="col-xs-6 col-md-2">
     <%= category_name_help(auction.category_id) %>
   </div>
-  <div class="col-xs-6 col-md-2">
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-6 col-md-1">
     <%= ope_flg_name_help(auction.ope_flg) %><%= custom_percentage_help(auction.auction_id) %>
+  </div>
+  <div class="col-xs-6 col-md-1 text-right" style="padding: 0px 10px">
+    <%= commas_help(auction_total_cost_help(auction).to_i) %>円
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>

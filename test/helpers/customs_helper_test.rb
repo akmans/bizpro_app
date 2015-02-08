@@ -70,7 +70,7 @@ class CustomsHelperTest < ActionView::TestCase
     @custom.is_auction = 1
     @custom.auction_id = "One1"
     @custom.percentage = 100
-    assert_equal 123456, custom_total_cost_help(@custom)
+    assert_equal -123456, custom_total_cost_help(@custom)
   end
 
   # test custom_name_help

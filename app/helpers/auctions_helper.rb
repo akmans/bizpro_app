@@ -61,7 +61,7 @@ module AuctionsHelper
   def custom_percentage_help(k)
     per = Custom.where(auction_id: k).sum(:percentage)
     return nil if per == 0
-    return "(#{per}%)"
+    return "(#{per})"
   end
 
   # return sold type hash
@@ -86,8 +86,16 @@ module AuctionsHelper
 
   # auction_total_cost
   def auction_total_cost_help(auction)
-    auction.price * (100 + (auction.tax_rate || 0)) / 100 + \
-    (auction.payment_cost || 0) + (auction.shipment_cost || 0)
+    total_cost = 0
+    isSold = auction.sold_flg || 0
+    if isSold == 1
+      total_cost = auction.price - (auction.payment_cost || 0)
+      total_cost -= (auction.shipment_cost || 0) if auction.ship_type == 0
+    else
+      total_cost = -auction.price * (100 + (auction.tax_rate || 0)) / 100 - (auction.payment_cost || 0)
+      total_cost -= (auction.shipment_cost || 0) if auction.ship_type == 1
+    end
+    return total_cost.to_i
   end
 
   # return auction name by auction id

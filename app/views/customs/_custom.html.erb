@@ -1,12 +1,12 @@
 <div class="row">
-  <div class="col-xs-12 col-md-2"><%= custom.custom_id %></div>
-  <!-- Add the extra clearfix for only the required viewport -->
-  <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-12 col-md-6"><%= custom.custom_name %></div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-12 col-md-2">
     <%= custom.auction_id.blank? ? "-" : (link_to custom.auction_id, auction_path(custom.auction_id)) %>
+  </div>
+  <div class="col-xs-12 col-md-2 text-right">
+    <%= commas_help(custom_total_cost_help(custom)) %>円
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
