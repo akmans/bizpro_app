@@ -30,7 +30,23 @@ two:
 three:
   auction_id: Three3
   auction_name: ThreeThreeThree 333
-  price: 0
+  price: 100
+  seller_id: OneOneOne3
+  url: www.example1.com
+  sold_flg: 1
+  ope_flg: 0
+  end_time: <%= Time.zone.now %>
+  category_id: One1
+  brand_id: One1
+  modu_id: OneOne1
+  shipmethod_id: One1
+  ship_type: 0
+  paymethod_id: One1
+
+four:
+  auction_id: Four4
+  auction_name: FourFourFourFour 4444
+  price: 100
   seller_id: OneOneOne3
   url: www.example1.com
   sold_flg: 0

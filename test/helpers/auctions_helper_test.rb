@@ -151,7 +151,7 @@ class AuctionsHelperTest < ActionView::TestCase
 
   # test auctions_hash_help
   test "test auction hash help" do
-    expected = {"" => "(空白)", "Three3" => "ThreeThreeThree 333"}
+    expected = {"" => "(空白)", "Four4" => "FourFourFourFour 4444"}
     assert_equal expected, auctions_hash_help(0)
   end
 end

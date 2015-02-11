@@ -4,7 +4,7 @@ require 'test_helper'
 class ProductsShowTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:one)
-    @product = products(:two)
+    @product = products(:one)
   end
   
   test "show including index links" do

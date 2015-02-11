@@ -2,10 +2,10 @@
 <h3>商品表示</h3>
 <div class="form-horizontal">
   <div class="form-group grid">
-    <div class="col-sm-1 header">ID</div>
-    <div class="col-sm-2"><%= @product.product_id %></div>
     <div class="col-sm-1 header">名称</div>
     <div class="col-sm-8"><%= @product.product_name %></div>
+    <div class="col-sm-1 header cell-no-padding text-center">為替レート</div>
+    <div class="col-sm-2"><%= @product.exchange_rate %></div>
   </div>
 
   <div class="form-group grid">
@@ -31,7 +31,7 @@
 <h4>オークションリスト</h4>
 <div class="row header">
   <div class="col-xs-2 col-md-2">終了日時</div>
-  <div class="col-xs-8 col-md-8">名称</div>
+  <div class="col-xs-8 col-md-8 text-center">名称</div>
   <div class="col-xs-2 col-md-2 text-center">総額</div>
 </div>
 <%= render :partial => 'shared/auction', :collection => @auctions %>
@@ -41,7 +41,7 @@
 <h4>カスタムリスト</h4>
 <div class="row header">
   <div class="col-xs-2 col-md-2">オーク品</div>
-  <div class="col-xs-8 col-md-8">名称</div>
+  <div class="col-xs-8 col-md-8 text-center">名称</div>
   <div class="col-xs-2 col-md-2 text-center">総額</div>
 </div>
 <%= render :partial => 'shared/custom', :collection => @customs %>
@@ -50,14 +50,14 @@
 <% unless @shipment_details.empty? %>
 <h4>発送情報</h4>
 <div class="row header">
-  <div class="col-xs-4 col-md-2">発送日</div>
-  <div class="col-xs-4 col-md-3">発送方法</div>
-  <div class="col-xs-4 col-md-2">到着日</div>
+  <div class="col-xs-4 col-md-1">発送日</div>
+  <div class="col-xs-4 col-md-2 text-center">発送方法</div>
+  <div class="col-xs-4 col-md-1 text-center">到着日</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-3 col-md-1">発送料金</div>
-  <div class="col-xs-3 col-md-1">保険料金</div>
-  <div class="col-xs-3 col-md-1">関税</div>
+  <div class="col-xs-3 col-md-2 text-center">発送料金</div>
+  <div class="col-xs-3 col-md-2 text-center">保険料金</div>
+  <div class="col-xs-3 col-md-2 text-center">関税</div>
   <div class="col-xs-3 col-md-2 text-center">総額</div>
 </div>
 <%= render :partial => 'shared/shipment_detail2', :collection => @shipment_details %>
@@ -66,15 +66,15 @@
 <% unless @solds.empty? %>
 <h4>売り情報</h4>
 <div class="row header">
-  <div class="col-xs-12 col-md-2">売出日</div>
+  <div class="col-xs-6 col-md-1">売出日</div>
+  <div class="col-xs-6 col-md-3 text-center">メモ</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-4 col-md-2">売値</div>
-  <div class="col-xs-4 col-md-2">送料</div>
-  <div class="col-xs-4 col-md-2">他料金</div>
+  <div class="col-xs-6 col-md-2 text-center">売値</div>
+  <div class="col-xs-6 col-md-2 text-center">送料</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-6 col-md-2">メモ</div>
+  <div class="col-xs-6 col-md-2 text-center">他料金</div>
   <div class="col-xs-6 col-md-2 text-center">総額</div>
 </div>
 <%= render :partial => 'shared/sold', :collection => @solds %>
@@ -83,12 +83,12 @@
 <h4>取引まとめ</h4>
 <div class="row header">
   <div class="col-xs-4 col-md-2">円支出</div>
-  <div class="col-xs-4 col-md-2">為替レート</div>
-  <div class="col-xs-4 col-md-2">元支出</div>
+  <div class="col-xs-4 col-md-2 text-center">為替レート</div>
+  <div class="col-xs-4 col-md-2 text-center">元支出</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-4 col-md-2">売値</div>
-  <div class="col-xs-4 col-md-2">利潤</div>
+  <div class="col-xs-4 col-md-2 text-center">売値</div>
+  <div class="col-xs-4 col-md-2 text-center">利潤</div>
   <div class="col-xs-4 col-md-2 text-center">利潤率</div>
 </div>
 <%= render :partial => 'shared/summary' %>

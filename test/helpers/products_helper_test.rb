@@ -4,6 +4,7 @@ require 'test_helper'
 class ProductsHelperTest < ActionView::TestCase
   def setup
     @product = products(:one)
+    @product3 = products(:three)
   end
 
   # test is_domestic_hash_help
@@ -43,6 +44,7 @@ class ProductsHelperTest < ActionView::TestCase
   test "test product total sold price help" do
     assert_equal 0, product_total_sold_price_help(nil)
     assert_equal 269000, product_total_sold_price_help(@product.product_id).to_i
+    assert_equal 100, product_total_sold_price_help(@product3.product_id).to_i
   end
 
   # test profit_help

@@ -70,12 +70,24 @@ module ProductsHelper
   def product_total_sold_price_help(product_id)
     total = 0
     return total if product_id.nil?
-    # get sold data
-    solds = Sold.where(product_id: @product.product_id)
-    # sold total value
-    if !solds.nil?
-      solds.each do |s|
-        total += sold_total_price_help(s)
+    product = Product.find(product_id)
+    if (product.is_domestic || 0) == 1
+      # get auction data
+      auctions = Auction.where(:auction_id => PaMap.where(product_id: product_id)).where(sold_flg: 1).all
+      # auctions cost
+      if !auctions.nil?
+        auctions.each do |a|
+          total += auction_total_cost_help(a)
+        end
+      end
+    else
+      # get sold data
+      solds = Sold.where(product_id: product_id)
+      # sold total value
+      if !solds.nil?
+        solds.each do |s|
+          total += sold_total_price_help(s)
+        end
       end
     end
     return total

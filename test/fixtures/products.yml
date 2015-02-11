@@ -17,6 +17,12 @@ two:
   exchange_rate: 8.8
   created_at: <%= Time.zone.now - 1 %>
 
+three:
+  product_id: Three3
+  product_name: MyString
+  is_domestic: 1
+  created_at: <%= Time.zone.now - 1 %>
+
 <% (101..200).each do |n| %>
 product_<%= "P#{n}" %>:
   product_id: <%= "P#{n}" %>

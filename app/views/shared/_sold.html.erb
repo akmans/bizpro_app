@@ -1,22 +1,20 @@
 <div class="row">
-  <div class="col-xs-12 col-md-2">
+  <div class="col-xs-6 col-md-1 text-center cell-no-padding">
     <%= sold.sold_date %>
   </div>
+  <div class="col-xs-6 col-md-3"><%= sold.memo %></div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-4 col-md-2">
+  <div class="col-xs-6 col-md-2 text-right">
     <%= sold.sold_price.round(3) %>元
   </div>
-  <div class="col-xs-4 col-md-2">
+  <div class="col-xs-6 col-md-2 text-right">
     <%= sold.ship_charge.round(3) unless sold.other_charge.nil? %>元
-  </div>
-  <div class="col-xs-4 col-md-2">
-    <%= sold.other_charge.round(3) unless sold.other_charge.nil? %>元
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-6 col-md-2">
-    <%= sold.memo %>
+  <div class="col-xs-6 col-md-2 text-right">
+    <%= sold.other_charge.round(3) unless sold.other_charge.nil? %>元
   </div>
   <div class="col-xs-6 col-md-2 text-right">
     <%= sold_total_price_help(sold).round(3) %>元
