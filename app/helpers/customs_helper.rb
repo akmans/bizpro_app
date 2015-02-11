@@ -43,7 +43,7 @@ module CustomsHelper
 
   # custom_total_cost
   def custom_total_cost_help(custom)
-    return (custom.net_cost + custom.tax_cost + custom.other_cost).to_i if custom.is_auction == 0
+    return (custom.net_cost + custom.tax_cost + custom.other_cost).to_i * -1 if custom.is_auction == 0
     return 0 if custom.auction_id.blank?
     auction = Auction.find(custom.auction_id)
     (auction_total_cost_help(auction) * (custom.percentage || 0) / 100).to_i

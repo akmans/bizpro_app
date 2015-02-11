@@ -25,12 +25,4 @@ class ApplicationHelperTest < ActionView::TestCase
     key = 123456789
     assert_equal "1-2345-6789", hiffen_help(key)
   end
-  
-#  test "test page ix help" do
-#    page = 2
-#    assert_nil session[:page_ix]
-#    assert_equal page, page_ix_help(page)
-#    assert_equal page, session[:page_ix]
-#    assert_equal 1, page_ix_help(session[:page_ix] = nil)
-#  end
 end

@@ -1,4 +1,6 @@
 #encoding: utf-8
+include CustomsHelper, ShipmentDetailsHelper, SoldsHelper
+
 module ProductsHelper
 
   # return is domestic hash
@@ -33,18 +35,29 @@ module ProductsHelper
   end
 
   # return product total cost
-  def product_total_cost_help(auctions, customs, shipment_details)
+#  def product_total_cost_help(auctions, customs, shipment_details)
+  def product_total_cost_help(product_id)
     total = 0
+    return total if product_id.nil?
+    # get auction data
+    auctions = Auction.where(:auction_id => PaMap.where(product_id: product_id)).where(sold_flg: 0).all
+    # get custom data
+    customs = Custom.where(:custom_id => PcMap.where(product_id: product_id)).all
+    # get shipment data
+    shipment_details = ShipmentDetail.where(product_id: product_id).all
+    # auctions cost
     if !auctions.nil?
       auctions.each do |a|
         total += auction_total_cost_help(a)
       end
     end
+    # customs cost
     if !customs.nil?
       customs.each do |c|
         total += custom_total_cost_help(c)
       end
     end
+    # shipment details cost
     if !shipment_details.nil?
       shipment_details.each do |sd|
         total += shipment_product_cost_help(sd)
@@ -54,8 +67,12 @@ module ProductsHelper
   end
 
   # return product total sold price
-  def product_total_sold_price_help(solds)
+  def product_total_sold_price_help(product_id)
     total = 0
+    return total if product_id.nil?
+    # get sold data
+    solds = Sold.where(product_id: @product.product_id)
+    # sold total value
     if !solds.nil?
       solds.each do |s|
         total += sold_total_price_help(s)
@@ -65,14 +82,22 @@ module ProductsHelper
   end
 
   # return profit
-  def profit_help(product, auctions, customs, shipment_details, solds)
-    product_total_sold_price_help(solds) + product_total_cost_help(auctions, customs, shipment_details) * \
-    (product.exchange_rate || 8.3) / 100
+#  def profit_help(product, auctions, customs, shipment_details, solds)
+  def profit_help(product_id)
+    total = 0
+    return total if product_id.nil?
+    product = Product.find(product_id)
+    total = product_total_sold_price_help(product_id) + \
+            product_total_cost_help(product_id) * (product.exchange_rate || 8.3) / 100
+    return total.to_f
   end
 
   # return profit rate
-  def profit_rate_help(product, auctions, customs, shipment_details, solds)
-    profit_help(product, auctions, customs, shipment_details, solds) * -100 * 100 / \
-      (product_total_cost_help(auctions, customs, shipment_details) * (product.exchange_rate || 8.3))
+  def profit_rate_help(product_id)
+    total = 0
+    return total if product_id.nil?
+    product = Product.find(product_id)
+    total = profit_help(product_id) * -100 * 100 / \
+            (product_total_cost_help(product_id) * (product.exchange_rate || 8.3))
   end
 end

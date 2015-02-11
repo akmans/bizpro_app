@@ -7,12 +7,13 @@ one:
   category_id: One1
   brand_id: One1
   modu_id: OneOne1
+  exchange_rate: 100
   created_at: <%= Time.zone.now %>
 
 two:
   product_id: Two2
   product_name: MyString
-  is_domestic: 1
+  is_domestic: 2
   exchange_rate: 8.8
   created_at: <%= Time.zone.now - 1 %>
 

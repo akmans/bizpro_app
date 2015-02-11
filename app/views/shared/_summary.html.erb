@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col-xs-4 col-md-2">
-    <%= commas_help(product_total_cost_help(@auctions, @customs, @shipment_details).to_i) %>円
+    <%= commas_help(product_total_cost_help(@product.product_id).to_i) %>円
   </div>
   <div class="col-xs-4 col-md-2">
     <%= @product.exchange_rate.to_f %>
   </div>
   <div class="col-xs-4 col-md-2">
     <%= commas_help((@product.exchange_rate.to_f \
-                      * product_total_cost_help(@auctions, @customs, @shipment_details) / 100).round(3)) %>元
+                      * product_total_cost_help(@product.product_id) / 100).round(3)) %>元
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
@@ -15,9 +15,9 @@
     <%= product_total_sold_price_help(@solds).round(3) %>元
   </div>
   <div class="col-xs-4 col-md-2">
-    <%= profit_help(@product, @auctions, @customs, @shipment_details, @solds).round(3) %>元
+    <%= profit_help(@product.product_id).round(3) %>元
   </div>
   <div class="col-xs-4 col-md-2">
-    <%= profit_rate_help(@product, @auctions, @customs, @shipment_details, @solds).round(3) %>％
+    <%= profit_rate_help(@product.product_id).round(3) %>％
   </div>
 </div>

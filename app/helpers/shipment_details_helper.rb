@@ -5,13 +5,14 @@ module ShipmentDetailsHelper
   end
 
   # return shipment count by product_id
-  def shipment_detail_cnt_by_product_id(product_id)
+  def shipment_detail_cnt_by_product_id_help(product_id)
     ShipmentDetail.where(product_id: product_id).count
   end
 
   # return shipmethod name by shipment_id
   def shipment_product_cost_help(shipment_detail)
     total_cost = 0
+    return total_cost if shipment_detail.nil?
     total_cost -= (shipment_detail.ship_cost || 0)
     total_cost -= (shipment_detail.insured_cost || 0)
     rate = Product.find(shipment_detail.product_id).exchange_rate || 8.3

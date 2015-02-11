@@ -6,10 +6,15 @@
 #
 one:
   product_id: One1
-  auction_id: Auction101
+  auction_id: One1
   created_at: <%= Time.zone.now %>
 
 two:
-  product_id: Two2
+  product_id: One1
   auction_id: Two2
   created_at: <%= Time.zone.now - 1 %>
+
+three:
+  product_id: One1
+  auction_id: Auction101
+  created_at: <%= Time.zone.now - 2 %>

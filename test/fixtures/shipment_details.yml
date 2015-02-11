@@ -4,8 +4,14 @@ one:
   shipment_id: One1
   product_id: One1
   memo: MyString
+  ship_cost: 1000
+  insured_cost: 10000
+  custom_cost: 1
 
 two:
-  shipment_id: Two2
+  shipment_id: One1
   product_id: Two2
   memo: MyString
+  ship_cost: 1000
+  insured_cost: 10000
+  custom_cost: 0

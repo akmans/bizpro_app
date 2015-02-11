@@ -2,12 +2,12 @@
 
 one:
   product_id: One1
-  sold_price: 100
+  sold_price: 134500
   sold_date: <%= Time.zone.now %>
 
 two:
-  product_id: Two2
-  sold_price: 200
+  product_id: One1
+  sold_price: 134500
   sold_date: <%= Time.zone.now - 1 %>
 
 <% (101..200).each do |n| %>

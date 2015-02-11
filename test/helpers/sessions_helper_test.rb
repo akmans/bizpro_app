@@ -11,21 +11,21 @@ class SessionsHelperTest < ActionView::TestCase
   end
 
   # test log_in_help
-  test "test log in" do
+  test "test log in help" do
     @user.remember
     log_in_help(@user)
     assert_equal @user.id, session[:user_id]
   end
 
   # test remember_help
-  test "test remember" do
+  test "test remember help" do
     remember_help(@user)
     assert_equal @user.id, cookies.permanent.signed[:user_id]
     assert_equal @user.remember_token, cookies.permanent[:remember_token]
   end
 
   # test current_user_help?
-  test "test current user?" do
+  test "test current user help?" do
     remember_help(@user)
     assert current_user_help?(@user)
     assert_not current_user_help?(nil)
@@ -45,14 +45,14 @@ class SessionsHelperTest < ActionView::TestCase
   end
 
   # test logged_in_help?
-  test "test logged in?" do
+  test "test logged in help?" do
     assert_not logged_in_help?
     remember_help(@user)
     assert logged_in_help?
   end
 
   # test forget_help
-  test "test forget" do
+  test "test forget help" do
     remember_help(@user)
     forget_help(@user)
     assert_nil cookies.permanent.signed[:user_id]
@@ -60,7 +60,7 @@ class SessionsHelperTest < ActionView::TestCase
   end
 
   # test log_out_help
-  test "test log out" do
+  test "test log out help" do
     remember_help(@user)
     log_out_help
     assert_nil assigns(:current_user)
@@ -68,9 +68,10 @@ class SessionsHelperTest < ActionView::TestCase
   end
 
   # test store_location_help
+  # nil
 #  test "test store location" do
 #    url = "http://ccc.ddd.com"
-#    request[:url] = url
+#    @request['url'] = url
 #    store_location_help
 #    assert_equal url, session[:forwarding_url]
 #  end

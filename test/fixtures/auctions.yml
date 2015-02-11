@@ -3,7 +3,7 @@
 one:
   auction_id: One1
   auction_name: OneOneOneOneOne 11111
-  price: 123456
+  price: 123400
   seller_id: OneOneOne3
   url: www.example1.com
   sold_flg: 0
@@ -26,6 +26,22 @@ two:
   sold_flg: 1
   ope_flg: 1
   ship_type: 0
+
+three:
+  auction_id: Three3
+  auction_name: ThreeThreeThree 333
+  price: 0
+  seller_id: OneOneOne3
+  url: www.example1.com
+  sold_flg: 0
+  ope_flg: 0
+  end_time: <%= Time.zone.now %>
+  category_id: One1
+  brand_id: One1
+  modu_id: OneOne1
+  shipmethod_id: One1
+  ship_type: 0
+  paymethod_id: One1
 
 <% (101..200).each do |n| %>
 auction_<%= "A#{n}" %>:
