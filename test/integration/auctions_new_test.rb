@@ -41,7 +41,8 @@ class AuctionsNewTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get "/auth/yahoojp/callback"
     assert_select 'a[href=?]', "/auth/yahoojp/logout", text: 'ログアウト'
-    assert_select 'a[href=?]', "/auth/yahoojp/loaddata", text: 'ロードデータ'
+    assert_select 'a[href=?]', "/auth/yahoojp/loaddata1", text: 'ロード買いデータ'
+    assert_select 'a[href=?]', "/auth/yahoojp/loaddata2", text: 'ロード売りデータ'
   end
 
   test "should render new after logout action" do

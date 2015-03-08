@@ -638,10 +638,16 @@ class RoutesTest < ActionController::TestCase
                    { controller: "auctions", action: "logout", provider: "yahoojp" }
   end
 
-  # test path /auth/:provider/loaddata
-  test "should get path /auth/:provider/loaddata" do
-    assert_routing "/auth/yahoojp/loaddata",
-                   { controller: "auctions", action: "loaddata", provider: "yahoojp" }
+  # test path /auth/:provider/loaddata1
+  test "should get path /auth/:provider/loaddata1" do
+    assert_routing "/auth/yahoojp/loaddata1",
+                   { controller: "auctions", action: "load_won_data", provider: "yahoojp" }
+  end
+
+  # test path /auth/:provider/loaddata2
+  test "should get path /auth/:provider/loaddata2" do
+    assert_routing "/auth/yahoojp/loaddata2",
+                   { controller: "auctions", action: "load_closed_data", provider: "yahoojp" }
   end
 
   # test path signup

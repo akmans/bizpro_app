@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   get    '/ajax/auction_percentage' => 'customs#ajax_auction_percentage'
   get    '/auth/:provider/callback' => 'auctions#callback' #戻り先
   get    '/auth/:provider/logout'   => 'auctions#logout'   #ログアウト
-  get    '/auth/:provider/loaddata' => 'auctions#loaddata' #ロードデータ
+  get    '/auth/:provider/loaddata1'=> 'auctions#load_won_data' #ロードデータ
+  get    '/auth/:provider/loaddata2'=> 'auctions#load_closed_data' #ロードデータ
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'

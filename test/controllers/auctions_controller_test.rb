@@ -180,7 +180,8 @@ class AuctionsControllerTest < ActionController::TestCase
     get :callback, :provider => 'yahoojp'
     assert_template 'auctions/new'
     assert_select 'a[href=?]', "/auth/yahoojp/logout", text: 'ログアウト'
-    assert_select 'a[href=?]', "/auth/yahoojp/loaddata", text: 'ロードデータ'
+    assert_select 'a[href=?]', "/auth/yahoojp/loaddata1", text: 'ロード買いデータ'
+    assert_select 'a[href=?]', "/auth/yahoojp/loaddata2", text: 'ロード売りデータ'
     assert_select 'a[href=?]', auctions_path, text: '戻る'
   end
 
