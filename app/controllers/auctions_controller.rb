@@ -31,18 +31,29 @@ class AuctionsController < ApplicationController
 
   # update action
   def update
+#    debugger
     @auction = Auction.find(params[:auction_id])
-#    if params[:auction][:is_product] == "1" and !Product.exists?(product_id: params[:auction_id])
-#      @product = Product.new()
-#      @product.product_id = params[:auction_id]
-#      @product.is_domestic = 1
-#      @product.exchange_rate = 0
-#      @product.category_id = params[:category_id]
-#      @product.brand_id = params[:brand_id]
-#      @product.modu_id = params[:modu_id]
-#      @product.save
-#    end
+    # update auction attributes
     if @auction.update_attributes(auction_params)
+      # create product and pa_map if checked
+      if params[:auction][:create_product] == "1"
+        # for product
+        product = Product.new()
+        product.product_id = "P" + params[:auction_id]
+        product.product_name = params[:auction][:auction_name]
+        product.is_domestic = 1
+        product.exchange_rate = 0
+        product.category_id = params[:auction][:category_id]
+        product.brand_id = params[:auction][:brand_id]
+        product.modu_id = params[:auction][:modu_id]
+        product.save
+        # for pa_map
+        pa_map = PaMap.new()
+        pa_map.auction_id = params[:auction_id]
+        pa_map.product_id = product.product_id
+        pa_map.save
+      end
+      # set flash message
       flash[:success] = "更新完了しました。"
       redirect_to auctions_path
     else

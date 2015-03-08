@@ -1,11 +1,26 @@
 <%= form_for(@auction, :html => {:class => "form-horizontal"}) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="form-group grid">
-    <div class="col-sm-1 header">ID</div>
-    <div class="col-sm-2"><%= @auction.auction_id.blank? ? '-' : @auction.auction_id %></div>
     <div class="col-sm-1 header">タイトル</div>
-    <div class="col-sm-8">
+    <div class="col-sm-9">
       <%= f.text_field :auction_name, class: 'form-control form-field' %>
+    </div>
+    <div class="col-sm-2">
+      <% if !@auction.auction_id.nil? && PaMap.exists?(:auction_id => @auction.auction_id) %>
+      <div class="checkbox line-height-22 disabled">
+        <%= f.label :create_product, class: "checkbox" do %>
+          <%= f.check_box :create_product, disabled: true %>
+          商品作成
+        <% end %>
+      </div>
+      <% else %>
+      <div class="checkbox line-height-22">
+        <%= f.label :create_product, class: "checkbox" do %>
+          <%= f.check_box :create_product %>
+          商品作成
+        <% end %>
+      </div>
+      <% end %>
     </div>
   </div>
 

@@ -1,4 +1,5 @@
 class Auction < ActiveRecord::Base
+  attr_accessor :create_product
   self.primary_key = "auction_id"
 
   default_scope -> { order(end_time: :DESC) }
