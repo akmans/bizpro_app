@@ -18,3 +18,8 @@ three:
   product_id: Three3
   auction_id: Three3
   created_at: <%= Time.zone.now - 2 %>
+
+four:
+  product_id: Three3
+  auction_id: Four4
+  created_at: <%= Time.zone.now - 3 %>

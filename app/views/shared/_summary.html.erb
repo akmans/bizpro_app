@@ -1,21 +1,25 @@
 <div class="row">
   <div class="col-xs-4 col-md-2 text-center">
-    <%= commas_help(product_total_cost_help(@product.product_id).to_i) %>円
+    <%= commas_help(product_total_cost_help(@product.product_id).to_i) %>
+    <%= @product.is_domestic == '1' ? '元' : '円' %>
   </div>
   <div class="col-xs-4 col-md-2 text-center">
     <%= @product.exchange_rate.to_f %>
   </div>
   <div class="col-xs-4 col-md-2 text-right">
     <%= commas_help((@product.exchange_rate.to_f \
-                      * product_total_cost_help(@product.product_id) / 100).round(3)) %>元
+                      * product_total_cost_help(@product.product_id) / 100).round(3)) %>
+    <%= @product.is_domestic == '1' ? '元' : '円' %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-4 col-md-2 text-right">
-    <%= product_total_sold_price_help(@product.product_id).round(3) %>元
+    <%= product_total_sold_price_help(@product.product_id).round(3) %>
+    <%= @product.is_domestic == '1' ? '元' : '円' %>
   </div>
   <div class="col-xs-4 col-md-2 text-right">
-    <%= profit_help(@product.product_id).round(3) %>元
+    <%= profit_help(@product.product_id).round(3) %>
+    <%= @product.is_domestic == '1' ? '元' : '円' %>
   </div>
   <div class="col-xs-4 col-md-2 text-right">
     <%= profit_rate_help(@product.product_id).round(3) %>％

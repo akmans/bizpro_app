@@ -35,7 +35,6 @@ module ProductsHelper
   end
 
   # return product total cost
-#  def product_total_cost_help(auctions, customs, shipment_details)
   def product_total_cost_help(product_id)
     total = 0
     return total if product_id.nil?
@@ -94,13 +93,13 @@ module ProductsHelper
   end
 
   # return profit
-#  def profit_help(product, auctions, customs, shipment_details, solds)
   def profit_help(product_id)
     total = 0
     return total if product_id.nil?
     product = Product.find(product_id)
+    rate = (product.is_domestic == '1' ? (product.exchange_rate || 8.3) : 100)
     total = product_total_sold_price_help(product_id) + \
-            product_total_cost_help(product_id) * (product.exchange_rate || 8.3) / 100
+            product_total_cost_help(product_id) * rate / 100
     return total.to_f
   end
 
@@ -109,7 +108,8 @@ module ProductsHelper
     total = 0
     return total if product_id.nil?
     product = Product.find(product_id)
+    rate = (product.is_domestic == '1' ? (product.exchange_rate || 8.3) : 100)
     total = profit_help(product_id) * -100 * 100 / \
-            (product_total_cost_help(product_id) * (product.exchange_rate || 8.3))
+            (product_total_cost_help(product_id) * rate)
   end
 end

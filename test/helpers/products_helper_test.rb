@@ -51,11 +51,13 @@ class ProductsHelperTest < ActionView::TestCase
   test "test profit help" do
     assert_equal 0, profit_help(nil)
     assert_equal 134500, profit_help(@product.product_id)
+    assert_equal 0, profit_help(@product3.product_id)
   end
 
   # test profit_rate_help
   test "test profit rate help" do
     assert_equal 0, profit_rate_help(nil)
     assert_equal 100, profit_rate_help(@product.product_id)
+    assert_equal 0, profit_rate_help(@product3.product_id)
   end
 end
