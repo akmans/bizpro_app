@@ -9,6 +9,9 @@ class AuctionsController < ApplicationController
     page = page_ix_help(params[:page])
     # get auction data list with pagination.
     @auctions = Auction.paginate(page: page, per_page: 15)
+    @condition = {}
+    @condition[:category_id] = '123'
+    @condition[:category_list] = [['1',1]]
   end
 
   # show action
@@ -66,6 +69,13 @@ class AuctionsController < ApplicationController
     Auction.find(params[:auction_id]).destroy
     flash[:success] = "削除完了しました。"
     redirect_to auctions_path
+  end
+
+  # search action
+  def search
+    page = page_ix_help(params[:page])
+    # get auction data list with pagination.
+    @auctions = Auction.where(:category_id => params[:page]).paginate(page: page, per_page: 15)
   end
 
   # load won data action.
