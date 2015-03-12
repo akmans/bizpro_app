@@ -13,3 +13,11 @@ $(document).on "page:change", ->
         $("select#auction_modu_id").children("option:gt(0)").remove()
         $.each data, (i, item) ->
           $("select#auction_modu_id").append $("<option>").text(item["modu_name"]).attr("value", item["modu_id"])
+  $("#btn-clear").bind "click", ->
+    $("#auction_name").val('')
+    $("#category_id").val('')
+    $("#year_s").val('')
+    $("#month_s").val('')
+    $("#year_e").val('')
+    $("#month_e").val('')
+    $("#sold_type").val('')

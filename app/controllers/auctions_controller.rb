@@ -78,14 +78,14 @@ class AuctionsController < ApplicationController
   end
 
   # search action
-#  def search
+  def search
     # get parameters from params and save it into session
-#    @condition = refresh_auctions_search_condition_help(params)
+    @condition = refresh_auctions_search_condition_help(params)
     # get auction data list with pagination.
-#    @auctions = search_auction(@condition)
+    @auctions = search_auction(@condition)
     # render index page
-#    render 'index'
-#  end
+    render 'index'
+  end
 
   # load won data action.
   def load_won_data
@@ -180,13 +180,26 @@ class AuctionsController < ApplicationController
 
   # search auction
   def search_auction(condition)
-    # page index
-#    page = page_ix_help(params[:page])
     # construct where condition
     auction = Auction
+    # category_id
     auction = auction.where(category_id: condition["category_id"]) unless condition["category_id"].blank?
+    # auction_name
     auction = auction.where("auction_name like :auction_name", \
               {:auction_name => "%#{condition['auction_name']}%"}) unless condition["auction_name"].blank?
+    # start year month
+    if !condition["year_s"].blank? && !condition["month_s"].blank?
+      date_s = Date::strptime(condition["year_s"] + condition["month_s"] + "01", "%Y%m%d")
+      auction = auction.where("end_time >= :end_time", {:end_time => date_s})
+    end
+    # end year month
+    if !condition["year_e"].blank? && !condition["month_e"].blank?
+      date_s = Date::strptime(condition["year_e"] + condition["month_e"] + "01", "%Y%m%d")
+      auction = auction.where("end_time <= :end_time", {:end_time => date_s.end_of_month})
+    end
+    # sold_type
+    auction = auction.where(sold_flg: condition["sold_type"]) unless condition["sold_type"].blank?
+    # paginate
     auction.paginate(page: condition["page_ix"], per_page: 15)
   end
 end

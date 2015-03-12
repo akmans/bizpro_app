@@ -35,14 +35,41 @@ class ApplicationController < ActionController::Base
       condition = {}
       # refresh condition
       unless par.nil?
-        # get previous condition from session
-        condition = session[:auctions_search_form] unless session[:auctions_search_form].nil?
+        if par["clear"] == '1'
+          # category_id
+          condition["category_id"] = nil
+          # auction_name
+          condition["auction_name"] = nil
+          # year start
+          condition["year_s"] = nil
+          # month start
+          condition["month_s"] = nil
+          # year end
+          condition["year_e"] = nil
+          # month end
+          condition["month_e"] = nil
+          # sold type
+          condition["sold_type"] = nil
+        else
+          # get previous condition from session
+          condition = session[:auctions_search_form] unless session[:auctions_search_form].nil?
+          # category_id
+          condition["category_id"] = par[:category_id] unless par[:category_id].nil?
+          # auction_name
+          condition["auction_name"] = par[:auction_name] unless par[:auction_name].nil?
+          # year start
+          condition["year_s"] = par[:year_s] unless par[:year_s].nil?
+          # month start
+          condition["month_s"] = par[:month_s] unless par[:month_s].nil?
+          # year end
+          condition["year_e"] = par[:year_e] unless par[:year_e].nil?
+          # month end
+          condition["month_e"] = par[:month_e] unless par[:month_e].nil?
+          # sold type
+          condition["sold_type"] = par[:sold_type] unless par[:sold_type].nil?
+        end
         # page index
         condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
-        # category_id
-        condition["category_id"] = par[:category_id] unless par[:category_id].nil?
-        # auction_name
-        condition["auction_name"] = par[:auction_name] unless par[:auction_name].nil?
         # refresh session
         session[:auctions_search_form] = condition
       end

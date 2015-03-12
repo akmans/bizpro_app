@@ -1,23 +1,41 @@
-<%= form_tag("/auctions", method: "get") do %>
+<%= form_tag("/auctions/search", method: "post") do %>
 <div class="form-horizontal">
   <div class="form-group grid">
-    <div class="col-sm-2 header">カテゴリ</div>
-    <div class="col-sm-10">
-      <%= select_tag(:category_id, options_for_select(category_hash_help.invert, selected: condition["category_id"] ),
+    <div class="col-sm-2 header">タイトル</div>
+    <div class="col-sm-4">
+      <%= text_field_tag(:auction_name , condition["auction_name"],
             {:class => 'form-control form-field'}) %>
+    </div>
+    <div class="col-sm-2 header">カテゴリ</div>
+    <div class="col-sm-4">
+      <%= select_tag(:category_id, options_for_select(category_hash_help.invert,
+            selected: condition["category_id"] ), {:class => 'form-control form-field'}) %>
     </div>
   </div>
 
   <div class="form-group grid row_last">
-    <div class="col-sm-2 header">タイトル</div>
-    <div class="col-sm-10">
-      <%= text_field_tag(:auction_name , condition["auction_name"],
-            {:class => 'form-control form-field'}) %>
+    <div class="col-sm-2 header">終了期間</div>
+    <div class="col-sm-4">
+      <%= select_tag(:year_s, options_for_select(year_hash_help.invert,
+            selected: condition["year_s"] ), {:class => 'form-control form-field select-inline'}) %>
+      <%= select_tag(:month_s, options_for_select(month_hash_help.invert,
+            selected: condition["month_s"] ), {:class => 'form-control form-field select-inline'}) %>
+      〜
+      <%= select_tag(:year_e, options_for_select(year_hash_help.invert,
+            selected: condition["year_e"] ), {:class => 'form-control form-field select-inline'}) %>
+      <%= select_tag(:month_e, options_for_select(month_hash_help.invert,
+            selected: condition["month_e"] ), {:class => 'form-control form-field select-inline'}) %>
+    </div>
+    <div class="col-sm-2 header">売買区分</div>
+    <div class="col-sm-4">
+      <%= select_tag(:sold_type, options_for_select({"" => "(全部)"}.merge!(sold_type_hash_help).invert,
+            selected: condition["sold_type"] ), {:class => 'form-control form-field'}) %>
     </div>
   </div>
 
   <div class="form-group">
     <div class="col-sm-12 text-right">
+      <%= link_to "Clear", '#', id: "btn-clear", class: "btn btn-default" %>
       <%= submit_tag("Search", {:class => 'btn btn-primary'}) %>
     </div>
   </div>
