@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get    '/auth/:provider/loaddata1'=> 'auctions#load_won_data' #ロードデータ
   get    '/auth/:provider/loaddata2'=> 'auctions#load_closed_data' #ロードデータ
   post   '/auctions/search'         => 'auctions#search'
+  post   '/products/search'         => 'products#search'
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'

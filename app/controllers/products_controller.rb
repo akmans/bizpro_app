@@ -5,10 +5,12 @@ class ProductsController < ApplicationController
 
   # index action
   def index
+    @condition = refresh_products_search_condition_help(params)
     # page index
-    page = page_ix_help(params[:page])
+#    page = page_ix_help(params[:page])
     # get product data list with pagination.
-    @products = Product.paginate(page: page, per_page: 15)
+#    @products = Product.paginate(page: page, per_page: 15)
+    @products = search_product(@condition)
   end
 
   # show action
@@ -74,10 +76,45 @@ class ProductsController < ApplicationController
     redirect_to products_path
   end
 
+  # search action
+  def search
+    # get parameters from params and save it into session
+    @condition = refresh_products_search_condition_help(params)
+    # get product data list with pagination.
+    @products = search_product(@condition)
+    # render index page
+    render 'index'
+  end
+
   private
     # strong parameters method.
     def product_params
       params.require(:product).permit(
         :product_name, :is_domestic, :exchange_rate, :category_id, :brand_id, :modu_id, :memo)
     end
+
+  # search product
+  def search_product(condition)
+    # construct where condition
+    product = Product
+    # category_id
+    product = product.where(category_id: condition["category_id"]) unless condition["category_id"].blank?
+    # product_name
+    product = product.where("product_name like :product_name", \
+              {:product_name => "%#{condition['product_name']}%"}) unless condition["product_name"].blank?
+    # start year month
+    if !condition["year_s"].blank? && !condition["month_s"].blank?
+      date_s = Date::strptime(condition["year_s"] + condition["month_s"] + "01", "%Y%m%d")
+      product = product.where(product_id: Sold.where("sold_date >= :sold_date", {:sold_date => date_s}).pluck(:product_id))
+    end
+    # end year month
+    if !condition["year_e"].blank? && !condition["month_e"].blank?
+      date_e = Date::strptime(condition["year_e"] + condition["month_e"] + "01", "%Y%m%d")
+      product = product.where(product_id: Sold.where("sold_date <= :sold_date", {:sold_date => date_e.end_of_month}).pluck(:product_id))
+    end
+    # is_domestic
+    product = product.where(is_domestic: condition["is_domestic"]) unless condition["is_domestic"].blank?
+    # paginate
+    product.paginate(page: condition["page_ix"], per_page: 15)
+  end
 end

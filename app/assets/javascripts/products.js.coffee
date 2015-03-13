@@ -31,3 +31,11 @@ $(document).on "page:change", ->
         $.each data, (k, v) ->
           if k != ''
             $("select#pa_map_auction_id").append $("<option>").text(v).attr("value", k)
+  $("#btn-clear").bind "click", ->
+    $("#product_name").val('')
+    $("#category_id").val('')
+    $("#year_s").val('')
+    $("#month_s").val('')
+    $("#year_e").val('')
+    $("#month_e").val('')
+    $("#is_domestic").val('')

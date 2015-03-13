@@ -194,8 +194,8 @@ class AuctionsController < ApplicationController
     end
     # end year month
     if !condition["year_e"].blank? && !condition["month_e"].blank?
-      date_s = Date::strptime(condition["year_e"] + condition["month_e"] + "01", "%Y%m%d")
-      auction = auction.where("end_time <= :end_time", {:end_time => date_s.end_of_month})
+      date_e = Date::strptime(condition["year_e"] + condition["month_e"] + "01", "%Y%m%d")
+      auction = auction.where("end_time <= :end_time", {:end_time => date_e.end_of_month})
     end
     # sold_type
     auction = auction.where(sold_flg: condition["sold_type"]) unless condition["sold_type"].blank?

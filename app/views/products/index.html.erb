@@ -1,4 +1,6 @@
 <% provide(:title, '一覧,商品') %>
+<h3>検索条件</h3>
+<%= render :partial => 'shared/product_search_form', locals: { condition: @condition } %>
 <h3>商品一覧</h3>
 <%= will_paginate %>
 <div class="row header">

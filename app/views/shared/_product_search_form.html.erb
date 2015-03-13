@@ -1,9 +1,9 @@
-<%= form_tag("/auctions/search", method: "post") do %>
+<%= form_tag("/products/search", method: "post") do %>
 <div class="form-horizontal">
   <div class="form-group grid">
-    <div class="col-sm-2 header">タイトル</div>
+    <div class="col-sm-2 header">商品名称</div>
     <div class="col-sm-5">
-      <%= text_field_tag(:auction_name , condition["auction_name"],
+      <%= text_field_tag(:product_name , condition["product_name"],
             {:class => 'form-control form-field'}) %>
     </div>
     <div class="col-sm-2 header">カテゴリ</div>
@@ -14,7 +14,7 @@
   </div>
 
   <div class="form-group grid row_last">
-    <div class="col-sm-2 header">終了期間</div>
+    <div class="col-sm-2 header">売却期間</div>
     <div class="col-sm-5">
       <%= select_tag(:year_s, options_for_select(year_hash_help.invert,
             selected: condition["year_s"] ), {:class => 'form-control form-field select-inline'}) %>
@@ -26,10 +26,10 @@
       <%= select_tag(:month_e, options_for_select(month_hash_help.invert,
             selected: condition["month_e"] ), {:class => 'form-control form-field select-inline'}) %>
     </div>
-    <div class="col-sm-2 header">売買区分</div>
+    <div class="col-sm-2 header">内外区分</div>
     <div class="col-sm-3">
-      <%= select_tag(:sold_type, options_for_select({"" => "(全部)"}.merge!(sold_type_hash_help).invert,
-            selected: condition["sold_type"] ), {:class => 'form-control form-field'}) %>
+      <%= select_tag(:is_domestic, options_for_select({"" => "(全部)"}.merge!(is_domestic_hash_help).invert,
+            selected: condition["is_domestic"] ), {:class => 'form-control form-field'}) %>
     </div>
   </div>
 
