@@ -1,0 +1,43 @@
+<%= form_tag("/shipments/search", method: "post") do %>
+<div class="form-horizontal">
+  <div class="form-group grid row_last">
+    <div class="col-sm-2 header">発送方法</div>
+    <div class="col-sm-3">
+      <%= select_tag(:shipmethod_id, options_for_select(shipmethod_hash_help(1).invert,
+            selected: condition["shipmethod_id"] ), {:class => 'form-control form-field'}) %>
+    </div>
+    <div class="col-sm-2 header">商品名称</div>
+    <div class="col-sm-5">
+      <%= text_field_tag(:product_name , condition["product_name"],
+            {:class => 'form-control form-field'}) %>
+    </div>
+  </div>
+
+  <div class="form-group grid row_last">
+    <div class="col-sm-2 header">区分</div>
+    <div class="col-sm-3">
+      <%= select_tag(:date_type, options_for_select({'' => '(空白)', '0' => '発送日', '1' => '到着日'}.invert,
+            selected: condition["date_type"] ), {:class => 'form-control form-field'}) %>
+    </div>
+    <div class="col-sm-2 header">期間</div>
+    <div class="col-sm-5">
+      <%= select_tag(:year_s, options_for_select(year_hash_help.invert,
+            selected: condition["year_s"] ), {:class => 'form-control form-field select-inline'}) %>
+      <%= select_tag(:month_s, options_for_select(month_hash_help.invert,
+            selected: condition["month_s"] ), {:class => 'form-control form-field select-inline'}) %>
+      〜
+      <%= select_tag(:year_e, options_for_select(year_hash_help.invert,
+            selected: condition["year_e"] ), {:class => 'form-control form-field select-inline'}) %>
+      <%= select_tag(:month_e, options_for_select(month_hash_help.invert,
+            selected: condition["month_e"] ), {:class => 'form-control form-field select-inline'}) %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-12 text-right">
+      <%= link_to "Clear", '#', id: "btn-shipment-clear", class: "btn btn-default" %>
+      <%= submit_tag("Search", {:class => 'btn btn-primary'}) %>
+    </div>
+  </div>
+</div>
+<% end %>

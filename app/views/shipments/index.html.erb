@@ -1,6 +1,8 @@
 <% provide(:title, '一覧,発送') %>
+<h3>検索条件</h3>
+<%= render :partial => 'shared/shipment_search_form', locals: { condition: @condition } %>
 <h3>発送一覧</h3>
-<%= will_paginate %>
+<%= will_paginate(@shipments, :params => { :controller => "shipments", :action => "index"}) %>
 <div class="row header">
   <div class="col-xs-6 col-md-2">発送日</div>
   <div class="col-xs-6 col-md-2">発送方法</div>
@@ -16,4 +18,4 @@
   </div>
 </div>
 <%= render @shipments %>
-<%= will_paginate %>
+<%= will_paginate(@shipments, :params => { :controller => "shipments", :action => "index"}) %>

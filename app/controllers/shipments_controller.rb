@@ -5,10 +5,14 @@ class ShipmentsController < ApplicationController
 
   # index action
   def index
-    # page index
-    page = page_ix_help(params[:page])
+#    # page index
+#    page = page_ix_help(params[:page])
     # get shipment data list with pagination.
-    @shipments = Shipment.paginate(page: page, per_page: 15)
+#    @shipments = Shipment.paginate(page: page, per_page: 15)
+    # refresh search condition
+    @condition = refresh_shipments_search_condition_help(params)
+    # get custom data list with pagination.
+    @shipments = search_shipment(@condition)
   end
 
   # show action
@@ -22,7 +26,7 @@ class ShipmentsController < ApplicationController
   # new action
   def new
     @shipment = Shipment.new
-    shipmethod_hash
+#    shipmethod_hash
   end
 
   # create action
@@ -33,7 +37,7 @@ class ShipmentsController < ApplicationController
       # shipment list
       redirect_to shipments_path
     else
-      shipmethod_hash
+#      shipmethod_hash
       render 'new'
     end
   end
@@ -41,7 +45,7 @@ class ShipmentsController < ApplicationController
   # edit action
   def edit
     @shipment = Shipment.find(params[:shipment_id])
-    shipmethod_hash
+#    shipmethod_hash
   end
 
   # update action
@@ -51,7 +55,7 @@ class ShipmentsController < ApplicationController
       flash[:success] = "更新完了しました。"
       redirect_to shipments_path
     else
-      shipmethod_hash
+#      shipmethod_hash
       render 'edit'
     end
   end
@@ -63,17 +67,65 @@ class ShipmentsController < ApplicationController
     redirect_to shipments_path
   end
 
+  # search action
+  def search
+    # get parameters from params and save it into session
+    @condition = refresh_shipments_search_condition_help(params)
+    # get custom data list with pagination.
+    @shipments = search_shipment(@condition)
+    # render index page
+    render 'index'
+  end
+
   private
     # strong parameters method.
     def shipment_params
       params.require(:shipment).permit(:shipmethod_id, :sent_date, :arrived_date, :memo)
     end
 
-    # shipmethod hash method
-    def shipmethod_hash
-      @shipmethods = {"" => "(空白)"}
-      Shipmethod.where(shipmethod_type: 1).each do |ss| 
-        @shipmethods.merge! ss.as_hash
-      end
+#    # shipmethod hash method
+#    def shipmethod_hash
+#      @shipmethods = {"" => "(空白)"}
+#      Shipmethod.where(shipmethod_type: 1).each do |ss| 
+#        @shipmethods.merge! ss.as_hash
+#      end
+#    end
+
+  # search shipment
+  def search_shipment(condition)
+    # construct where condition
+    shipment = Shipment
+    # shipmethod_id
+    shipment = shipment.where(shipmethod_id: condition["shipmethod_id"]) \
+              unless condition["shipmethod_id"].blank?
+#    debugger
+    # product_name
+    shipment = shipment.where(shipment_id: ShipmentDetail.where(product_id: \
+               Product.where("product_name like :product_name", \
+               {:product_name => "%#{condition['product_name']}%"}) \
+               .pluck(:product_id)).pluck(:shipment_id)) \
+               unless condition["product_name"].blank?
+    # start year month
+    if !condition["year_s"].blank? && !condition["month_s"].blank? && !condition["date_type"].blank?
+      date_s = Date::strptime(condition["year_s"] + condition["month_s"] + "01", "%Y%m%d")
+      # condition for sent date
+      shipment = shipment.where("sent_date >= :sent_date", {:sent_date => date_s}) \
+                 if condition["date_type"] == "0"
+      # condition for arrived date
+      shipment = shipment.where("arrived_date >= :arrived_date", {:arrived_date => date_s}) \
+                 if condition["date_type"] == "1"
     end
+    # end year month
+    if !condition["year_e"].blank? && !condition["month_e"].blank? && !condition["date_type"].blank?
+      date_e = Date::strptime(condition["year_e"] + condition["month_e"] + "01", "%Y%m%d")
+      # condition for sent date
+      shipment = shipment.where("sent_date <= :sent_date", {:sent_date => date_e.end_of_month}) \
+                 if condition["date_type"] == "0"
+      # condition for arrived date
+      shipment = shipment.where("arrived_date <= :arrived_date", {:arrived_date => date_s.end_of_month}) \
+                 if condition["date_type"] == "1"
+    end
+    # paginate
+    shipment.paginate(page: condition["page_ix"], per_page: 15)
+  end
 end

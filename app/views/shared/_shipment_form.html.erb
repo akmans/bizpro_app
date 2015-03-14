@@ -5,7 +5,7 @@
     <div class="col-sm-2"><%= @shipment.shipment_id.blank? ? '-' : @shipment.shipment_id %></div>
     <div class="col-sm-1 header">発送方法</div>
     <div class="col-sm-2">
-      <%= collection_select :shipment, :shipmethod_id, @shipmethods, :first, :last, {}, \
+      <%= collection_select :shipment, :shipmethod_id, shipmethod_hash_help(1), :first, :last, {}, \
           {selected: @shipment.shipmethod_id, :class => 'form-control form-field'} %>
     </div>
     <div class="col-sm-1 header">発着日</div>
@@ -37,7 +37,7 @@
   <div class="form-group">
     <div class="col-sm-12 text-right">
       <%= f.submit "実行", class: "btn btn-primary" %>
-      <%= link_to "戻る", :back, class: "btn btn-default" %>
+      <%= link_to "戻る", shipments_path, class: "btn btn-default" %>
     </div>
   </div>
 <% end %>

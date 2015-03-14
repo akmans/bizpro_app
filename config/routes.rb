@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post   '/auctions/search'         => 'auctions#search'
   post   '/products/search'         => 'products#search'
   post   '/customs/search'          => 'customs#search'
+  post   '/shipments/search'        => 'shipments#search'
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'

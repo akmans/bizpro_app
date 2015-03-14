@@ -108,4 +108,34 @@ class ApplicationController < ActionController::Base
       end
       return condition
     end
+
+    # remember shipments search condition
+    def refresh_shipments_search_condition_help(par)
+      # new condition hash
+      condition = {}
+      # refresh condition
+      unless par.nil?
+        # get previous condition from session
+        condition = session[:shipments_search_form] unless session[:shipments_search_form].nil?
+        # shipmethod_id
+        condition["shipmethod_id"] = par[:shipmethod_id] unless par[:shipmethod_id].nil?
+        # product_name
+        condition["product_name"] = par[:product_name] unless par[:product_name].nil?
+        # year start
+        condition["year_s"] = par[:year_s] unless par[:year_s].nil?
+        # month start
+        condition["month_s"] = par[:month_s] unless par[:month_s].nil?
+        # year end
+        condition["year_e"] = par[:year_e] unless par[:year_e].nil?
+        # month end
+        condition["month_e"] = par[:month_e] unless par[:month_e].nil?
+        # date_type
+        condition["date_type"] = par[:date_type] unless par[:date_type].nil?
+        # page index
+        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
+        # refresh session
+        session[:shipments_search_form] = condition
+      end
+      return condition
+    end
 end
