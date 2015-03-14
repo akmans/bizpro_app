@@ -5,11 +5,9 @@ class ProductsController < ApplicationController
 
   # index action
   def index
+    # refresh search condition
     @condition = refresh_products_search_condition_help(params)
-    # page index
-#    page = page_ix_help(params[:page])
-    # get product data list with pagination.
-#    @products = Product.paginate(page: page, per_page: 15)
+    # get product data.
     @products = search_product(@condition)
   end
 
@@ -98,22 +96,39 @@ class ProductsController < ApplicationController
     # construct where condition
     product = Product
     # category_id
-    product = product.where(category_id: condition["category_id"]) unless condition["category_id"].blank?
+    product = product.where(category_id: condition["category_id"]) \
+              unless condition["category_id"].blank?
     # product_name
     product = product.where("product_name like :product_name", \
-              {:product_name => "%#{condition['product_name']}%"}) unless condition["product_name"].blank?
+              {:product_name => "%#{condition['product_name']}%"}) \
+              unless condition["product_name"].blank?
     # start year month
-    if !condition["year_s"].blank? && !condition["month_s"].blank?
+    if !condition["year_s"].blank? && !condition["month_s"].blank? && !condition["is_domestic"].blank?
       date_s = Date::strptime(condition["year_s"] + condition["month_s"] + "01", "%Y%m%d")
-      product = product.where(product_id: Sold.where("sold_date >= :sold_date", {:sold_date => date_s}).pluck(:product_id))
+      # condition for offshore
+      product = product.where(product_id: Sold.where("sold_date >= :sold_date", \
+                {:sold_date => date_s}).pluck(:product_id)) \
+                if condition["is_domestic"] == "0"
+      # condition for domestic
+      product = product.where(product_id: PaMap.where(auction_id: Auction.where("end_time >= :end_time", \
+                {:end_time => date_s}).pluck(:auction_id)).pluck(:product_id)) \
+                if condition["is_domestic"] == "1"
     end
     # end year month
-    if !condition["year_e"].blank? && !condition["month_e"].blank?
+    if !condition["year_e"].blank? && !condition["month_e"].blank? && !condition["is_domestic"].blank?
       date_e = Date::strptime(condition["year_e"] + condition["month_e"] + "01", "%Y%m%d")
-      product = product.where(product_id: Sold.where("sold_date <= :sold_date", {:sold_date => date_e.end_of_month}).pluck(:product_id))
+      # condition for offshore
+      product = product.where(product_id: Sold.where("sold_date <= :sold_date", \
+                {:sold_date => date_e.end_of_month}).pluck(:product_id))\
+                if condition["is_domestic"] == "0"
+      # condition for domestic
+      product = product.where(product_id: PaMap.where(auction_id: Auction.where("end_time <= :end_time", \
+                {:end_time => date_e.end_of_month}).pluck(:auction_id)).pluck(:product_id)) \
+                if condition["is_domestic"] == "1"
     end
     # is_domestic
-    product = product.where(is_domestic: condition["is_domestic"]) unless condition["is_domestic"].blank?
+    product = product.where(is_domestic: condition["is_domestic"]) \
+              unless condition["is_domestic"].blank?
     # paginate
     product.paginate(page: condition["page_ix"], per_page: 15)
   end
