@@ -33,9 +33,12 @@ custom_form_change = (flg) ->
       $("select#custom_percentage").prop("disabled", true)
 
 $(document).on "page:change", ->
+  # call custom_form_change with flag 0 on page load.
   custom_form_change(0)
+  # bind change event to custom_is_auction
   $("#custom_is_auction").bind "change", ->
     custom_form_change(1)
+  # bind change event to select#custom_auction_id
   $("select#custom_auction_id").bind "change", ->
     $("#custom_custom_name").val($( "#custom_auction_id option:selected" ).text())
     $.ajax
@@ -47,3 +50,7 @@ $(document).on "page:change", ->
         $("select#custom_percentage").children("option:gt(0)").remove()
         $.each data, (k, v) ->
           $("select#custom_percentage").append $("<option>").text(v).attr("value", k) if k != ""
+  # bind click event to btn-custom-clear
+  $("#btn-custom-clear").bind "click", ->
+    $("#custom_name").val('')
+    $("#is_auction").val('')

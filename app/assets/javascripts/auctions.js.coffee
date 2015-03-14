@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).on "page:change", ->
+  # bind change event to select#auction_brand_id
   $("select#auction_brand_id").bind "change", ->
     $.ajax
       url: "/ajax/modus"
@@ -13,7 +14,8 @@ $(document).on "page:change", ->
         $("select#auction_modu_id").children("option:gt(0)").remove()
         $.each data, (i, item) ->
           $("select#auction_modu_id").append $("<option>").text(item["modu_name"]).attr("value", item["modu_id"])
-  $("#btn-clear").bind "click", ->
+  # bind click event to #btn-auction-clear
+  $("#btn-auction-clear").bind "click", ->
     $("#auction_name").val('')
     $("#category_id").val('')
     $("#year_s").val('')

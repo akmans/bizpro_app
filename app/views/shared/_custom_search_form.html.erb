@@ -1,0 +1,23 @@
+<%= form_tag("/customs/search", method: "post") do %>
+<div class="form-horizontal">
+  <div class="form-group grid row_last">
+    <div class="col-sm-2 header">オーク品</div>
+    <div class="col-sm-3">
+      <%= select_tag(:is_auction, options_for_select(is_auction_hash_help.invert,
+            selected: condition["is_auction"] ), {:class => 'form-control form-field'}) %>
+    </div>
+    <div class="col-sm-2 header">カスタム</div>
+    <div class="col-sm-5">
+      <%= text_field_tag(:custom_name , condition["custom_name"],
+            {:class => 'form-control form-field'}) %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-12 text-right">
+      <%= link_to "Clear", '#', id: "btn-custom-clear", class: "btn btn-default" %>
+      <%= submit_tag("Search", {:class => 'btn btn-primary'}) %>
+    </div>
+  </div>
+</div>
+<% end %>

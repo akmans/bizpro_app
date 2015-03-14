@@ -88,4 +88,24 @@ class ApplicationController < ActionController::Base
       end
       return condition
     end
+
+    # remember customs search condition
+    def refresh_customs_search_condition_help(par)
+      # new condition hash
+      condition = {}
+      # refresh condition
+      unless par.nil?
+        # get previous condition from session
+        condition = session[:customs_search_form] unless session[:customs_search_form].nil?
+        # custom_name
+        condition["custom_name"] = par[:custom_name] unless par[:custom_name].nil?
+        # is_auction
+        condition["is_auction"] = par[:is_auction] unless par[:is_auction].nil?
+        # page index
+        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
+        # refresh session
+        session[:customs_search_form] = condition
+      end
+      return condition
+    end
 end

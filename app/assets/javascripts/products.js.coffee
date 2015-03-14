@@ -44,8 +44,8 @@ $(document).on "page:change", ->
 #        $.each data, (k, v) ->
 #          if k != ''
 #            $("select#pa_map_auction_id").append $("<option>").text(v).attr("value", k)
-  # bind click event to btn-clear
-  $("#btn-clear").bind "click", ->
+  # bind click event to btn-product-clear
+  $("#btn-product-clear").bind "click", ->
     $("#product_name").val('')
     $("#category_id").val('')
     $("#year_s").val('').prop( "disabled", true)

@@ -43,10 +43,8 @@ module ApplicationHelper
     return year
   end
 
-  # generate sold type hash
-#  def sold_type_hash_help
-#    year = {"" => "(全部)"}
-#    year.merge!(sold_type_hash_help)
-#    return year
-#  end
+  # generate is auction hash
+  def is_auction_hash_help
+    {"" => "(全部)", "0" => "非オーク品", "1" => "オーク品"}
+  end
 end

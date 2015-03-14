@@ -4,9 +4,13 @@ class CustomsController < ApplicationController
 
   # index action
   def index
-    page = page_ix_help(params[:page])
+#    page = page_ix_help(params[:page])
     # get auction data list with pagination.
-    @customs = Custom.paginate(page: page, per_page: 15)
+#    @customs = Custom.paginate(page: page, per_page: 15)
+    # refresh search condition
+    @condition = refresh_customs_search_condition_help(params)
+    # get custom data.
+    @customs = search_custom(@condition)
   end
 
   # show action
@@ -59,6 +63,16 @@ class CustomsController < ApplicationController
     redirect_to customs_path
   end
 
+  # search action
+  def search
+    # get parameters from params and save it into session
+    @condition = refresh_customs_search_condition_help(params)
+    # get custom data list with pagination.
+    @customs = search_custom(@condition)
+    # render index page
+    render 'index'
+  end
+
   # ajax customs action
   def ajax_customs
     # get custom data.
@@ -78,4 +92,19 @@ class CustomsController < ApplicationController
             .permit(:custom_name, :is_auction, :auction_id,:percentage,
                     :net_cost, :tax_cost, :other_cost, :memo)
     end
+
+  # search custom
+  def search_custom(condition)
+    # construct where condition
+    custom = Custom
+    # custom_name
+    custom = custom.where("custom_name like :custom_name", \
+              {:custom_name => "%#{condition['custom_name']}%"}) \
+              unless condition["custom_name"].blank?
+    # is_auction
+    custom = custom.where(is_auction: condition["is_auction"]) \
+              unless condition["is_auction"].blank?
+    # paginate
+    custom.paginate(page: condition["page_ix"], per_page: 15)
+  end
 end

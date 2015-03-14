@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get    '/auth/:provider/loaddata2'=> 'auctions#load_closed_data' #ロードデータ
   post   '/auctions/search'         => 'auctions#search'
   post   '/products/search'         => 'products#search'
+  post   '/customs/search'          => 'customs#search'
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
