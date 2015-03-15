@@ -3,4 +3,5 @@ $('#categories').html("<%= j (render @categories) %>");
 $('#messages').html("<%= j (render 'layouts/messages') %>");
 
 $('#pagination_top').html("<%= j (will_paginate(@categories, :params => { :controller => "categories", :action => "index" })) %>");
+$('#total_entries').text("<%= "総件数：#{@categories.total_entries}件" %>");
 $('#pagination_bottom').html("<%= j (will_paginate(@categories, :params => { :controller => "categories", :action => "index" })) %>");

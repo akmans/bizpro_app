@@ -1,6 +1,8 @@
 <% provide(:title, '一覧,ユーザー,マスタ管理') %>
 <h3>ユーザー一覧</h3>
+<div id="total_entries" class="pull-right line-height-22">総件数：<%= @users.total_entries %>件</div>
 <%= will_paginate %>
+<div class="clearfix"></div>
 <div class="row header">
   <div class="col-xs-2 col-md-2">名前</div>
   <div class="col-xs-8 col-md-7">メールアドレス</div>

@@ -1,8 +1,10 @@
 <% provide(:title, '一覧,ブランド,マスタ管理') %>
 <h3>ブランド一覧</h3>
+<div id="total_entries" class="pull-right line-height-22">総件数：<%= @brands.total_entries %>件</div>
 <div id="pagination_top">
 <%= will_paginate %>
 </div>
+<div class="clearfix"></div>
 <div class="row header">
   <div class="col-xs-2 col-md-1">ID</div>
   <div class="col-xs-10 col-md-8">名称</div>

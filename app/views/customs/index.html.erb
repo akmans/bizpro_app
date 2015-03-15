@@ -2,7 +2,9 @@
 <h3>検索条件</h3>
 <%= render :partial => 'shared/custom_search_form', locals: { condition: @condition } %>
 <h3>カスタム一覧</h3>
+<div id="total_entries" class="pull-right line-height-22">総件数：<%= @customs.total_entries %>件</div>
 <%= will_paginate(@customs, :params => { :controller => "customs", :action => "index"}) %>
+<div class="clearfix"></div>
 <div class="row header">
   <div class="col-xs-12 col-md-6">カスタム</div>
   <!-- Add the extra clearfix for only the required viewport -->

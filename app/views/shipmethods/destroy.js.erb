@@ -3,4 +3,5 @@ $('#shipmethods').html("<%= j (render @shipmethods) %>");
 $('#messages').html("<%= j (render 'layouts/messages') %>");
 
 $('#pagination_top').html("<%= j (will_paginate(@shipmethods, :params => { :controller => "shipmethods", :action => "index" })) %>");
+$('#total_entries').text("<%= "総件数：#{@shipmethods.total_entries}件" %>");
 $('#pagination_bottom').html("<%= j (will_paginate(@shipmethods, :params => { :controller => "shipmethods", :action => "index" })) %>");
