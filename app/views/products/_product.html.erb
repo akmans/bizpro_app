@@ -12,11 +12,11 @@
     <%= link_to pc_map_custom_cnt_help(product.product_id),
                 product_pc_maps_path(product_product_id: product.product_id),
                 class: "btn btn-default" %>
+    <%= link_to shipment_detail_cnt_by_product_id_help(product.product_id), "#", class: "btn btn-default disabled" %>
     <%= link_to sold_cnt_help(product.product_id),
                 product_solds_path(product_product_id: product.product_id),
                 class: "btn btn-default" if product.is_domestic == 0 %>
     <%= link_to "-", "#", class: "btn btn-default disabled" unless product.is_domestic == 0 %>
-    <%= link_to shipment_detail_cnt_by_product_id_help(product.product_id), "#", class: "btn btn-default disabled" %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>

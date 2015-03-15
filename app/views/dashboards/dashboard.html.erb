@@ -1,0 +1,243 @@
+<% provide(:title, '') %>
+
+<div class="table-responsive col-md-6">
+  <table class="table table-hover">
+    <thead>
+      <th>国内売上情報</th>
+      <th class="text-right">件数</th>
+      <th class="text-right">売上</th>
+      <th class="text-right">利潤</th>
+      <th class="text-right">利潤率</th>
+    </thead>
+    <tbody>
+    <tr>
+      <th>今月</th>
+      <td class="text-right">１１</td>
+      <td class="text-right">２２</td>
+      <td class="text-right">３３</td>
+      <td class="text-right">４４</td>
+    </tr>
+    <tr>
+      <th>今年</th>
+      <td class="text-right">１１</td>
+      <td class="text-right">２２</td>
+      <td class="text-right">３３</td>
+      <td class="text-right">４４</td>
+    </tr>
+    <tr>
+      <th>全部</th>
+      <td class="text-right">１１</td>
+      <td class="text-right">２２</td>
+      <td class="text-right">３３</td>
+      <td class="text-right">４４</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="table-responsive col-md-6">
+  <table class="table table-hover">
+    <thead>
+      <th class="col-md-4">海外売上情報</th>
+      <th class="col-md-2 text-right">件数</th>
+      <th class="col-md-2 text-right">売上</th>
+      <th class="col-md-2 text-right">利潤</th>
+      <th class="col-md-2 text-right">利潤率</th>
+    </thead>
+    <tbody>
+    <tr>
+      <th>今月</th>
+      <td class="text-right">１１</td>
+      <td class="text-right">２２</td>
+      <td class="text-right">３３</td>
+      <td class="text-right">４４</td>
+    </tr>
+    <tr>
+      <th>今年</th>
+      <td class="text-right">１１</td>
+      <td class="text-right">２２</td>
+      <td class="text-right">３３</td>
+      <td class="text-right">４４</td>
+    </tr>
+    <tr>
+      <th>全部</th>
+      <td class="text-right">１１</td>
+      <td class="text-right">２２</td>
+      <td class="text-right">３３</td>
+      <td class="text-right">４４</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="table-responsive col-md-6">
+  <table class="table table-hover">
+    <thead>
+      <th class="col-md-4">オークション取引情報</th>
+      <th class="col-md-2 text-right">売件数</th>
+      <th class="col-md-2 text-right">売総額</th>
+      <th class="col-md-2 text-right">買件数</th>
+      <th class="col-md-2 text-right">買総額</th>
+    </thead>
+    <tbody>
+    <tr>
+      <th>今月</th>
+      <td class="text-right">１１</td>
+      <td class="text-right">２２</td>
+      <td class="text-right">３３</td>
+      <td class="text-right">４４</td>
+    </tr>
+    <tr>
+      <th>今年</th>
+      <td class="text-right">１１</td>
+      <td class="text-right">２２</td>
+      <td class="text-right">３３</td>
+      <td class="text-right">４４</td>
+    </tr>
+    <tr>
+      <th>全部</th>
+      <td class="text-right">１１</td>
+      <td class="text-right">２２</td>
+      <td class="text-right">３３</td>
+      <td class="text-right">４４</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="table-responsive col-md-6">
+  <table class="table table-hover">
+    <thead>
+      <th class="col-md-4">カスタム取引情報</th>
+      <th class="col-md-2 text-right">オーク数</th>
+      <th class="col-md-2 text-right">非オーク数</th>
+      <th class="col-md-2 text-right">&nbsp;</th>
+      <th class="col-md-2 text-right">&nbsp;</th>
+    </thead>
+    <tbody>
+    <tr>
+      <th>今月</th>
+      <td class="text-right">１１</td>
+      <td class="text-right">２２</td>
+      <td class="text-right">&nbsp;</td>
+      <td class="text-right">&nbsp;</td>
+    </tr>
+    <tr>
+      <th>今年</th>
+      <td class="text-right">１１</td>
+      <td class="text-right">２２</td>
+      <td class="text-right">&nbsp;</td>
+      <td class="text-right">&nbsp;</td>
+    </tr>
+    <tr>
+      <th>全部</th>
+      <td class="text-right">１１</td>
+      <td class="text-right">２２</td>
+      <td class="text-right">&nbsp;</td>
+      <td class="text-right">&nbsp;</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="table-responsive col-md-6">
+  <table class="table table-hover">
+    <thead>
+      <th class="col-md-4">商品情報</th>
+      <th class="col-md-2 text-right">国内</th>
+      <th class="col-md-2 text-right">海外</th>
+      <th class="col-md-4">&nbsp;</th>
+    </thead>
+    <tbody>
+    <tr>
+      <th class="col-md-4">未売数</th>
+      <td class="col-md-2 text-right"><%= @summary["product"]["domesitc_unsale_cnt"] %></td>
+      <td class="col-md-2 text-right"><%= @summary["product"]["offshore_unsale_cnt"] %></td>
+      <td class="col-md-4">&nbsp;</td>
+    </tr>
+    <tr>
+      <th class="col-md-4">売済数</th>
+      <td class="col-md-2 text-right"><%= @summary["product"]["domesitc_sold_cnt"] %></td>
+      <td class="col-md-2 text-right"><%= @summary["product"]["offshore_sold_cnt"] %></td>
+      <td class="col-md-4">&nbsp;</td>
+    </tr>
+    <tr>
+      <th class="col-md-4">発送中品</th>
+      <td class="col-md-2 text-right">-</td>
+      <td class="col-md-2 text-right"><%= @summary["product"]["offshore_sending_cnt"] %></td>
+      <td class="col-md-4">&nbsp;</td>
+    </tr>
+    <tr>
+      <th class="col-md-4">合計</th>
+      <td class="col-md-2 text-right">
+        <%= @summary["product"]["domesitc_unsale_cnt"].to_i + \
+            @summary["product"]["domesitc_sold_cnt"].to_i %>
+      </td>
+      <td class="col-md-2 text-right">
+        <%= @summary["product"]["offshore_unsale_cnt"].to_i + \
+            @summary["product"]["offshore_sold_cnt"].to_i + \
+            @summary["product"]["offshore_sending_cnt"].to_i %>
+      </td>
+      <td class="col-md-4">&nbsp;</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="table-responsive col-md-4">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th class="col-md-6">未処置オーク情報</th>
+      <th class="col-md-3 text-right">数</th>
+      <th class="col-md-3">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th class="col-md-6">区分未登録</th>
+      <td class="col-md-3 text-right"><%= @summary["product"]["domesitc_unsale_cnt"] %></td>
+      <td class="col-md-3">&nbsp;</td>
+    </tr>
+    <tr>
+      <th class="col-md-6">商品未登録</th>
+      <td class="col-md-3 text-right"><%= @summary["product"]["domesitc_sold_cnt"] %></td>
+      <td class="col-md-3">&nbsp;</td>
+    </tr>
+    <tr>
+      <th class="col-md-6">カス未登録</th>
+      <td class="col-md-3 text-right"><%= @summary["product"]["offshore_sending_cnt"] %></td>
+      <td class="col-md-3">&nbsp;</td>
+    </tr>
+    <tr>
+      <th class="col-md-6">合計</th>
+      <td class="col-md-3 text-right">
+        <%= @summary["product"]["offshore_unsale_cnt"].to_i + \
+            @summary["product"]["offshore_sold_cnt"].to_i + \
+            @summary["product"]["offshore_sending_cnt"].to_i %>
+      </td>
+      <td class="col-md-3">&nbsp;</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="table-responsive col-md-2">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th colspan="2">未処置カスタム数</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td class="col-md-6 text-right"><%= @summary["product"]["domesitc_unsale_cnt"] %></td>
+      <td class="col-md-6">&nbsp;</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
