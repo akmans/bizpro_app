@@ -104,9 +104,12 @@ module AuctionsHelper
   end
 
   # return auction hash
-  def auctions_hash_help(key)
+  def auctions_hash_help(auction_id)
     a_hash = {"" => "(空白)"}
-    Auction.where(ope_flg: key).where.not(auction_id: PaMap.all).each do |auction|
+#    Auction.where(ope_flg: key).where.not(auction_id: PaMap.all).each do |auction|
+    Auction.where(ope_flg: 0).where.not(auction_id: Custom.select("auction_id, SUM(percentage)") \
+          .where.not(auction_id: auction_id).group("auction_id").having("SUM(percentage) = 100")\
+          .pluck(:auction_id)).each do |auction|
       akey = auction.auction_id
       avalue = auction.auction_name
       new_hash = { akey => avalue}

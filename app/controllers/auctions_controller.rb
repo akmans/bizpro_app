@@ -119,7 +119,8 @@ class AuctionsController < ApplicationController
   # ajax auctions action
   def ajax_auctions
     # get auction data.
-    render :json => auctions_hash_help(params[:ope_flg])
+#    render :json => auctions_hash_help(params[:ope_flg])
+    render :json => auctions_hash_help(params[:auction_id])
   end
 
   private

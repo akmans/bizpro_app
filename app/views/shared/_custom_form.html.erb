@@ -18,7 +18,7 @@
     </div>
     <div class="col-sm-1 header">オーク名</div>
     <div class="col-sm-5">
-      <%= collection_select :custom, :auction_id, auctions_hash_help(0), :first, :last, {}, \
+      <%= collection_select :custom, :auction_id, auctions_hash_help(@custom.auction_id), :first, :last, {}, \
           {selected: @custom.auction_id, :class => 'form-control form-field'} %>
     </div>
     <div class="col-sm-1 header">比率</div>

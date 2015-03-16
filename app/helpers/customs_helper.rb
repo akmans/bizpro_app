@@ -21,6 +21,7 @@ module CustomsHelper
   def auction_percentage_hash_help(custom)
     rtn = {"" => "(空白)"}
     i = 10
+#    debugger
     per = 100 - Custom.where(auction_id: custom.auction_id).sum(:percentage).to_i
     per = per > (custom.percentage || 0) ? per : (custom.percentage || 0)
     while i <= per and i < 100 do
