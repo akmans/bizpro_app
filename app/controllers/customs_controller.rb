@@ -81,8 +81,9 @@ class CustomsController < ApplicationController
 
   # ajax auction percentage
   def ajax_auction_percentage
-    custom = Custom.find(params[:custom_id])
-    render json: auction_percentage_hash_help(custom)
+#    debugger
+#    custom = Custom.find(params[:custom_id])
+    render json: auction_percentage_hash_help(params[:custom_id], params[:auction_id])
   end
 
   private

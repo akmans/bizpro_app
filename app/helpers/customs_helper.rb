@@ -18,12 +18,17 @@ module CustomsHelper
   end
 
   # return action percentage hash
-  def auction_percentage_hash_help(custom)
+  def auction_percentage_hash_help(custom_id, auction_id)
     rtn = {"" => "(空白)"}
     i = 10
 #    debugger
-    per = 100 - Custom.where(auction_id: custom.auction_id).sum(:percentage).to_i
-    per = per > (custom.percentage || 0) ? per : (custom.percentage || 0)
+    # get current percentage
+    currentCustom = Custom.select(:percentage).where(custom_id: custom_id).where(auction_id: auction_id).first
+    currentPercentage = 0
+    currentPercentage = currentCustom.percentage unless (currentCustom.nil? || currentCustom.percentage.nil?)
+    # caculate percentage
+    per = 100 - Custom.where(auction_id: auction_id).sum(:percentage).to_i
+    per = per > currentPercentage ? per : currentPercentage if currentPercentage > 0
     while i <= per and i < 100 do
       thash = {i.to_s => percentage_hash_help[i.to_s]}
       rtn.merge! thash

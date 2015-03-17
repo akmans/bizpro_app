@@ -180,7 +180,7 @@ class CustomsControllerTest < ActionController::TestCase
   # test ajax_auction_percentage action
   test "get ajax_auction_percentage should get json data when logged in" do
     log_in_as(@user)
-    xhr :get, :ajax_auction_percentage, :custom_id => @custom
+    xhr :get, :ajax_auction_percentage, :custom_id => @custom.custom_id, :auction_id => @custom.auction_id
     expected = {""   => "(空白)",
      "10" => "１０％",
      "20" => "２０％",

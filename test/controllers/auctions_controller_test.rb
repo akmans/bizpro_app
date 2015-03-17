@@ -208,7 +208,9 @@ class AuctionsControllerTest < ActionController::TestCase
   # test ajax_auctions action
   test "get ajax_auctions should get json data when logged in" do
     log_in_as(@user)
-    expected = {""=>"(空白)", "Five5"=>"FiveFiveFiveFiveFive 55555"}
+    expected = {""=>"(空白)", "One1"=>"OneOneOneOneOne 11111", \
+        "Three3"=>"ThreeThreeThree 333", "Four4"=>"FourFourFourFour 4444", \
+        "Five5"=>"FiveFiveFiveFiveFive 55555"}
     xhr :get, :ajax_auctions, ope_flg: 0
     assert_equal expected, JSON.parse(response.body)
   end
