@@ -12,21 +12,21 @@
     <tbody>
     <tr>
       <th>今月</th>
-      <td class="text-right">１１</td>
+      <td class="text-right"><%=@summary["domestic"]["sold_month_cnt"] %></td>
       <td class="text-right">２２</td>
       <td class="text-right">３３</td>
       <td class="text-right">４４</td>
     </tr>
     <tr>
       <th>今年</th>
-      <td class="text-right">１１</td>
+      <td class="text-right"><%=@summary["domestic"]["sold_year_cnt"] %></td>
       <td class="text-right">２２</td>
       <td class="text-right">３３</td>
       <td class="text-right">４４</td>
     </tr>
     <tr>
       <th>全部</th>
-      <td class="text-right">１１</td>
+      <td class="text-right"><%=@summary["domestic"]["sold_all_cnt"] %></td>
       <td class="text-right">２２</td>
       <td class="text-right">３３</td>
       <td class="text-right">４４</td>
@@ -84,24 +84,24 @@
     <tbody>
     <tr>
       <th>今月</th>
-      <td class="text-right">１１</td>
-      <td class="text-right">２２</td>
-      <td class="text-right">３３</td>
-      <td class="text-right">４４</td>
+      <td class="text-right"><%=@summary["auction"]["sold_month_cnt"] %></td>
+      <td class="text-right"><%=commas_help(@summary["auction"]["sold_month_amount"]) %>円</td>
+      <td class="text-right"><%=@summary["auction"]["bought_month_cnt"] %></td>
+      <td class="text-right"><%=commas_help(@summary["auction"]["bought_month_amount"]) %>円</td>
     </tr>
     <tr>
       <th>今年</th>
-      <td class="text-right">１１</td>
-      <td class="text-right">２２</td>
-      <td class="text-right">３３</td>
-      <td class="text-right">４４</td>
+      <td class="text-right"><%=@summary["auction"]["sold_year_cnt"] %></td>
+      <td class="text-right"><%=commas_help(@summary["auction"]["sold_year_amount"]) %>円</td>
+      <td class="text-right"><%=@summary["auction"]["bought_year_cnt"] %></td>
+      <td class="text-right"><%=commas_help(@summary["auction"]["bought_year_amount"]) %>円</td>
     </tr>
     <tr>
       <th>全部</th>
-      <td class="text-right">１１</td>
-      <td class="text-right">２２</td>
-      <td class="text-right">３３</td>
-      <td class="text-right">４４</td>
+      <td class="text-right"><%=@summary["auction"]["sold_all_cnt"] %></td>
+      <td class="text-right"><%=commas_help(@summary["auction"]["sold_all_amount"]) %>円</td>
+      <td class="text-right"><%=@summary["auction"]["bought_all_cnt"] %></td>
+      <td class="text-right"><%=commas_help(@summary["auction"]["bought_all_amount"]) %>円</td>
     </tr>
     </tbody>
   </table>
@@ -119,22 +119,22 @@
     <tbody>
     <tr>
       <th>今月</th>
-      <td class="text-right">１１</td>
-      <td class="text-right">２２</td>
+      <td class="text-right"><%=@summary["custom"]["auction_month"] %></td>
+      <td class="text-right"><%=@summary["custom"]["general_month"] %></td>
       <td class="text-right">&nbsp;</td>
       <td class="text-right">&nbsp;</td>
     </tr>
     <tr>
       <th>今年</th>
-      <td class="text-right">１１</td>
-      <td class="text-right">２２</td>
+      <td class="text-right"><%=@summary["custom"]["auction_year"] %></td>
+      <td class="text-right"><%=@summary["custom"]["general_year"] %></td>
       <td class="text-right">&nbsp;</td>
       <td class="text-right">&nbsp;</td>
     </tr>
     <tr>
       <th>全部</th>
-      <td class="text-right">１１</td>
-      <td class="text-right">２２</td>
+      <td class="text-right"><%=@summary["custom"]["auction_all"] %></td>
+      <td class="text-right"><%=@summary["custom"]["general_all"] %></td>
       <td class="text-right">&nbsp;</td>
       <td class="text-right">&nbsp;</td>
     </tr>
@@ -155,32 +155,32 @@
     <tbody>
     <tr>
       <th class="col-md-4">未売数</th>
-      <td class="col-md-2 text-right"><%= @summary["product"]["domesitc_unsale_cnt"] %></td>
-      <td class="col-md-2 text-right"><%= @summary["product"]["offshore_unsale_cnt"] %></td>
+      <td class="col-md-2 text-right"><%= @summary["undeal_product"]["domesitc_unsale_cnt"] %></td>
+      <td class="col-md-2 text-right"><%= @summary["undeal_product"]["offshore_unsale_cnt"] %></td>
       <td class="col-md-4">&nbsp;</td>
     </tr>
     <tr>
       <th class="col-md-4">売済数</th>
-      <td class="col-md-2 text-right"><%= @summary["product"]["domesitc_sold_cnt"] %></td>
-      <td class="col-md-2 text-right"><%= @summary["product"]["offshore_sold_cnt"] %></td>
+      <td class="col-md-2 text-right"><%= @summary["undeal_product"]["domesitc_sold_cnt"] %></td>
+      <td class="col-md-2 text-right"><%= @summary["undeal_product"]["offshore_sold_cnt"] %></td>
       <td class="col-md-4">&nbsp;</td>
     </tr>
     <tr>
       <th class="col-md-4">発送中品</th>
       <td class="col-md-2 text-right">-</td>
-      <td class="col-md-2 text-right"><%= @summary["product"]["offshore_sending_cnt"] %></td>
+      <td class="col-md-2 text-right"><%= @summary["undeal_product"]["offshore_sending_cnt"] %></td>
       <td class="col-md-4">&nbsp;</td>
     </tr>
     <tr>
       <th class="col-md-4">合計</th>
       <td class="col-md-2 text-right">
-        <%= @summary["product"]["domesitc_unsale_cnt"].to_i + \
-            @summary["product"]["domesitc_sold_cnt"].to_i %>
+        <%= @summary["undeal_product"]["domesitc_unsale_cnt"].to_i + \
+            @summary["undeal_product"]["domesitc_sold_cnt"].to_i %>
       </td>
       <td class="col-md-2 text-right">
-        <%= @summary["product"]["offshore_unsale_cnt"].to_i + \
-            @summary["product"]["offshore_sold_cnt"].to_i + \
-            @summary["product"]["offshore_sending_cnt"].to_i %>
+        <%= @summary["undeal_product"]["offshore_unsale_cnt"].to_i + \
+            @summary["undeal_product"]["offshore_sold_cnt"].to_i + \
+            @summary["undeal_product"]["offshore_sending_cnt"].to_i %>
       </td>
       <td class="col-md-4">&nbsp;</td>
     </tr>
@@ -200,25 +200,25 @@
     <tbody>
     <tr>
       <th class="col-md-6">区分未登録</th>
-      <td class="col-md-3 text-right"><%= @summary["product"]["domesitc_unsale_cnt"] %></td>
+      <td class="col-md-3 text-right"><%= @summary["undeal_auction"]["operation_unregist"] %></td>
       <td class="col-md-3">&nbsp;</td>
     </tr>
     <tr>
       <th class="col-md-6">商品未登録</th>
-      <td class="col-md-3 text-right"><%= @summary["product"]["domesitc_sold_cnt"] %></td>
+      <td class="col-md-3 text-right"><%= @summary["undeal_auction"]["product_unregist"] %></td>
       <td class="col-md-3">&nbsp;</td>
     </tr>
     <tr>
       <th class="col-md-6">カス未登録</th>
-      <td class="col-md-3 text-right"><%= @summary["product"]["offshore_sending_cnt"] %></td>
+      <td class="col-md-3 text-right"><%= @summary["undeal_auction"]["custom_unregist"] %></td>
       <td class="col-md-3">&nbsp;</td>
     </tr>
     <tr>
       <th class="col-md-6">合計</th>
       <td class="col-md-3 text-right">
-        <%= @summary["product"]["offshore_unsale_cnt"].to_i + \
-            @summary["product"]["offshore_sold_cnt"].to_i + \
-            @summary["product"]["offshore_sending_cnt"].to_i %>
+        <%= @summary["undeal_auction"]["operation_unregist"].to_i + \
+            @summary["undeal_auction"]["product_unregist"].to_i + \
+            @summary["undeal_auction"]["custom_unregist"].to_i %>
       </td>
       <td class="col-md-3">&nbsp;</td>
     </tr>
@@ -235,7 +235,7 @@
     </thead>
     <tbody>
     <tr>
-      <td class="col-md-6 text-right"><%= @summary["product"]["domesitc_unsale_cnt"] %></td>
+      <td class="col-md-6 text-right"><%= @summary["undeal_custom"]["product_unregist"] %></td>
       <td class="col-md-6">&nbsp;</td>
     </tr>
     </tbody>
