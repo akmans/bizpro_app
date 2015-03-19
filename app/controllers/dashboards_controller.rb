@@ -137,7 +137,8 @@ class DashboardsController < ApplicationController
       # custom unregirst
       allCustom = Auction.where(ope_flg: 0).count
       finishCustom = Auction.where(auction_id: Custom.select("auction_id, SUM(percentage)")\
-          .where("auction_id is not null").group("auction_id").having("SUM(percentage) = 100").pluck(:auction_id)).count
+          .where("auction_id is not null").reorder('').group("auction_id") \
+          .having("SUM(percentage) = 100").pluck(:auction_id)).count
       auction["custom_unregist"] = allCustom - finishCustom
       return auction
     end
