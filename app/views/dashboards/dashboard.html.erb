@@ -13,23 +13,23 @@
     <tr>
       <th>今月</th>
       <td class="text-right"><%=@summary["domestic"]["sold_month_cnt"] %></td>
-      <td class="text-right">２２</td>
-      <td class="text-right">３３</td>
-      <td class="text-right">４４</td>
+      <td class="text-right"><%=commas_help(@summary["domestic"]["sold_month_amount"]) %>円</td>
+      <td class="text-right"><%=commas_help(@summary["domestic"]["sold_month_profit"]) %>円</td>
+      <td class="text-right"><%=@summary["domestic"]["sold_month_profit_rate"] %>％</td>
     </tr>
     <tr>
       <th>今年</th>
       <td class="text-right"><%=@summary["domestic"]["sold_year_cnt"] %></td>
-      <td class="text-right">２２</td>
-      <td class="text-right">３３</td>
-      <td class="text-right">４４</td>
+      <td class="text-right"><%=commas_help(@summary["domestic"]["sold_year_amount"]) %>円</td>
+      <td class="text-right"><%=commas_help(@summary["domestic"]["sold_year_profit"]) %>円</td>
+      <td class="text-right"><%=@summary["domestic"]["sold_year_profit_rate"] %>％</td>
     </tr>
     <tr>
       <th>全部</th>
       <td class="text-right"><%=@summary["domestic"]["sold_all_cnt"] %></td>
-      <td class="text-right">２２</td>
-      <td class="text-right">３３</td>
-      <td class="text-right">４４</td>
+      <td class="text-right"><%=commas_help(@summary["domestic"]["sold_all_amount"]) %>円</td>
+      <td class="text-right"><%=commas_help(@summary["domestic"]["sold_all_profit"]) %>円</td>
+      <td class="text-right"><%=@summary["domestic"]["sold_all_profit_rate"] %>％</td>
     </tr>
     </tbody>
   </table>

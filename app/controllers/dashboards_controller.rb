@@ -40,16 +40,24 @@ class DashboardsController < ApplicationController
     # get domesitc sold data info
     def domestic_sold_info
       domestic = {}
-      domestic["sold_all_cnt"] = Product.where(product_id: PaMap.select("product_id") \
-          .where(auction_id: Auction.where(sold_flg: 1))).all.count
-      domestic["sold_year_cnt"] = Product.where(product_id: PaMap.select("product_id") \
-          .where(auction_id: Auction.where(sold_flg: 1).where("end_time >= :year_s", \
-          {:year_s => Time.zone.now.beginning_of_year}).where("end_time <= :year_e", \
-          {:year_e => Time.zone.now.end_of_year}))).all.count
-      domestic["sold_month_cnt"] = Product.where(product_id: PaMap.select("product_id") \
-          .where(auction_id: Auction.where(sold_flg: 1).where("end_time >= :month_s", \
-          {:month_s => Time.zone.now.beginning_of_month}).where("end_time <= :month_e", \
-          {:month_e => Time.zone.now.end_of_month}))).all.count
+      # all
+      all = domestic_sold_product(0)
+      domestic["sold_all_cnt"] = all["sold_cnt"]
+      domestic["sold_all_amount"] = all["sold_amount"]
+      domestic["sold_all_profit"] = all["profit_amount"]
+      domestic["sold_all_profit_rate"] = all["profit_rate"]
+      # year
+      year = domestic_sold_product(1)
+      domestic["sold_year_cnt"] = year["sold_cnt"]
+      domestic["sold_year_amount"] = year["sold_amount"]
+      domestic["sold_year_profit"] = year["profit_amount"]
+      domestic["sold_year_profit_rate"] = year["profit_rate"]
+      # month
+      month = domestic_sold_product(2)
+      domestic["sold_month_cnt"] = month["sold_cnt"]
+      domestic["sold_month_amount"] = month["sold_amount"]
+      domestic["sold_month_profit"] = month["profit_amount"]
+      domestic["sold_month_profit_rate"] = month["profit_rate"]
       return domestic
     end
 
@@ -143,6 +151,74 @@ class DashboardsController < ApplicationController
     end
 
     # ---------------------- utilities function --------------------------
+    # domestic sold product
+    def domestic_sold_product(date_type)
+      info = {}
+      beginning_date = Time.zone.now.beginning_of_year
+      beginning_date = Time.zone.now.beginning_of_month if date_type == 2
+      end_date = Time.zone.now.end_of_year
+      end_date = Time.zone.now.end_of_month if date_type == 2
+      # count
+      info["sold_cnt"] = Auction.joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
+          .where(sold_flg: 1).count if date_type == 0
+      info["sold_cnt"] = Auction.joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
+          .where(sold_flg: 1).where("end_time >= :date_s", \
+          {:date_s => beginning_date}).where("end_time <= :date_e", \
+          {:date_e => end_date}).count if date_type != 0
+      # amount(sold)
+      info["sold_amount"] = Auction.select("SUM(price) as amount").joins("LEFT JOIN pa_maps" \
+          + " ON auctions.auction_id = pa_maps.auction_id ").where(sold_flg: 1).first.amount if date_type == 0
+      info["sold_amount"] = Auction.select("SUM(price) as amount").joins("LEFT JOIN pa_maps" \
+          + " ON auctions.auction_id = pa_maps.auction_id ").where(sold_flg: 1).where("end_time >= :date_s", \
+          {:date_s => beginning_date}).where("end_time <= :date_e", \
+          {:date_e => end_date}).first.amount if date_type != 0
+      # amount(bought)
+      bought1 = Auction.select("SUM(price) as amount").joins("LEFT JOIN pa_maps" \
+          + " ON auctions.auction_id = pa_maps.auction_id ").where(sold_flg: 0).first.amount.to_i if date_type == 0
+      bought1 = Auction.select("SUM(price) as amount").joins("LEFT JOIN pa_maps" \
+          + " ON auctions.auction_id = pa_maps.auction_id ").where(sold_flg: 0).where("end_time >= :date_s", \
+          {:date_s => beginning_date}).where("end_time <= :date_e", \
+          {:date_e => end_date}).first.amount.to_i if date_type != 0
+      bought2 = Custom.select("SUM(net_cost) + SUM(tax_cost) + SUM(other_cost) as amount").joins("LEFT JOIN pc_maps" \
+          + " ON customs.custom_id = pc_maps.custom_id ").joins("LEFT JOIN products" \
+          + " ON pc_maps.product_id = products.product_id ").joins("LEFT JOIN pa_maps" \
+          + " ON products.product_id = pa_maps.product_id").joins("LEFT JOIN auctions" \
+          + " ON pa_maps.auction_id = auctions.auction_id").where(is_auction: 0).first.amount.to_i if date_type == 0
+      bought2 = Custom.select("SUM(net_cost) + SUM(tax_cost) + SUM(other_cost) as amount").joins("LEFT JOIN pc_maps" \
+          + " ON customs.custom_id = pc_maps.custom_id ").joins("LEFT JOIN products" \
+          + " ON pc_maps.product_id = products.product_id ").joins("LEFT JOIN pa_maps" \
+          + " ON products.product_id = pa_maps.product_id").joins("LEFT JOIN auctions" \
+          + " ON pa_maps.auction_id = auctions.auction_id").where(is_auction: 0).where("end_time >= :date_s", \
+          {:date_s => beginning_date}).where("end_time <= :date_e", \
+          {:date_e => end_date}).first.amount.to_i if date_type != 0
+      bought3 = Custom.select("SUM(price * percentage) as amount").joins("LEFT JOIN auctions" \
+          + " ON customs.auction_id = auctions.auction_id ").joins("LEFT JOIN pc_maps" \
+          + " ON customs.custom_id = pc_maps.custom_id ").where(is_auction: 1).first.amount.to_i if date_type == 0
+      bought3 = Custom.select("SUM(price * percentage) as amount").joins("LEFT JOIN auctions" \
+          + " ON customs.auction_id = auctions.auction_id ").joins("LEFT JOIN pc_maps" \
+          + " ON customs.custom_id = pc_maps.custom_id ").where(is_auction: 1).where("end_time >= :date_s", \
+          {:date_s => beginning_date}).where("end_time <= :date_e", \
+          {:date_e => end_date}).first.amount.to_i if date_type != 0
+      bought4 = ShipmentDetail.select("SUM(ship_cost) + SUM(insured_cost) + SUM(custom_cost * exchange_rate) as amount") \
+          .joins("LEFT JOIN products ON shipment_details.product_id = products.product_id ") \
+          .joins("LEFT JOIN pa_maps ON products.product_id = pa_maps.product_id") \
+          .joins("LEFT JOIN auctions ON pa_maps.auction_id = auctions.auction_id") \
+          .where("sold_flg = :sold_flg", :sold_flg => 0).first.amount.to_i if date_type == 0
+      bought4 = ShipmentDetail.select("SUM(ship_cost) + SUM(insured_cost) + SUM(custom_cost * exchange_rate) as amount") \
+          .joins("LEFT JOIN products ON shipment_details.product_id = products.product_id ") \
+          .joins("LEFT JOIN pa_maps ON products.product_id = pa_maps.product_id") \
+          .joins("LEFT JOIN auctions ON pa_maps.auction_id = auctions.auction_id") \
+          .where("sold_flg = :sold_flg", :sold_flg => 0).where("end_time >= :date_s", \
+          {:date_s => beginning_date}).where("end_time <= :date_e", \
+          {:date_e => end_date}).first.amount.to_i if date_type != 0
+#      debugger
+      # profit amount
+      info["profit_amount"] = info["sold_amount"] - bought1 - bought2 - bought3 - bought4
+      # profit rate
+      info["profit_rate"] = (info["profit_amount"] * 100 / (bought1 + bought2 + bought3 + bought4)).round(2)
+      return info
+    end
+
     # count auction(date_type 0:all 1:year 2:month)
     def count_auction(sold_flg, date_type)
       return Auction.where(sold_flg: sold_flg).all.count if date_type == 0
@@ -150,9 +226,9 @@ class DashboardsController < ApplicationController
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
-      return Auction.where(sold_flg: 1).where("end_time >= :year_s", \
-          {:year_s => beginning_date}).where("end_time <= :year_e", \
-          {:year_e => end_date}).all.count
+      return Auction.where(sold_flg: 1).where("end_time >= :date_s", \
+          {:date_s => beginning_date}).where("end_time <= :date_e", \
+          {:date_e => end_date}).all.count
     end
 
     # sum auction(date_type 0:all 1:year 2:month)
@@ -162,9 +238,9 @@ class DashboardsController < ApplicationController
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
-      return Auction.select("SUM(price) as amount").where(sold_flg: sold_flg).where("end_time >= :year_s", \
-          {:year_s => beginning_date}).where("end_time <= :year_e", \
-          {:year_e => end_date}).first.amount.to_i
+      return Auction.select("SUM(price) as amount").where(sold_flg: sold_flg).where("end_time >= :date_s", \
+          {:date_s => beginning_date}).where("end_time <= :date_e", \
+          {:date_e => end_date}).first.amount.to_i
     end
 
     # count custom(date_type 0:all 1:year 2:month)
@@ -174,8 +250,8 @@ class DashboardsController < ApplicationController
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
-      return Custom.where(is_auction: is_auction).where("created_at >= :year_s", \
-          {:year_s => beginning_date}).where("created_at <= :year_e", \
-          {:year_e => end_date}).all.count
+      return Custom.where(is_auction: is_auction).where("created_at >= :date_s", \
+          {:date_s => beginning_date}).where("created_at <= :date_e", \
+          {:date_e => end_date}).all.count
     end
 end
