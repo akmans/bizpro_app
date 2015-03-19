@@ -234,14 +234,15 @@ class DashboardsController < ApplicationController
 
     # sum auction(date_type 0:all 1:year 2:month)
     def sum_auction(sold_flg, date_type)
-      return Auction.select("SUM(price) as amount").where(sold_flg: sold_flg).first.amount.to_i if date_type == 0
+      return Auction.select("SUM(price) as amount").where(sold_flg: sold_flg) \
+          .reorder('').first.amount.to_i if date_type == 0
       beginning_date = Time.zone.now.beginning_of_year
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
-      return Auction.select("SUM(price) as amount").where(sold_flg: sold_flg).where("end_time >= :date_s", \
-          {:date_s => beginning_date}).where("end_time <= :date_e", \
-          {:date_e => end_date}).first.amount.to_i
+      return Auction.select("SUM(price) as amount").where(sold_flg: sold_flg) \
+          .where("end_time >= :date_s", {:date_s => beginning_date}) \
+          .where("end_time <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_i
     end
 
     # count custom(date_type 0:all 1:year 2:month)
