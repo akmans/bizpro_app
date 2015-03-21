@@ -55,6 +55,7 @@ class AuctionsController < ApplicationController
         product.category_id = params[:auction][:category_id]
         product.brand_id = params[:auction][:brand_id]
         product.modu_id = params[:auction][:modu_id]
+        product.sold_date = @auction.end_time if @auction.sold_flg == 1
         product.save
         # for pa_map
         pa_map = PaMap.new()

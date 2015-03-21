@@ -2,10 +2,10 @@
 <h3>商品表示</h3>
 <div class="form-horizontal">
   <div class="form-group grid">
+    <div class="col-sm-1 header">ID</div>
+    <div class="col-sm-2"><%= @product.product_id %></div>
     <div class="col-sm-1 header">名称</div>
     <div class="col-sm-8"><%= @product.product_name %></div>
-    <div class="col-sm-1 header cell-no-padding text-center">為替レート</div>
-    <div class="col-sm-2"><%= @product.exchange_rate %></div>
   </div>
 
   <div class="form-group grid">
@@ -17,6 +17,13 @@
     <div class="col-sm-2"><%= brand_name_help(@product.brand_id) %></div>
     <div class="col-sm-1 header">モデル</div>
     <div class="col-sm-2"><%= modu_name_help(@product.modu_id) %></div>
+  </div>
+
+  <div class="form-group grid">
+    <div class="col-sm-1 header cell-no-padding text-center">為替レート</div>
+    <div class="col-sm-2"><%= @product.exchange_rate %></div>
+    <div class="col-sm-1 header">売却日</div>
+    <div class="col-sm-8"><%= @product.sold_date.nil? ? "-" : @product.sold_date %></div>
   </div>
 
   <div class="form-group grid row_last">

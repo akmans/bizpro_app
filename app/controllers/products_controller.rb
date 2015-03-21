@@ -87,8 +87,8 @@ class ProductsController < ApplicationController
   private
     # strong parameters method.
     def product_params
-      params.require(:product).permit(
-        :product_name, :is_domestic, :exchange_rate, :category_id, :brand_id, :modu_id, :memo)
+      params.require(:product).permit(:product_name, :is_domestic, \
+          :exchange_rate, :category_id, :brand_id, :modu_id, :memo, :sold_date)
     end
 
   # search product

@@ -2,10 +2,10 @@
   <%= render 'shared/error_messages', object: f.object %>
 
   <div class="form-group grid">
+    <div class="col-sm-1 header cell-no-padding text-center">ID</div>
+    <div class="col-sm-2"><%= @product.product_id.nil? ? "-" : @product.product_id %></div>
     <div class="col-sm-1 header">名称</div>
     <div class="col-sm-8"><%= f.text_field :product_name, class: 'form-control form-field' %></div>
-    <div class="col-sm-1 header cell-no-padding text-center">為替レート</div>
-    <div class="col-sm-2"><%= f.text_field :exchange_rate, class: 'form-control form-field' %></div>
   </div>
 
   <div class="form-group grid">
@@ -28,6 +28,22 @@
     <div class="col-sm-2">
       <%= collection_select :product, :modu_id, modu_hash_help, :first, :last, {}, \
           {selected: @product.modu_id, :class => 'form-control form-field'} %>
+    </div>
+  </div>
+
+  <div class="form-group grid">
+    <div class="col-sm-1 header cell-no-padding text-center">為替レート</div>
+    <div class="col-sm-2"><%= f.text_field :exchange_rate, class: 'form-control form-field' %></div>
+    <div class="col-sm-1 header">売却日</div>
+    <div class="col-sm-8">
+      <%= f.date_select :sold_date,
+        options = { :order => [:year, :month, :day],
+                    :prompt => { :day => '(D)', :month => '(M)', :year => '(Y)' },
+                    :use_two_digit_numbers => true,
+                    :start_year => 2011, :end_year => 2015
+        },
+        html_options = {:class => "form-control form-field select-inline"}
+      %>
     </div>
   </div>
 

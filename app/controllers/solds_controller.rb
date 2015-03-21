@@ -23,6 +23,8 @@ class SoldsController < ApplicationController
     @sold.product_id = params[:product_product_id]
     # save sold
     if @sold.save
+      # update product
+      @product.update_attributes(:sold_date => @sold.sold_date)
       # flash message
       flash.now[:success] = "作成完了しました。"
     else
@@ -38,6 +40,8 @@ class SoldsController < ApplicationController
     @sold = Sold.find(params[:id])
     # update attribute
     if @sold.update_attributes(sold_params)
+      # update product
+      @product.update_attributes(:sold_date => @sold.sold_date)
       # flash message
       flash.now[:success] = "更新完了しました。"
     else
@@ -74,4 +78,10 @@ class SoldsController < ApplicationController
     def sold_params
       params.require(:sold).permit(:sold_date, :sold_price, :ship_charge, :other_charge, :memo)
     end
+
+    # refresh sold_date of product
+#    def update_product(product_id, sold_date)
+#      product = Product.find(product_id)
+#      product.update_attributes(:sold_date => sold_date)
+#    end
 end

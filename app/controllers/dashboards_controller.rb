@@ -158,7 +158,8 @@ class DashboardsController < ApplicationController
       auction["operation_unregist"] = Auction.where("ope_flg IS NULL").count
       # product unregirst
       auction["product_unregist"] =  Auction.joins("LEFT OUTER JOIN pa_maps" \
-          + " ON auctions.auction_id = pa_maps.auction_id and pa_maps.product_id is null ").where(ope_flg: 1).count
+          + " ON auctions.auction_id = pa_maps.auction_id") \
+          .where("pa_maps.product_id is null").where(ope_flg: 1).count
       # custom unregirst
       allCustom = Auction.where(ope_flg: 0).count
       finishCustom = Auction.where(auction_id: Custom.select("auction_id, SUM(percentage)")\
@@ -187,12 +188,12 @@ class DashboardsController < ApplicationController
       # count
       info["sold_cnt"] = Sold.select("distinct products.product_id") \
           .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
-          .where("is_domestic = 0").count if date_type == 0
+          .where("products.is_domestic = 0").count if date_type == 0
       info["sold_cnt"] = Sold.select("distinct products.product_id") \
           .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
-          .where("is_domestic = 0") \
-          .where("sold_date >= :date_s", {:date_s => beginning_date}) \
-          .where("sold_date <= :date_e", {:date_e => end_date}).count if date_type != 0
+          .where("products.is_domestic = 0") \
+          .where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
+          .where("products.sold_date <= :date_e", {:date_e => end_date}).count if date_type != 0
       if info["sold_cnt"] == 0 then
         # amount(sold) = profit amount = profit rate
         info["sold_amount"] = info["profit_amount"] = info["profit_rate"] = 0
@@ -201,13 +202,13 @@ class DashboardsController < ApplicationController
         info["sold_amount"] = Sold.select("SUM(coalesce(sold_price, 0))" \
             + " - SUM(coalesce(ship_charge, 0)) - SUM(coalesce(other_charge, 0)) as amount") \
             .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
-            .where("is_domestic = 0").reorder('').first.amount.to_i if date_type == 0
+            .where("products.is_domestic = 0").reorder('').first.amount.to_i if date_type == 0
         info["sold_amount"] = Sold.select("SUM(coalesce(sold_price, 0))" \
             + " - SUM(coalesce(ship_charge, 0)) - SUM(coalesce(other_charge, 0)) as amount") \
             .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
-            .where("is_domestic = 0") \
-            .where("sold_date >= :date_s", {:date_s => beginning_date}) \
-            .where("sold_date <= :date_e", {:date_e => end_date}) \
+            .where("products.is_domestic = 0") \
+            .where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
+            .where("products.sold_date <= :date_e", {:date_e => end_date}) \
             .reorder('').first.amount.to_i if date_type != 0
         # amount(bought) (sold_flg, date_type, is_domestic)
         cost_amount = cost_calculate(0, date_type, 0)
@@ -229,10 +230,10 @@ class DashboardsController < ApplicationController
       # count
       info["sold_cnt"] = Auction.joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
           .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-          .where("is_domestic = 1").where(sold_flg: 1).count if date_type == 0
+          .where("products.is_domestic = 1").where(sold_flg: 1).count if date_type == 0
       info["sold_cnt"] = Auction.joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
           .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-          .where("is_domestic = 1").where(sold_flg: 1) \
+          .where("products.is_domestic = 1").where(sold_flg: 1) \
           .where("end_time >= :date_s", {:date_s => beginning_date}) \
           .where("end_time <= :date_e", {:date_e => end_date}).count if date_type != 0
       if info["sold_cnt"] == 0 then
@@ -243,11 +244,11 @@ class DashboardsController < ApplicationController
         info["sold_amount"] = Auction.select("SUM(price) as amount") \
             .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
             .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-            .where("is_domestic = 1").where(sold_flg: 1).reorder('').first.amount.to_i if date_type == 0
+            .where("products.is_domestic = 1").where(sold_flg: 1).reorder('').first.amount.to_i if date_type == 0
         info["sold_amount"] = Auction.select("SUM(price) as amount") \
             .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
             .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-            .where("is_domestic = 1").where(sold_flg: 1) \
+            .where("products.is_domestic = 1").where(sold_flg: 1) \
             .where("end_time >= :date_s", {:date_s => beginning_date}) \
             .where("end_time <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_i if date_type != 0
         # amount(bought) (sold_flg, date_type, is_domestic)
@@ -307,12 +308,12 @@ class DashboardsController < ApplicationController
       bought1 = Auction.select("SUM(price) as amount") \
           .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
           .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-          .where("is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
+          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
           .where(sold_flg: sold_flg).reorder('').first.amount.to_i if date_type == 0
       bought1 = Auction.select("SUM(price) as amount") \
           .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
           .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-          .where("is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
+          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
           .where(sold_flg: sold_flg) \
           .where("end_time >= :date_s", {:date_s => beginning_date}) \
           .where("end_time <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_i if date_type != 0
@@ -322,14 +323,14 @@ class DashboardsController < ApplicationController
           .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id ") \
           .joins("LEFT JOIN pa_maps ON products.product_id = pa_maps.product_id") \
           .joins("LEFT JOIN auctions ON pa_maps.auction_id = auctions.auction_id") \
-          .where(is_auction: 0).where("is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
+          .where(is_auction: 0).where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
           .reorder('').first.amount.to_i if date_type == 0
       bought2 = Custom.select("SUM(net_cost) + SUM(tax_cost) + SUM(other_cost) as amount") \
           .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
           .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id ") \
           .joins("LEFT JOIN pa_maps ON products.product_id = pa_maps.product_id") \
           .joins("LEFT JOIN auctions ON pa_maps.auction_id = auctions.auction_id") \
-          .where(is_auction: 0).where("is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
+          .where(is_auction: 0).where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
           .where("end_time >= :date_s", {:date_s => beginning_date}) \
           .where("end_time <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_i if date_type != 0
       # custom cost(auction)
@@ -337,13 +338,13 @@ class DashboardsController < ApplicationController
           .joins("LEFT JOIN auctions ON customs.auction_id = auctions.auction_id ") \
           .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
           .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id") \
-          .where("is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
+          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
           .where(is_auction: 1).reorder('').first.amount.to_i if date_type == 0
       bought3 = Custom.select("SUM(price * percentage) as amount") \
           .joins("LEFT JOIN auctions ON customs.auction_id = auctions.auction_id ") \
           .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
           .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id") \
-          .where("is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
+          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
           .where(is_auction: 1).where("end_time >= :date_s", \
           {:date_s => beginning_date}).where("end_time <= :date_e", \
           {:date_e => end_date}).reorder('').first.amount.to_i if date_type != 0
@@ -353,14 +354,14 @@ class DashboardsController < ApplicationController
           .joins("LEFT JOIN pa_maps ON products.product_id = pa_maps.product_id") \
           .joins("LEFT JOIN auctions ON pa_maps.auction_id = auctions.auction_id") \
           .where("sold_flg = :sold_flg", :sold_flg => sold_flg) \
-          .where("is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
+          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
           .reorder('').first.amount.to_i if date_type == 0
       bought4 = ShipmentDetail.select("SUM(ship_cost) + SUM(insured_cost) + SUM(custom_cost * exchange_rate) as amount") \
           .joins("LEFT JOIN products ON shipment_details.product_id = products.product_id ") \
           .joins("LEFT JOIN pa_maps ON products.product_id = pa_maps.product_id") \
           .joins("LEFT JOIN auctions ON pa_maps.auction_id = auctions.auction_id") \
           .where("sold_flg = :sold_flg", :sold_flg => sold_flg) \
-          .where("is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
+          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
           .where("end_time >= :date_s", {:date_s => beginning_date}) \
           .where("end_time <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_i if date_type != 0
       return bought1 + bought2 + bought3 + bought4
