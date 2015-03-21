@@ -193,24 +193,29 @@ class DashboardsController < ApplicationController
           .where("is_domestic = 0") \
           .where("sold_date >= :date_s", {:date_s => beginning_date}) \
           .where("sold_date <= :date_e", {:date_e => end_date}).count if date_type != 0
-      # amount(sold)
-      info["sold_amount"] = Sold.select("SUM(coalesce(sold_price, 0))" \
-          + " - SUM(coalesce(ship_charge, 0)) - SUM(coalesce(other_charge, 0)) as amount") \
-          .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
-          .where("is_domestic = 0").reorder('').first.amount.to_i if date_type == 0
-      info["sold_amount"] = Sold.select("SUM(coalesce(sold_price, 0))" \
-          + " - SUM(coalesce(ship_charge, 0)) - SUM(coalesce(other_charge, 0)) as amount") \
-          .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
-          .where("is_domestic = 0") \
-          .where("sold_date >= :date_s", {:date_s => beginning_date}) \
-          .where("sold_date <= :date_e", {:date_e => end_date}) \
-          .reorder('').first.amount.to_i if date_type != 0
-      # amount(bought) (sold_flg, date_type, is_domestic)
-      cost_amount = cost_calculate(0, date_type, 0)
-      # profit amount
-      info["profit_amount"] = info["sold_amount"] - cost_amount
-      # profit rate
-      info["profit_rate"] = (cost_amount != 0 ? (info["profit_amount"] * 100 / cost_amount).round(2) : 0) 
+      if info["sold_cnt"] == 0 then
+        # amount(sold) = profit amount = profit rate
+        info["sold_amount"] = info["profit_amount"] = info["profit_rate"] = 0
+      else
+        # amount(sold)
+        info["sold_amount"] = Sold.select("SUM(coalesce(sold_price, 0))" \
+            + " - SUM(coalesce(ship_charge, 0)) - SUM(coalesce(other_charge, 0)) as amount") \
+            .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
+            .where("is_domestic = 0").reorder('').first.amount.to_i if date_type == 0
+        info["sold_amount"] = Sold.select("SUM(coalesce(sold_price, 0))" \
+            + " - SUM(coalesce(ship_charge, 0)) - SUM(coalesce(other_charge, 0)) as amount") \
+            .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
+            .where("is_domestic = 0") \
+            .where("sold_date >= :date_s", {:date_s => beginning_date}) \
+            .where("sold_date <= :date_e", {:date_e => end_date}) \
+            .reorder('').first.amount.to_i if date_type != 0
+        # amount(bought) (sold_flg, date_type, is_domestic)
+        cost_amount = cost_calculate(0, date_type, 0)
+        # profit amount
+        info["profit_amount"] = info["sold_amount"] - cost_amount
+        # profit rate
+        info["profit_rate"] = (cost_amount != 0 ? (info["profit_amount"] * 100 / cost_amount).round(2) : 0)
+      end
       return info
     end
 
@@ -230,23 +235,28 @@ class DashboardsController < ApplicationController
           .where("is_domestic = 1").where(sold_flg: 1) \
           .where("end_time >= :date_s", {:date_s => beginning_date}) \
           .where("end_time <= :date_e", {:date_e => end_date}).count if date_type != 0
-      # amount(sold)
-      info["sold_amount"] = Auction.select("SUM(price) as amount") \
-          .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
-          .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-          .where("is_domestic = 1").where(sold_flg: 1).reorder('').first.amount if date_type == 0
-      info["sold_amount"] = Auction.select("SUM(price) as amount") \
-          .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
-          .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-          .where("is_domestic = 1").where(sold_flg: 1) \
-          .where("end_time >= :date_s", {:date_s => beginning_date}) \
-          .where("end_time <= :date_e", {:date_e => end_date}).reorder('').first.amount if date_type != 0
-      # amount(bought) (sold_flg, date_type, is_domestic)
-      cost_amount = cost_calculate(0, date_type, 1)
-      # profit amount
-      info["profit_amount"] = info["sold_amount"] - cost_amount
-      # profit rate
-      info["profit_rate"] = (cost_amount != 0 ? (info["profit_amount"] * 100 / cost_amount).round(2) : 0) 
+      if info["sold_cnt"] == 0 then
+        # amount(sold) = profit amount = profit rate
+        info["sold_amount"] = info["profit_amount"] = info["profit_rate"] = 0
+      else
+        # amount(sold)
+        info["sold_amount"] = Auction.select("SUM(price) as amount") \
+            .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
+            .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
+            .where("is_domestic = 1").where(sold_flg: 1).reorder('').first.amount.to_i if date_type == 0
+        info["sold_amount"] = Auction.select("SUM(price) as amount") \
+            .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
+            .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
+            .where("is_domestic = 1").where(sold_flg: 1) \
+            .where("end_time >= :date_s", {:date_s => beginning_date}) \
+            .where("end_time <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_i if date_type != 0
+        # amount(bought) (sold_flg, date_type, is_domestic)
+        cost_amount = cost_calculate(0, date_type, 1)
+        # profit amount
+        info["profit_amount"] = info["sold_amount"] - cost_amount
+        # profit rate
+        info["profit_rate"] = (cost_amount != 0 ? (info["profit_amount"] * 100 / cost_amount).round(2) : 0)
+      end
       return info
     end
 
