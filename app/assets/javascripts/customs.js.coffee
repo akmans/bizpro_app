@@ -60,3 +60,4 @@ $(document).on "page:change", ->
   $("#btn-custom-clear").bind "click", ->
     $("#custom_name").val('')
     $("#is_auction").val('')
+    $("#product_unregist").val('')

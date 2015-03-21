@@ -4,13 +4,12 @@ class CustomsController < ApplicationController
 
   # index action
   def index
-#    page = page_ix_help(params[:page])
-    # get auction data list with pagination.
-#    @customs = Custom.paginate(page: page, per_page: 15)
+    # get page index
+    page = page_ix_help(params[:page])
     # refresh search condition
     @condition = refresh_customs_search_condition_help(params)
     # get custom data.
-    @customs = search_custom(@condition)
+    @customs = search_custom(@condition, page)
   end
 
   # show action
@@ -65,10 +64,11 @@ class CustomsController < ApplicationController
 
   # search action
   def search
+#    debugger
     # get parameters from params and save it into session
     @condition = refresh_customs_search_condition_help(params)
     # get custom data list with pagination.
-    @customs = search_custom(@condition)
+    @customs = search_custom(@condition, 1)
     # render index page
     render 'index'
   end
@@ -95,9 +95,11 @@ class CustomsController < ApplicationController
     end
 
   # search custom
-  def search_custom(condition)
+  def search_custom(condition, page_ix)
     # construct where condition
-    custom = Custom
+    custom = Custom.select("customs.custom_id, custom_name, auction_id, " \
+        + "CASE WHEN pc_maps.custom_id is null THEN '未' ELSE '-' END as regist_status") \
+        .joins("LEFT OUTER JOIN pc_maps ON customs.custom_id = pc_maps.custom_id")
     # custom_name
     custom = custom.where("custom_name like :custom_name", \
               {:custom_name => "%#{condition['custom_name']}%"}) \
@@ -105,7 +107,9 @@ class CustomsController < ApplicationController
     # is_auction
     custom = custom.where(is_auction: condition["is_auction"]) \
               unless condition["is_auction"].blank?
+    # product_unregist
+    custom = custom.where("pc_maps.custom_id is null") unless condition["product_unregist"].blank?
     # paginate
-    custom.paginate(page: condition["page_ix"], per_page: 15)
+    custom.paginate(page: page_ix, per_page: 15)
   end
 end

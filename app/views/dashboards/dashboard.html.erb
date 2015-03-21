@@ -1,9 +1,13 @@
 <% provide(:title, '') %>
 
+<div class="row header">
+  <div class="col-xs-12"><h4>商品売上情報</h4></div>
+</div>
+
 <div class="table-responsive col-md-6">
   <table class="table table-hover">
     <thead>
-      <th>国内売上情報</th>
+      <th>国内</th>
       <th class="text-right">件数</th>
       <th class="text-right">売上</th>
       <th class="text-right">利潤</th>
@@ -38,7 +42,7 @@
 <div class="table-responsive col-md-6">
   <table class="table table-hover">
     <thead>
-      <th class="col-md-4">海外売上情報</th>
+      <th class="col-md-4">海外</th>
       <th class="col-md-2 text-right">件数</th>
       <th class="col-md-2 text-right">売上</th>
       <th class="col-md-2 text-right">利潤</th>
@@ -71,11 +75,14 @@
 </div>
 
 <div class="clearfix"></div>
+<div class="row header">
+  <div class="col-xs-12"><h4>取引情報</h4></div>
+</div>
 
 <div class="table-responsive col-md-6">
   <table class="table table-hover">
     <thead>
-      <th class="col-md-4">オークション取引情報</th>
+      <th class="col-md-4">オークション</th>
       <th class="col-md-2 text-right">売件数</th>
       <th class="col-md-2 text-right">売総額</th>
       <th class="col-md-2 text-right">買件数</th>
@@ -110,7 +117,7 @@
 <div class="table-responsive col-md-6">
   <table class="table table-hover">
     <thead>
-      <th class="col-md-4">カスタム取引情報</th>
+      <th class="col-md-4">カスタム</th>
       <th class="col-md-2 text-right">オーク数</th>
       <th class="col-md-2 text-right">非オーク数</th>
       <th class="col-md-2 text-right">&nbsp;</th>
@@ -143,6 +150,9 @@
 </div>
 
 <div class="clearfix"></div>
+<div class="row header">
+  <div class="col-xs-12"><h4>データ情報</h4></div>
+</div>
 
 <div class="table-responsive col-md-6">
   <table class="table table-hover">
@@ -235,9 +245,14 @@
     </thead>
     <tbody>
     <tr>
-      <td class="col-md-6 text-right"><%= @summary["undeal_custom"]["product_unregist"] %></td>
+      <td class="col-md-6 text-right">
+        <%= link_to @summary["undeal_custom"]["product_unregist"], "#", id: "link-product-unregist", class: "" %>
+      </td>
       <td class="col-md-6">&nbsp;</td>
     </tr>
     </tbody>
   </table>
 </div>
+<%= form_tag("#", method: "post", id: "bashboard-form") do %>
+<div id="dummy">&nbsp;</div>
+<% end %>

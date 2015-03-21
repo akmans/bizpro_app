@@ -101,8 +101,10 @@ class ApplicationController < ActionController::Base
         condition["custom_name"] = par[:custom_name] unless par[:custom_name].nil?
         # is_auction
         condition["is_auction"] = par[:is_auction] unless par[:is_auction].nil?
-        # page index
-        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
+        # product_regist
+        condition["product_unregist"] = par[:product_unregist] unless par[:product_unregist].nil?
+#        # page index
+#        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
         # refresh session
         session[:customs_search_form] = condition
       end

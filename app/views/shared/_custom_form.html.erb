@@ -46,7 +46,7 @@
           class: 'form-control form-field text-right' %>
     </div>
     <div class="col-sm-1 header">総額</div>
-    <div class="col-sm-2"><%= custom_total_cost_help(@custom) %>円</div>
+    <div class="col-sm-2"><%= @custom.custom_id.blank? ? 0 : custom_total_cost_help(@custom.custom_id) %>円</div>
   </div>
 
   <div class="form-group row-fluid grid row_last">

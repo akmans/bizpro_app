@@ -53,7 +53,7 @@ module ProductsHelper
     # customs cost
     if !customs.nil?
       customs.each do |c|
-        total += custom_total_cost_help(c)
+        total += custom_total_cost_help(c.custom_id)
       end
     end
     # shipment details cost

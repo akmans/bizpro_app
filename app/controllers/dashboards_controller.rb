@@ -18,7 +18,6 @@ class DashboardsController < ApplicationController
     # by date
     @summary["auction"] = auction_info
     @summary["custom"] = custom_info
-#    debugger
     render 'dashboard'
   end
 
@@ -138,22 +137,14 @@ class DashboardsController < ApplicationController
       # total 
       product["domesitc_cnt"] = Product.where(is_domestic: 1).count
       # domesitc sold count
-#      product["domesitc_sold_cnt"] = Product.where(is_domestic: 1).where(product_id: \
-#          PaMap.where(auction_id: Auction.where(sold_flg: 1).pluck(:auction_id)).pluck(:product_id)).count
-#      product["domesitc_sold_cnt"] = Product \
-#          .joins("LEFT JOIN pa_maps ON pa_maps.product_id=products.product_id") \
-#          .joins("LEFT JOIN auctions ON auctions.auction_id=pa_maps.auction_id") \
-#          .where(is_domestic: 1).where("sold_flg = 1").count
       product["domesitc_sold_cnt"] = Product.where(is_domestic: 1).where.not(sold_date: nil).count
       # domesitc unsale count
       product["domesitc_unsale_cnt"] = product["domesitc_cnt"].to_i - product["domesitc_sold_cnt"].to_i
       # offshore sending count
       product["offshore_sending_cnt"] = Product.where(is_domestic: 2).count
       # offshore sold count
-#      product["offshore_sold_cnt"] = Product.where(is_domestic: 0).where(product_id: Sold.all.pluck(:product_id)).count
       product["offshore_sold_cnt"] = Product.where(is_domestic: 0).where.not(sold_date: nil).count
       # offshore unsale count
-#      product["offshore_unsale_cnt"] = Product.where(is_domestic: 0).count - product["offshore_sold_cnt"]
       product["offshore_unsale_cnt"] = Product.where(is_domestic: 0).where(sold_date: nil).count
       return product
     end
@@ -169,12 +160,11 @@ class DashboardsController < ApplicationController
           .where("pa_maps.product_id is null").where(ope_flg: 1).count
       # custom unregirst
       allCustom = Auction.where(ope_flg: 0).count
-#      finishCustom = Auction.where(auction_id: Custom.select("auction_id, SUM(percentage)")\
-#          .where("auction_id is not null").reorder('').group("auction_id") \
-#          .having("SUM(percentage) = 100").pluck(:auction_id)).count
+      # regirsted custom count
       finishCustom = Custom.select("auction_id, SUM(percentage)")\
           .where("auction_id is not null").reorder('').group("auction_id") \
           .having("SUM(percentage) = 100").pluck(:auction_id).count
+      # unregirst custom count
       auction["custom_unregist"] = allCustom - finishCustom
       return auction
     end
@@ -183,7 +173,6 @@ class DashboardsController < ApplicationController
     def undeal_custom_info
       custom = {}
       # product unregist
-#      custom["product_unregist"] = Custom.where.not(custom_id: PcMap.all.pluck(:custom_id)).count
       custom["product_unregist"] =  Custom \
           .joins("LEFT OUTER JOIN pc_maps ON pc_maps.custom_id = customs.custom_id") \
           .where("pc_maps.product_id is null").count
@@ -193,11 +182,14 @@ class DashboardsController < ApplicationController
     # ---------------------- utilities function(LEVEL 1) --------------------------
     # count auction(date_type 0:all 1:year 2:month)
     def count_auction(sold_flg, date_type)
+      # all
       return Auction.where(sold_flg: sold_flg).all.count if date_type == 0
+      # date interval
       beginning_date = Time.zone.now.beginning_of_year
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
+      # year or month
       return Auction.where(sold_flg: 1) \
           .where("end_time >= :date_s", {:date_s => beginning_date}) \
           .where("end_time <= :date_e", {:date_e => end_date}).all.count
@@ -205,13 +197,16 @@ class DashboardsController < ApplicationController
 
     # sum auction(date_type 0:all 1:year 2:month)
     def sum_auction(sold_flg, date_type)
+      # all
       return Auction.select("SUM(price * (tax_rate + 100) / 100 + " \
           + "COALESCE(payment_cost, 0) + COALESCE(shipment_cost, 0)) as amount") \
           .where(sold_flg: sold_flg).reorder('').first.amount.to_i if date_type == 0
+      # date interval
       beginning_date = Time.zone.now.beginning_of_year
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
+      # year or month
       return Auction.select("SUM(price * (tax_rate + 100) / 100 + " \
           + "COALESCE(payment_cost, 0) + COALESCE(shipment_cost, 0)) as amount") \
           .where(sold_flg: sold_flg) \
@@ -221,11 +216,14 @@ class DashboardsController < ApplicationController
 
     # count custom(date_type 0:all 1:year 2:month)
     def count_custom(is_auction, date_type)
+      # all
       return Custom.where(is_auction: is_auction).all.count if date_type == 0
+      # date interval
       beginning_date = Time.zone.now.beginning_of_year
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
+      # year or month
       return Custom.where(is_auction: is_auction) \
           .where("created_at >= :date_s", {:date_s => beginning_date}) \
           .where("created_at <= :date_e", {:date_e => end_date}).all.count
@@ -234,22 +232,14 @@ class DashboardsController < ApplicationController
     # offshore sold product
     def offshore_sold_product(date_type)
       info = {}
+      # date interval
       beginning_date = Time.zone.now.beginning_of_year
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
       # count product
-#      info["sold_cnt"] = Sold.select("distinct products.product_id") \
-#          .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
-#          .where("products.is_domestic = 0").count if date_type == 0
       info["sold_cnt"] = count_product(date_type, 0)
-#      info["sold_cnt"] = Sold.select("distinct products.product_id") \
-#          .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
-#          .where("products.is_domestic = 0") \
-##      info["sold_cnt"] = Product.where(is_domestic: 0).where.not(sold_date: nil) \
-##          .where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
-##          .where("products.sold_date <= :date_e", {:date_e => end_date}).count if date_type != 0
-      # no sold data
+      # sold data count is 0
       if info["sold_cnt"] == 0 then
         # amount(sold) = profit amount = profit rate
         info["sold_amount"] = info["profit_amount"] = info["profit_rate"] = 0
@@ -269,7 +259,6 @@ class DashboardsController < ApplicationController
             .reorder('').first.amount.to_i if date_type != 0
         # amount(bought) (sold_flg, date_type, is_domestic)
         cost_amount = cost_calculate(date_type, 0)
-#        debugger
         # profit amount
         info["profit_amount"] = info["sold_amount"] - cost_amount
         # profit rate
@@ -281,23 +270,14 @@ class DashboardsController < ApplicationController
     # domestic sold product
     def domestic_sold_product(date_type)
       info = {}
+      # date interval
       beginning_date = Time.zone.now.beginning_of_year
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
       # count
       info["sold_cnt"] = count_product(date_type, 1)
-#      info["sold_cnt"] = Auction \
-#          .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
-#          .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-#          .where("products.is_domestic = 1").where(sold_flg: 1).count if date_type == 0
-#      info["sold_cnt"] = Auction \
-#          .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
-#          .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-#          .where("products.is_domestic = 1").where(sold_flg: 1) \
-#          .where("end_time >= :date_s", {:date_s => beginning_date}) \
-#          .where("end_time <= :date_e", {:date_e => end_date}).count if date_type != 0
-      # no sold data
+      # sold data count is 0
       if info["sold_cnt"] == 0 then
         # amount(sold) = profit amount = profit rate
         info["sold_amount"] = info["profit_amount"] = info["profit_rate"] = 0
@@ -330,12 +310,15 @@ class DashboardsController < ApplicationController
     # ---------------------- utilities function(LEVEL 1) --------------------------
     # count product(date_type 0:all 1:year 2:month)
     def count_product(date_type, is_domestic)
+      # all
+      return Product.where(is_domestic: is_domestic).where.not(sold_date: nil) \
+          .count  if date_type == 0
+      # date interval
       beginning_date = Time.zone.now.beginning_of_year
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
-      return Product.where(is_domestic: is_domestic).where.not(sold_date: nil) \
-          .count  if date_type == 0
+      # year or month
       return Product.where(is_domestic: is_domestic).where.not(sold_date: nil) \
           .where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
           .where("products.sold_date <= :date_e", {:date_e => end_date}).count
@@ -343,6 +326,7 @@ class DashboardsController < ApplicationController
     
     # cost calculate(date_type 0:all 1:year 2:month)
     def cost_calculate(date_type, is_domestic)
+      # date interval
       beginning_date = Time.zone.now.beginning_of_year
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
