@@ -5,14 +5,14 @@ class ShipmentsController < ApplicationController
 
   # index action
   def index
-#    # page index
-#    page = page_ix_help(params[:page])
+    # page index
+    page = page_ix_help(params[:page])
     # get shipment data list with pagination.
 #    @shipments = Shipment.paginate(page: page, per_page: 15)
     # refresh search condition
     @condition = refresh_shipments_search_condition_help(params)
     # get custom data list with pagination.
-    @shipments = search_shipment(@condition)
+    @shipments = search_shipment(@condition, page)
   end
 
   # show action
@@ -72,7 +72,7 @@ class ShipmentsController < ApplicationController
     # get parameters from params and save it into session
     @condition = refresh_shipments_search_condition_help(params)
     # get custom data list with pagination.
-    @shipments = search_shipment(@condition)
+    @shipments = search_shipment(@condition, 1)
     # render index page
     render 'index'
   end
@@ -92,7 +92,7 @@ class ShipmentsController < ApplicationController
 #    end
 
   # search shipment
-  def search_shipment(condition)
+  def search_shipment(condition, page_ix)
     # construct where condition
     shipment = Shipment
     # shipmethod_id
@@ -107,7 +107,7 @@ class ShipmentsController < ApplicationController
                unless condition["product_name"].blank?
     # start year month
     if !condition["year_s"].blank? && !condition["month_s"].blank? && !condition["date_type"].blank?
-      date_s = Date::strptime(condition["year_s"] + condition["month_s"] + "01", "%Y%m%d")
+      date_s = Date::strptime(condition["year_s"] + condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d")
       # condition for sent date
       shipment = shipment.where("sent_date >= :sent_date", {:sent_date => date_s}) \
                  if condition["date_type"] == "0"
@@ -117,7 +117,7 @@ class ShipmentsController < ApplicationController
     end
     # end year month
     if !condition["year_e"].blank? && !condition["month_e"].blank? && !condition["date_type"].blank?
-      date_e = Date::strptime(condition["year_e"] + condition["month_e"] + "01", "%Y%m%d")
+      date_e = Date::strptime(condition["year_e"] + condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
       # condition for sent date
       shipment = shipment.where("sent_date <= :sent_date", {:sent_date => date_e.end_of_month}) \
                  if condition["date_type"] == "0"
@@ -125,7 +125,16 @@ class ShipmentsController < ApplicationController
       shipment = shipment.where("arrived_date <= :arrived_date", {:arrived_date => date_s.end_of_month}) \
                  if condition["date_type"] == "1"
     end
+    # date type
+    if condition["year_e"].blank? && condition["month_e"].blank? && !condition["date_type"].blank? \
+        && condition["year_s"].blank? && condition["month_s"].blank?
+      shipment = shipment.where.not(sent_date: nil) if condition["date_type"] == '0'
+      shipment = shipment.where.not(arrived_date: nil) if condition["date_type"] == '1'
+    end
+    # shipment_status
+    shipment = shipment.where(arrived_date: nil) if condition["shipment_status"] == '0'
+    shipment = shipment.where.not(arrived_date: nil) if condition["shipment_status"] == '1'
     # paginate
-    shipment.paginate(page: condition["page_ix"], per_page: 15)
+    shipment.paginate(page: page_ix, per_page: 15)
   end
 end

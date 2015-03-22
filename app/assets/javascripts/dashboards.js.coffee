@@ -39,6 +39,8 @@ $(document).on "page:change", ->
     doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
            year_s: '', month_s: '', \
            year_e: '', month_e: '', sold_flg: 1})
+
+  # ------------------ offshore product relate --------------------
   # bind click event to #link-offshore-sold-month
   $("#link-offshore-sold-month").bind "click", ->
     # do post action
@@ -135,6 +137,44 @@ $(document).on "page:change", ->
            year_s: '', month_s: '', \
            year_e: '', month_e: ''})
 
+  # ------------------ shipment relate --------------------
+  # bind click event to #link-shipment-sending-month
+  $("#link-shipment-sending-month").bind "click", ->
+    # do post action
+    doPost('/shipments/search', {product_name: '', shipmethod_id: '', date_type: '0', \
+           year_s: $("#year-id").text(), month_s: $("#month-id").text(), \
+           year_e: $("#year-id").text(), month_e: $("#month-id").text(), shipment_status: ''})
+  # bind click event to #link-shipment-sending-year
+  $("#link-shipment-sending-year").bind "click", ->
+    # do post action
+    doPost('/shipments/search', {product_name: '', shipmethod_id: '', date_type: '0', \
+           year_s: $("#year-id").text(), month_s: 1, \
+           year_e: $("#year-id").text(), month_e: 12, shipment_status: ''})
+  # bind click event to #link-shipment-sending-all
+  $("#link-shipment-sending-all").bind "click", ->
+    # do post action
+    doPost('/shipments/search', {product_name: '', shipmethod_id: '', date_type: '0', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', shipment_status: ''})
+  # bind click event to #link-shipment-arrived-month
+  $("#link-shipment-arrived-month").bind "click", ->
+    # do post action
+    doPost('/shipments/search', {product_name: '', shipmethod_id: '', date_type: '1', \
+           year_s: $("#year-id").text(), month_s: $("#month-id").text(), \
+           year_e: $("#year-id").text(), month_e: $("#month-id").text(), shipment_status: ''})
+  # bind click event to #link-shipment-arrived-year
+  $("#link-shipment-arrived-year").bind "click", ->
+    # do post action
+    doPost('/shipments/search', {product_name: '', shipmethod_id: '', date_type: '1', \
+           year_s: $("#year-id").text(), month_s: 1, \
+           year_e: $("#year-id").text(), month_e: 12, shipment_status: ''})
+  # bind click event to #link-shipment-arrived-all
+  $("#link-shipment-arrived-all").bind "click", ->
+    # do post action
+    doPost('/shipments/search', {product_name: '', shipmethod_id: '', date_type: '1', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', shipment_status: ''})
+
   # ------------------ undeal product --------------------
   # bind click event to #link-product-domestic-unsale
   $("#link-product-domestic-unsale").bind "click", ->
@@ -192,3 +232,17 @@ $(document).on "page:change", ->
   $("#link-product-unregist").bind "click", ->
     # do post action
     doPost('/customs/search', {custom_name: '', is_auction: '', product_unregist: 0})
+
+  # ------------------ shipment status --------------------
+  # bind click event to #link-shipment-sending
+  $("#link-shipment-sending").bind "click", ->
+    # do post action
+    doPost('/shipments/search', {product_name: '', shipmethod_id: '', date_type: '', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', shipment_status: 0})
+  # bind click event to #link-shipment-arrived
+  $("#link-shipment-arrived").bind "click", ->
+    # do post action
+    doPost('/shipments/search', {product_name: '', shipmethod_id: '', date_type: '', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', shipment_status: 1})

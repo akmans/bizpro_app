@@ -1,12 +1,17 @@
 <%= form_tag("/shipments/search", method: "post") do %>
 <div class="form-horizontal">
   <div class="form-group grid row_last">
-    <div class="col-sm-2 header">発送方法</div>
-    <div class="col-sm-3">
+    <div class="col-sm-1 header">発送状態</div>
+    <div class="col-sm-2">
+      <%= select_tag(:shipment_status, options_for_select(shipment_status_hash_help.invert,
+            selected: condition["shipment_status"] ), {:class => 'form-control form-field'}) %>
+    </div>
+    <div class="col-sm-1 header">発送方法</div>
+    <div class="col-sm-2">
       <%= select_tag(:shipmethod_id, options_for_select(shipmethod_hash_help(1).invert,
             selected: condition["shipmethod_id"] ), {:class => 'form-control form-field'}) %>
     </div>
-    <div class="col-sm-2 header">商品名称</div>
+    <div class="col-sm-1 header">商品名称</div>
     <div class="col-sm-5">
       <%= text_field_tag(:product_name , condition["product_name"],
             {:class => 'form-control form-field'}) %>
@@ -14,13 +19,13 @@
   </div>
 
   <div class="form-group grid row_last">
-    <div class="col-sm-2 header">区分</div>
-    <div class="col-sm-3">
+    <div class="col-sm-1 header">区分</div>
+    <div class="col-sm-2">
       <%= select_tag(:date_type, options_for_select({'' => '(空白)', '0' => '発送日', '1' => '到着日'}.invert,
             selected: condition["date_type"] ), {:class => 'form-control form-field'}) %>
     </div>
-    <div class="col-sm-2 header">期間</div>
-    <div class="col-sm-5">
+    <div class="col-sm-1 header">期間</div>
+    <div class="col-sm-8">
       <%= select_tag(:year_s, options_for_select(year_hash_help.invert,
             selected: condition["year_s"] ), {:class => 'form-control form-field select-inline'}) %>
       <%= select_tag(:month_s, options_for_select(month_hash_help.invert,

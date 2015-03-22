@@ -145,8 +145,10 @@ class ApplicationController < ActionController::Base
         condition["month_e"] = par[:month_e] unless par[:month_e].nil?
         # date_type
         condition["date_type"] = par[:date_type] unless par[:date_type].nil?
-        # page index
-        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
+        # shipment_status
+        condition["shipment_status"] = par[:shipment_status] unless par[:shipment_status].nil?
+#        # page index
+#        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
         # refresh session
         session[:shipments_search_form] = condition
       end

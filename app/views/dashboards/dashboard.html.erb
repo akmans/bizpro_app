@@ -64,9 +64,9 @@
         <%= link_to @summary["offshore"]["sold_month_cnt"].to_s + "件", "#", \
             id: "link-offshore-sold-month", class: "" %>
       </td>
-      <td class="text-right"><%=commas_help(@summary["offshore"]["sold_month_amount"]) %>元</td>
-      <td class="text-right"><%=commas_help(@summary["offshore"]["sold_month_profit"]) %>元</td>
-      <td class="text-right"><%=@summary["offshore"]["sold_month_profit_rate"] %>％</td>
+      <td class="text-right"><%=commas_help(@summary["offshore"]["sold_month_amount"].round(2)) %>元</td>
+      <td class="text-right"><%=commas_help(@summary["offshore"]["sold_month_profit"].round(2)) %>元</td>
+      <td class="text-right"><%=@summary["offshore"]["sold_month_profit_rate"].round(2) %>％</td>
     </tr>
     <tr>
       <th>今年(<%= Date.today.year %>年)</th>
@@ -74,9 +74,9 @@
         <%= link_to @summary["offshore"]["sold_year_cnt"].to_s + "件", "#", \
             id: "link-offshore-sold-year", class: "" %>
       </td>
-      <td class="text-right"><%=commas_help(@summary["offshore"]["sold_year_amount"]) %>元</td>
-      <td class="text-right"><%=commas_help(@summary["offshore"]["sold_year_profit"]) %>元</td>
-      <td class="text-right"><%=@summary["offshore"]["sold_year_profit_rate"] %>％</td>
+      <td class="text-right"><%=commas_help(@summary["offshore"]["sold_year_amount"].round(2)) %>元</td>
+      <td class="text-right"><%=commas_help(@summary["offshore"]["sold_year_profit"].round(2)) %>元</td>
+      <td class="text-right"><%=@summary["offshore"]["sold_year_profit_rate"].round(2) %>％</td>
     </tr>
     <tr>
       <th>全部</th>
@@ -84,20 +84,21 @@
         <%= link_to @summary["offshore"]["sold_all_cnt"].to_s + "件", "#", \
             id: "link-offshore-sold-all", class: "" %>
       </td>
-      <td class="text-right"><%=commas_help(@summary["offshore"]["sold_all_amount"]) %>元</td>
-      <td class="text-right"><%=commas_help(@summary["offshore"]["sold_all_profit"]) %>元</td>
-      <td class="text-right"><%=@summary["offshore"]["sold_all_profit_rate"] %>％</td>
+      <td class="text-right"><%=commas_help(@summary["offshore"]["sold_all_amount"].round(2)) %>元</td>
+      <td class="text-right"><%=commas_help(@summary["offshore"]["sold_all_profit"].round(2)) %>元</td>
+      <td class="text-right"><%=@summary["offshore"]["sold_all_profit_rate"].round(2) %>％</td>
     </tr>
     </tbody>
   </table>
 </div>
 
 <div class="clearfix"></div>
+<!-- --------------------- break line --------------------------- -->
 <div class="row header">
   <div class="col-xs-12"><h4>取引情報</h4></div>
 </div>
 
-<div class="table-responsive col-md-6">
+<div class="table-responsive col-md-5">
   <table class="table table-hover">
     <thead>
       <th class="col-md-3">オークション</th>
@@ -150,14 +151,12 @@
   </table>
 </div>
 
-<div class="table-responsive col-md-6">
+<div class="table-responsive col-md-4">
   <table class="table table-hover">
     <thead>
-      <th class="col-md-3">カスタム</th>
-      <th class="col-md-2 text-right">オーク数</th>
-      <th class="col-md-2 text-right">非オーク数</th>
-      <th class="col-md-2 text-right">&nbsp;</th>
-      <th class="col-md-3 text-right">&nbsp;</th>
+      <th class="col-md-5">カスタム</th>
+      <th class="col-md-3 text-right">オーク数</th>
+      <th class="col-md-3 text-right">非オーク数</th>
     </thead>
     <tbody>
     <tr>
@@ -170,8 +169,6 @@
         <%= link_to @summary["custom"]["general_month"].to_s + "件", "#", \
             id: "link-custom-general-month", class: "" %>
       </td>
-      <td class="text-right">&nbsp;</td>
-      <td class="text-right">&nbsp;</td>
     </tr>
     <tr>
       <th>今年(<%= Date.today.year %>年)</th>
@@ -183,8 +180,6 @@
         <%= link_to @summary["custom"]["general_year"].to_s + "件", "#", \
             id: "link-custom-general-year", class: "" %>
       </td>
-      <td class="text-right">&nbsp;</td>
-      <td class="text-right">&nbsp;</td>
     </tr>
     <tr>
       <th>全部</th>
@@ -196,25 +191,69 @@
         <%= link_to @summary["custom"]["general_all"].to_s + "件", "#", \
             id: "link-custom-general-all", class: "" %>
       </td>
-      <td class="text-right">&nbsp;</td>
-      <td class="text-right">&nbsp;</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="table-responsive col-md-3">
+  <table class="table table-hover">
+    <thead>
+      <th class="col-md-6">発送情報</th>
+      <th class="col-md-3 text-right">発送数</th>
+      <th class="col-md-3 text-right">到着数</th>
+    </thead>
+    <tbody>
+    <tr>
+      <th>今月(<%= Date.today.month %>月)</th>
+      <td class="text-right">
+        <%= link_to @summary["shipment"]["shipment_sending_month"].to_s + "件", "#", \
+            id: "link-shipment-sending-month", class: "" %>
+      </td>
+      <td class="text-right">
+        <%= link_to @summary["shipment"]["shipment_arrived_month"].to_s + "件", "#", \
+            id: "link-shipment-arrived-month", class: "" %>
+      </td>
+    </tr>
+    <tr>
+      <th>今年(<%= Date.today.year %>年)</th>
+      <td class="text-right">
+        <%= link_to @summary["shipment"]["shipment_sending_year"].to_s + "件", "#", \
+            id: "link-shipment-sending-year", class: "" %>
+      </td>
+      <td class="text-right">
+        <%= link_to @summary["shipment"]["shipment_arrived_year"].to_s + "件", "#", \
+            id: "link-shipment-arrived-year", class: "" %>
+      </td>
+    </tr>
+    <tr>
+      <th>全部</th>
+      <td class="text-right">
+        <%= link_to @summary["shipment"]["shipment_sending_all"].to_s + "件", "#", \
+            id: "link-shipment-sending-all", class: "" %>
+      </td>
+      <td class="text-right">
+        <%= link_to @summary["shipment"]["shipment_arrived_all"].to_s + "件", "#", \
+            id: "link-shipment-arrived-all", class: "" %>
+      </td>
     </tr>
     </tbody>
   </table>
 </div>
 
 <div class="clearfix"></div>
+<!-- --------------------- break line --------------------------- -->
 <div class="row header">
   <div class="col-xs-12"><h4>データ情報</h4></div>
 </div>
 
-<div class="table-responsive col-md-6">
+<div class="table-responsive col-md-3">
   <table class="table table-hover">
     <thead>
-      <th class="col-md-3">商品情報</th>
-      <th class="col-md-2 text-right">国内</th>
-      <th class="col-md-2 text-right">海外</th>
-      <th class="col-md-5">&nbsp;</th>
+      <th class="col-md-5">商品情報</th>
+      <th class="col-md-3 text-right">国内</th>
+      <th class="col-md-3 text-right">海外</th>
+      <th class="col-md-1">&nbsp;</th>
     </thead>
     <tbody>
     <tr>
@@ -267,7 +306,7 @@
   </table>
 </div>
 
-<div class="table-responsive col-md-4">
+<div class="table-responsive col-md-3">
   <table class="table table-hover">
     <thead>
     <tr>
@@ -314,24 +353,72 @@
   </table>
 </div>
 
-<div class="table-responsive col-md-2">
+<div class="table-responsive col-md-3">
   <table class="table table-hover">
     <thead>
     <tr>
-      <th colspan="2">未処置カスタム件数</th>
+      <th class="col-md-7">未処置カスタム情報</th>
+      <th class="col-md-4 text-right">件数</th>
+      <th class="col-md-1">&nbsp;</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <td class="col-md-10 text-right">
+      <td>&nbsp;</td>
+      <td class="text-right">
         <%= link_to @summary["undeal_custom"]["product_unregist"].to_s + "件", "#", \
             id: "link-product-unregist", class: "" %>
       </td>
-      <td class="col-md-2">&nbsp;</td>
+      <td>&nbsp;</td>
     </tr>
     </tbody>
   </table>
 </div>
+
+<div class="table-responsive col-md-3">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th class="col-md-7">発送情報</th>
+      <th class="col-md-3 text-right">件数</th>
+      <th class="col-md-1">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th>発送中</th>
+      <td class="text-right">
+        <%= link_to @summary["shipment_status"]["sending"].to_s + "件", "#", \
+            id: "link-shipment-sending", class: "" %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <th>到着済</th>
+      <td class="text-right">
+        <%= link_to @summary["shipment_status"]["arrived"].to_s + "件", "#", \
+            id: "link-shipment-arrived", class: "" %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <th>-</th>
+      <td class="text-right">-</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <th>合計</th>
+      <td class="text-right">
+        <%= @summary["shipment_status"]["sending"].to_i + \
+            @summary["shipment_status"]["arrived"].to_i %>件
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- --------------------- break line --------------------------- -->
 <%= form_tag("#", method: "post", id: "bashboard-form") do %>
 <div id="dummy">&nbsp;</div>
 <% end %>

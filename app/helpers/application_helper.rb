@@ -62,4 +62,9 @@ module ApplicationHelper
   def undeal_custom_hash_help
     {"" => "(全部)", "0" => "商品未登録"}
   end
+
+  # generate shipment_status hash
+  def shipment_status_hash_help
+    {"" => "(全部)", "0" => "発送中", "1" => "到着済"}
+  end
 end

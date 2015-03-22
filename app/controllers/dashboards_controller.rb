@@ -11,13 +11,15 @@ class DashboardsController < ApplicationController
     # sell info
     @summary["domestic"] = domestic_sold_info
     @summary["offshore"] = offshore_sold_info
+    # by date
+    @summary["auction"] = auction_info
+    @summary["custom"] = custom_info
+    @summary["shipment"] = shipment_info
     # undeal
     @summary["undeal_product"] = undeal_product_info
     @summary["undeal_auction"] = undeal_auction_info
     @summary["undeal_custom"] = undeal_custom_info
-    # by date
-    @summary["auction"] = auction_info
-    @summary["custom"] = custom_info
+    @summary["shipment_status"] = shipment_status_info
     render 'dashboard'
   end
 
@@ -131,6 +133,25 @@ class DashboardsController < ApplicationController
       return custom
     end
 
+    # get shipment data info
+    def shipment_info
+      shipment = {}
+      # shipment sending all
+      shipment["shipment_sending_all"] = count_shipment(0, 0)
+      # shipment sending year
+      shipment["shipment_sending_year"] = count_shipment(0, 1)
+      # shipment sending month
+      shipment["shipment_sending_month"] = count_shipment(0, 2)
+      # shipment arrived all
+      shipment["shipment_arrived_all"] = count_shipment(1, 0)
+      # shipment arrived year
+      shipment["shipment_arrived_year"] = count_shipment(1, 1)
+      # shipment arrived month
+      shipment["shipment_arrived_month"] = count_shipment(1, 2)
+#      debugger
+      return shipment
+    end
+
     # get undeal product data info
     def undeal_product_info
       product = {}
@@ -177,6 +198,16 @@ class DashboardsController < ApplicationController
           .joins("LEFT OUTER JOIN pc_maps ON pc_maps.custom_id = customs.custom_id") \
           .where("pc_maps.product_id is null").count
       return custom
+    end
+
+    # get shipment status info
+    def shipment_status_info
+      shipment = {}
+      # shipment sending
+      shipment["sending"] = Shipment.where(arrived_date: nil).count
+      # shipment sending
+      shipment["arrived"] = Shipment.where.not(arrived_date: nil).count
+      return shipment
     end
 
     # ---------------------- utilities function(LEVEL 1) --------------------------
@@ -227,6 +258,26 @@ class DashboardsController < ApplicationController
       return Custom.where(is_auction: is_auction) \
           .where("created_at >= :date_s", {:date_s => beginning_date}) \
           .where("created_at <= :date_e", {:date_e => end_date}).all.count
+    end
+
+    # count shipment(date_type 0:all 1:year 2:month)
+    def count_shipment(date_flg, date_type)
+      # all
+      return Shipment.all.count if date_type == 0
+      # date interval
+      beginning_date = Time.zone.now.beginning_of_year
+      beginning_date = Time.zone.now.beginning_of_month if date_type == 2
+      end_date = Time.zone.now.end_of_year
+      end_date = Time.zone.now.end_of_month if date_type == 2
+      # shipment sending
+      count = Shipment.where("shipments.sent_date >= :date_s", {:date_s => beginning_date}) \
+          .where("shipments.sent_date <= :date_e", {:date_e => end_date}).all.count \
+          if date_flg == '0'
+      # shipment arrived
+      count = Shipment.where("shipments.arrived_date >= :date_s", {:date_s => beginning_date}) \
+          .where("shipments.arrived_date <= :date_e", {:date_e => end_date}).all.count \
+          if date_flg == '1'
+      return count
     end
 
     # offshore sold product
