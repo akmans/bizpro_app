@@ -16,21 +16,30 @@
     <tbody>
     <tr>
       <th>今月(<span id="month-id"><%= Date.today.month %></span>月)</th>
-      <td class="text-right"><%=@summary["domestic"]["sold_month_cnt"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["domestic"]["sold_month_cnt"].to_s + "件", "#", \
+            id: "link-domestic-sold-month", class: "" %>
+      </td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_month_amount"].to_i) %>円</td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_month_profit"].to_i) %>円</td>
       <td class="text-right"><%=@summary["domestic"]["sold_month_profit_rate"] %>％</td>
     </tr>
     <tr>
       <th>今年(<span id="year-id"><%= Date.today.year %></span>年)</th>
-      <td class="text-right"><%=@summary["domestic"]["sold_year_cnt"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["domestic"]["sold_year_cnt"].to_s + "件", "#", \
+            id: "link-domestic-sold-year", class: "" %>
+      </td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_year_amount"].to_i) %>円</td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_year_profit"].to_i) %>円</td>
       <td class="text-right"><%=@summary["domestic"]["sold_year_profit_rate"] %>％</td>
     </tr>
     <tr>
       <th>全部</th>
-      <td class="text-right"><%=@summary["domestic"]["sold_all_cnt"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["domestic"]["sold_all_cnt"].to_s + "件", "#", \
+            id: "link-domestic-sold-all", class: "" %>
+      </td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_all_amount"].to_i) %>円</td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_all_profit"].to_i) %>円</td>
       <td class="text-right"><%=@summary["domestic"]["sold_all_profit_rate"] %>％</td>
@@ -51,21 +60,30 @@
     <tbody>
     <tr>
       <th>今月(<%= Date.today.month %>月)</th>
-      <td class="text-right"><%=@summary["offshore"]["sold_month_cnt"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["offshore"]["sold_month_cnt"].to_s + "件", "#", \
+            id: "link-offshore-sold-month", class: "" %>
+      </td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_month_amount"]) %>元</td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_month_profit"]) %>元</td>
       <td class="text-right"><%=@summary["offshore"]["sold_month_profit_rate"] %>％</td>
     </tr>
     <tr>
       <th>今年(<%= Date.today.year %>年)</th>
-      <td class="text-right"><%=@summary["offshore"]["sold_year_cnt"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["offshore"]["sold_year_cnt"].to_s + "件", "#", \
+            id: "link-offshore-sold-year", class: "" %>
+      </td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_year_amount"]) %>元</td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_year_profit"]) %>元</td>
       <td class="text-right"><%=@summary["offshore"]["sold_year_profit_rate"] %>％</td>
     </tr>
     <tr>
       <th>全部</th>
-      <td class="text-right"><%=@summary["offshore"]["sold_all_cnt"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["offshore"]["sold_all_cnt"].to_s + "件", "#", \
+            id: "link-offshore-sold-all", class: "" %>
+      </td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_all_amount"]) %>元</td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_all_profit"]) %>元</td>
       <td class="text-right"><%=@summary["offshore"]["sold_all_profit_rate"] %>％</td>
@@ -82,11 +100,11 @@
 <div class="table-responsive col-md-6">
   <table class="table table-hover">
     <thead>
-      <th class="col-md-4">オークション</th>
+      <th class="col-md-3">オークション</th>
       <th class="col-md-2 text-right">売件数</th>
       <th class="col-md-2 text-right">売総額</th>
       <th class="col-md-2 text-right">買件数</th>
-      <th class="col-md-2 text-right">買総額</th>
+      <th class="col-md-3 text-right">買総額</th>
     </thead>
     <tbody>
     <tr>
@@ -135,11 +153,11 @@
 <div class="table-responsive col-md-6">
   <table class="table table-hover">
     <thead>
-      <th class="col-md-4">カスタム</th>
+      <th class="col-md-3">カスタム</th>
       <th class="col-md-2 text-right">オーク数</th>
       <th class="col-md-2 text-right">非オーク数</th>
       <th class="col-md-2 text-right">&nbsp;</th>
-      <th class="col-md-2 text-right">&nbsp;</th>
+      <th class="col-md-3 text-right">&nbsp;</th>
     </thead>
     <tbody>
     <tr>
@@ -193,42 +211,57 @@
 <div class="table-responsive col-md-6">
   <table class="table table-hover">
     <thead>
-      <th class="col-md-4">商品情報</th>
+      <th class="col-md-3">商品情報</th>
       <th class="col-md-2 text-right">国内</th>
       <th class="col-md-2 text-right">海外</th>
-      <th class="col-md-4">&nbsp;</th>
+      <th class="col-md-5">&nbsp;</th>
     </thead>
     <tbody>
     <tr>
-      <th class="col-md-4">未売数</th>
-      <td class="col-md-2 text-right"><%= @summary["undeal_product"]["domesitc_unsale_cnt"] %></td>
-      <td class="col-md-2 text-right"><%= @summary["undeal_product"]["offshore_unsale_cnt"] %></td>
-      <td class="col-md-4">&nbsp;</td>
-    </tr>
-    <tr>
-      <th class="col-md-4">売済数</th>
-      <td class="col-md-2 text-right"><%= @summary["undeal_product"]["domesitc_sold_cnt"] %></td>
-      <td class="col-md-2 text-right"><%= @summary["undeal_product"]["offshore_sold_cnt"] %></td>
-      <td class="col-md-4">&nbsp;</td>
-    </tr>
-    <tr>
-      <th class="col-md-4">発送中品</th>
-      <td class="col-md-2 text-right">-</td>
-      <td class="col-md-2 text-right"><%= @summary["undeal_product"]["offshore_sending_cnt"] %></td>
-      <td class="col-md-4">&nbsp;</td>
-    </tr>
-    <tr>
-      <th class="col-md-4">合計</th>
-      <td class="col-md-2 text-right">
-        <%= @summary["undeal_product"]["domesitc_unsale_cnt"].to_i + \
-            @summary["undeal_product"]["domesitc_sold_cnt"].to_i %>
+      <th>未売数</th>
+      <td class="text-right">
+        <%= link_to @summary["undeal_product"]["domesitc_unsale_cnt"].to_s + "件", "#", \
+            id: "link-product-domestic-unsale", class: "" %>
       </td>
-      <td class="col-md-2 text-right">
+      <td class="text-right">
+        <%= link_to @summary["undeal_product"]["offshore_unsale_cnt"].to_s + "件", "#", \
+            id: "link-product-offshore-unsale", class: "" %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <th>売済数</th>
+      <td class="text-right">
+        <%= link_to @summary["undeal_product"]["domesitc_sold_cnt"].to_s + "件", "#", \
+            id: "link-product-domestic-sold", class: "" %>
+      </td>
+      <td class="text-right">
+        <%= link_to @summary["undeal_product"]["offshore_sold_cnt"].to_s + "件", "#", \
+            id: "link-product-offshore-sold", class: "" %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <th>発送中品</th>
+      <td class="text-right">-</td>
+      <td class="text-right">
+        <%= link_to @summary["undeal_product"]["offshore_sending_cnt"].to_s + "件", "#", \
+            id: "link-product-offshore-sending", class: "" %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <th>合計</th>
+      <td class="text-right">
+        <%= @summary["undeal_product"]["domesitc_unsale_cnt"].to_i + \
+            @summary["undeal_product"]["domesitc_sold_cnt"].to_i %>件
+      </td>
+      <td class="text-right">
         <%= @summary["undeal_product"]["offshore_unsale_cnt"].to_i + \
             @summary["undeal_product"]["offshore_sold_cnt"].to_i + \
-            @summary["undeal_product"]["offshore_sending_cnt"].to_i %>
+            @summary["undeal_product"]["offshore_sending_cnt"].to_i %>件
       </td>
-      <td class="col-md-4">&nbsp;</td>
+      <td>&nbsp;</td>
     </tr>
     </tbody>
   </table>
@@ -238,44 +271,44 @@
   <table class="table table-hover">
     <thead>
     <tr>
-      <th class="col-md-6">未処置オーク情報</th>
-      <th class="col-md-3 text-right">数</th>
-      <th class="col-md-3">&nbsp;</th>
+      <th class="col-md-7">未処置オーク情報</th>
+      <th class="col-md-3 text-right">件数</th>
+      <th class="col-md-1">&nbsp;</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <th class="col-md-6">区分未登録</th>
-      <td class="col-md-3 text-right">
+      <th>区分未登録</th>
+      <td class="text-right">
         <%= link_to @summary["undeal_auction"]["operation_unregist"].to_s + "件", "#", \
             id: "link-auction-operation-unregist", class: "" %>
       </td>
-      <td class="col-md-3">&nbsp;</td>
+      <td>&nbsp;</td>
     </tr>
     <tr>
-      <th class="col-md-6">商品未登録</th>
-      <td class="col-md-3 text-right">
+      <th>商品未登録</th>
+      <td class="text-right">
         <%= link_to @summary["undeal_auction"]["product_unregist"].to_s + "件", "#", \
             id: "link-auction-product-unregist", class: "" %>
       </td>
-      <td class="col-md-3">&nbsp;</td>
+      <td>&nbsp;</td>
     </tr>
     <tr>
-      <th class="col-md-6">カス未登録</th>
-      <td class="col-md-3 text-right">
+      <th>カス未登録</th>
+      <td class="text-right">
         <%= link_to @summary["undeal_auction"]["custom_unregist"].to_s + "件", "#", \
             id: "link-auction-custom-unregist", class: "" %>
       </td>
-      <td class="col-md-3">&nbsp;</td>
+      <td>&nbsp;</td>
     </tr>
     <tr>
-      <th class="col-md-6">合計</th>
-      <td class="col-md-3 text-right">
+      <th>合計</th>
+      <td class="text-right">
         <%= @summary["undeal_auction"]["operation_unregist"].to_i + \
             @summary["undeal_auction"]["product_unregist"].to_i + \
             @summary["undeal_auction"]["custom_unregist"].to_i %>件
       </td>
-      <td class="col-md-3">&nbsp;</td>
+      <td>&nbsp;</td>
     </tr>
     </tbody>
   </table>
@@ -285,16 +318,16 @@
   <table class="table table-hover">
     <thead>
     <tr>
-      <th colspan="2">未処置カスタム</th>
+      <th colspan="2">未処置カスタム件数</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <td class="col-md-6 text-right">
+      <td class="col-md-10 text-right">
         <%= link_to @summary["undeal_custom"]["product_unregist"].to_s + "件", "#", \
             id: "link-product-unregist", class: "" %>
       </td>
-      <td class="col-md-6">&nbsp;</td>
+      <td class="col-md-2">&nbsp;</td>
     </tr>
     </tbody>
   </table>

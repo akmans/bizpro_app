@@ -83,8 +83,10 @@ class ApplicationController < ActionController::Base
         condition["month_e"] = par[:month_e] unless par[:month_e].nil?
         # is_domestic
         condition["is_domestic"] = par[:is_domestic] unless par[:is_domestic].nil?
-        # page index
-        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
+        # sold_flg
+        condition["sold_flg"] = par[:sold_flg] unless par[:sold_flg].nil?
+#        # page index
+#        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
         # refresh session
         session[:products_search_form] = condition
       end

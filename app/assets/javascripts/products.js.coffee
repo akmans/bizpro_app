@@ -25,25 +25,6 @@ $(document).on "page:change", ->
         $("select#product_modu_id").children("option:gt(0)").remove()
         $.each data, (i, item) ->
           $("select#product_modu_id").append $("<option>").text(item["modu_name"]).attr("value", item["modu_id"])
-#  # bind change event to pa_map_part_type.
-#  $("select#pa_map_part_type").bind "change", ->
-#    $("select#pa_map_auction_id").children("option:gt(0)").remove()
-#    return if @value == ""
-#    if @value == "0"
-#      url = "/ajax/customs"
-#      data = ''
-#    if @value == "1"
-#      url = "/ajax/auctions"
-#      data = 'ope_flg=1'
-#    $.ajax
-#      url: url
-#      data: data
-##      dataType: "json"
-#      type: "GET"
-#      success: (data) ->
-#        $.each data, (k, v) ->
-#          if k != ''
-#            $("select#pa_map_auction_id").append $("<option>").text(v).attr("value", k)
   # bind click event to btn-product-clear
   $("#btn-product-clear").bind "click", ->
     $("#product_name").val('')
@@ -53,6 +34,7 @@ $(document).on "page:change", ->
     $("#year_e").val('').prop( "disabled", true)
     $("#month_e").val('').prop( "disabled", true)
     $("#is_domestic").val('')
+    $("#sold_flg").val('')
   #bind change event to is_domestic
   $("#is_domestic").bind "change", ->
     if $("#is_domestic").val() == "" || $("#is_domestic").val() == "2"

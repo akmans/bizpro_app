@@ -48,6 +48,11 @@ module ApplicationHelper
     {"" => "(全部)", "0" => "非オーク品", "1" => "オーク品"}
   end
 
+  # generate sold flag hash
+  def undeal_product_sold_flg_help
+    {"" => "(全部)", "0" => "未売却", "1" => "売却済"}
+  end
+
   # generate undeal_auction hash
   def undeal_auction_hash_help
     {"" => "(全部)", "0" => "区分未登録", "1" => "商品未登録", "2" => "カス未登録"}

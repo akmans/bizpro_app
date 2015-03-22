@@ -20,6 +20,44 @@ doPost = (path, params, method) ->
   form.submit()
 
 $(document).on "page:change", ->
+  # ------------------ domestic product relate --------------------
+  # bind click event to #link-domestic-sold-month
+  $("#link-domestic-sold-month").bind "click", ->
+    # do post action
+    doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
+           year_s: $("#year-id").text(), month_s: $("#month-id").text(), \
+           year_e: $("#year-id").text(), month_e: $("#month-id").text(), sold_flg: 1})
+  # bind click event to #link-domestic-sold-year
+  $("#link-domestic-sold-year").bind "click", ->
+    # do post action
+    doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
+           year_s: $("#year-id").text(), month_s: 1, \
+           year_e: $("#year-id").text(), month_e: 12, sold_flg: 1})
+  # bind click event to #link-domestic-sold-all
+  $("#link-domestic-sold-all").bind "click", ->
+    # do post action
+    doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', sold_flg: 1})
+  # bind click event to #link-offshore-sold-month
+  $("#link-offshore-sold-month").bind "click", ->
+    # do post action
+    doPost('/products/search', {product_name: '', category_id: '', is_domestic: '0', \
+           year_s: $("#year-id").text(), month_s: $("#month-id").text(), \
+           year_e: $("#year-id").text(), month_e: $("#month-id").text(), sold_flg: 1})
+  # bind click event to #link-offshore-sold-year
+  $("#link-offshore-sold-year").bind "click", ->
+    # do post action
+    doPost('/products/search', {product_name: '', category_id: '', is_domestic: '0', \
+           year_s: $("#year-id").text(), month_s: 1, \
+           year_e: $("#year-id").text(), month_e: 12, sold_flg: 1})
+  # bind click event to #link-offshore-sold-all
+  $("#link-offshore-sold-all").bind "click", ->
+    # do post action
+    doPost('/products/search', {product_name: '', category_id: '', is_domestic: '0', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', sold_flg: 1})
+
   # ------------------ auction relate --------------------
   # bind click event to #link-auction-sold-month
   $("#link-auction-sold-month").bind "click", ->
@@ -58,6 +96,7 @@ $(document).on "page:change", ->
     doPost('/auctions/search', {auction_name: '', category_id: '', sold_type: '0', \
            year_s: '', month_s: '', \
            year_e: '', month_e: '', undeal_auction: ''})
+
   # ------------------ custom relate --------------------
   # bind click event to #link-custom-auction-month
   $("#link-custom-auction-month").bind "click", ->
@@ -95,6 +134,38 @@ $(document).on "page:change", ->
     doPost('/customs/search', {custom_name: '', is_auction: '0', product_unregist: '', \
            year_s: '', month_s: '', \
            year_e: '', month_e: ''})
+
+  # ------------------ undeal product --------------------
+  # bind click event to #link-product-domestic-unsale
+  $("#link-product-domestic-unsale").bind "click", ->
+    # do post action
+    doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', sold_flg: 0})
+  # bind click event to #link-product-domestic-sold
+  $("#link-product-domestic-sold").bind "click", ->
+    # do post action
+    doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', sold_flg: 1})
+  # bind click event to #link-product-offshore-unsale
+  $("#link-product-offshore-unsale").bind "click", ->
+    # do post action
+    doPost('/products/search', {product_name: '', category_id: '', is_domestic: '0', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', sold_flg: 0})
+  # bind click event to #link-product-offshore-unsale
+  $("#link-product-offshore-sold").bind "click", ->
+    # do post action
+    doPost('/products/search', {product_name: '', category_id: '', is_domestic: '0', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', sold_flg: 1})
+  # bind click event to #link-product-offshore-sending
+  $("#link-product-offshore-sending").bind "click", ->
+    # do post action
+    doPost('/products/search', {product_name: '', category_id: '', is_domestic: '2', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', sold_flg: ''})
 
   # ------------------ undeal auction --------------------
   # bind click event to #link-auction-operation-unregist

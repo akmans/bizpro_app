@@ -5,10 +5,12 @@ class ProductsController < ApplicationController
 
   # index action
   def index
+    # get page index
+    page = page_ix_help(params[:page])
     # refresh search condition
     @condition = refresh_products_search_condition_help(params)
     # get product data.
-    @products = search_product(@condition)
+    @products = search_product(@condition, page)
   end
 
   # show action
@@ -79,7 +81,7 @@ class ProductsController < ApplicationController
     # get parameters from params and save it into session
     @condition = refresh_products_search_condition_help(params)
     # get product data list with pagination.
-    @products = search_product(@condition)
+    @products = search_product(@condition, 1)
     # render index page
     render 'index'
   end
@@ -92,7 +94,7 @@ class ProductsController < ApplicationController
     end
 
   # search product
-  def search_product(condition)
+  def search_product(condition, page_ix)
     # construct where condition
     product = Product
     # category_id
@@ -104,7 +106,7 @@ class ProductsController < ApplicationController
               unless condition["product_name"].blank?
     # start year month
     if !condition["year_s"].blank? && !condition["month_s"].blank? && !condition["is_domestic"].blank?
-      date_s = Date::strptime(condition["year_s"] + condition["month_s"] + "01", "%Y%m%d")
+      date_s = Date::strptime(condition["year_s"] + condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d")
       # condition for offshore
       product = product.where(product_id: Sold.where("sold_date >= :sold_date", \
                 {:sold_date => date_s}).pluck(:product_id)) \
@@ -116,7 +118,7 @@ class ProductsController < ApplicationController
     end
     # end year month
     if !condition["year_e"].blank? && !condition["month_e"].blank? && !condition["is_domestic"].blank?
-      date_e = Date::strptime(condition["year_e"] + condition["month_e"] + "01", "%Y%m%d")
+      date_e = Date::strptime(condition["year_e"] + condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
       # condition for offshore
       product = product.where(product_id: Sold.where("sold_date <= :sold_date", \
                 {:sold_date => date_e.end_of_month}).pluck(:product_id))\
@@ -129,7 +131,10 @@ class ProductsController < ApplicationController
     # is_domestic
     product = product.where(is_domestic: condition["is_domestic"]) \
               unless condition["is_domestic"].blank?
+    # sold_flg
+    product = product.where(sold_date: nil) if condition["sold_flg"] == '0'
+    product = product.where.not(sold_date: nil) if condition["sold_flg"] == '1'
     # paginate
-    product.paginate(page: condition["page_ix"], per_page: 15)
+    product.paginate(page: page_ix, per_page: 15)
   end
 end
