@@ -8,10 +8,10 @@
   <table class="table table-hover">
     <thead>
       <th class="col-md-3">国内</th>
-      <th class="col-md-1 text-right">件数</th>
+      <th class="col-md-2 text-right">件数</th>
       <th class="col-md-3 text-right">売上</th>
       <th class="col-md-3 text-right">利潤</th>
-      <th class="col-md-2 text-right">利潤率</th>
+      <th class="col-md-1 text-right">利潤率</th>
     </thead>
     <tbody>
     <tr>
@@ -22,7 +22,7 @@
       </td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_month_amount"].to_i) %>円</td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_month_profit"].to_i) %>円</td>
-      <td class="text-right"><%=@summary["domestic"]["sold_month_profit_rate"] %>％</td>
+      <td class="text-right"><%=@summary["domestic"]["sold_month_profit_rate"] %>%</td>
     </tr>
     <tr>
       <th>今年(<span id="year-id"><%= Date.today.year %></span>年)</th>
@@ -32,7 +32,7 @@
       </td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_year_amount"].to_i) %>円</td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_year_profit"].to_i) %>円</td>
-      <td class="text-right"><%=@summary["domestic"]["sold_year_profit_rate"] %>％</td>
+      <td class="text-right"><%=@summary["domestic"]["sold_year_profit_rate"] %>%</td>
     </tr>
     <tr>
       <th>全部</th>
@@ -42,7 +42,7 @@
       </td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_all_amount"].to_i) %>円</td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_all_profit"].to_i) %>円</td>
-      <td class="text-right"><%=@summary["domestic"]["sold_all_profit_rate"] %>％</td>
+      <td class="text-right"><%=@summary["domestic"]["sold_all_profit_rate"] %>%</td>
     </tr>
     </tbody>
   </table>
@@ -52,10 +52,10 @@
   <table class="table table-hover">
     <thead>
       <th class="col-md-3">海外</th>
-      <th class="col-md-1 text-right">件数</th>
+      <th class="col-md-2 text-right">件数</th>
       <th class="col-md-3 text-right">売上</th>
       <th class="col-md-3 text-right">利潤</th>
-      <th class="col-md-2 text-right">利潤率</th>
+      <th class="col-md-1 text-right">利潤率</th>
     </thead>
     <tbody>
     <tr>
@@ -66,7 +66,7 @@
       </td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_month_amount"].round(2)) %>元</td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_month_profit"].round(2)) %>元</td>
-      <td class="text-right"><%=@summary["offshore"]["sold_month_profit_rate"].round(2) %>％</td>
+      <td class="text-right"><%=@summary["offshore"]["sold_month_profit_rate"].round(2) %>%</td>
     </tr>
     <tr>
       <th>今年(<%= Date.today.year %>年)</th>
@@ -76,7 +76,7 @@
       </td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_year_amount"].round(2)) %>元</td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_year_profit"].round(2)) %>元</td>
-      <td class="text-right"><%=@summary["offshore"]["sold_year_profit_rate"].round(2) %>％</td>
+      <td class="text-right"><%=@summary["offshore"]["sold_year_profit_rate"].round(2) %>%</td>
     </tr>
     <tr>
       <th>全部</th>
@@ -86,7 +86,7 @@
       </td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_all_amount"].round(2)) %>元</td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_all_profit"].round(2)) %>元</td>
-      <td class="text-right"><%=@summary["offshore"]["sold_all_profit_rate"].round(2) %>％</td>
+      <td class="text-right"><%=@summary["offshore"]["sold_all_profit_rate"].round(2) %>%</td>
     </tr>
     </tbody>
   </table>
