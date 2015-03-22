@@ -23,3 +23,4 @@ $(document).on "page:change", ->
     $("#year_e").val('')
     $("#month_e").val('')
     $("#sold_type").val('')
+    $("#undeal_auction").val('')

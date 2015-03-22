@@ -11,17 +11,54 @@ doPost = (path, params, method) ->
   form.attr("method", method)
   form.attr("action", path)
   $.each params, (key, value) ->
-#  for key in params
     if params.hasOwnProperty(key)
       hiddenField = document.createElement("input")
       hiddenField.setAttribute("type", "hidden")
       hiddenField.setAttribute("name", key)
       hiddenField.setAttribute("value", params[key])
       $("#dummy").append(hiddenField)
-#  document.body.appendChild(form)
   form.submit()
 
 $(document).on "page:change", ->
+  # ------------------ auction relate --------------------
+  # bind click event to #link-auction-sold-month
+  $("#link-auction-sold-month").bind "click", ->
+    # do post action
+    doPost('/auctions/search', {auction_name: '', category_id: '', sold_type: '1', \
+           year_s: $("#year-id").text(), month_s: $("#month-id").text(), \
+           year_e: $("#year-id").text(), month_e: $("#month-id").text(), undeal_auction: ''})
+  # bind click event to #link-auction-sold-year
+  $("#link-auction-sold-year").bind "click", ->
+    # do post action
+    doPost('/auctions/search', {auction_name: '', category_id: '', sold_type: '1', \
+           year_s: $("#year-id").text(), month_s: 1, \
+           year_e: $("#year-id").text(), month_e: 12, undeal_auction: ''})
+  # bind click event to #link-auction-sold-all
+  $("#link-auction-sold-all").bind "click", ->
+    # do post action
+    doPost('/auctions/search', {auction_name: '', category_id: '', sold_type: '1', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', undeal_auction: ''})
+  # -- bought
+  # bind click event to #link-auction-bought-month
+  $("#link-auction-bought-month").bind "click", ->
+    # do post action
+    doPost('/auctions/search', {auction_name: '', category_id: '', sold_type: '0', \
+           year_s: $("#year-id").text(), month_s: $("#month-id").text(), \
+           year_e: $("#year-id").text(), month_e: $("#month-id").text(), undeal_auction: ''})
+  # bind click event to #link-auction-bought-year
+  $("#link-auction-bought-year").bind "click", ->
+    # do post action
+    doPost('/auctions/search', {auction_name: '', category_id: '', sold_type: '0', \
+           year_s: $("#year-id").text(), month_s: 1, \
+           year_e: $("#year-id").text(), month_e: 12, undeal_auction: ''})
+  # bind click event to #link-auction-bought-all
+  $("#link-auction-bought-all").bind "click", ->
+    # do post action
+    doPost('/auctions/search', {auction_name: '', category_id: '', sold_type: '0', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', undeal_auction: ''})
+  # ------------------ custom relate --------------------
   # bind click event to #link-custom-auction-month
   $("#link-custom-auction-month").bind "click", ->
     # do post action
@@ -59,7 +96,28 @@ $(document).on "page:change", ->
            year_s: '', month_s: '', \
            year_e: '', month_e: ''})
 
-  # bind click event to #btn-auction-clear
+  # ------------------ undeal auction --------------------
+  # bind click event to #link-auction-operation-unregist
+  $("#link-auction-operation-unregist").bind "click", ->
+    # do post action
+    doPost('/auctions/search', {auction_name: '', category_id: '', sold_type: '', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', undeal_auction: 0})
+  # bind click event to #link-auction-product-unregist
+  $("#link-auction-product-unregist").bind "click", ->
+    # do post action
+    doPost('/auctions/search', {auction_name: '', category_id: '', sold_type: '', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', undeal_auction: 1})
+  # bind click event to #link-auction-custom-unregist
+  $("#link-auction-custom-unregist").bind "click", ->
+    # do post action
+    doPost('/auctions/search', {auction_name: '', category_id: '', sold_type: '', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', undeal_auction: 2})
+
+  # ------------------ undeal custom --------------------
+  # bind click event to #link-product-unregist
   $("#link-product-unregist").bind "click", ->
     # do post action
     doPost('/customs/search', {custom_name: '', is_auction: '', product_unregist: 0})

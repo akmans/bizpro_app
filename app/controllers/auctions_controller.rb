@@ -6,12 +6,15 @@ class AuctionsController < ApplicationController
 
   # index action
   def index
+    # get page index
+    page = page_ix_help(params[:page])
+    # refresh search condition
     @condition = refresh_auctions_search_condition_help(params)
 #    debugger
 #    page = page_ix_help(params[:page])
     # get auction data list with pagination.
 #    @auctions = Auction.paginate(page: page, per_page: 15)
-    @auctions = search_auction(@condition)
+    @auctions = search_auction(@condition, page)
 #    @condition = {}
 #    @condition[:category_id] = '123'
 
@@ -83,7 +86,7 @@ class AuctionsController < ApplicationController
     # get parameters from params and save it into session
     @condition = refresh_auctions_search_condition_help(params)
     # get auction data list with pagination.
-    @auctions = search_auction(@condition)
+    @auctions = search_auction(@condition, 1)
     # render index page
     render 'index'
   end
@@ -181,9 +184,13 @@ class AuctionsController < ApplicationController
     end
 
   # search auction
-  def search_auction(condition)
+  def search_auction(condition, page_ix)
+#    debugger
     # construct where condition
     auction = Auction
+    # undeal auction (product unregist: 1)
+    auction = auction.joins("LEFT OUTER JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id") \
+          .where("pa_maps.product_id is null").where(ope_flg: 1) if condition["undeal_auction"] == '1'
     # category_id
     auction = auction.where(category_id: condition["category_id"]) unless condition["category_id"].blank?
     # auction_name
@@ -191,17 +198,24 @@ class AuctionsController < ApplicationController
               {:auction_name => "%#{condition['auction_name']}%"}) unless condition["auction_name"].blank?
     # start year month
     if !condition["year_s"].blank? && !condition["month_s"].blank?
-      date_s = Date::strptime(condition["year_s"] + condition["month_s"] + "01", "%Y%m%d")
+      date_s = Date::strptime(condition["year_s"] + condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d")
       auction = auction.where("end_time >= :end_time", {:end_time => date_s})
     end
     # end year month
     if !condition["year_e"].blank? && !condition["month_e"].blank?
-      date_e = Date::strptime(condition["year_e"] + condition["month_e"] + "01", "%Y%m%d")
+      date_e = Date::strptime(condition["year_e"] + condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
       auction = auction.where("end_time <= :end_time", {:end_time => date_e.end_of_month})
     end
     # sold_type
     auction = auction.where(sold_flg: condition["sold_type"]) unless condition["sold_type"].blank?
+    # undeal auction(ope_flg is nil: 0)
+    auction = auction.where(ope_flg: nil) if condition["undeal_auction"] == '0'
+    # undeal auction(custom unregist: 2)
+    auction = auction.where(ope_flg: 0).where.not(auction_id: Custom.select("auction_id, SUM(percentage)") \
+          .where("auction_id is not null").reorder('').group("auction_id") \
+          .having("SUM(percentage) = 100").pluck(:auction_id)) if condition["undeal_auction"] == '2'
+#    debugger
     # paginate
-    auction.paginate(page: condition["page_ix"], per_page: 15)
+    auction.paginate(page: page_ix, per_page: 15)
   end
 end

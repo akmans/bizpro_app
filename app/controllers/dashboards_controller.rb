@@ -190,7 +190,7 @@ class DashboardsController < ApplicationController
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
       # year or month
-      return Auction.where(sold_flg: 1) \
+      return Auction.where(sold_flg: sold_flg) \
           .where("end_time >= :date_s", {:date_s => beginning_date}) \
           .where("end_time <= :date_e", {:date_e => end_date}).all.count
     end

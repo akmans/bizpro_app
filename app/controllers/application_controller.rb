@@ -51,8 +51,10 @@ class ApplicationController < ActionController::Base
         condition["month_e"] = par[:month_e] unless par[:month_e].nil?
         # sold type
         condition["sold_type"] = par[:sold_type] unless par[:sold_type].nil?
-        # page index
-        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
+        # undeal auction
+        condition["undeal_auction"] = par[:undeal_auction] unless par[:undeal_auction].nil?
+#        # page index
+#        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
         # refresh session
         session[:auctions_search_form] = condition
       end

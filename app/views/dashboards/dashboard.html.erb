@@ -91,23 +91,41 @@
     <tbody>
     <tr>
       <th>今月(<%= Date.today.month %>月)</th>
-      <td class="text-right"><%=@summary["auction"]["sold_month_cnt"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["auction"]["sold_month_cnt"].to_s + "件", "#", \
+            id: "link-auction-sold-month", class: "" %>
+      </td>
       <td class="text-right"><%=commas_help(@summary["auction"]["sold_month_amount"]) %>円</td>
-      <td class="text-right"><%=@summary["auction"]["bought_month_cnt"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["auction"]["bought_month_cnt"].to_s + "件", "#", \
+            id: "link-auction-bought-month", class: "" %>
+      </td>
       <td class="text-right"><%=commas_help(@summary["auction"]["bought_month_amount"]) %>円</td>
     </tr>
     <tr>
       <th>今年(<%= Date.today.year %>年)</th>
-      <td class="text-right"><%=@summary["auction"]["sold_year_cnt"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["auction"]["sold_year_cnt"].to_s + "件", "#", \
+            id: "link-auction-sold-year", class: "" %>
+      </td>
       <td class="text-right"><%=commas_help(@summary["auction"]["sold_year_amount"]) %>円</td>
-      <td class="text-right"><%=@summary["auction"]["bought_year_cnt"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["auction"]["bought_year_cnt"].to_s + "件", "#", \
+            id: "link-auction-bought-year", class: "" %>
+      </td>
       <td class="text-right"><%=commas_help(@summary["auction"]["bought_year_amount"]) %>円</td>
     </tr>
     <tr>
       <th>全部</th>
-      <td class="text-right"><%=@summary["auction"]["sold_all_cnt"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["auction"]["sold_all_cnt"].to_s + "件", "#", \
+            id: "link-auction-sold-all", class: "" %>
+      </td>
       <td class="text-right"><%=commas_help(@summary["auction"]["sold_all_amount"]) %>円</td>
-      <td class="text-right"><%=@summary["auction"]["bought_all_cnt"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["auction"]["bought_all_cnt"].to_s + "件", "#", \
+            id: "link-auction-bought-all", class: "" %>
+      </td>
       <td class="text-right"><%=commas_help(@summary["auction"]["bought_all_amount"]) %>円</td>
     </tr>
     </tbody>
@@ -228,17 +246,26 @@
     <tbody>
     <tr>
       <th class="col-md-6">区分未登録</th>
-      <td class="col-md-3 text-right"><%= @summary["undeal_auction"]["operation_unregist"] %></td>
+      <td class="col-md-3 text-right">
+        <%= link_to @summary["undeal_auction"]["operation_unregist"].to_s + "件", "#", \
+            id: "link-auction-operation-unregist", class: "" %>
+      </td>
       <td class="col-md-3">&nbsp;</td>
     </tr>
     <tr>
       <th class="col-md-6">商品未登録</th>
-      <td class="col-md-3 text-right"><%= @summary["undeal_auction"]["product_unregist"] %></td>
+      <td class="col-md-3 text-right">
+        <%= link_to @summary["undeal_auction"]["product_unregist"].to_s + "件", "#", \
+            id: "link-auction-product-unregist", class: "" %>
+      </td>
       <td class="col-md-3">&nbsp;</td>
     </tr>
     <tr>
       <th class="col-md-6">カス未登録</th>
-      <td class="col-md-3 text-right"><%= @summary["undeal_auction"]["custom_unregist"] %></td>
+      <td class="col-md-3 text-right">
+        <%= link_to @summary["undeal_auction"]["custom_unregist"].to_s + "件", "#", \
+            id: "link-auction-custom-unregist", class: "" %>
+      </td>
       <td class="col-md-3">&nbsp;</td>
     </tr>
     <tr>
@@ -246,7 +273,7 @@
       <td class="col-md-3 text-right">
         <%= @summary["undeal_auction"]["operation_unregist"].to_i + \
             @summary["undeal_auction"]["product_unregist"].to_i + \
-            @summary["undeal_auction"]["custom_unregist"].to_i %>
+            @summary["undeal_auction"]["custom_unregist"].to_i %>件
       </td>
       <td class="col-md-3">&nbsp;</td>
     </tr>
