@@ -272,11 +272,11 @@ class DashboardsController < ApplicationController
       # shipment sending
       count = Shipment.where("shipments.sent_date >= :date_s", {:date_s => beginning_date}) \
           .where("shipments.sent_date <= :date_e", {:date_e => end_date}).all.count \
-          if date_flg == '0'
+          if date_flg == 0
       # shipment arrived
       count = Shipment.where("shipments.arrived_date >= :date_s", {:date_s => beginning_date}) \
           .where("shipments.arrived_date <= :date_e", {:date_e => end_date}).all.count \
-          if date_flg == '1'
+          if date_flg == 1
       return count
     end
 

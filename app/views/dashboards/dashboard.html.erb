@@ -4,14 +4,14 @@
   <div class="col-xs-12"><h4>商品売上情報</h4></div>
 </div>
 
-<div class="table-responsive col-md-6">
+<div class="table-responsive col-md-6 cell-no-padding">
   <table class="table table-hover">
     <thead>
-      <th>国内</th>
-      <th class="text-right">件数</th>
-      <th class="text-right">売上</th>
-      <th class="text-right">利潤</th>
-      <th class="text-right">利潤率</th>
+      <th class="col-md-3">国内</th>
+      <th class="col-md-1 text-right">件数</th>
+      <th class="col-md-3 text-right">売上</th>
+      <th class="col-md-3 text-right">利潤</th>
+      <th class="col-md-2 text-right">利潤率</th>
     </thead>
     <tbody>
     <tr>
@@ -48,13 +48,13 @@
   </table>
 </div>
 
-<div class="table-responsive col-md-6">
+<div class="table-responsive col-md-6 cell-no-padding">
   <table class="table table-hover">
     <thead>
-      <th class="col-md-4">海外</th>
-      <th class="col-md-2 text-right">件数</th>
-      <th class="col-md-2 text-right">売上</th>
-      <th class="col-md-2 text-right">利潤</th>
+      <th class="col-md-3">海外</th>
+      <th class="col-md-1 text-right">件数</th>
+      <th class="col-md-3 text-right">売上</th>
+      <th class="col-md-3 text-right">利潤</th>
       <th class="col-md-2 text-right">利潤率</th>
     </thead>
     <tbody>
@@ -98,7 +98,7 @@
   <div class="col-xs-12"><h4>取引情報</h4></div>
 </div>
 
-<div class="table-responsive col-md-5">
+<div class="table-responsive col-md-6 cell-no-padding">
   <table class="table table-hover">
     <thead>
       <th class="col-md-3">オークション</th>
@@ -151,12 +151,12 @@
   </table>
 </div>
 
-<div class="table-responsive col-md-4">
+<div class="table-responsive col-md-3 cell-no-padding">
   <table class="table table-hover">
     <thead>
       <th class="col-md-5">カスタム</th>
-      <th class="col-md-3 text-right">オーク数</th>
-      <th class="col-md-3 text-right">非オーク数</th>
+      <th class="col-md-3 text-right">オク数</th>
+      <th class="col-md-3 text-right">非オク数</th>
     </thead>
     <tbody>
     <tr>
@@ -196,7 +196,7 @@
   </table>
 </div>
 
-<div class="table-responsive col-md-3">
+<div class="table-responsive col-md-3 cell-no-padding">
   <table class="table table-hover">
     <thead>
       <th class="col-md-6">発送情報</th>
@@ -247,13 +247,12 @@
   <div class="col-xs-12"><h4>データ情報</h4></div>
 </div>
 
-<div class="table-responsive col-md-3">
+<div class="table-responsive col-md-3 cell-no-padding">
   <table class="table table-hover">
     <thead>
-      <th class="col-md-5">商品情報</th>
+      <th class="col-md-6">商品情報</th>
       <th class="col-md-3 text-right">国内</th>
       <th class="col-md-3 text-right">海外</th>
-      <th class="col-md-1">&nbsp;</th>
     </thead>
     <tbody>
     <tr>
@@ -266,7 +265,6 @@
         <%= link_to @summary["undeal_product"]["offshore_unsale_cnt"].to_s + "件", "#", \
             id: "link-product-offshore-unsale", class: "" %>
       </td>
-      <td>&nbsp;</td>
     </tr>
     <tr>
       <th>売済数</th>
@@ -278,7 +276,6 @@
         <%= link_to @summary["undeal_product"]["offshore_sold_cnt"].to_s + "件", "#", \
             id: "link-product-offshore-sold", class: "" %>
       </td>
-      <td>&nbsp;</td>
     </tr>
     <tr>
       <th>発送中品</th>
@@ -287,7 +284,6 @@
         <%= link_to @summary["undeal_product"]["offshore_sending_cnt"].to_s + "件", "#", \
             id: "link-product-offshore-sending", class: "" %>
       </td>
-      <td>&nbsp;</td>
     </tr>
     <tr>
       <th>合計</th>
@@ -300,19 +296,17 @@
             @summary["undeal_product"]["offshore_sold_cnt"].to_i + \
             @summary["undeal_product"]["offshore_sending_cnt"].to_i %>件
       </td>
-      <td>&nbsp;</td>
     </tr>
     </tbody>
   </table>
 </div>
 
-<div class="table-responsive col-md-3">
+<div class="table-responsive col-md-3 cell-no-padding">
   <table class="table table-hover">
     <thead>
     <tr>
-      <th class="col-md-7">未処置オーク情報</th>
-      <th class="col-md-3 text-right">件数</th>
-      <th class="col-md-1">&nbsp;</th>
+      <th class="col-md-7">オーク情報</th>
+      <th class="col-md-5 text-right">件数</th>
     </tr>
     </thead>
     <tbody>
@@ -322,7 +316,6 @@
         <%= link_to @summary["undeal_auction"]["operation_unregist"].to_s + "件", "#", \
             id: "link-auction-operation-unregist", class: "" %>
       </td>
-      <td>&nbsp;</td>
     </tr>
     <tr>
       <th>商品未登録</th>
@@ -330,7 +323,6 @@
         <%= link_to @summary["undeal_auction"]["product_unregist"].to_s + "件", "#", \
             id: "link-auction-product-unregist", class: "" %>
       </td>
-      <td>&nbsp;</td>
     </tr>
     <tr>
       <th>カス未登録</th>
@@ -338,7 +330,6 @@
         <%= link_to @summary["undeal_auction"]["custom_unregist"].to_s + "件", "#", \
             id: "link-auction-custom-unregist", class: "" %>
       </td>
-      <td>&nbsp;</td>
     </tr>
     <tr>
       <th>合計</th>
@@ -347,41 +338,37 @@
             @summary["undeal_auction"]["product_unregist"].to_i + \
             @summary["undeal_auction"]["custom_unregist"].to_i %>件
       </td>
-      <td>&nbsp;</td>
     </tr>
     </tbody>
   </table>
 </div>
 
-<div class="table-responsive col-md-3">
+<div class="table-responsive col-md-3 cell-no-padding">
   <table class="table table-hover">
     <thead>
     <tr>
-      <th class="col-md-7">未処置カスタム情報</th>
-      <th class="col-md-4 text-right">件数</th>
-      <th class="col-md-1">&nbsp;</th>
+      <th class="col-md-7">カスタム情報</th>
+      <th class="col-md-5 text-right">件数</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <td>&nbsp;</td>
+      <td>未処置</td>
       <td class="text-right">
         <%= link_to @summary["undeal_custom"]["product_unregist"].to_s + "件", "#", \
             id: "link-product-unregist", class: "" %>
       </td>
-      <td>&nbsp;</td>
     </tr>
     </tbody>
   </table>
 </div>
 
-<div class="table-responsive col-md-3">
+<div class="table-responsive col-md-3 cell-no-padding">
   <table class="table table-hover">
     <thead>
     <tr>
       <th class="col-md-7">発送情報</th>
-      <th class="col-md-3 text-right">件数</th>
-      <th class="col-md-1">&nbsp;</th>
+      <th class="col-md-5 text-right">件数</th>
     </tr>
     </thead>
     <tbody>
@@ -391,7 +378,6 @@
         <%= link_to @summary["shipment_status"]["sending"].to_s + "件", "#", \
             id: "link-shipment-sending", class: "" %>
       </td>
-      <td>&nbsp;</td>
     </tr>
     <tr>
       <th>到着済</th>
@@ -399,12 +385,10 @@
         <%= link_to @summary["shipment_status"]["arrived"].to_s + "件", "#", \
             id: "link-shipment-arrived", class: "" %>
       </td>
-      <td>&nbsp;</td>
     </tr>
     <tr>
       <th>-</th>
       <td class="text-right">-</td>
-      <td>&nbsp;</td>
     </tr>
     <tr>
       <th>合計</th>
@@ -412,7 +396,6 @@
         <%= @summary["shipment_status"]["sending"].to_i + \
             @summary["shipment_status"]["arrived"].to_i %>件
       </td>
-      <td>&nbsp;</td>
     </tr>
     </tbody>
   </table>
