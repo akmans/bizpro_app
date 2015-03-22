@@ -13,13 +13,17 @@
     </div>
     <div class="col-sm-1 header">登録区分</div>
     <div class="col-sm-2">
-      <%= select_tag(:product_unregist, options_for_select(undeal_custom_product_unregist_hash_help.invert,
+      <%= select_tag(:product_unregist, options_for_select(undeal_custom_hash_help.invert,
             selected: condition["product_unregist"] ), {:class => 'form-control form-field'}) %>
     </div>
   </div>
 
   <div class="form-group">
     <div class="col-sm-12 text-right">
+      <%= hidden_field_tag 'year_s', '' %>
+      <%= hidden_field_tag 'month_s', '' %>
+      <%= hidden_field_tag 'year_e', '' %>
+      <%= hidden_field_tag 'month_e', '' %>
       <%= link_to "Clear", '#', id: "btn-custom-clear", class: "btn btn-default" %>
       <%= submit_tag("Search", {:class => 'btn btn-primary'}) %>
     </div>

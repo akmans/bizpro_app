@@ -48,8 +48,13 @@ module ApplicationHelper
     {"" => "(全部)", "0" => "非オーク品", "1" => "オーク品"}
   end
 
-  # generate undeal_custom product_unregist hash
-  def undeal_custom_product_unregist_hash_help
+  # generate undeal_auction hash
+  def undeal_auction_hash_help
+    {"" => "(全部)", "0" => "区分未登録", "1" => "商品未登録", "2" => "カス未登録"}
+  end
+
+  # generate undeal_custom hash
+  def undeal_custom_hash_help
     {"" => "(全部)", "0" => "商品未登録"}
   end
 end

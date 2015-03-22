@@ -61,3 +61,7 @@ $(document).on "page:change", ->
     $("#custom_name").val('')
     $("#is_auction").val('')
     $("#product_unregist").val('')
+    $("#year_s").val('')
+    $("#year_e").val('')
+    $("#month_s").val('')
+    $("#month_e").val('')

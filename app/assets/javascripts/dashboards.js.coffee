@@ -22,10 +22,44 @@ doPost = (path, params, method) ->
   form.submit()
 
 $(document).on "page:change", ->
+  # bind click event to #link-custom-auction-month
+  $("#link-custom-auction-month").bind "click", ->
+    # do post action
+    doPost('/customs/search', {custom_name: '', is_auction: '1', product_unregist: '', \
+           year_s: $("#year-id").text(), month_s: $("#month-id").text(), \
+           year_e: $("#year-id").text(), month_e: $("#month-id").text()})
+  # bind click event to #link-custom-auction-year
+  $("#link-custom-auction-year").bind "click", ->
+    # do post action
+    doPost('/customs/search', {custom_name: '', is_auction: '1', product_unregist: '', \
+           year_s: $("#year-id").text(), month_s: 1, \
+           year_e: $("#year-id").text(), month_e: 12})
+  # bind click event to #link-custom-auction-all
+  $("#link-custom-auction-all").bind "click", ->
+    # do post action
+    doPost('/customs/search', {custom_name: '', is_auction: '1', product_unregist: '', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: ''})
+  # bind click event to #link-custom-general-month
+  $("#link-custom-general-month").bind "click", ->
+    # do post action
+    doPost('/customs/search', {custom_name: '', is_auction: '0', product_unregist: '', \
+           year_s: $("#year-id").text(), month_s: $("#month-id").text(), \
+           year_e: $("#year-id").text(), month_e: $("#month-id").text()})
+  # bind click event to #link-custom-general-year
+  $("#link-custom-general-year").bind "click", ->
+    # do post action
+    doPost('/customs/search', {custom_name: '', is_auction: '0', product_unregist: '', \
+           year_s: $("#year-id").text(), month_s: 1, \
+           year_e: $("#year-id").text(), month_e: 12})
+  # bind click event to #link-custom-general-all
+  $("#link-custom-general-all").bind "click", ->
+    # do post action
+    doPost('/customs/search', {custom_name: '', is_auction: '0', product_unregist: '', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: ''})
+
   # bind click event to #btn-auction-clear
   $("#link-product-unregist").bind "click", ->
-    param = {}
-    param["custom_name"] = ''
-    param["is_auction"] = ''
-    param["product_unregist"] = 0
-    doPost('/customs/search', param)
+    # do post action
+    doPost('/customs/search', {custom_name: '', is_auction: '', product_unregist: 0})

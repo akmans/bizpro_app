@@ -15,14 +15,14 @@
     </thead>
     <tbody>
     <tr>
-      <th>今月</th>
+      <th>今月(<span id="month-id"><%= Date.today.month %></span>月)</th>
       <td class="text-right"><%=@summary["domestic"]["sold_month_cnt"] %></td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_month_amount"].to_i) %>円</td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_month_profit"].to_i) %>円</td>
       <td class="text-right"><%=@summary["domestic"]["sold_month_profit_rate"] %>％</td>
     </tr>
     <tr>
-      <th>今年</th>
+      <th>今年(<span id="year-id"><%= Date.today.year %></span>年)</th>
       <td class="text-right"><%=@summary["domestic"]["sold_year_cnt"] %></td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_year_amount"].to_i) %>円</td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_year_profit"].to_i) %>円</td>
@@ -50,14 +50,14 @@
     </thead>
     <tbody>
     <tr>
-      <th>今月</th>
+      <th>今月(<%= Date.today.month %>月)</th>
       <td class="text-right"><%=@summary["offshore"]["sold_month_cnt"] %></td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_month_amount"]) %>元</td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_month_profit"]) %>元</td>
       <td class="text-right"><%=@summary["offshore"]["sold_month_profit_rate"] %>％</td>
     </tr>
     <tr>
-      <th>今年</th>
+      <th>今年(<%= Date.today.year %>年)</th>
       <td class="text-right"><%=@summary["offshore"]["sold_year_cnt"] %></td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_year_amount"]) %>元</td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_year_profit"]) %>元</td>
@@ -90,14 +90,14 @@
     </thead>
     <tbody>
     <tr>
-      <th>今月</th>
+      <th>今月(<%= Date.today.month %>月)</th>
       <td class="text-right"><%=@summary["auction"]["sold_month_cnt"] %></td>
       <td class="text-right"><%=commas_help(@summary["auction"]["sold_month_amount"]) %>円</td>
       <td class="text-right"><%=@summary["auction"]["bought_month_cnt"] %></td>
       <td class="text-right"><%=commas_help(@summary["auction"]["bought_month_amount"]) %>円</td>
     </tr>
     <tr>
-      <th>今年</th>
+      <th>今年(<%= Date.today.year %>年)</th>
       <td class="text-right"><%=@summary["auction"]["sold_year_cnt"] %></td>
       <td class="text-right"><%=commas_help(@summary["auction"]["sold_year_amount"]) %>円</td>
       <td class="text-right"><%=@summary["auction"]["bought_year_cnt"] %></td>
@@ -125,23 +125,41 @@
     </thead>
     <tbody>
     <tr>
-      <th>今月</th>
-      <td class="text-right"><%=@summary["custom"]["auction_month"] %></td>
-      <td class="text-right"><%=@summary["custom"]["general_month"] %></td>
+      <th>今月(<%= Date.today.month %>月)</th>
+      <td class="text-right">
+        <%= link_to @summary["custom"]["auction_month"].to_s + "件", "#", \
+            id: "link-custom-auction-month", class: "" %>
+      </td>
+      <td class="text-right">
+        <%= link_to @summary["custom"]["general_month"].to_s + "件", "#", \
+            id: "link-custom-general-month", class: "" %>
+      </td>
       <td class="text-right">&nbsp;</td>
       <td class="text-right">&nbsp;</td>
     </tr>
     <tr>
-      <th>今年</th>
-      <td class="text-right"><%=@summary["custom"]["auction_year"] %></td>
-      <td class="text-right"><%=@summary["custom"]["general_year"] %></td>
+      <th>今年(<%= Date.today.year %>年)</th>
+      <td class="text-right">
+        <%= link_to @summary["custom"]["auction_year"].to_s + "件", "#", \
+            id: "link-custom-auction-year", class: "" %>
+      </td>
+      <td class="text-right">
+        <%= link_to @summary["custom"]["general_year"].to_s + "件", "#", \
+            id: "link-custom-general-year", class: "" %>
+      </td>
       <td class="text-right">&nbsp;</td>
       <td class="text-right">&nbsp;</td>
     </tr>
     <tr>
       <th>全部</th>
-      <td class="text-right"><%=@summary["custom"]["auction_all"] %></td>
-      <td class="text-right"><%=@summary["custom"]["general_all"] %></td>
+      <td class="text-right">
+        <%= link_to @summary["custom"]["auction_all"].to_s + "件", "#", \
+            id: "link-custom-auction-all", class: "" %>
+      </td>
+      <td class="text-right">
+        <%= link_to @summary["custom"]["general_all"].to_s + "件", "#", \
+            id: "link-custom-general-all", class: "" %>
+      </td>
       <td class="text-right">&nbsp;</td>
       <td class="text-right">&nbsp;</td>
     </tr>
@@ -240,13 +258,14 @@
   <table class="table table-hover">
     <thead>
     <tr>
-      <th colspan="2">未処置カスタム数</th>
+      <th colspan="2">未処置カスタム</th>
     </tr>
     </thead>
     <tbody>
     <tr>
       <td class="col-md-6 text-right">
-        <%= link_to @summary["undeal_custom"]["product_unregist"], "#", id: "link-product-unregist", class: "" %>
+        <%= link_to @summary["undeal_custom"]["product_unregist"].to_s + "件", "#", \
+            id: "link-product-unregist", class: "" %>
       </td>
       <td class="col-md-6">&nbsp;</td>
     </tr>

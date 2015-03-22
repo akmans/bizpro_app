@@ -96,6 +96,7 @@ class CustomsController < ApplicationController
 
   # search custom
   def search_custom(condition, page_ix)
+#    debugger
     # construct where condition
     custom = Custom.select("customs.custom_id, custom_name, auction_id, " \
         + "CASE WHEN pc_maps.custom_id is null THEN '未' ELSE '-' END as regist_status") \
@@ -109,6 +110,16 @@ class CustomsController < ApplicationController
               unless condition["is_auction"].blank?
     # product_unregist
     custom = custom.where("pc_maps.custom_id is null") unless condition["product_unregist"].blank?
+    # start year month
+    if !condition["year_s"].blank? && !condition["month_s"].blank?
+      date_s = Date::strptime(condition["year_s"] + condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d")
+      custom = custom.where("customs.created_at >= :created_at", {:created_at => date_s})
+    end
+    # end year month
+    if !condition["year_e"].blank? && !condition["month_e"].blank?
+      date_e = Date::strptime(condition["year_e"] + condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
+      custom = custom.where("customs.created_at <= :created_at", {:created_at => date_e.end_of_month})
+    end
     # paginate
     custom.paginate(page: page_ix, per_page: 15)
   end
