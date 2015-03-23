@@ -17,7 +17,7 @@ $(document).on "page:change", ->
   if $("#is_domestic").val() == "1"
     $("#no_cost").prop( "disabled", false)
   else
-    $("#no_cost").val('').prop( "disabled", true)
+    $("#no_cost").val('').attr('checked', false).prop( "disabled", true)
   # bind change event to product_brand_id.
   $("select#product_brand_id").bind "change", ->
     $.ajax
@@ -39,7 +39,7 @@ $(document).on "page:change", ->
     $("#month_e").val('').prop( "disabled", true)
     $("#is_domestic").val('')
     $("#sold_flg").val('')
-    $("#no_cost").val('').prop( "disabled", true)
+    $("#no_cost").val('').attr('checked', false).prop( "disabled", true)
   #bind change event to is_domestic
   $("#is_domestic").bind "change", ->
     if $("#is_domestic").val() == "" || $("#is_domestic").val() == "2"
@@ -55,5 +55,5 @@ $(document).on "page:change", ->
     if $("#is_domestic").val() == "1"
       $("#no_cost").prop( "disabled", false)
     else
-      $("#no_cost").val('').prop( "disabled", true)
+      $("#no_cost").val('').attr('checked', false).prop( "disabled", true)
   

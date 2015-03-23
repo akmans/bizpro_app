@@ -169,7 +169,7 @@ class DashboardsController < ApplicationController
           - product["domestic_no_cost_cnt"]
       # domesitc unsale count
       product["domesitc_unsale_cnt"] = product["domesitc_cnt"].to_i \
-          - product["domesitc_sold_cnt"].to_i - product["domesitc_sold_cnt"].to_i
+          - product["domesitc_sold_cnt"].to_i - product["domestic_no_cost_cnt"].to_i
       # offshore sending count
       product["offshore_sending_cnt"] = Product.where(is_domestic: 2).count
       # offshore sold count
