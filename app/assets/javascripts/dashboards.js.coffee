@@ -181,13 +181,18 @@ $(document).on "page:change", ->
     # do post action
     doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
            year_s: '', month_s: '', \
-           year_e: '', month_e: '', sold_flg: 0})
+           year_e: '', month_e: '', sold_flg: 0, no_cost: ''})
   # bind click event to #link-product-domestic-sold
   $("#link-product-domestic-sold").bind "click", ->
     # do post action
     doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
            year_s: '', month_s: '', \
-           year_e: '', month_e: '', sold_flg: 1})
+           year_e: '', month_e: '', sold_flg: 1, no_cost: ''})
+  $("#link-product-domestic-no-cost").bind "click", ->
+    # do post action
+    doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
+           year_s: '', month_s: '', \
+           year_e: '', month_e: '', sold_flg: 1, no_cost: '1'})
   # bind click event to #link-product-offshore-unsale
   $("#link-product-offshore-unsale").bind "click", ->
     # do post action

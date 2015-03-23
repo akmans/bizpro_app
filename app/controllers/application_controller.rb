@@ -85,6 +85,8 @@ class ApplicationController < ActionController::Base
         condition["is_domestic"] = par[:is_domestic] unless par[:is_domestic].nil?
         # sold_flg
         condition["sold_flg"] = par[:sold_flg] unless par[:sold_flg].nil?
+        # no_cost
+        condition["no_cost"] = (par[:no_cost].nil? ? '' : par[:no_cost] )
 #        # page index
 #        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
         # refresh session

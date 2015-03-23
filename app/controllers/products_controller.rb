@@ -97,6 +97,13 @@ class ProductsController < ApplicationController
   def search_product(condition, page_ix)
     # construct where condition
     product = Product
+    # no_cost
+    product = product.joins("LEFT OUTER JOIN pa_maps ON products.product_id = pa_maps.product_id") \
+        .joins("LEFT JOIN auctions ON pa_maps.auction_id = auctions.auction_id and auctions.sold_flg = 0") \
+        .joins("LEFT OUTER JOIN pc_maps ON products.product_id = pc_maps.product_id") \
+        .joins("LEFT JOIN customs ON pc_maps.custom_id = customs.custom_id") \
+        .where("auctions.auction_id is null and customs.custom_id is null") \
+        .where.not(sold_date: nil) if condition["no_cost"] == '1'
     # category_id
     product = product.where(category_id: condition["category_id"]) \
               unless condition["category_id"].blank?

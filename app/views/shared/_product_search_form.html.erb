@@ -35,6 +35,9 @@
             selected: condition["year_e"] ), {:class => 'form-control form-field select-inline'}) %>
       <%= select_tag(:month_e, options_for_select(month_hash_help.invert,
             selected: condition["month_e"] ), {:class => 'form-control form-field select-inline'}) %>
+      &nbsp;
+      <%= check_box_tag :no_cost, condition["no_cost"], (condition["no_cost"] == '1' ? true : false) %>
+      <%= label_tag :no_cost, "コスト未登録", :class => 'custom-normal line-height-22' %>
     </div>
   </div>
 

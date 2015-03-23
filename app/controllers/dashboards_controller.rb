@@ -157,14 +157,19 @@ class DashboardsController < ApplicationController
       product = {}
       # total 
       product["domesitc_cnt"] = Product.where(is_domestic: 1).count
+      product["domestic_no_cost_cnt"] = Product \
+          .joins("LEFT OUTER JOIN pa_maps ON products.product_id = pa_maps.product_id") \
+          .joins("LEFT JOIN auctions ON pa_maps.auction_id = auctions.auction_id and auctions.sold_flg = 0") \
+          .joins("LEFT OUTER JOIN pc_maps ON products.product_id = pc_maps.product_id") \
+          .joins("LEFT JOIN customs ON pc_maps.custom_id = customs.custom_id") \
+          .where("auctions.auction_id is null and customs.custom_id is null") \
+          .where.not(sold_date: nil).count
       # domesitc sold count
-      product["domesitc_sold_cnt"] = Product.where(is_domestic: 1).where.not(sold_date: nil).count
-#      product["domestic_no_cost_cnt"] = Product \
-#          .joins("LEFT JOIN pa_maps ON products.product_id = pa_maps.product_id") \
-#          .joins("LEFT OUTER JOIN auctions ON pa_maps.auction_id = auctions.auction_id") \
-#          .where.not(sold_date: nil)
+      product["domesitc_sold_cnt"] = Product.where(is_domestic: 1).where.not(sold_date: nil).count \
+          - product["domestic_no_cost_cnt"]
       # domesitc unsale count
-      product["domesitc_unsale_cnt"] = product["domesitc_cnt"].to_i - product["domesitc_sold_cnt"].to_i
+      product["domesitc_unsale_cnt"] = product["domesitc_cnt"].to_i \
+          - product["domesitc_sold_cnt"].to_i - product["domesitc_sold_cnt"].to_i
       # offshore sending count
       product["offshore_sending_cnt"] = Product.where(is_domestic: 2).count
       # offshore sold count
