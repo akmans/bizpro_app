@@ -66,8 +66,8 @@ class AuctionsControllerTest < ActionController::TestCase
     log_in_as(@user)
     get :new
     assert_response :success
-    assert_select 'title', full_title_help('ロード,オークション')
-    assert_nil assigns(:auction)
+    assert_select 'title', full_title_help('新規,オークション')
+    assert_not_nil assigns(:auction)
   end
 
   test "should redirect new when not logged in" do
@@ -178,7 +178,7 @@ class AuctionsControllerTest < ActionController::TestCase
     log_in_as(@user)
     request.env['omniauth.auth'] = @auth
     get :callback, :provider => 'yahoojp'
-    assert_template 'auctions/new'
+    assert_template 'auctions/load'
     assert_select 'a[href=?]', "/auth/yahoojp/logout", text: 'ログアウト'
     assert_select 'a[href=?]', "/auth/yahoojp/loaddata1", text: 'ロード買いデータ'
     assert_select 'a[href=?]', "/auth/yahoojp/loaddata2", text: 'ロード売りデータ'
@@ -195,7 +195,7 @@ class AuctionsControllerTest < ActionController::TestCase
   test "should do logout when logged in" do
     log_in_as(@user)
     get :logout, :provider => 'yahoojp'
-    assert_template 'auctions/new'
+    assert_template 'auctions/load'
     assert_select 'a[href=?]', "/auth/yahoojp", text: 'Yahoo! JAPAN でlogin'
     assert_select 'a[href=?]', auctions_path, text: '戻る'
   end

@@ -31,10 +31,20 @@ class AuctionsController < ApplicationController
 
   # new action
   def new
+    @auction = Auction.new
   end
 
   # create action
-  # nil
+  def create
+    @auction = Auction.new(auction_params)
+    if @auction.save
+      flash[:success] = "作成完了しました。"
+      # カテゴリー全体
+      redirect_to auctions_path
+    else
+      render 'new'
+    end
+  end
 
   # edit action
   def edit
@@ -91,6 +101,12 @@ class AuctionsController < ApplicationController
     render 'index'
   end
 
+  # initload action
+  def initload
+    # render load page
+    render 'load'
+  end
+
   # load won data action.
   def load_won_data
     # call loaddata
@@ -111,13 +127,13 @@ class AuctionsController < ApplicationController
   def callback
     auth = request.env['omniauth.auth']
     yahoojp_log_in_help auth
-    render 'new'
+    render 'load'
   end
 
   # logout action.
   def logout
     yahoojp_log_out_help
-    render 'new'
+    render 'load'
   end
 
   # ajax auctions action
@@ -134,7 +150,8 @@ class AuctionsController < ApplicationController
         .require(:auction)
         .permit(:auction_name, :price, :tax_rate, :category_id, :brand_id, :modu_id,
                 :sold_flg, :ope_flg, :paymethod_id, :payment_cost, :ship_type,
-                :shipmethod_id, :shipment_cost, :shipment_code, :memo
+                :shipmethod_id, :shipment_cost, :shipment_code, :memo,
+                :manual, :seller_id, :end_time, :auction_id
         )
     end
 

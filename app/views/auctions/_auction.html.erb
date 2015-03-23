@@ -1,7 +1,8 @@
 <div class="row">
   <div class="col-xs-12 col-md-5">
     【<%= auction.end_time.nil? ? "-" : auction.end_time.strftime("%m/%d/%y") %>】
-    <%= link_to auction.auction_name, auction.url, :target => '_blank' %>
+    <%= link_to auction.auction_name, auction.url, :target => '_blank' unless auction.url.blank? %>
+    <%= auction.auction_id if auction.url.blank? %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>

@@ -159,6 +159,10 @@ class DashboardsController < ApplicationController
       product["domesitc_cnt"] = Product.where(is_domestic: 1).count
       # domesitc sold count
       product["domesitc_sold_cnt"] = Product.where(is_domestic: 1).where.not(sold_date: nil).count
+#      product["domestic_no_cost_cnt"] = Product \
+#          .joins("LEFT JOIN pa_maps ON products.product_id = pa_maps.product_id") \
+#          .joins("LEFT OUTER JOIN auctions ON pa_maps.auction_id = auctions.auction_id") \
+#          .where.not(sold_date: nil)
       # domesitc unsale count
       product["domesitc_unsale_cnt"] = product["domesitc_cnt"].to_i - product["domesitc_sold_cnt"].to_i
       # offshore sending count

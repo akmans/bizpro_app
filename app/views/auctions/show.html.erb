@@ -4,7 +4,8 @@
   <div class="form-group grid">
     <div class="col-sm-1 header">ID</div>
     <div class="col-sm-2">
-      <%= link_to @auction.auction_id, @auction.url, :target => '_blank' %>
+      <%= link_to @auction.auction_id, @auction.url, :target => '_blank' unless @auction.url.blank? %>
+      <%= @auction.auction_id if @auction.url.blank? %>
     </div>
     <div class="col-sm-1 header">タイトル</div>
     <div class="col-sm-8"><%= @auction.auction_name %></div>

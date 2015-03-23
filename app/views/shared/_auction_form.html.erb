@@ -1,13 +1,27 @@
 <%= form_for(@auction, :html => {:class => "form-horizontal"}) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="form-group grid">
-    <div class="col-sm-1 header">タイトル</div>
-    <div class="col-sm-8">
-      <%= f.text_field :auction_name, class: 'form-control form-field' %>
-    </div>
+    <% if @auction.auction_id.nil? || @auction.manual == 1 %>
+      <div class="col-sm-1 header">ID</div>
+      <div class="col-sm-2">
+        <%= f.text_field :auction_id, class: 'form-control form-field' %>
+      </div>
+      <div class="col-sm-1 header">タイトル</div>
+      <div class="col-sm-5">
+        <%= f.text_field :auction_name, class: 'form-control form-field' %>
+      </div>
+    <% else %>
+      <div class="col-sm-1 header">タイトル</div>
+      <div class="col-sm-8">
+        <%= f.text_field :auction_name, class: 'form-control form-field' %>
+      </div>
+    <% end %>
     <div class="col-sm-1 header">落札価格</div>
     <div class="col-sm-2">
       <%= f.text_field :price, :value => @auction.price.to_i, class: 'form-control form-field text-right' %>
+      <%= f.hidden_field :manual,
+          :value => (@auction.manual.nil? ? (@auction.auction_id.nil? ? 1 : 0) : @auction.manual),
+          class: 'form-control form-field text-right' %>
     </div>
   </div>
 
@@ -93,17 +107,38 @@
 
   <div class="form-group grid">
     <div class="col-sm-1 header">出品者ID</div>
-    <div class="col-sm-2"><%= @auction.seller_id %></div>
-    <div class="col-sm-1 header">終了日時</div>
     <div class="col-sm-2">
-      <%= @auction.end_time.nil? ? "-" : @auction.end_time.strftime("%F %T") %>
+      <% if @auction.auction_id.nil? || @auction.manual == 1 %>
+        <%= f.text_field :seller_id, class: 'form-control form-field' %>
+      <% else %>
+        <%= @auction.seller_id %>
+      <% end %>
     </div>
+    <div class="col-sm-1 header">終了日時</div>
+    <% if @auction.auction_id.nil? || @auction.manual == 1 %>
+      <div class="col-sm-2 text-center cell-no-padding">
+        <%= f.date_select :end_time,
+            options = { :order => [:year, :month, :day],
+                    :prompt => { :day => '(D)', :month => '(M)', :year => '(Y)' },
+                    :use_two_digit_numbers => true,
+                    :start_year => 2011, :end_year => 2015
+            },
+            html_options = {:class => "form-control form-field select-inline"}
+        %>
+      </div>
+    <% else %>
+      <div class="col-sm-2">
+        <%= @auction.end_time.nil? ? "-" : @auction.end_time.strftime("%F %T") %>
+      </div>
+    <% end %>
     <div class="col-sm-1 header">問合番号</div>
     <div class="col-sm-2">
       <%= f.text_field :shipment_code, class: 'form-control form-field' %>
     </div>
     <div class="col-sm-1 header">総額</div>
-    <div class="col-sm-2 text-right"><%= commas_help(auction_total_cost_help(@auction).to_i) %>円</div>
+    <div class="col-sm-2 text-right">
+      <%= commas_help(auction_total_cost_help(@auction).to_i) unless @auction.auction_id.blank? %>円
+    </div>
   </div>
 
   <div class="form-group row-fluid grid row_last">

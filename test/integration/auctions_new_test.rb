@@ -26,8 +26,8 @@ class AuctionsNewTest < ActionDispatch::IntegrationTest
 
   test "should show yahoojp login button if not log in yahoojp" do
     log_in_as(@user)
-    get new_auction_path
-    assert_template 'auctions/new'
+    get "/auctions/initload"
+    assert_template 'auctions/load'
     assert_select 'a[href=?]', "/auth/yahoojp", text: 'Yahoo! JAPAN でlogin'
   end
 
@@ -37,7 +37,7 @@ class AuctionsNewTest < ActionDispatch::IntegrationTest
     assert_redirected_to "/auth/yahoojp/callback"
   end
 
-  test "should render new after callback action" do
+  test "should render load after callback action" do
     log_in_as(@user)
     get "/auth/yahoojp/callback"
     assert_select 'a[href=?]', "/auth/yahoojp/logout", text: 'ログアウト'
@@ -45,10 +45,10 @@ class AuctionsNewTest < ActionDispatch::IntegrationTest
     assert_select 'a[href=?]', "/auth/yahoojp/loaddata2", text: 'ロード売りデータ'
   end
 
-  test "should render new after logout action" do
+  test "should render load after logout action" do
     log_in_as(@user)
     get "/auth/yahoojp/logout"
-    assert_template 'auctions/new'
+    assert_template 'auctions/load'
     assert_select 'a[href=?]', "/auth/yahoojp", text: 'Yahoo! JAPAN でlogin'
   end
 end
