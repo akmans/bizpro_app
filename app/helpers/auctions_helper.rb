@@ -117,4 +117,19 @@ module AuctionsHelper
     end
     return a_hash
   end
+
+  # return auction hash for product
+  def auctions_hash_for_product_help()
+    a_hash = {"" => "(空白)"}
+#    Auction.where(ope_flg: key).where.not(auction_id: PaMap.all).each do |auction|
+    Auction.select("auctions.auction_id, auctions.auction_name") \
+          .joins("LEFT OUTER JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id") \
+          .where("pa_maps.auction_id is null").each do |auction|
+      akey = auction.auction_id
+      avalue = auction.auction_name
+      new_hash = { akey => avalue}
+      a_hash.merge! new_hash
+    end
+    return a_hash
+  end
 end
