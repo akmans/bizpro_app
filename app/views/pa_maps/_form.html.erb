@@ -4,7 +4,7 @@
   <%= @pa_map.auction_id.blank? ? '-' : @pa_map.auction_id %>
 </div>
 <div class="col-xs-10 col-md-8">
-  <%= collection_select :pa_map, :auction_id, auctions_hash_help(1), :first, :last, {},
+  <%= collection_select :pa_map, :auction_id, auctions_hash_for_product_help(), :first, :last, {},
       {selected: @pa_map.auction_id, :class => 'form-control form-field'} %>
 </div>
 <!-- Add the extra clearfix for only the required viewport -->
