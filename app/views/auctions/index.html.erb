@@ -22,5 +22,5 @@
     <%= link_to "New", new_auction_path, class: "btn btn-default" %>
   </div>
 </div>
-<%= render @auctions %>
+<%= render :partial => 'auction', :collection => @auctions %>
 <%= will_paginate(@auctions, :params => { :controller => "auctions", :action => "index"}) %>
