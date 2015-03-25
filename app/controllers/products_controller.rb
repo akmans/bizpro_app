@@ -98,12 +98,21 @@ class ProductsController < ApplicationController
     # construct where condition
     product = Product
     # no_cost
-    product = product.joins("LEFT OUTER JOIN pa_maps ON products.product_id = pa_maps.product_id") \
-        .joins("LEFT JOIN auctions ON pa_maps.auction_id = auctions.auction_id and auctions.sold_flg = 0") \
-        .joins("LEFT OUTER JOIN pc_maps ON products.product_id = pc_maps.product_id") \
-        .joins("LEFT JOIN customs ON pc_maps.custom_id = customs.custom_id") \
-        .where("auctions.auction_id is null and customs.custom_id is null") \
-        .where.not(sold_date: nil) if condition["no_cost"] == '1'
+#    product = product.joins("LEFT OUTER JOIN pa_maps ON products.product_id = pa_maps.product_id") \
+#        .joins("LEFT JOIN auctions ON pa_maps.auction_id = auctions.auction_id and auctions.sold_flg = 0") \
+#        .joins("LEFT OUTER JOIN pc_maps ON products.product_id = pc_maps.product_id") \
+#        .joins("LEFT JOIN customs ON pc_maps.custom_id = customs.custom_id") \
+#        .where("auctions.auction_id is null and customs.custom_id is null") \
+#        .where.not(sold_date: nil) if condition["no_cost"] == '1'
+    product = product.joins("LEFT OUTER JOIN (SELECT pa_maps.product_id FROM auctions " \
+        + " LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id " \
+        + " AND auctions.sold_flg = 0) ap ON products.product_id = ap.product_id" ) \
+        .joins("LEFT OUTER JOIN (SELECT pc_maps.product_id FROM customs " \
+        + " LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id) as cp " \
+        + " ON products.product_id = cp.product_id") \
+        .where.not(sold_date: nil) if condition["no_cost"] == '1' || condition["no_cost"] == '0'
+    product = product.where("ap.product_id is null and cp.product_id is null") if condition["no_cost"] == '1'
+    product = product.where("ap.product_id is not null or cp.product_id is not null") if condition["no_cost"] == '0'
     # category_id
     product = product.where(category_id: condition["category_id"]) \
               unless condition["category_id"].blank?

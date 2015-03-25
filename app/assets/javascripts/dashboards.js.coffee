@@ -187,7 +187,7 @@ $(document).on "page:change", ->
     # do post action
     doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
            year_s: '', month_s: '', \
-           year_e: '', month_e: '', sold_flg: 1, no_cost: ''})
+           year_e: '', month_e: '', sold_flg: 1, no_cost: '0'})
   $("#link-product-domestic-no-cost").bind "click", ->
     # do post action
     doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \

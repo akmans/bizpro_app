@@ -292,6 +292,7 @@
       <th>合計</th>
       <td class="text-right">
         <%= @summary["undeal_product"]["domesitc_unsale_cnt"].to_i + \
+            @summary["undeal_product"]["domestic_no_cost_cnt"].to_i + \
             @summary["undeal_product"]["domesitc_sold_cnt"].to_i %>件
       </td>
       <td class="text-right">

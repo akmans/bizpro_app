@@ -15,7 +15,9 @@
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-6 col-md-1">
-    <%= ope_flg_name_help(auction.ope_flg) %><%= custom_percentage_help(auction.auction_id) %>
+    <%= ope_flg_name_help(auction.ope_flg) %>
+    <%= custom_percentage_help(auction.auction_id) %>
+    <%= auction_regist_status_help(auction.auction_id) %>
   </div>
   <div class="col-xs-6 col-md-1 text-right" style="padding: 0px 10px">
     <%= commas_help(auction_total_cost_help(auction).to_i) %>円
