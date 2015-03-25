@@ -59,8 +59,8 @@ module AuctionsHelper
 
   # return the summary of custom percentage
   def custom_percentage_help(k)
+    return nil if k.nil? || Auction.where(auction_id: k).first.ope_flg != 0
     per = Custom.where(auction_id: k).sum(:percentage)
-    return nil if per == 0
     return "(#{per})"
   end
 
@@ -133,13 +133,17 @@ module AuctionsHelper
     return a_hash
   end
 
+  # auction regist status
   def auction_regist_status_help(auction_id)
+    # only for ope_flg == 1(product)
+    return nil if Auction.where(auction_id: auction_id).first.ope_flg == 0
     # undeal auction (product unregist: 1)
     auction1 = Auction.joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id") \
-          .where(ope_flg: 1).where(auction_id: auction_id).count
-    # undeal auction(custom unregist: 2)
-    auction2 = Auction.joins("LEFT JOIN customs ON auctions.auction_id = customs.auction_id") \
-          .where(ope_flg: 0).where(auction_id: auction_id).count
-    return (auction1 + auction2 == 0) ? "(未)" : "(済)"
+          .where("pa_maps.auction_id is not null").where(ope_flg: 1).where(auction_id: auction_id).count
+#    # undeal auction(custom unregist: 2)
+#    auction2 = Auction.joins("LEFT JOIN customs ON auctions.auction_id = customs.auction_id") \
+#          .where(ope_flg: 0).where(auction_id: auction_id).count
+#    return (auction1 + auction2 == 0) ? "(未)" : "(済)"
+    return auction1 == 0 ? "(未)" : "(済)"
   end
 end
