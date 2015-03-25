@@ -136,10 +136,10 @@ module AuctionsHelper
   def auction_regist_status_help(auction_id)
     # undeal auction (product unregist: 1)
     auction1 = Auction.joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id") \
-          .where(ope_flg: 1).count
+          .where(ope_flg: 1).where(auction_id: auction_id).count
     # undeal auction(custom unregist: 2)
     auction2 = Auction.joins("LEFT JOIN customs ON auctions.auction_id = customs.auction_id") \
-          .where(ope_flg: 0).count
+          .where(ope_flg: 0).where(auction_id: auction_id).count
     return (auction1 + auction2 == 0) ? "(未)" : "(済)"
   end
 end
