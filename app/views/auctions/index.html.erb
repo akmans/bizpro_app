@@ -6,11 +6,14 @@
 <%= will_paginate(@auctions, :params => { :controller => "auctions", :action => "index"}) %>
 <div class="clearfix"></div>
 <div class="row header">
+  <div class="col-xs-6 col-md-1">終了日</div>
+  <div class="col-xs-6 col-md-1">カテゴリ</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-12 col-md-5">オークション</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-6 col-md-1">売買</div>
-  <div class="col-xs-6 col-md-2">カテゴリ</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-6 col-md-1">処置区分</div>

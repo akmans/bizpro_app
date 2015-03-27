@@ -117,6 +117,8 @@ class ApplicationController < ActionController::Base
         condition["year_e"] = par[:year_e] unless par[:year_e].nil?
         # month end
         condition["month_e"] = par[:month_e] unless par[:month_e].nil?
+        # auction_id
+        condition["auction_id"] = par[:auction_id] unless par[:auction_id].nil?
 #        # page index
 #        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
         # refresh session

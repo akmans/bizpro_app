@@ -120,6 +120,9 @@ class CustomsController < ApplicationController
       date_e = Date::strptime(condition["year_e"] + condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
       custom = custom.where("customs.created_at <= :created_at", {:created_at => date_e.end_of_month})
     end
+    # auction_id
+    custom = custom.where("customs.auction_id = :auction_id", {:auction_id => condition["auction_id"]}) \
+        unless condition["auction_id"].blank?
     # paginate
     custom.paginate(page: page_ix, per_page: 15)
   end

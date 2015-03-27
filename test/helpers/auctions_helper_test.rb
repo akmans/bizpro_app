@@ -85,7 +85,7 @@ class AuctionsHelperTest < ActionView::TestCase
 
   # test ope_flg_hash_help
   test "test ope flg hash help" do
-    expected = {"" => "(空白)", "0" => "カス品", "1" => "商品"}
+    expected = {"" => "(空白)", "0" => "カス", "1" => "部品"}
     assert_equal expected, ope_flg_hash_help
   end
 
@@ -93,8 +93,8 @@ class AuctionsHelperTest < ActionView::TestCase
   test "test ope flg name help" do
     assert_equal "-", ope_flg_name_help(nil)
     assert_equal "-", ope_flg_name_help("")
-    assert_equal "カス品", ope_flg_name_help(0)
-    assert_equal "商品", ope_flg_name_help(1)
+    assert_equal "カス", ope_flg_name_help(0)
+    assert_equal "部品", ope_flg_name_help(1)
   end
 
   # test custom_percentage_help

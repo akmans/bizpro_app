@@ -1,6 +1,13 @@
 <div class="row">
+  <div class="col-xs-6 col-md-1">
+    <%= auction.end_time.nil? ? "-" : auction.end_time.strftime("%m/%d/%y") %>
+  </div>
+  <div class="col-xs-6 col-md-1 cell-no-padding">
+    <%= auction.category_name.blank? ? '-' : auction.category_name %>
+  </div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-12 col-md-5">
-    【<%= auction.end_time.nil? ? "-" : auction.end_time.strftime("%m/%d/%y") %>】
     <%= link_to auction.auction_name, auction.url, :target => '_blank' unless auction.url.blank? %>
     <%= auction.auction_name if auction.url.blank? %>
   </div>
@@ -9,18 +16,19 @@
   <div class="col-xs-6 col-md-1">
     <%= sold_type_name_help(auction.sold_flg) %>
   </div>
-  <div class="col-xs-6 col-md-2">
-    <%= category_name_help(auction.category_id) %>
+  <div class="col-xs-6 col-md-1 text-right">
+    <%= link_to ope_flg_name_help(auction.ope_flg).to_s + auction_regist_status_help(auction.auction_id).to_s, \
+        product_path(auction.product_id), class: '' unless auction.product_id.blank? %>
+    <%= ope_flg_name_help(auction.ope_flg).to_s + auction_regist_status_help(auction.auction_id).to_s \
+        if auction.ope_flg == 1 && auction.product_id.blank? %>
+    <%= link_to ope_flg_name_help(auction.ope_flg).to_s + custom_percentage_help(auction.auction_id).to_s, \
+        customs_path(auction_id: auction.auction_id), class: '' if auction.ope_flg == 0 %>
+    <%= '未登録' if auction.ope_flg.blank? %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-6 col-md-1">
-    <%= ope_flg_name_help(auction.ope_flg) %>
-    <%= custom_percentage_help(auction.auction_id) %>
-    <%= auction_regist_status_help(auction.auction_id) %>
-  </div>
-  <div class="col-xs-6 col-md-1 text-right" style="padding: 0px 10px">
-    <%= commas_help(auction_total_cost_help(auction).to_i) %>円
+  <div class="col-xs-12 col-md-1 text-right" style="padding: 0px 10px">
+    <%= commas_help(auction.price.to_i) %>円
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>

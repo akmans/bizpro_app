@@ -65,3 +65,4 @@ $(document).on "page:change", ->
     $("#year_e").val('')
     $("#month_s").val('')
     $("#month_e").val('')
+    $("#auction_id").val('')

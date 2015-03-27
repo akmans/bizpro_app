@@ -10,17 +10,8 @@ class AuctionsController < ApplicationController
     page = page_ix_help(params[:page])
     # refresh search condition
     @condition = refresh_auctions_search_condition_help(params)
-#    debugger
-#    page = page_ix_help(params[:page])
-    # get auction data list with pagination.
-#    @auctions = Auction.paginate(page: page, per_page: 15)
+    # build search.
     @auctions = search_auction(@condition, page)
-#    @condition = {}
-#    @condition[:category_id] = '123'
-
-#    auction = Auction
-#    auction = auction.where(category_id: @condition[:category_id]) unless @condition[:category_id].blank?
-#    @auctions = auction.paginate(page: @condition["page_ix"], per_page: 15)
   end
 
   # show action
@@ -53,7 +44,6 @@ class AuctionsController < ApplicationController
 
   # update action
   def update
-#    debugger
     @auction = Auction.find(params[:auction_id])
     # update auction attributes
     if @auction.update_attributes(auction_params)
@@ -139,7 +129,6 @@ class AuctionsController < ApplicationController
   # ajax auctions action
   def ajax_auctions
     # get auction data.
-#    render :json => auctions_hash_help(params[:ope_flg])
     render :json => auctions_hash_help(params[:auction_id])
   end
 
@@ -204,7 +193,14 @@ class AuctionsController < ApplicationController
   def search_auction(condition, page_ix)
 #    debugger
     # construct where condition
-    auction = Auction
+    auction = Auction.select("auctions.auction_id, auctions.end_time, auctions.auction_name," \
+        + "auctions.url, auctions.sold_flg, auctions.ope_flg, auctions.price, " \
+        + "CASE WHEN COALESCE(ope_flg, 0) == 0 THEN (-1) * auctions.price * " \
+        + "(COALESCE(auctions.tax_rate, 0) + 100) / 100 - COALESCE(auctions.payment_cost, 0) - " \
+        + "COALESCE(auctions.shipment_cost, 0) ELSE auctions.price - COALESCE(auctions.payment_cost, 0) - " \
+        + "COALESCE(auctions.shipment_cost, 0) END as price, cat.category_name, pa.product_id") \
+        .joins("LEFT OUTER JOIN categories cat ON auctions.category_id = cat.category_id") \
+        .joins("LEFT OUTER JOIN pa_maps pa ON auctions.auction_id = pa.auction_id")
     # undeal auction (product unregist: 1)
     auction = auction.joins("LEFT OUTER JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id") \
           .where("pa_maps.product_id is null").where(ope_flg: 1) if condition["undeal_auction"] == '1'
