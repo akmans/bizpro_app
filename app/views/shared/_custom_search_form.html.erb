@@ -25,7 +25,7 @@
       <%= hidden_field_tag 'year_e', '' %>
       <%= hidden_field_tag 'month_e', '' %>
       <%= hidden_field_tag 'auction_id', '' %>
-      <%= link_to "Clear", '', id: "btn-custom-clear", class: "btn btn-default" %>
+      <%= button_tag "Clear", type: 'button', id: "btn-custom-clear", class: "btn btn-default" %>
       <%= submit_tag("Search", {:class => 'btn btn-primary'}) %>
     </div>
   </div>
