@@ -49,7 +49,7 @@ module AuctionsHelper
 
   # return ope flg hash
   def ope_flg_hash_help
-    {"" => "(空白)", "0" => "カス", "1" => "部品"}
+    {"" => "(空白)", "0" => "カス", "1" => "部品", "2" => "自用品"}
   end
 
   # return sold type name

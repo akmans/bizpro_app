@@ -1,27 +1,30 @@
+<% info = profit_hash_help(product.product_id) %>
 <div class="row">
   <div class="col-xs-4 col-md-2 text-center">
-    <%= commas_help(product_total_cost_help(@product.product_id).to_i) %>
+    <%= commas_help(product_total_cost_help(product.product_id).to_i) %>
     円
   </div>
   <div class="col-xs-4 col-md-2 text-center">
-    <%= @product.exchange_rate.to_f %>
+    <%= product.exchange_rate.to_f %>
   </div>
   <div class="col-xs-4 col-md-2 text-right">
-    <%= commas_help((@product.exchange_rate.to_f \
-                      * product_total_cost_help(@product.product_id) / 100).round(3)) %>
-    <%= @product.is_domestic == 1 ? '円' : '元' %>
+    <%= info["cost_amount"].round(3).to_i if product.is_domestic == 1 %>
+    <%= info["cost_amount"].round(3) if product.is_domestic == 0 %>
+    <%= product.is_domestic == 1 ? '円' : '元' %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-4 col-md-2 text-right">
-    <%= product_total_sold_price_help(@product.product_id).round(3) %>
-    <%= @product.is_domestic == 1 ? '円' : '元' %>
+    <%= info["sold_amount"].round(3).to_i if product.is_domestic == 1 %>
+    <%= info["sold_amount"].round(3) if product.is_domestic == 0 %>
+    <%= product.is_domestic == 1 ? '円' : '元' %>
   </div>
   <div class="col-xs-4 col-md-2 text-right">
-    <%= profit_help(@product.product_id).round(3) %>
-    <%= @product.is_domestic == 1 ? '円' : '元' %>
+    <%= commas_help(info["profit_amount"].round(3).to_i) if product.is_domestic == 1 %>
+    <%= commas_help(info["profit_amount"].round(3)) if product.is_domestic == 0 %>
+    <%= product.is_domestic == 1 ? '円' : '元' %>
   </div>
   <div class="col-xs-4 col-md-2 text-right">
-    <%= profit_rate_help(@product.product_id).round(3) %>％
+    <%= info["profit_rate"].round(3) %>％
   </div>
 </div>

@@ -23,6 +23,7 @@
         if auction.ope_flg == 1 && auction.product_id.blank? %>
     <%= link_to ope_flg_name_help(auction.ope_flg).to_s + custom_percentage_help(auction.auction_id).to_s, \
         customs_path(auction_id: auction.auction_id), class: '' if auction.ope_flg == 0 %>
+    <%= ope_flg_name_help(auction.ope_flg).to_s if auction.ope_flg == 2 %>
     <%= '未' if auction.ope_flg.blank? %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->

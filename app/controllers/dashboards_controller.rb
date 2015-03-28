@@ -319,7 +319,7 @@ class DashboardsController < ApplicationController
             .where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
             .where("products.sold_date <= :date_e", {:date_e => end_date}) \
             .reorder('').first.amount.to_i if date_type != 0
-        # amount(bought) (sold_flg, date_type, is_domestic)
+        # amount(bought) git(sold_flg, date_type, is_domestic)
         cost_amount = cost_calculate(date_type, 0)
         # profit amount
         info["profit_amount"] = info["sold_amount"] - cost_amount
@@ -332,7 +332,7 @@ class DashboardsController < ApplicationController
     # domestic sold product
     def domestic_sold_product(date_type)
       info = {}
-      # date interval
+      # date intervalSS
       beginning_date = Time.zone.now.beginning_of_year
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
@@ -456,14 +456,14 @@ class DashboardsController < ApplicationController
           .joins("LEFT JOIN products ON shipment_details.product_id = products.product_id ") \
           .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
           .where("products.sold_date is not null") \
-          .reorder('').first.amount.to_i if date_type == 0
+          .reorder('').first.amount.to_f if date_type == 0
       bought4 = ShipmentDetail.select("SUM((COALESCE(ship_cost, 0) + COALESCE(insured_cost, 0) + " \
           + "COALESCE(custom_cost, 0) * 100 / (CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) " \
           + ") * ((CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) / 100)) as amount") \
           .joins("LEFT JOIN products ON shipment_details.product_id = products.product_id ") \
           .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
           .where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
-          .where("products.sold_date <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_i if date_type != 0
+          .where("products.sold_date <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_f if date_type != 0
       return bought1 + bought2 + bought3 + bought4
     end
 end

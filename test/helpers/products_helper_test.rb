@@ -41,23 +41,23 @@ class ProductsHelperTest < ActionView::TestCase
   end
 
   # test product_total_sold_price_help
-  test "test product total sold price help" do
-    assert_equal 0, product_total_sold_price_help(nil)
-    assert_equal 269000, product_total_sold_price_help(@product.product_id).to_i
-    assert_equal 100, product_total_sold_price_help(@product3.product_id).to_i
-  end
+#  test "test product total sold price help" do
+#    assert_equal 0, product_total_sold_price_help(nil)
+#    assert_equal 269000, product_total_sold_price_help(@product.product_id).to_i
+#    assert_equal 100, product_total_sold_price_help(@product3.product_id).to_i
+#  end
 
   # test profit_help
-  test "test profit help" do
-    assert_equal 0, profit_help(nil)
-    assert_equal 134500, profit_help(@product.product_id)
-    assert_equal 0, profit_help(@product3.product_id)
-  end
+#  test "test profit help" do
+#    assert_equal 0, profit_help(nil)
+#    assert_equal 134500, profit_help(@product.product_id)
+#    assert_equal 0, profit_help(@product3.product_id)
+#  end
 
   # test profit_rate_help
-  test "test profit rate help" do
-    assert_equal 0, profit_rate_help(nil)
-    assert_equal 100, profit_rate_help(@product.product_id)
-    assert_equal 0, profit_rate_help(@product3.product_id)
-  end
+#  test "test profit rate help" do
+#    assert_equal 0, profit_rate_help(nil)
+#    assert_equal 100, profit_rate_help(@product.product_id)
+#    assert_equal 0, profit_rate_help(@product3.product_id)
+#  end
 end

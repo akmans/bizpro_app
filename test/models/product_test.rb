@@ -115,8 +115,8 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   # test ORDER BY
-  test "order should be newest ID first" do
-    assert_equal Product.first, products(:one)
+  test "order should be newest sold_date first" do
+    assert_equal Product.first, products(:three)
   end
 
   # test as_hash

@@ -3,6 +3,8 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).on "page:change", ->
+  if $("#auction_sold_flg").val() == "1"
+    $("select#auction_ope_flg").val("1").prop("disabled", true)
   # bind change event to select#auction_brand_id
   $("select#auction_brand_id").bind "change", ->
     $.ajax
@@ -14,6 +16,12 @@ $(document).on "page:change", ->
         $("select#auction_modu_id").children("option:gt(0)").remove()
         $.each data, (i, item) ->
           $("select#auction_modu_id").append $("<option>").text(item["modu_name"]).attr("value", item["modu_id"])
+  # bind change event to auction_sold_flg
+  $("#auction_sold_flg").bind "change", ->
+    if $("#auction_sold_flg").val() == "1"
+      $("select#auction_ope_flg").val("1").prop("disabled", true)
+    else
+      $("select#auction_ope_flg").val("").prop("disabled", false)
   # bind click event to #btn-auction-clear
   $("#btn-auction-clear").bind "click", ->
     $("#auction_name").val('')

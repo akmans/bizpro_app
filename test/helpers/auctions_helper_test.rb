@@ -85,7 +85,7 @@ class AuctionsHelperTest < ActionView::TestCase
 
   # test ope_flg_hash_help
   test "test ope flg hash help" do
-    expected = {"" => "(空白)", "0" => "カス", "1" => "部品"}
+    expected = {"" => "(空白)", "0" => "カス", "1" => "部品", "2" => "自用品"}
     assert_equal expected, ope_flg_hash_help
   end
 

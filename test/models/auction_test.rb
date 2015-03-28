@@ -132,8 +132,8 @@ class AuctionTest < ActiveSupport::TestCase
     assert_not @auction.valid?
   end
 
-  test "ope_flg should be less than 2" do
-    @auction.ope_flg = 2
+  test "ope_flg should be less than 3" do
+    @auction.ope_flg = 3
     assert_not @auction.valid?
   end
 
