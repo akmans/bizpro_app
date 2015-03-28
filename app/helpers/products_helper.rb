@@ -140,9 +140,9 @@ module ProductsHelper
         # amount(bought) (sold_flg, date_type, is_domestic)
         info["cost_amount"] = cost_calculate(product_id, product.is_domestic)
         # profit amount
-        info["profit_amount"] = info["sold_amount"] - info["cost_amount"]
+        info["profit_amount"] = info["sold_amount"] + info["cost_amount"]
         # profit rate
-        info["profit_rate"] = (info["cost_amount"] != 0 ? (info["profit_amount"] * 100 / info["cost_amount"]).round(2) : 0)
+        info["profit_rate"] = (info["cost_amount"] != 0 ? (info["profit_amount"] * 100 / info["cost_amount"]).round(2) * -1 : 0)
       end
       return info
   end
@@ -188,6 +188,6 @@ module ProductsHelper
           .where("products.sold_date is not null") \
           .where("products.product_id = :product_id", {:product_id => product_id}) \
           .reorder('').first.amount.to_f
-      return bought1 + bought2 + bought3 + bought4
+      return (bought1 + bought2 + bought3 + bought4) * -1
     end
 end
