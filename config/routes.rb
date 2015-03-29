@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post   '/products/search'         => 'products#search'
   post   '/customs/search'          => 'customs#search'
   post   '/shipments/search'        => 'shipments#search'
+#  get    '/summaries/index'         => 'summaries#index'
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
@@ -34,6 +35,7 @@ Rails.application.routes.draw do
     resources :shipment_details, param: :id, :except => [:show]
   end
   resources :shipmethods, param: :shipmethod_id, :except => [:show]
+  resources :summaries, :only => [:index]
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.

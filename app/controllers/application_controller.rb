@@ -158,4 +158,150 @@ class ApplicationController < ActionController::Base
       end
       return condition
     end
+
+    # offshore sold product
+    def offshore_sold_product(date_type, beginning_date, end_date)
+      info = {}
+      # count product
+      info["sold_cnt"] = count_product(0, beginning_date, end_date)
+      # sold data count is 0
+      if info["sold_cnt"] == 0 then
+        # amount(sold) = profit amount = profit rate
+        info["sold_amount"] = info["profit_amount"] = info["profit_rate"] = 0
+      else
+        # amount(sold)
+        sold = Sold.select("SUM(COALESCE(sold_price, 0))" \
+            + " - SUM(COALESCE(ship_charge, 0)) - SUM(COALESCE(other_charge, 0)) as amount") \
+            .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
+            .where("products.is_domestic = 0")
+        # beginning date
+        sold = sold.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
+            unless beginning_date.blank?
+        # end date
+        sold = sold.where("products.sold_date <= :date_e", {:date_e => end_date}) \
+            unless end_date.blank?
+        info["sold_amount"] = sold.reorder('').first.amount.to_i
+        # amount(bought) git(sold_flg, date_type, is_domestic)
+        cost_amount = cost_calculate(0, beginning_date, end_date)
+        # profit amount
+        info["profit_amount"] = info["sold_amount"] - cost_amount
+        # profit rate
+        info["profit_rate"] = (cost_amount != 0 ? (info["profit_amount"] * 100 / cost_amount).round(2) : 0)
+      end
+      return info
+    end
+
+    # domestic sold product
+    def domestic_sold_product(date_type, beginning_date, end_date)
+      info = {}
+      # count
+      info["sold_cnt"] = count_product(1, beginning_date, end_date)
+      # sold data count is 0
+      if info["sold_cnt"] == 0 then
+        # amount(sold) = profit amount = profit rate
+        info["sold_amount"] = info["profit_amount"] = info["profit_rate"] = 0
+      else
+        # amount(sold)
+        auction = Auction.select("SUM(price * (tax_rate + 100) / 100 - " \
+            + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) as amount") \
+            .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
+            .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
+            .where("products.is_domestic = 1").where(sold_flg: 1)
+        # beginning date
+        auction = auction.where("sold_date >= :date_s", {:date_s => beginning_date}) \
+            unless beginning_date.blank?
+        # end date
+        auction = auction.where("sold_date <= :date_e", {:date_e => end_date}) \
+            unless end_date.blank?
+        info["sold_amount"] = auction.reorder('').first.amount.to_i
+        # amount(bought) (sold_flg, date_type, is_domestic)
+        cost_amount = cost_calculate(1, beginning_date, end_date)
+        # profit amount
+        info["profit_amount"] = info["sold_amount"] - cost_amount
+        # profit rate
+        info["profit_rate"] = (cost_amount != 0 ? (info["profit_amount"] * 100 / cost_amount).round(2) : 0)
+      end
+      return info
+    end
+
+    # ---------------------- utilities function(LEVEL 1) --------------------------
+    # count product
+    def count_product(is_domestic, beginning_date, end_date)
+      # all
+      product = Product.where(is_domestic: is_domestic).where.not(sold_date: nil)
+      # beginning date
+      product = product.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
+          unless beginning_date.blank?
+      # end date
+      product = product.where("products.sold_date <= :date_e", {:date_e => end_date}) \
+          unless end_date.blank?
+      # year or month
+      return product.count
+    end
+
+    # cost calculate(date_type 0:all 1:year 2:month)
+    def cost_calculate(is_domestic, beginning_date, end_date)
+      # auction cost
+      auction = Auction.select("SUM((price * (tax_rate + 100) / 100 - " \
+          + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) * " \
+          + "(CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) / 100) as amount") \
+          .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
+          .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
+          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
+          .where("products.sold_date is not null").where(sold_flg: 0)
+      # beginning date
+      auction = auction.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
+          unless beginning_date.blank?
+      # end date
+      auction = auction.where("products.sold_date <= :date_e", {:date_e => end_date}) \
+          unless end_date.blank?
+      bought1 = auction.reorder('').first.amount.to_f
+      # custom cost(non auction)
+      custom = Custom.select("SUM((COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) + COALESCE(other_cost, 0)) * " \
+          + "(CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) / 100) as amount") \
+          .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
+          .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id ") \
+          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
+          .where("products.sold_date is not null").where(is_auction: 0)
+      # beginning date
+      custom = custom.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
+          unless beginning_date.blank?
+      # end date
+      custom = custom.where("products.sold_date <= :date_e", {:date_e => end_date}) \
+          unless end_date.blank?
+      bought2 = custom.reorder('').first.amount.to_f
+      # custom cost(auction)
+      custom2 = Custom.select("SUM((price * (tax_rate + 100) / 100 - " \
+          + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) * " \
+          + "(CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) * " \
+          + "percentage / 100 / 100) as amount") \
+          .joins("LEFT JOIN auctions ON customs.auction_id = auctions.auction_id ") \
+          .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
+          .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id") \
+          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
+          .where("products.sold_date is not null").where(is_auction: 1)
+      # beginning date
+      custom2 = custom2.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
+          unless beginning_date.blank?
+      # end date
+      custom2 = custom2.where("products.sold_date <= :date_e", {:date_e => end_date}) \
+          unless end_date.blank?
+      bought3 = custom2.reorder('').first.amount.to_f
+      # offshore shipment cost
+      shipment_detail = ShipmentDetail.select("SUM((COALESCE(ship_cost, 0) + COALESCE(insured_cost, 0) + " \
+          + "COALESCE(custom_cost, 0) * 100 / (CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) " \
+          + ") * ((CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) / 100)) as amount") \
+          .joins("LEFT JOIN products ON shipment_details.product_id = products.product_id ") \
+          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
+          .where("products.sold_date is not null")
+      # beginning date
+      shipment_detail = shipment_detail.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
+          unless beginning_date.blank?
+      # end date
+      shipment_detail = shipment_detail.where("products.sold_date <= :date_e", {:date_e => end_date}) \
+          unless end_date.blank?
+      bought4 = shipment_detail.reorder('').first.amount.to_f
+      # sum all
+      return bought1 + bought2 + bought3 + bought4
+    end
 end

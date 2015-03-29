@@ -1,0 +1,21 @@
+<% provide(:title, '一覧,データ集計') %>
+<h3>検索条件</h3>
+<%= render :partial => 'shared/product_search_form', locals: { condition: @condition } %>
+<h3>集計情報</h3>
+<div class="clearfix"></div>
+<h3>データ一覧</h3>
+<div class="clearfix"></div>
+<div class="row header">
+  <div class="col-xs-12 col-md-5">商品名称</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-6 col-md-1 text-center">内外区分</div>
+  <div class="col-xs-6 col-md-2 text-center">オク／カス／発送／国内</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-6 col-md-2 text-center">利潤</div>
+  <div class="col-xs-6 col-md-2 text-right">
+    <%= link_to "New", new_product_path, class: "btn btn-default" %>
+  </div>
+</div>
+<%= render @products %>
