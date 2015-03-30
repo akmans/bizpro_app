@@ -3,14 +3,18 @@ class SummariesController < ApplicationController
 
   # index action
   def index
-    # get page index
-#    page = page_ix_help(params[:page])
     # refresh search condition
-    @condition = refresh_products_search_condition_help(params)
+    @condition = refresh_summaries_search_condition_help(params)
     # get product data.
-    @products = search_product(@condition)
-    @summary = domestic_sold_info(1, )
-    @summary = offshore_sold_info(1, )
+    @products = search_summary(@condition)
+    date_s = Date::strptime(@condition["year_s"] + \
+        @condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d") \
+        unless (@condition["year_s"].blank? && @condition["month_s"].blank?)
+    date_e = Date::strptime(@condition["year_e"] + \
+        @condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d") \
+        unless (@condition["year_e"].blank? && @condition["month_e"].blank?)
+    @summary = domestic_sold_product(1, date_s, date_e) if @condition["is_domestic"] == '1'
+    @summary = offshore_sold_product(1, date_s, date_e) if @condition["is_domestic"] == '0'
   end
 
   # show action
@@ -31,9 +35,27 @@ class SummariesController < ApplicationController
   # destroy action
   # nil
 
+  # search action
+  def search
+    # get parameters from params and save it into session
+    @condition = refresh_summaries_search_condition_help(params)
+    # get product data list with pagination.
+    @products = search_summary(@condition)
+    date_s = Date::strptime(@condition["year_s"] + \
+        @condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d") \
+        unless (@condition["year_s"].blank? && @condition["month_s"].blank?)
+    date_e = Date::strptime(@condition["year_e"] + \
+        @condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d") \
+        unless (@condition["year_e"].blank? && @condition["month_e"].blank?)
+    @summary = domestic_sold_product(1, date_s, date_e) if @condition["is_domestic"] == '1'
+    @summary = offshore_sold_product(1, date_s, date_e) if @condition["is_domestic"] == '0'
+    # render index page
+    render 'index'
+  end
+
   private
-  # search product
-  def search_product(condition)
+  # search summary
+  def search_summary(condition)
     # construct where condition
     product = Product
     # no_cost

@@ -1,21 +1,24 @@
 <% provide(:title, '一覧,データ集計') %>
 <h3>検索条件</h3>
-<%= render :partial => 'shared/product_search_form', locals: { condition: @condition } %>
-<h3>集計情報</h3>
+<%= render :partial => 'summary_search_form', locals: { condition: @condition } %>
+
+<div class="row header">
+  <div class="col-xs-12"><h4>集計情報</h4></div>
+</div>
+<%= render :partial => 'summary', locals: { summary: @summary } %>
 <div class="clearfix"></div>
 <h3>データ一覧</h3>
 <div class="clearfix"></div>
 <div class="row header">
-  <div class="col-xs-12 col-md-5">商品名称</div>
+  <div class="col-xs-4 col-md-1">売却日</div>
+  <div class="col-xs-8 col-md-7">商品名称</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-6 col-md-1 text-center">内外区分</div>
-  <div class="col-xs-6 col-md-2 text-center">オク／カス／発送／国内</div>
+  <div class="col-xs-6 col-md-1 text-center">コスト</div>
+  <div class="col-xs-6 col-md-1 text-center">売上</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-6 col-md-2 text-center">利潤</div>
-  <div class="col-xs-6 col-md-2 text-right">
-    <%= link_to "New", new_product_path, class: "btn btn-default" %>
-  </div>
+  <div class="col-xs-6 col-md-1 text-center">利潤</div>
+  <div class="col-xs-6 col-md-1 text-right">利潤率</div>
 </div>
-<%= render @products %>
+<%= render :partial => 'product', :collection => @products %>
