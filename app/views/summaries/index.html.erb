@@ -2,9 +2,7 @@
 <h3>検索条件</h3>
 <%= render :partial => 'summary_search_form', locals: { condition: @condition } %>
 
-<div class="row header">
-  <div class="col-xs-12"><h4>集計情報</h4></div>
-</div>
+<h3>集計情報</h3>
 <%= render :partial => 'summary', locals: { summary: @summary } %>
 <div class="clearfix"></div>
 <h3>データ一覧</h3>

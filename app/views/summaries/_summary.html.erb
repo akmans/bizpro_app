@@ -1,34 +1,34 @@
-<div class="table-responsive col-md-12 cell-no-padding">
-  <table class="table table-hover">
-    <thead>
-      <th class="col-md-2">コスト(円)</th>
-      <th class="col-md-2">コスト(元)</th>
-      <th class="col-md-2">コスト(合計)</th>
-      <th class="col-md-2">売上</th>
-      <th class="col-md-2">利潤</th>
-      <th class="col-md-2 text-right">利潤率</th>
-    </thead>
-    <tbody>
-    <tr>
-      <td class="text-right">
-        <%= commas_help(summary["cost_amount_jp"].to_i) %>円
-      </td>
-      <td class="text-right">
-        <%= commas_help(summary["cost_amount_cn"]) %>元
-      </td>
-      <td class="text-right">
-        <%=commas_help(summary["cost_amount"].to_i) %>
-      </td>
-      <td class="text-right">
-        <%=commas_help(summary["sold_amount"].to_i) %>
-      </td>
-      <td class="text-right">
-        <%=commas_help(summary["profit_amount"].to_i) %>
-      </td>
-      <td class="text-right">
-        <%=summary["profit_rate"] %>%
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<div class="form-horizontal">
+<div class="form-group grid">
+  <div class="col-sm-2 header">コスト(円)</div>
+  <div class="col-sm-2 text-right">
+    <%= commas_help(summary["cost_amount_jp"].to_i) %>円
+  </div>
+  <div class="col-sm-2 header">コスト(元)</div>
+  <div class="col-sm-2 text-right">
+    <%= commas_help(summary["cost_amount_cn"]) %>元
+  </div>
+  <div class="col-sm-2 header">コスト(合計)</div>
+  <div class="col-sm-2 text-right">
+    <%=commas_help(summary["cost_amount"].to_i) %>
+    <%= summary["is_domestic"] == '1' ? "円" : "元" %>
+  </div>
+</div>
+<div class="form-group grid row_last">
+  <div class="col-sm-2 header">売上</div>
+  <div class="col-sm-2 text-right">
+    <%=commas_help(summary["sold_amount"].to_i) %>
+    <%= summary["is_domestic"] == '1' ? "円" : "元" %>
+  </div>
+  <div class="col-sm-2 header">件数</div>
+  <div class="col-sm-2 text-right">
+    <%=commas_help(summary["sold_cnt"].to_i) %>件
+  </div>
+  <div class="col-sm-2 header">利潤</div>
+  <div class="col-sm-2 text-right">
+    <%=commas_help(summary["profit_amount"].to_i) %>
+    <%= summary["is_domestic"] == '1' ? "円" : "元" %>
+    (<%=summary["profit_rate"] %>%)
+  </div>
+</div>
 </div>

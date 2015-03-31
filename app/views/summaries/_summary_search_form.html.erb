@@ -21,7 +21,7 @@
     </div>
     <div class="col-sm-1 header">内外区分</div>
     <div class="col-sm-2">
-      <%= select_tag(:is_domestic, options_for_select({"" => "(全部)"}.merge!(is_domestic_hash_help).invert,
+      <%= select_tag(:is_domestic, options_for_select(is_domestic_hash_help.invert,
             selected: condition["is_domestic"] ), {:class => 'form-control form-field'}) %>
     </div>
     <div class="col-sm-1 header">売却期間</div>

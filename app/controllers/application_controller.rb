@@ -192,10 +192,24 @@ class ApplicationController < ActionController::Base
     end
 
     # offshore sold product
-    def offshore_sold_product(date_type, beginning_date, end_date)
+    def offshore_sold_product(condition)
+      beginning_date = end_date = nil
+      # start year month
+      if !condition["year_s"].blank? && !condition["month_s"].blank?
+        beginning_date = Date::strptime(condition["year_s"] + \
+            condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d")
+      end
+      # end year month
+      if !condition["year_e"].blank? && !condition["month_e"].blank?
+        end_date = Date::strptime(condition["year_e"] + \
+            condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
+      end
+      # for return
       info = {}
+      # set is_domestic
+      info["is_domestic"] = condition["is_domestic"]
       # count product
-      info["sold_cnt"] = count_product(0, beginning_date, end_date)
+      info["sold_cnt"] = count_product(condition, beginning_date, end_date)
       # sold data count is 0
       if info["sold_cnt"] == 0 then
         # amount(sold) = profit amount = profit rate
@@ -204,17 +218,28 @@ class ApplicationController < ActionController::Base
         # amount(sold)
         sold = Sold.select("SUM(COALESCE(sold_price, 0))" \
             + " - SUM(COALESCE(ship_charge, 0)) - SUM(COALESCE(other_charge, 0)) as amount") \
-            .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
-            .where("products.is_domestic = 0")
+            .joins("LEFT JOIN products ON solds.product_id = products.product_id")
+        sold = sold.where("products.is_domestic = :is_domestic", \
+            is_domestic: condition["is_domestic"]) unless condition["is_domestic"].blank?
+        # sold_flg
+        sold = sold.where("products.sold_date is null") if condition["sold_flg"] == '0'
+        sold = sold.where("products.sold_date is not null") if condition["sold_flg"] == '1'
+        # category_id
+        sold = sold.where("products.category_id = :category_id", \
+            category_id: condition["category_id"]) unless condition["category_id"].blank?
+        # product_name
+        sold = sold.where("products.product_name like :product_name", \
+            {:product_name => "%#{condition['product_name']}%"}) \
+            unless condition["product_name"].blank?
         # beginning date
         sold = sold.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
             unless beginning_date.blank?
         # end date
         sold = sold.where("products.sold_date <= :date_e", {:date_e => end_date}) \
             unless end_date.blank?
-        info["sold_amount"] = sold.reorder('').first.amount
+        info["sold_amount"] = sold.reorder('').first.amount.to_f
         # amount(bought) git(sold_flg, date_type, is_domestic)
-        cost = cost_calculate(0, beginning_date, end_date)
+        cost = cost_calculate(condition, beginning_date, end_date)
         # cost
         info["cost_amount"] = cost["amount"]
         info["cost_amount_jp"] = cost["amount_jp"]
@@ -228,10 +253,24 @@ class ApplicationController < ActionController::Base
     end
 
     # domestic sold product
-    def domestic_sold_product(date_type, beginning_date, end_date)
+    def domestic_sold_product(condition)
+      beginning_date = end_date = nil
+      # start year month
+      if !condition["year_s"].blank? && !condition["month_s"].blank?
+        beginning_date = Date::strptime(condition["year_s"] + \
+            condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d")
+      end
+      # end year month
+      if !condition["year_e"].blank? && !condition["month_e"].blank?
+        end_date = Date::strptime(condition["year_e"] + \
+            condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
+      end
+      # for return
       info = {}
+      # set is_domestic
+      info["is_domestic"] = condition["is_domestic"]
       # count
-      info["sold_cnt"] = count_product(1, beginning_date, end_date)
+      info["sold_cnt"] = count_product(condition, beginning_date, end_date)
       # sold data count is 0
       if info["sold_cnt"] == 0 then
         # amount(sold) = profit amount = profit rate
@@ -243,6 +282,16 @@ class ApplicationController < ActionController::Base
             .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
             .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
             .where("products.is_domestic = 1").where(sold_flg: 1)
+        # sold_flg
+        auction = auction.where("products.sold_date is null") if condition["sold_flg"] == '0'
+        auction = auction.where("products.sold_date is not null") if condition["sold_flg"] == '1'
+        # category_id
+        auction = auction.where("products.category_id = :category_id", \
+            category_id: condition["category_id"]) unless condition["category_id"].blank?
+        # product_name
+        auction = auction.where("products.product_name like :product_name", \
+            {:product_name => "%#{condition['product_name']}%"}) \
+            unless condition["product_name"].blank?
         # beginning date
         auction = auction.where("sold_date >= :date_s", {:date_s => beginning_date}) \
             unless beginning_date.blank?
@@ -251,7 +300,7 @@ class ApplicationController < ActionController::Base
             unless end_date.blank?
         info["sold_amount"] = auction.reorder('').first.amount.to_i
         # amount(bought) (sold_flg, date_type, is_domestic)
-        cost = cost_calculate(1, beginning_date, end_date)
+        cost = cost_calculate(condition, beginning_date, end_date)
         # cost
         info["cost_amount"] = cost["amount"]
         info["cost_amount_jp"] = cost["amount_jp"]
@@ -266,9 +315,18 @@ class ApplicationController < ActionController::Base
 
     # ---------------------- utilities function(LEVEL 1) --------------------------
     # count product
-    def count_product(is_domestic, beginning_date, end_date)
+#    def count_product(is_domestic, beginning_date, end_date)
+    def count_product(condition, beginning_date, end_date)
       # all
-      product = Product.where(is_domestic: is_domestic).where.not(sold_date: nil)
+#      product = Product.where(is_domestic: condition["is_domestic"]).where.not(sold_date: nil)
+      product = Product.where(is_domestic: condition["is_domestic"])
+      # category_id
+      product = product.where(category_id: condition["category_id"]) \
+                unless condition["category_id"].blank?
+      # product_name
+      product = product.where("product_name like :product_name", \
+                {:product_name => "%#{condition['product_name']}%"}) \
+                unless condition["product_name"].blank?
       # beginning date
       product = product.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
           unless beginning_date.blank?
@@ -280,18 +338,30 @@ class ApplicationController < ActionController::Base
     end
 
     # cost calculate(date_type 0:all 1:year 2:month)
-    def cost_calculate(is_domestic, beginning_date, end_date)
+#    def cost_calculate(is_domestic, beginning_date, end_date)
+    def cost_calculate(condition, beginning_date, end_date)
       cost = {}
       # auction cost------------------------------
       auction = Auction.select("SUM((price * (tax_rate + 100) / 100 - " \
           + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) * " \
-          + "(CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) / 100) as amount, " \
+          + "(CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) / 100) as amount, " \
           + "SUM(price * (tax_rate + 100) / 100 - COALESCE(payment_cost, 0) - " \
           + "COALESCE(shipment_cost, 0)) as amount_jp") \
           .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
           .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
-          .where("products.sold_date is not null").where(sold_flg: 0)
+          .where("products.is_domestic = :is_domestic", {:is_domestic => condition["is_domestic"]}) \
+#          .where("products.sold_date is not null").where(sold_flg: 0)
+          .where(sold_flg: 0)
+      # sold_flg
+      auction = auction.where("products.sold_date is null") if condition["sold_flg"] == '0'
+      auction = auction.where("products.sold_date is not null") if condition["sold_flg"] == '1'
+      # category_id
+      auction = auction.where("products.category_id = :category_id", \
+                category_id: condition["category_id"]) unless condition["category_id"].blank?
+      # product_name
+      auction = auction.where("products.product_name like :product_name", \
+                {:product_name => "%#{condition['product_name']}%"}) \
+                unless condition["product_name"].blank?
       # beginning date
       auction = auction.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
           unless beginning_date.blank?
@@ -303,12 +373,23 @@ class ApplicationController < ActionController::Base
       bought1_jp = auction.amount_jp.to_f
       # custom cost(non auction)------------------------------
       custom = Custom.select("SUM((COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) + COALESCE(other_cost, 0)) * " \
-          + "(CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) / 100) as amount, " \
+          + "(CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) / 100) as amount, " \
           + "SUM(COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) + COALESCE(other_cost, 0)) as amount_jp") \
           .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
           .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id ") \
-          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
-          .where("products.sold_date is not null").where(is_auction: 0)
+          .where("products.is_domestic = :is_domestic", {:is_domestic => condition["is_domestic"]}) \
+#          .where("products.sold_date is not null").where(is_auction: 0)
+          .where(is_auction: 0)
+      # sold_flg
+      custom = custom.where("products.sold_date is null") if condition["sold_flg"] == '0'
+      custom = custom.where("products.sold_date is not null") if condition["sold_flg"] == '1'
+      # category_id
+      custom = custom.where("products.category_id = :category_id", \
+               category_id: condition["category_id"]) unless condition["category_id"].blank?
+      # product_name
+      custom = custom.where("products.product_name like :product_name", \
+               {:product_name => "%#{condition['product_name']}%"}) \
+               unless condition["product_name"].blank?
       # beginning date
       custom = custom.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
           unless beginning_date.blank?
@@ -321,15 +402,26 @@ class ApplicationController < ActionController::Base
       # custom cost(auction)------------------------------
       custom2 = Custom.select("SUM((price * (tax_rate + 100) / 100 - " \
           + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) * " \
-          + "(CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) * " \
+          + "(CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) * " \
           + "percentage / 100 / 100) as amount, " \
           + "SUM((price * (tax_rate + 100) / 100 - COALESCE(payment_cost, 0) - " \
           + "COALESCE(shipment_cost, 0)) * percentage / 100) as amount_jp") \
           .joins("LEFT JOIN auctions ON customs.auction_id = auctions.auction_id ") \
           .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
           .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id") \
-          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
-          .where("products.sold_date is not null").where(is_auction: 1)
+          .where("products.is_domestic = :is_domestic", {:is_domestic => condition["is_domestic"]}) \
+#          .where("products.sold_date is not null").where(is_auction: 1)
+          .where(is_auction: 1)
+      # sold_flg
+      custom2 = custom2.where("products.sold_date is null") if condition["sold_flg"] == '0'
+      custom2 = custom2.where("products.sold_date is not null") if condition["sold_flg"] == '1'
+      # category_id
+      custom2 = custom2.where("products.category_id = :category_id", \
+                category_id: condition["category_id"]) unless condition["category_id"].blank?
+      # product_name
+      custom2 = custom2.where("products.product_name like :product_name", \
+                {:product_name => "%#{condition['product_name']}%"}) \
+                unless condition["product_name"].blank?
       # beginning date
       custom2 = custom2.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
           unless beginning_date.blank?
@@ -342,12 +434,22 @@ class ApplicationController < ActionController::Base
       # offshore shipment cost------------------------------
       shipment_detail = ShipmentDetail.select("SUM((COALESCE(ship_cost, 0) + COALESCE(insured_cost, 0) + " \
           + "COALESCE(custom_cost, 0) * 100 / (CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) " \
-          + ") * ((CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) / 100)) as amount, " \
+          + ") * ((CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) / 100)) as amount, " \
           + "SUM(COALESCE(ship_cost, 0) + COALESCE(insured_cost, 0)) as amount_jp, " \
           + "SUM(COALESCE(custom_cost, 0)) as amount_cn") \
           .joins("LEFT JOIN products ON shipment_details.product_id = products.product_id ") \
-          .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
-          .where("products.sold_date is not null")
+          .where("products.is_domestic = :is_domestic", {:is_domestic => condition["is_domestic"]})
+#          .where("products.sold_date is not null")
+      # sold_flg
+      shipment_detail = shipment_detail.where("products.sold_date is null") if condition["sold_flg"] == '0'
+      shipment_detail = shipment_detail.where("products.sold_date is not null") if condition["sold_flg"] == '1'
+      # category_id
+      shipment_detail = shipment_detail.where("products.category_id = :category_id", \
+          category_id: condition["category_id"]) unless condition["category_id"].blank?
+      # product_name
+      shipment_detail = shipment_detail.where("products.product_name like :product_name", \
+          {:product_name => "%#{condition['product_name']}%"}) \
+          unless condition["product_name"].blank?
       # beginning date
       shipment_detail = shipment_detail.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
           unless beginning_date.blank?

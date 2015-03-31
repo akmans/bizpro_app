@@ -41,25 +41,34 @@ class DashboardsController < ApplicationController
   private
     # get offshore sold data info
     def offshore_sold_info
+      t = Time.now
       offshore = {}
       # all--------------------------
-      all = offshore_sold_product(0, nil, nil)
+      condition = {"is_domestic" => 0}
+      all = offshore_sold_product(condition)
       offshore["sold_all_cnt"] = all["sold_cnt"]
       offshore["sold_all_amount"] = all["sold_amount"]
       offshore["sold_all_profit"] = all["profit_amount"]
       offshore["sold_all_profit_rate"] = all["profit_rate"]
       # year--------------------------
-      beginning_date = Time.zone.now.beginning_of_year
-      end_date = Time.zone.now.end_of_year
-      year = offshore_sold_product(1, beginning_date, end_date)
+      condition = {"is_domestic" => 0, "year_s" => t.strftime("%Y"), \
+          "month_s" => 1, "year_e" => t.strftime("%Y"), "month_e" => 12
+      }
+#      beginning_date = Time.zone.now.beginning_of_year
+#      end_date = Time.zone.now.end_of_year
+      year = offshore_sold_product(condition)
       offshore["sold_year_cnt"] = year["sold_cnt"]
       offshore["sold_year_amount"] = year["sold_amount"]
       offshore["sold_year_profit"] = year["profit_amount"]
       offshore["sold_year_profit_rate"] = year["profit_rate"]
       # month--------------------------
-      beginning_date = Time.zone.now.beginning_of_month
-      end_date = Time.zone.now.end_of_month
-      month = offshore_sold_product(2, beginning_date, end_date)
+      condition = {"is_domestic" => 0, "year_s" => t.strftime("%Y"), \
+          "month_s" => t.strftime("%m"), "year_e" => t.strftime("%Y"), \
+          "month_e" => t.strftime("%m")
+      }
+#      beginning_date = Time.zone.now.beginning_of_month
+#      end_date = Time.zone.now.end_of_month
+      month = offshore_sold_product(condition)
       offshore["sold_month_cnt"] = month["sold_cnt"]
       offshore["sold_month_amount"] = month["sold_amount"]
       offshore["sold_month_profit"] = month["profit_amount"]
@@ -69,25 +78,34 @@ class DashboardsController < ApplicationController
 
     # get domesitc sold data info
     def domestic_sold_info
+      t = Time.now
       domestic = {}
       # all--------------------------
-      all = domestic_sold_product(0, nil, nil)
+      condition = {"is_domestic" => 1}
+      all = domestic_sold_product(condition)
       domestic["sold_all_cnt"] = all["sold_cnt"]
       domestic["sold_all_amount"] = all["sold_amount"]
       domestic["sold_all_profit"] = all["profit_amount"]
       domestic["sold_all_profit_rate"] = all["profit_rate"]
       # year--------------------------
-      beginning_date = Time.zone.now.beginning_of_year
-      end_date = Time.zone.now.end_of_year
-      year = domestic_sold_product(1, beginning_date, end_date)
+      condition = {"is_domestic" => 1, "year_s" => t.strftime("%Y"), \
+          "month_s" => 1, "year_e" => t.strftime("%Y"), "month_e" => 12
+      }
+#      beginning_date = Time.zone.now.beginning_of_year
+#      end_date = Time.zone.now.end_of_year
+      year = domestic_sold_product(condition)
       domestic["sold_year_cnt"] = year["sold_cnt"]
       domestic["sold_year_amount"] = year["sold_amount"]
       domestic["sold_year_profit"] = year["profit_amount"]
       domestic["sold_year_profit_rate"] = year["profit_rate"]
       # month--------------------------
-      beginning_date = Time.zone.now.beginning_of_month
-      end_date = Time.zone.now.end_of_month
-      month = domestic_sold_product(2, beginning_date, end_date)
+      condition = {"is_domestic" => 1, "year_s" => t.strftime("%Y"), \
+          "month_s" => t.strftime("%m"), "year_e" => t.strftime("%Y"), \
+          "month_e" => t.strftime("%m")
+      }
+#      beginning_date = Time.zone.now.beginning_of_month
+#      end_date = Time.zone.now.end_of_month
+      month = offshore_sold_product(condition)
       domestic["sold_month_cnt"] = month["sold_cnt"]
       domestic["sold_month_amount"] = month["sold_amount"]
       domestic["sold_month_profit"] = month["profit_amount"]
