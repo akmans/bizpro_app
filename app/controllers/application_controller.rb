@@ -433,7 +433,7 @@ class ApplicationController < ActionController::Base
       bought3_jp = custom2.amount_jp.to_f
       # offshore shipment cost------------------------------
       shipment_detail = ShipmentDetail.select("SUM((COALESCE(ship_cost, 0) + COALESCE(insured_cost, 0) + " \
-          + "COALESCE(custom_cost, 0) * 100 / (CASE is_domestic WHEN 0 THEN exchange_rate ELSE 100 END) " \
+          + "COALESCE(custom_cost, 0) * 100 / (CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) " \
           + ") * ((CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) / 100)) as amount, " \
           + "SUM(COALESCE(ship_cost, 0) + COALESCE(insured_cost, 0)) as amount_jp, " \
           + "SUM(COALESCE(custom_cost, 0)) as amount_cn") \
