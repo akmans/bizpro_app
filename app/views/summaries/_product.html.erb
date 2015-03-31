@@ -1,3 +1,4 @@
+<% info = profit_hash_help(product.product_id) %>
 <div class="row">
   <div class="col-xs-4 col-md-1">
     <%= product.sold_date.nil? ? "-" : product.sold_date.strftime("%m/%d/%y") %>
@@ -7,20 +8,21 @@
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-6 col-md-1 text-right">
+  <div class="col-xs-6 col-md-1 text-right cell-no-padding">
     <%= commas_help(product_total_cost_help(product.product_id)) %>
     <%= product.is_domestic == 1 ? "円" : "元" %>
   </div>
-  <div class="col-xs-6 col-md-1 text-right">
-    売り上げ
+  <div class="col-xs-6 col-md-1 text-right cell-no-padding">
+    <%= commas_help(info["cost_amount"].round(3).to_i) if product.is_domestic == 1 %>
+    <%= commas_help(info["cost_amount"].round(3)) if product.is_domestic != 1 %>
+    <%= product.is_domestic == 1 ? "円" : "元" %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <% if !product.sold_date.blank? %>
-    <% info = profit_hash_help(product.product_id) %>
     <div class="col-xs-6 col-md-1 text-right cell-no-padding">
       <%= commas_help(info["profit_amount"].round(3).to_i) if product.is_domestic == 1 %>
-      <%= commas_help(info["profit_amount"].round(3)) if product.is_domestic == 0 %>
+      <%= commas_help(info["profit_amount"].round(3)) if product.is_domestic != 1 %>
       <%= product.is_domestic == 1 ? "円" : "元" %>
     </div>
     <div class="col-xs-6 col-md-1 text-right">
@@ -28,7 +30,7 @@
     </div>
   <% end %>
   <% if product.sold_date.blank? %>
-    <div class="col-xs-6 col-md-1 text-right cell-no-padding">--</div>
-    <div class="col-xs-6 col-md-1 text-right">--</div>
+    <div class="col-xs-6 col-md-1 text-right cell-no-padding">-</div>
+    <div class="col-xs-6 col-md-1 text-right">-</div>
   <% end %>
 </div>
