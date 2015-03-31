@@ -9,10 +9,6 @@
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-6 col-md-1 text-right cell-no-padding">
-    <%= commas_help(product_total_cost_help(product.product_id)) %>
-    <%= product.is_domestic == 1 ? "円" : "元" %>
-  </div>
-  <div class="col-xs-6 col-md-1 text-right cell-no-padding">
     <%= commas_help(info["cost_amount"].round(3).to_i) if product.is_domestic == 1 %>
     <%= commas_help(info["cost_amount"].round(3)) if product.is_domestic != 1 %>
     <%= product.is_domestic == 1 ? "円" : "元" %>
@@ -20,6 +16,11 @@
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <% if !product.sold_date.blank? %>
+    <div class="col-xs-6 col-md-1 text-right cell-no-padding">
+      <%= commas_help(info["sold_amount"].round(3).to_i) if product.is_domestic == 1 %>
+      <%= commas_help(info["sold_amount"].round(3)) if product.is_domestic != 1 %>
+      <%= product.is_domestic == 1 ? "円" : "元" %>
+    </div>
     <div class="col-xs-6 col-md-1 text-right cell-no-padding">
       <%= commas_help(info["profit_amount"].round(3).to_i) if product.is_domestic == 1 %>
       <%= commas_help(info["profit_amount"].round(3)) if product.is_domestic != 1 %>
@@ -30,6 +31,7 @@
     </div>
   <% end %>
   <% if product.sold_date.blank? %>
+    <div class="col-xs-6 col-md-1 text-right cell-no-padding">-</div>
     <div class="col-xs-6 col-md-1 text-right cell-no-padding">-</div>
     <div class="col-xs-6 col-md-1 text-right">-</div>
   <% end %>
