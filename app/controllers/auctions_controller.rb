@@ -191,7 +191,6 @@ class AuctionsController < ApplicationController
 
   # search auction
   def search_auction(condition, page_ix)
-#    debugger
     # construct where condition
     auction = Auction.select("auctions.auction_id, auctions.end_time, auctions.auction_name," \
         + "auctions.url, auctions.sold_flg, auctions.ope_flg, auctions.price, " \
@@ -227,7 +226,6 @@ class AuctionsController < ApplicationController
     auction = auction.where(ope_flg: 0).where.not(auction_id: Custom.select("auction_id, SUM(percentage)") \
           .where("auction_id is not null").reorder('').group("auction_id") \
           .having("SUM(percentage) = 100").pluck(:auction_id)) if condition["undeal_auction"] == '2'
-#    debugger
     # paginate
     auction.paginate(page: page_ix, per_page: 15)
   end

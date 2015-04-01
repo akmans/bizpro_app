@@ -78,10 +78,4 @@ class SoldsController < ApplicationController
     def sold_params
       params.require(:sold).permit(:sold_date, :sold_price, :ship_charge, :other_charge, :memo)
     end
-
-    # refresh sold_date of product
-#    def update_product(product_id, sold_date)
-#      product = Product.find(product_id)
-#      product.update_attributes(:sold_date => sold_date)
-#    end
 end

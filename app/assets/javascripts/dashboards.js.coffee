@@ -26,19 +26,19 @@ $(document).on "page:change", ->
     # do post action
     doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
            year_s: $("#year-id").text(), month_s: $("#month-id").text(), \
-           year_e: $("#year-id").text(), month_e: $("#month-id").text(), sold_flg: 1})
+           year_e: $("#year-id").text(), month_e: $("#month-id").text(), sold_flg: ''})
   # bind click event to #link-domestic-sold-year
   $("#link-domestic-sold-year").bind "click", ->
     # do post action
     doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
            year_s: $("#year-id").text(), month_s: 1, \
-           year_e: $("#year-id").text(), month_e: 12, sold_flg: 1})
+           year_e: $("#year-id").text(), month_e: 12, sold_flg: ''})
   # bind click event to #link-domestic-sold-all
   $("#link-domestic-sold-all").bind "click", ->
     # do post action
     doPost('/products/search', {product_name: '', category_id: '', is_domestic: '1', \
            year_s: '', month_s: '', \
-           year_e: '', month_e: '', sold_flg: 1})
+           year_e: '', month_e: '', sold_flg: ''})
 
   # ------------------ offshore product relate --------------------
   # bind click event to #link-offshore-sold-month
@@ -46,19 +46,19 @@ $(document).on "page:change", ->
     # do post action
     doPost('/products/search', {product_name: '', category_id: '', is_domestic: '0', \
            year_s: $("#year-id").text(), month_s: $("#month-id").text(), \
-           year_e: $("#year-id").text(), month_e: $("#month-id").text(), sold_flg: 1})
+           year_e: $("#year-id").text(), month_e: $("#month-id").text(), sold_flg: ''})
   # bind click event to #link-offshore-sold-year
   $("#link-offshore-sold-year").bind "click", ->
     # do post action
     doPost('/products/search', {product_name: '', category_id: '', is_domestic: '0', \
            year_s: $("#year-id").text(), month_s: 1, \
-           year_e: $("#year-id").text(), month_e: 12, sold_flg: 1})
+           year_e: $("#year-id").text(), month_e: 12, sold_flg: ''})
   # bind click event to #link-offshore-sold-all
   $("#link-offshore-sold-all").bind "click", ->
     # do post action
     doPost('/products/search', {product_name: '', category_id: '', is_domestic: '0', \
            year_s: '', month_s: '', \
-           year_e: '', month_e: '', sold_flg: 1})
+           year_e: '', month_e: '', sold_flg: ''})
 
   # ------------------ auction relate --------------------
   # bind click event to #link-auction-sold-month

@@ -64,7 +64,6 @@ class CustomsController < ApplicationController
 
   # search action
   def search
-#    debugger
     # get parameters from params and save it into session
     @condition = refresh_customs_search_condition_help(params)
     # get custom data list with pagination.
@@ -81,8 +80,6 @@ class CustomsController < ApplicationController
 
   # ajax auction percentage
   def ajax_auction_percentage
-#    debugger
-#    custom = Custom.find(params[:custom_id])
     render json: auction_percentage_hash_help(params[:custom_id], params[:auction_id])
   end
 
@@ -96,7 +93,6 @@ class CustomsController < ApplicationController
 
   # search custom
   def search_custom(condition, page_ix)
-#    debugger
     # construct where condition
     custom = Custom.select("customs.custom_id, custom_name, auction_id, pc_maps.product_id, " \
         + "CASE WHEN pc_maps.custom_id is null THEN '未' ELSE '-' END as regist_status") \

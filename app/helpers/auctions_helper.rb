@@ -106,7 +106,7 @@ module AuctionsHelper
   # return auction hash
   def auctions_hash_help(auction_id)
     a_hash = {"" => "(空白)"}
-#    Auction.where(ope_flg: key).where.not(auction_id: PaMap.all).each do |auction|
+    # auction except those 100 percentage
     Auction.where(ope_flg: 0).where.not(auction_id: Custom.select("auction_id, SUM(percentage)") \
           .where.not(auction_id: auction_id).group("auction_id").having("SUM(percentage) = 100")\
           .reorder('').pluck(:auction_id)).each do |auction|
@@ -121,7 +121,7 @@ module AuctionsHelper
   # return auction hash for product
   def auctions_hash_for_product_help()
     a_hash = {"" => "(空白)"}
-#    Auction.where(ope_flg: key).where.not(auction_id: PaMap.all).each do |auction|
+    # auction except those product registed
     Auction.select("auctions.auction_id, auctions.auction_name") \
           .joins("LEFT OUTER JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id") \
           .where(ope_flg: 1).where("pa_maps.auction_id is null").each do |auction|
@@ -140,10 +140,6 @@ module AuctionsHelper
     # undeal auction (product unregist: 1)
     auction1 = Auction.joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id") \
           .where("pa_maps.auction_id is not null").where(ope_flg: 1).where(auction_id: auction_id).count
-#    # undeal auction(custom unregist: 2)
-#    auction2 = Auction.joins("LEFT JOIN customs ON auctions.auction_id = customs.auction_id") \
-#          .where(ope_flg: 0).where(auction_id: auction_id).count
-#    return (auction1 + auction2 == 0) ? "(未)" : "(済)"
     return auction1 == 0 ? "(未)" : "(済)"
   end
 end

@@ -7,8 +7,6 @@ class ShipmentsController < ApplicationController
   def index
     # page index
     page = page_ix_help(params[:page])
-    # get shipment data list with pagination.
-#    @shipments = Shipment.paginate(page: page, per_page: 15)
     # refresh search condition
     @condition = refresh_shipments_search_condition_help(params)
     # get custom data list with pagination.
@@ -26,7 +24,6 @@ class ShipmentsController < ApplicationController
   # new action
   def new
     @shipment = Shipment.new
-#    shipmethod_hash
   end
 
   # create action
@@ -37,7 +34,6 @@ class ShipmentsController < ApplicationController
       # shipment list
       redirect_to shipments_path
     else
-#      shipmethod_hash
       render 'new'
     end
   end
@@ -45,7 +41,6 @@ class ShipmentsController < ApplicationController
   # edit action
   def edit
     @shipment = Shipment.find(params[:shipment_id])
-#    shipmethod_hash
   end
 
   # update action
@@ -55,7 +50,6 @@ class ShipmentsController < ApplicationController
       flash[:success] = "更新完了しました。"
       redirect_to shipments_path
     else
-#      shipmethod_hash
       render 'edit'
     end
   end
@@ -83,14 +77,6 @@ class ShipmentsController < ApplicationController
       params.require(:shipment).permit(:shipmethod_id, :sent_date, :arrived_date, :memo)
     end
 
-#    # shipmethod hash method
-#    def shipmethod_hash
-#      @shipmethods = {"" => "(空白)"}
-#      Shipmethod.where(shipmethod_type: 1).each do |ss| 
-#        @shipmethods.merge! ss.as_hash
-#      end
-#    end
-
   # search shipment
   def search_shipment(condition, page_ix)
     # construct where condition
@@ -98,7 +84,6 @@ class ShipmentsController < ApplicationController
     # shipmethod_id
     shipment = shipment.where(shipmethod_id: condition["shipmethod_id"]) \
               unless condition["shipmethod_id"].blank?
-#    debugger
     # product_name
     shipment = shipment.where(shipment_id: ShipmentDetail.where(product_id: \
                Product.where("product_name like :product_name", \

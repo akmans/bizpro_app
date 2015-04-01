@@ -315,10 +315,8 @@ class ApplicationController < ActionController::Base
 
     # ---------------------- utilities function(LEVEL 1) --------------------------
     # count product
-#    def count_product(is_domestic, beginning_date, end_date)
     def count_product(condition, beginning_date, end_date)
       # all
-#      product = Product.where(is_domestic: condition["is_domestic"]).where.not(sold_date: nil)
       product = Product.where(is_domestic: condition["is_domestic"])
       # category_id
       product = product.where(category_id: condition["category_id"]) \
@@ -338,7 +336,6 @@ class ApplicationController < ActionController::Base
     end
 
     # cost calculate(date_type 0:all 1:year 2:month)
-#    def cost_calculate(is_domestic, beginning_date, end_date)
     def cost_calculate(condition, beginning_date, end_date)
       cost = {}
       # auction cost------------------------------
@@ -350,7 +347,6 @@ class ApplicationController < ActionController::Base
           .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
           .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
           .where("products.is_domestic = :is_domestic", {:is_domestic => condition["is_domestic"]}) \
-#          .where("products.sold_date is not null").where(sold_flg: 0)
           .where(sold_flg: 0)
       # sold_flg
       auction = auction.where("products.sold_date is null") if condition["sold_flg"] == '0'
@@ -378,7 +374,6 @@ class ApplicationController < ActionController::Base
           .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
           .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id ") \
           .where("products.is_domestic = :is_domestic", {:is_domestic => condition["is_domestic"]}) \
-#          .where("products.sold_date is not null").where(is_auction: 0)
           .where(is_auction: 0)
       # sold_flg
       custom = custom.where("products.sold_date is null") if condition["sold_flg"] == '0'
@@ -410,7 +405,6 @@ class ApplicationController < ActionController::Base
           .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
           .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id") \
           .where("products.is_domestic = :is_domestic", {:is_domestic => condition["is_domestic"]}) \
-#          .where("products.sold_date is not null").where(is_auction: 1)
           .where(is_auction: 1)
       # sold_flg
       custom2 = custom2.where("products.sold_date is null") if condition["sold_flg"] == '0'
@@ -439,7 +433,6 @@ class ApplicationController < ActionController::Base
           + "SUM(COALESCE(custom_cost, 0)) as amount_cn") \
           .joins("LEFT JOIN products ON shipment_details.product_id = products.product_id ") \
           .where("products.is_domestic = :is_domestic", {:is_domestic => condition["is_domestic"]})
-#          .where("products.sold_date is not null")
       # sold_flg
       shipment_detail = shipment_detail.where("products.sold_date is null") if condition["sold_flg"] == '0'
       shipment_detail = shipment_detail.where("products.sold_date is not null") if condition["sold_flg"] == '1'

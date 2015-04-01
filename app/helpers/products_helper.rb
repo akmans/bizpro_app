@@ -65,54 +65,6 @@ module ProductsHelper
     return total
   end
 
-  # return product total sold price
-#  def product_total_sold_price_help(product_id)
-#    total = 0
-#    return total if product_id.nil?
-#    product = Product.find(product_id)
-#    if (product.is_domestic || 0) == 1
-#     # get auction data
-#      auctions = Auction.where(:auction_id => PaMap.where(product_id: product_id)).where(sold_flg: 1).all
-#      # auctions cost
-#      if !auctions.nil?
-#        auctions.each do |a|
-#          total += auction_total_cost_help(a)
-#        end
-#      end
-#    else
-#      # get sold data
-#      solds = Sold.where(product_id: product_id)
-#      # sold total value
-#      if !solds.nil?
-#        solds.each do |s|
-#          total += sold_total_price_help(s)
-#        end
-#      end
-#    end
-#    return total
-#  end
-
-  # return profit
-#  def profit_help(product_id)
-#    total = 0
-#    return total if product_id.nil?
-#    product = Product.find(product_id)
-#    rate = (product.is_domestic == '1' ? (product.exchange_rate || 8.3) : 100)
-#    total = product_total_sold_price_help(product_id) + \
-#            product_total_cost_help(product_id) * rate / 100
-#    return total.to_f
-#  end
-
-  # return profit rate
-#  def profit_rate_help(product_id)
-#    total = 0
-#    return total if product_id.nil?
-#    product = Product.find(product_id)
-#    rate = (product.is_domestic == '1' ? (product.exchange_rate || 8.3) : 100)
-#    total = profit_help(product_id) * -100 * 100 / \
-#            (product_total_cost_help(product_id) * rate)
-#  end
-
   # return profit hash
   def profit_hash_help(product_id)
       info = {}
@@ -156,7 +108,6 @@ module ProductsHelper
         .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
         .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
         .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
-#        .where("products.sold_date is not null") \
         .where("products.product_id = :product_id", {:product_id => product_id}) \
         .where(sold_flg: 0).reorder('').first.amount.to_f
     # custom cost(non auction)
@@ -165,7 +116,6 @@ module ProductsHelper
         .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
         .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id ") \
         .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
-#        .where("products.sold_date is not null") \
         .where("products.product_id = :product_id", {:product_id => product_id}) \
         .where(is_auction: 0).reorder('').first.amount.to_f
     # custom cost(auction)
@@ -177,7 +127,6 @@ module ProductsHelper
         .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
         .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id") \
         .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
-#        .where("products.sold_date is not null") \
         .where("products.product_id = :product_id", {:product_id => product_id}) \
         .where(is_auction: 1).reorder('').first.amount.to_f
     # offshore shipment cost
@@ -186,7 +135,6 @@ module ProductsHelper
         + ") * ((CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) / 100)) as amount") \
         .joins("LEFT JOIN products ON shipment_details.product_id = products.product_id ") \
         .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
-#        .where("products.sold_date is not null") \
         .where("products.product_id = :product_id", {:product_id => product_id}) \
         .reorder('').first.amount.to_f
     return (bought1 + bought2 + bought3 + bought4) * -1

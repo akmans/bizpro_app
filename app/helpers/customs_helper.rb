@@ -21,7 +21,6 @@ module CustomsHelper
   def auction_percentage_hash_help(custom_id, auction_id)
     rtn = {"" => "(空白)"}
     i = 10
-#    debugger
     # get current percentage
     currentCustom = Custom.select(:percentage).where(custom_id: custom_id).where(auction_id: auction_id).first
     currentPercentage = 0

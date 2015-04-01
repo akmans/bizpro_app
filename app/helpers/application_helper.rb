@@ -28,7 +28,6 @@ module ApplicationHelper
   def month_hash_help
     month = {"" => "(月)"}
     (1..12).each do |m|
-#      ms = m.to_s.rjust(2, "0")
       month[m] = "#{m}月"
     end
     return month
