@@ -3,11 +3,16 @@
   <div class="col-xs-4 col-md-1">
     <%= product.sold_date.nil? ? "-" : product.sold_date.strftime("%m/%d/%y") %>
   </div>
-  <div class="col-xs-8 col-md-7">
+  <div class="col-xs-8 col-md-6">
     <%= product.product_name %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-6 col-md-1 text-right cell-no-padding">
+    <%= commas_help(info["cost_amount_jp"].round(3).to_i) if product.is_domestic == 1 %>
+    <%= commas_help(info["cost_amount_jp"].round(3)) if product.is_domestic != 1 %>
+    円
+  </div>
   <div class="col-xs-6 col-md-1 text-right cell-no-padding">
     <%= commas_help(info["cost_amount"].round(3).to_i) if product.is_domestic == 1 %>
     <%= commas_help(info["cost_amount"].round(3)) if product.is_domestic != 1 %>
@@ -16,23 +21,23 @@
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <% if !product.sold_date.blank? %>
-    <div class="col-xs-6 col-md-1 text-right cell-no-padding">
+    <div class="col-xs-4 col-md-1 text-right cell-no-padding">
       <%= commas_help(info["sold_amount"].round(3).to_i) if product.is_domestic == 1 %>
       <%= commas_help(info["sold_amount"].round(3)) if product.is_domestic != 1 %>
       <%= product.is_domestic == 1 ? "円" : "元" %>
     </div>
-    <div class="col-xs-6 col-md-1 text-right cell-no-padding">
+    <div class="col-xs-4 col-md-1 text-right cell-no-padding">
       <%= commas_help(info["profit_amount"].round(3).to_i) if product.is_domestic == 1 %>
       <%= commas_help(info["profit_amount"].round(3)) if product.is_domestic != 1 %>
       <%= product.is_domestic == 1 ? "円" : "元" %>
     </div>
-    <div class="col-xs-6 col-md-1 text-right">
+    <div class="col-xs-4 col-md-1 text-right">
       <%= info["profit_rate"].round(3) %>％
     </div>
   <% end %>
   <% if product.sold_date.blank? %>
-    <div class="col-xs-6 col-md-1 text-right cell-no-padding">-</div>
-    <div class="col-xs-6 col-md-1 text-right cell-no-padding">-</div>
-    <div class="col-xs-6 col-md-1 text-right">-</div>
+    <div class="col-xs-4 col-md-1 text-right cell-no-padding">-</div>
+    <div class="col-xs-4 col-md-1 text-right cell-no-padding">-</div>
+    <div class="col-xs-4 col-md-1 text-right">-</div>
   <% end %>
 </div>

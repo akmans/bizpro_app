@@ -9,14 +9,15 @@
 <div class="clearfix"></div>
 <div class="row header">
   <div class="col-xs-4 col-md-1">売却日</div>
-  <div class="col-xs-8 col-md-7">商品名称</div>
+  <div class="col-xs-8 col-md-6">商品名称</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-6 col-md-1 text-center">コスト</div>
-  <div class="col-xs-6 col-md-1 text-center">売上</div>
+  <div class="col-xs-6 col-md-1 text-center cell-no-padding">コスト(円)</div>
+  <div class="col-xs-6 col-md-1 text-center cell-no-padding">コスト(相当)</div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-6 col-md-1 text-center">利潤</div>
-  <div class="col-xs-6 col-md-1 text-right">利潤率</div>
+  <div class="col-xs-4 col-md-1 text-center">売上</div>
+  <div class="col-xs-4 col-md-1 text-center">利潤</div>
+  <div class="col-xs-4 col-md-1 text-right">利潤率</div>
 </div>
 <%= render :partial => 'product', :collection => @products %>

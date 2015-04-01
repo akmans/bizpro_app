@@ -194,7 +194,7 @@ class AuctionsController < ApplicationController
     # construct where condition
     auction = Auction.select("auctions.auction_id, auctions.end_time, auctions.auction_name," \
         + "auctions.url, auctions.sold_flg, auctions.ope_flg, auctions.price, " \
-        + "CASE WHEN COALESCE(ope_flg, 0) = 0 THEN (-1) * auctions.price * " \
+        + "CASE WHEN COALESCE(sold_flg, 0) = 0 THEN (-1) * auctions.price * " \
         + "(COALESCE(auctions.tax_rate, 0) + 100) / 100 - COALESCE(auctions.payment_cost, 0) - " \
         + "COALESCE(auctions.shipment_cost, 0) ELSE auctions.price - COALESCE(auctions.payment_cost, 0) - " \
         + "COALESCE(auctions.shipment_cost, 0) END as price, cat.category_name, pa.product_id") \

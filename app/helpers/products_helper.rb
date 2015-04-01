@@ -70,8 +70,13 @@ module ProductsHelper
       info = {}
       # get product
       product = Product.where(product_id: product_id).first
-      # amount(bought) (sold_flg, date_type, is_domestic)
-      info["cost_amount"] = cost_calculate(product_id, product.is_domestic)
+      # amount(bought) function defined at application helper
+      cost = cost_calculate({"product_id" => product.product_id, \
+          "is_domestic" => product.is_domestic}, nil, nil)
+      info["cost_amount"] = -1 * cost["amount"]
+      info["cost_amount_jp"] = (info["cost_amount"] || 0) if product.is_domestic == 1
+      info["cost_amount_jp"] = (info["cost_amount"] || 0) * 100 / (product.exchange_rate || 100) \
+          unless product.is_domestic == 1
       # sold count
       cnt = Product.where(product_id: product_id).where.not(sold_date: nil).count
       if cnt == 0
@@ -97,46 +102,5 @@ module ProductsHelper
         info["profit_rate"] = (info["cost_amount"] != 0 ? (info["profit_amount"] * 100 / info["cost_amount"]).round(2) * -1 : 0)
       end
       return info
-  end
-
-  # cost calculate
-  def cost_calculate(product_id, is_domestic)
-    # auction cost
-    bought1 = Auction.select("SUM((price * (tax_rate + 100) / 100 - " \
-        + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) * " \
-        + "(CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) / 100) as amount") \
-        .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
-        .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-        .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
-        .where("products.product_id = :product_id", {:product_id => product_id}) \
-        .where(sold_flg: 0).reorder('').first.amount.to_f
-    # custom cost(non auction)
-    bought2 = Custom.select("SUM((COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) + COALESCE(other_cost, 0)) * " \
-        + "(CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) / 100) as amount") \
-        .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
-        .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id ") \
-        .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
-        .where("products.product_id = :product_id", {:product_id => product_id}) \
-        .where(is_auction: 0).reorder('').first.amount.to_f
-    # custom cost(auction)
-    bought3 = Custom.select("SUM((price * (tax_rate + 100) / 100 - " \
-        + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) * " \
-        + "(CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) * " \
-        + "percentage / 100 / 100) as amount") \
-        .joins("LEFT JOIN auctions ON customs.auction_id = auctions.auction_id ") \
-        .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
-        .joins("LEFT JOIN products ON pc_maps.product_id = products.product_id") \
-        .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
-        .where("products.product_id = :product_id", {:product_id => product_id}) \
-        .where(is_auction: 1).reorder('').first.amount.to_f
-    # offshore shipment cost
-    bought4 = ShipmentDetail.select("SUM((COALESCE(ship_cost, 0) + COALESCE(insured_cost, 0) + " \
-        + "COALESCE(custom_cost, 0) * 100 / (CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) " \
-        + ") * ((CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) / 100)) as amount") \
-        .joins("LEFT JOIN products ON shipment_details.product_id = products.product_id ") \
-        .where("products.is_domestic = :is_domestic", {:is_domestic => is_domestic}) \
-        .where("products.product_id = :product_id", {:product_id => product_id}) \
-        .reorder('').first.amount.to_f
-    return (bought1 + bought2 + bought3 + bought4) * -1
   end
 end
