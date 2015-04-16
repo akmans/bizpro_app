@@ -145,8 +145,8 @@ class CustomTest < ActiveSupport::TestCase
   end
 
   # test ORDER BY
-  test "order should be newest ID first" do
-    assert_equal Custom.first, customs(:one)
+  test "order should be newest regist_date first" do
+    assert_equal Custom.first, customs(:two)
   end
 
   # test before_create

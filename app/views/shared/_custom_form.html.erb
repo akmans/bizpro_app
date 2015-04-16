@@ -1,8 +1,11 @@
 <%= form_for(@custom, :html => {:class => "form-horizontal"}) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="form-group grid">
-    <div class="col-sm-1 header">ID</div>
-    <div class="col-sm-2" id="custom_custom_id"><%= @custom.custom_id.blank? ? '-' : @custom.custom_id %></div>
+    <div class="col-sm-1 header">単価</div>
+    <div class="col-sm-2">
+      <%= f.text_field :net_cost, :value => @custom.net_cost.to_i, \
+          class: 'form-control form-field text-right' %>
+    </div>
     <div class="col-sm-1 header">名称</div>
     <div class="col-sm-8">
       <%= f.text_field :custom_name, class: 'form-control form-field' %>
@@ -10,6 +13,11 @@
   </div>
 
   <div class="form-group grid">
+    <div class="col-sm-1 header">消費税</div>
+    <div class="col-sm-2">
+      <%= f.text_field :tax_cost, :value => @custom.tax_cost.to_i, \
+          class: 'form-control form-field text-right' %>
+    </div>
     <div class="col-sm-1 header">オーク品</div>
     <div class="col-sm-2">
       <%= f.label :is_auction, class: "checkbox check-box line-height-22" do %>
@@ -21,32 +29,31 @@
       <%= collection_select :custom, :auction_id, auctions_hash_help(@custom.auction_id), :first, :last, {}, \
           {selected: @custom.auction_id, :class => 'form-control form-field'} %>
     </div>
+  </div>
+
+  <div class="form-group grid">
+    <div class="col-sm-1 header">その他</div>
+    <div class="col-sm-2">
+      <%= f.text_field :other_cost, :value => @custom.other_cost.to_i, \
+          class: 'form-control form-field text-right' %>
+    </div>
     <div class="col-sm-1 header">比率</div>
     <div class="col-sm-2">
       <%= collection_select :custom, :percentage, \
           auction_percentage_hash_help(@custom.custom_id, @custom.auction_id), :first, :last, {}, \
           {selected: @custom.percentage, :class => 'form-control form-field'} %>
     </div>
-  </div>
-
-  <div class="form-group grid">
-    <div class="col-sm-1 header">単価</div>
-    <div class="col-sm-2">
-      <%= f.text_field :net_cost, :value => @custom.net_cost.to_i, \
-          class: 'form-control form-field text-right' %>
+    <div class="col-sm-1 header">登録日</div>
+    <div class="col-sm-5">
+      <%= f.date_select :regist_date,
+        options = { :order => [:year, :month, :day],
+                    :prompt => { :day => '(D)', :month => '(M)', :year => '(Y)' },
+                    :use_two_digit_numbers => true,
+                    :start_year => 2011, :end_year => 2015
+        },
+        html_options = {:class => "form-control form-field select-inline"}
+      %>
     </div>
-    <div class="col-sm-1 header">消費税</div>
-    <div class="col-sm-2">
-      <%= f.text_field :tax_cost, :value => @custom.tax_cost.to_i, \
-          class: 'form-control form-field text-right' %>
-    </div>
-    <div class="col-sm-1 header">その他</div>
-    <div class="col-sm-2">
-      <%= f.text_field :other_cost, :value => @custom.other_cost.to_i, \
-          class: 'form-control form-field text-right' %>
-    </div>
-    <div class="col-sm-1 header">総額</div>
-    <div class="col-sm-2"><%= @custom.custom_id.blank? ? 0 : custom_total_cost_help(@custom.custom_id) %>円</div>
   </div>
 
   <div class="form-group row-fluid grid row_last">

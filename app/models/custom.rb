@@ -1,7 +1,7 @@
 class Custom < ActiveRecord::Base
   self.primary_key = "custom_id"
 
-  default_scope -> { order(created_at: :DESC) }
+  default_scope -> { order(regist_date: :DESC) }
 
   validates :custom_id , # presence: true,
                          length: { maximum: 20},

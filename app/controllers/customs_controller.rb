@@ -88,13 +88,14 @@ class CustomsController < ApplicationController
     def custom_params
       params.require(:custom)
             .permit(:custom_name, :is_auction, :auction_id,:percentage,
-                    :net_cost, :tax_cost, :other_cost, :memo)
+                    :net_cost, :tax_cost, :other_cost, :memo, :regist_date)
     end
 
   # search custom
   def search_custom(condition, page_ix)
     # construct where condition
-    custom = Custom.select("customs.custom_id, custom_name, auction_id, pc_maps.product_id, " \
+    custom = Custom.select("customs.custom_id, custom_name, auction_id, " \
+        + "regist_date, pc_maps.product_id, " \
         + "CASE WHEN pc_maps.custom_id is null THEN '未' ELSE '-' END as regist_status") \
         .joins("LEFT OUTER JOIN pc_maps ON customs.custom_id = pc_maps.custom_id")
     # custom_name

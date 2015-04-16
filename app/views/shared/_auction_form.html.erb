@@ -116,7 +116,7 @@
     </div>
     <div class="col-sm-1 header">終了日時</div>
     <% if @auction.auction_id.nil? || @auction.manual == 1 %>
-      <div class="col-sm-2 text-center cell-no-padding">
+      <div class="col-sm-5">
         <%= f.date_select :end_time,
             options = { :order => [:year, :month, :day],
                     :prompt => { :day => '(D)', :month => '(M)', :year => '(Y)' },
@@ -127,17 +127,13 @@
         %>
       </div>
     <% else %>
-      <div class="col-sm-2">
+      <div class="col-sm-5">
         <%= @auction.end_time.nil? ? "-" : @auction.end_time.strftime("%F %T") %>
       </div>
     <% end %>
     <div class="col-sm-1 header">問合番号</div>
     <div class="col-sm-2">
       <%= f.text_field :shipment_code, class: 'form-control form-field' %>
-    </div>
-    <div class="col-sm-1 header">総額</div>
-    <div class="col-sm-2 text-right">
-      <%= commas_help(auction_total_cost_help(@auction).to_i) unless @auction.auction_id.blank? %>円
     </div>
   </div>
 

@@ -5,7 +5,9 @@
     <div class="col-sm-1 header">ID</div>
     <div class="col-sm-2"><%= @custom.custom_id %></div>
     <div class="col-sm-1 header">名称</div>
-    <div class="col-sm-8"><%= @custom.custom_name %></div>
+    <div class="col-sm-5"><%= @custom.custom_name %></div>
+    <div class="col-sm-1 header">登録日</div>
+    <div class="col-sm-2"><%= @custom.regist_date.nil? ? "-" : @custom.regist_date %></div>
   </div>
 
   <div class="form-group grid">
