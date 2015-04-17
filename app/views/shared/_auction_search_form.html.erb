@@ -24,7 +24,7 @@
       <%= select_tag(:undeal_auction, options_for_select(undeal_auction_hash_help.invert,
             selected: condition["undeal_auction"] ), {:class => 'form-control form-field'}) %>
     </div>
-    <div class="col-sm-1 header">終了期間</div>
+    <div class="col-sm-1 header">終了日</div>
     <div class="col-sm-8">
       <%= select_tag(:year_s, options_for_select(year_hash_help.invert,
             selected: condition["year_s"] ), {:class => 'form-control form-field select-inline'}) %>

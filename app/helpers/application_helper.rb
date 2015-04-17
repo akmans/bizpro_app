@@ -59,7 +59,7 @@ module ApplicationHelper
 
   # generate undeal_custom hash
   def undeal_custom_hash_help
-    {"" => "(全部)", "0" => "商品未登録"}
+    {"" => "(全部)", "0" => "未登録", "1" => "登録済"}
   end
 
   # generate shipment_status hash

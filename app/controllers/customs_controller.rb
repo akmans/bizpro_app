@@ -106,16 +106,17 @@ class CustomsController < ApplicationController
     custom = custom.where(is_auction: condition["is_auction"]) \
               unless condition["is_auction"].blank?
     # product_unregist
-    custom = custom.where("pc_maps.custom_id is null") unless condition["product_unregist"].blank?
+    custom = custom.where("pc_maps.custom_id is null") if condition["product_unregist"] == '0'
+    custom = custom.where("pc_maps.custom_id is not null") if condition["product_unregist"] == '1'
     # start year month
     if !condition["year_s"].blank? && !condition["month_s"].blank?
       date_s = Date::strptime(condition["year_s"] + condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d")
-      custom = custom.where("customs.created_at >= :created_at", {:created_at => date_s})
+      custom = custom.where("customs.regist_date >= :created_at", {:created_at => date_s})
     end
     # end year month
     if !condition["year_e"].blank? && !condition["month_e"].blank?
       date_e = Date::strptime(condition["year_e"] + condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
-      custom = custom.where("customs.created_at <= :created_at", {:created_at => date_e.end_of_month})
+      custom = custom.where("customs.regist_date <= :created_at", {:created_at => date_e.end_of_month})
     end
     # auction_id
     custom = custom.where("customs.auction_id = :auction_id", {:auction_id => condition["auction_id"]}) \
