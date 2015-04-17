@@ -9,11 +9,11 @@ $(document).on "page:change", ->
     $("#month_s").val('').prop( "disabled", true )
     $("#year_e").val('').prop( "disabled", true )
     $("#month_e").val('').prop( "disabled", true )
-  else
-    $("#year_s").prop( "disabled", false )
-    $("#month_s").prop( "disabled", false )
-    $("#year_e").prop( "disabled", false )
-    $("#month_e").prop( "disabled", false )
+#  else
+#    $("#year_s").prop( "disabled", false )
+#    $("#month_s").prop( "disabled", false )
+#    $("#year_e").prop( "disabled", false )
+#    $("#month_e").prop( "disabled", false )
   if $("#is_domestic").val() == "1"
     $("#no_cost").prop( "disabled", false)
   else

@@ -4,14 +4,14 @@
 
 $(document).on "page:change", ->
   # disable date input fields if empty
-  if $("#date_type").val() == "" && $("#year_s").val() == ""
-      $("#year_s").val('').prop( "disabled", true)
+  if $("#date_type").val() == ""
+    $("#year_s").val('').prop( "disabled", true)
   if $("#date_type").val() == "" && $("#month_s").val() == ""
-      $("#month_s").val('').prop( "disabled", true )
+    $("#month_s").val('').prop( "disabled", true )
   if $("#date_type").val() == "" && $("#year_e").val() == ""
-      $("#year_e").val('').prop( "disabled", true )
+    $("#year_e").val('').prop( "disabled", true )
   if $("#date_type").val() == "" && $("#month_e").val() == ""
-      $("#month_e").val('').prop( "disabled", true )
+    $("#month_e").val('').prop( "disabled", true )
   # bind click event to #btn-auction-clear
   $("#btn-shipment-clear").bind "click", ->
     $("#product_name").val('')
