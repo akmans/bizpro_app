@@ -150,10 +150,13 @@ class DashboardsController < ApplicationController
       # --------- general data --------------------
       # all custom data(general)
       custom["general_all"] = count_custom(0, 0)
+      custom["general_all_sum"] = sum_custom(0, 0)
       # custom data of current year(general)
       custom["general_year"] = count_custom(0, 1)
+      custom["general_year_sum"] = sum_custom(0, 1)
       # custom date of current month(general)
       custom["general_month"] = count_custom(0, 2)
+      custom["general_month_sum"] = sum_custom(0, 2)
       return custom
     end
 
@@ -292,6 +295,24 @@ class DashboardsController < ApplicationController
       return Custom.where(is_auction: is_auction) \
           .where("created_at >= :date_s", {:date_s => beginning_date}) \
           .where("created_at <= :date_e", {:date_e => end_date}).all.count
+    end
+
+    # sum custom(date_type 0:all 1:year 2:month)
+    def sum_custom(is_auction, date_type)
+      # all
+      return Custom.select("SUM(COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) " \
+          + " + COALESCE(other_cost, 0)) as amount") \
+          .where(is_auction: is_auction).first.amount.to_i if date_type == 0
+      # date interval
+      beginning_date = Time.zone.now.beginning_of_year
+      beginning_date = Time.zone.now.beginning_of_month if date_type == 2
+      end_date = Time.zone.now.end_of_year
+      end_date = Time.zone.now.end_of_month if date_type == 2
+      # year or month
+      return Custom.select("SUM(COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) " \
+          + " + COALESCE(other_cost, 0)) as amount").where(is_auction: is_auction) \
+          .where("created_at >= :date_s", {:date_s => beginning_date}) \
+          .where("created_at <= :date_e", {:date_e => end_date}).first.amount.to_i
     end
 
     # count shipment(date_type 0:all 1:year 2:month)
