@@ -293,8 +293,8 @@ class DashboardsController < ApplicationController
       end_date = Time.zone.now.end_of_month if date_type == 2
       # year or month
       return Custom.where(is_auction: is_auction) \
-          .where("created_at >= :date_s", {:date_s => beginning_date}) \
-          .where("created_at <= :date_e", {:date_e => end_date}).all.count
+          .where("regist_date >= :date_s", {:date_s => beginning_date}) \
+          .where("regist_date <= :date_e", {:date_e => end_date}).all.count
     end
 
     # sum custom(date_type 0:all 1:year 2:month)
