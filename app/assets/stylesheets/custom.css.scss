@@ -39,6 +39,12 @@ $gray-medium-light: #eaeaea;
   margin: 0px 0px;
 }
 
+.hide-text-overflow {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 /* myform */
 .myform {
   padding-bottom: 5px;

@@ -7,7 +7,7 @@
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-12 col-md-5">
+  <div class="col-xs-12 col-md-5 hide-text-overflow">
     <%= link_to auction.auction_name, auction.url, :target => '_blank' unless auction.url.blank? %>
     <%= auction.auction_name if auction.url.blank? %>
   </div>
