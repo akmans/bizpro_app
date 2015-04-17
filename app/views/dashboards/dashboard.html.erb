@@ -16,7 +16,7 @@
     <tbody>
     <tr>
       <th>今月(<span id="month-id"><%= Date.today.month %></span>月)</th>
-      <td class="text-right">
+      <td class="text-right cell-no-padding">
         <%= link_to @summary["domestic"]["sold_month_cnt"].to_s + "件", "", \
             id: "link-domestic-sold-month", class: "" %>
       </td>
@@ -26,7 +26,7 @@
     </tr>
     <tr>
       <th>今年(<span id="year-id"><%= Date.today.year %></span>年)</th>
-      <td class="text-right">
+      <td class="text-right cell-no-padding">
         <%= link_to @summary["domestic"]["sold_year_cnt"].to_s + "件", "", \
             id: "link-domestic-sold-year", class: "" %>
       </td>
@@ -36,7 +36,7 @@
     </tr>
     <tr>
       <th>全部</th>
-      <td class="text-right">
+      <td class="text-right cell-no-padding">
         <%= link_to @summary["domestic"]["sold_all_cnt"].to_s + "件", "", \
             id: "link-domestic-sold-all", class: "" %>
       </td>
@@ -60,7 +60,7 @@
     <tbody>
     <tr>
       <th>今月(<%= Date.today.month %>月)</th>
-      <td class="text-right">
+      <td class="text-right cell-no-padding">
         <%= link_to @summary["offshore"]["sold_month_cnt"].to_s + "件", "", \
             id: "link-offshore-sold-month", class: "" %>
       </td>
@@ -70,7 +70,7 @@
     </tr>
     <tr>
       <th>今年(<%= Date.today.year %>年)</th>
-      <td class="text-right">
+      <td class="text-right cell-no-padding">
         <%= link_to @summary["offshore"]["sold_year_cnt"].to_s + "件", "", \
             id: "link-offshore-sold-year", class: "" %>
       </td>
@@ -80,7 +80,7 @@
     </tr>
     <tr>
       <th>全部</th>
-      <td class="text-right">
+      <td class="text-right cell-no-padding">
         <%= link_to @summary["offshore"]["sold_all_cnt"].to_s + "件", "", \
             id: "link-offshore-sold-all", class: "" %>
       </td>

@@ -2,7 +2,7 @@ class Auction < ActiveRecord::Base
   attr_accessor :create_product
   self.primary_key = "auction_id"
 
-  default_scope -> { order(end_time: :DESC) }
+  default_scope -> { order('case when end_time is null then 1 else 0 end, end_time desc') }
 
   validates :auction_id , presence: true,
                           length: { maximum: 20},

@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
   self.primary_key = "product_id"
 
-  default_scope -> { order(sold_date: :DESC) }
+  default_scope -> { order('case when sold_date is null then 1 else 0 end, sold_date desc') }
 
   validates :product_id , # presence: true,
                           length: { maximum: 20},

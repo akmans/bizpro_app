@@ -1,7 +1,7 @@
 class Custom < ActiveRecord::Base
   self.primary_key = "custom_id"
 
-  default_scope -> { order(regist_date: :DESC) }
+  default_scope -> { order('case when regist_date is null then 1 else 0 end, regist_date desc') }
 
   validates :custom_id , # presence: true,
                          length: { maximum: 20},
