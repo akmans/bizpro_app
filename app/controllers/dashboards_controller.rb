@@ -302,7 +302,7 @@ class DashboardsController < ApplicationController
       # all
       return Custom.select("SUM(COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) " \
           + " + COALESCE(other_cost, 0)) as amount") \
-          .where(is_auction: is_auction).first.amount.to_i if date_type == 0
+          .where(is_auction: is_auction).reorder('').first.amount.to_i if date_type == 0
       # date interval
       beginning_date = Time.zone.now.beginning_of_year
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
@@ -312,7 +312,7 @@ class DashboardsController < ApplicationController
       return Custom.select("SUM(COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) " \
           + " + COALESCE(other_cost, 0)) as amount").where(is_auction: is_auction) \
           .where("created_at >= :date_s", {:date_s => beginning_date}) \
-          .where("created_at <= :date_e", {:date_e => end_date}).first.amount.to_i
+          .where("created_at <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_i
     end
 
     # count shipment(date_type 0:all 1:year 2:month)
