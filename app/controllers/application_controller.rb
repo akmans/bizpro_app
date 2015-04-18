@@ -202,7 +202,7 @@ class ApplicationController < ActionController::Base
       # end year month
       if !condition["year_e"].blank? && !condition["month_e"].blank?
         end_date = Date::strptime(condition["year_e"] + \
-            condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
+            condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d").end_of_month
       end
       # for return
       info = {}
@@ -263,7 +263,7 @@ class ApplicationController < ActionController::Base
       # end year month
       if !condition["year_e"].blank? && !condition["month_e"].blank?
         end_date = Date::strptime(condition["year_e"] + \
-            condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
+            condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d").end_of_month
       end
       # for return
       info = {}
@@ -305,6 +305,7 @@ class ApplicationController < ActionController::Base
         info["cost_amount"] = cost["amount"]
         info["cost_amount_jp"] = cost["amount_jp"]
         info["cost_amount_cn"] = cost["amount_cn"]
+#        p "sold_amount=#{info['sold_amount']}@cost_amount=#{info['cost_amount']}"
         # profit amount
         info["profit_amount"] = info["sold_amount"] - info["cost_amount"]
         # profit rate

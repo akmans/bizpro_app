@@ -72,6 +72,9 @@ module ApplicationHelper
   def count_product(condition, beginning_date, end_date)
     # all
     product = Product.where(is_domestic: condition["is_domestic"])
+    # sold_flg
+    product = product.where(sold_date: nil) if condition["sold_flg"] == '0'
+    product = product.where.not(sold_date: nil) if condition["sold_flg"] == '1'
     # category_id
     product = product.where(category_id: condition["category_id"]) \
               unless condition["category_id"].blank?
@@ -80,10 +83,10 @@ module ApplicationHelper
               {:product_name => "%#{condition['product_name']}%"}) \
               unless condition["product_name"].blank?
     # beginning date
-    product = product.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
+    product = product.where("sold_date >= :date_s", {:date_s => beginning_date}) \
         unless beginning_date.blank?
     # end date
-    product = product.where("products.sold_date <= :date_e", {:date_e => end_date}) \
+    product = product.where("sold_date <= :date_e", {:date_e => end_date}) \
         unless end_date.blank?
     # year or month
     return product.count
@@ -219,6 +222,7 @@ module ApplicationHelper
     bought4 = shipment_detail.amount.to_f
     bought4_jp = shipment_detail.amount_jp.to_f
     bought4_cn = shipment_detail.amount_cn.to_f
+#        p "bought1=#{bought1}@bought2=#{bought2}@bought3=#{bought3}@bought4=#{bought4}"
     # sum all
     cost["amount"] = bought1 + bought2 + bought3 + bought4
     cost["amount_jp"] = bought1_jp + bought2_jp + bought3_jp + bought4_jp

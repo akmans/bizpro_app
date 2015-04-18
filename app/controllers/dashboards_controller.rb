@@ -44,7 +44,7 @@ class DashboardsController < ApplicationController
       t = Time.now
       offshore = {}
       # all--------------------------
-      condition = {"is_domestic" => 0}
+      condition = {"is_domestic" => 0, "sold_flg" => '1'}
       # all data
       all = offshore_sold_product(condition)
       offshore["sold_all_cnt"] = all["sold_cnt"]
@@ -52,8 +52,9 @@ class DashboardsController < ApplicationController
       offshore["sold_all_profit"] = all["profit_amount"]
       offshore["sold_all_profit_rate"] = all["profit_rate"]
       # year--------------------------
-      condition = {"is_domestic" => 0, "year_s" => t.strftime("%Y"), \
-          "month_s" => 1, "year_e" => t.strftime("%Y"), "month_e" => 12
+      condition = {"is_domestic" => 0, "year_s" => t.strftime("%Y"),
+          "month_s" => 1, "year_e" => t.strftime("%Y"), "month_e" => 12,
+          "sold_flg" => '1'
       }
       # data of current year
       year = offshore_sold_product(condition)
@@ -64,7 +65,7 @@ class DashboardsController < ApplicationController
       # month--------------------------
       condition = {"is_domestic" => 0, "year_s" => t.strftime("%Y"), \
           "month_s" => t.strftime("%m"), "year_e" => t.strftime("%Y"), \
-          "month_e" => t.strftime("%m")
+          "month_e" => t.strftime("%m"), "sold_flg" => '1'
       }
       # data of current month
       month = offshore_sold_product(condition)
@@ -80,7 +81,7 @@ class DashboardsController < ApplicationController
       t = Time.now
       domestic = {}
       # all--------------------------
-      condition = {"is_domestic" => 1}
+      condition = {"is_domestic" => 1, "sold_flg" => '1'}
       # all data
       all = domestic_sold_product(condition)
       domestic["sold_all_cnt"] = all["sold_cnt"]
@@ -88,8 +89,9 @@ class DashboardsController < ApplicationController
       domestic["sold_all_profit"] = all["profit_amount"]
       domestic["sold_all_profit_rate"] = all["profit_rate"]
       # year--------------------------
-      condition = {"is_domestic" => 1, "year_s" => t.strftime("%Y"), \
-          "month_s" => 1, "year_e" => t.strftime("%Y"), "month_e" => 12
+      condition = {"is_domestic" => 1, "year_s" => t.strftime("%Y"),
+          "month_s" => 1, "year_e" => t.strftime("%Y"), "month_e" => 12,
+          "sold_flg" => '1'
       }
       # data of current year
       year = domestic_sold_product(condition)
@@ -100,10 +102,10 @@ class DashboardsController < ApplicationController
       # month--------------------------
       condition = {"is_domestic" => 1, "year_s" => t.strftime("%Y"), \
           "month_s" => t.strftime("%m"), "year_e" => t.strftime("%Y"), \
-          "month_e" => t.strftime("%m")
+          "month_e" => t.strftime("%m"), "sold_flg" => '1'
       }
       # data of current month
-      month = offshore_sold_product(condition)
+      month = domestic_sold_product(condition)
       domestic["sold_month_cnt"] = month["sold_cnt"]
       domestic["sold_month_amount"] = month["sold_amount"]
       domestic["sold_month_profit"] = month["profit_amount"]
