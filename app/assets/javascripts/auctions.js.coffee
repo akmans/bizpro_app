@@ -32,3 +32,6 @@ $(document).on "page:change", ->
     $("#month_e").val('')
     $("#sold_type").val('')
     $("#undeal_auction").val('')
+  # bind remove disabled attribute from select to submit
+  $("form").bind "submit", ->
+    $(this).find(':input').removeAttr('disabled')

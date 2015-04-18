@@ -93,10 +93,10 @@ module ApplicationHelper
   def cost_calculate(condition, beginning_date, end_date)
     cost = {}
     # auction cost------------------------------
-    auction = Auction.select("SUM((price * (tax_rate + 100) / 100 - " \
-        + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) * " \
+    auction = Auction.select("SUM((price * (tax_rate + 100) / 100 + " \
+        + "COALESCE(payment_cost, 0) + COALESCE(shipment_cost, 0)) * " \
         + "(CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) / 100) as amount, " \
-        + "SUM(price * (tax_rate + 100) / 100 - COALESCE(payment_cost, 0) - " \
+        + "SUM(price * (tax_rate + 100) / 100 + COALESCE(payment_cost, 0) + " \
         + "COALESCE(shipment_cost, 0)) as amount_jp") \
         .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
         .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
@@ -155,11 +155,11 @@ module ApplicationHelper
     bought2 = custom.amount.to_f
     bought2_jp = custom.amount_jp.to_f
     # custom cost(auction)------------------------------
-    custom2 = Custom.select("SUM((price * (tax_rate + 100) / 100 - " \
-        + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) * " \
+    custom2 = Custom.select("SUM((price * (tax_rate + 100) / 100 + " \
+        + "COALESCE(payment_cost, 0) + COALESCE(shipment_cost, 0)) * " \
         + "(CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) * " \
         + "percentage / 100 / 100) as amount, " \
-        + "SUM((price * (tax_rate + 100) / 100 - COALESCE(payment_cost, 0) - " \
+        + "SUM((price * (tax_rate + 100) / 100 + COALESCE(payment_cost, 0) + " \
         + "COALESCE(shipment_cost, 0)) * percentage / 100) as amount_jp") \
         .joins("LEFT JOIN auctions ON customs.auction_id = auctions.auction_id ") \
         .joins("LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id ") \
