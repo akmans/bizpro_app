@@ -22,7 +22,7 @@
     <tr>
       <th>今月(<span id="month-id"><%= Date.today.month %></span>月)</th>
       <td class="text-right cell-no-padding">
-        <%= link_to @summary["domestic"]["sold_month_cnt"].to_s + "件", "", \
+        <%= link_to @summary["domestic"]["sold_month_cnt"].to_s + "件", "javascript:;", \
             id: "link-domestic-sold-month", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_month_amount"].to_i) %>円</td>
@@ -32,7 +32,7 @@
     <tr>
       <th>今年(<span id="year-id"><%= Date.today.year %></span>年)</th>
       <td class="text-right cell-no-padding">
-        <%= link_to @summary["domestic"]["sold_year_cnt"].to_s + "件", "", \
+        <%= link_to @summary["domestic"]["sold_year_cnt"].to_s + "件", "javascript:;", \
             id: "link-domestic-sold-year", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_year_amount"].to_i) %>円</td>
@@ -42,7 +42,7 @@
     <tr>
       <th>全部</th>
       <td class="text-right cell-no-padding">
-        <%= link_to @summary["domestic"]["sold_all_cnt"].to_s + "件", "", \
+        <%= link_to @summary["domestic"]["sold_all_cnt"].to_s + "件", "javascript:;", \
             id: "link-domestic-sold-all", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["domestic"]["sold_all_amount"].to_i) %>円</td>
@@ -71,7 +71,7 @@
     <tr>
       <th>今月(<%= Date.today.month %>月)</th>
       <td class="text-right cell-no-padding">
-        <%= link_to @summary["offshore"]["sold_month_cnt"].to_s + "件", "", \
+        <%= link_to @summary["offshore"]["sold_month_cnt"].to_s + "件", "javascript:;", \
             id: "link-offshore-sold-month", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_month_amount"].round(2)) %>元</td>
@@ -81,7 +81,7 @@
     <tr>
       <th>今年(<%= Date.today.year %>年)</th>
       <td class="text-right cell-no-padding">
-        <%= link_to @summary["offshore"]["sold_year_cnt"].to_s + "件", "", \
+        <%= link_to @summary["offshore"]["sold_year_cnt"].to_s + "件", "javascript:;", \
             id: "link-offshore-sold-year", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_year_amount"].round(2)) %>元</td>
@@ -91,7 +91,7 @@
     <tr>
       <th>全部</th>
       <td class="text-right cell-no-padding">
-        <%= link_to @summary["offshore"]["sold_all_cnt"].to_s + "件", "", \
+        <%= link_to @summary["offshore"]["sold_all_cnt"].to_s + "件", "javascript:;", \
             id: "link-offshore-sold-all", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["offshore"]["sold_all_amount"].round(2)) %>元</td>
@@ -126,12 +126,12 @@
     <tr>
       <th>今月(<%= Date.today.month %>月)</th>
       <td class="text-right">
-        <%= link_to @summary["auction"]["sold_month_cnt"].to_s + "件", "", \
+        <%= link_to @summary["auction"]["sold_month_cnt"].to_s + "件", "javascript:;", \
             id: "link-auction-sold-month", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["auction"]["sold_month_amount"]) %>円</td>
       <td class="text-right">
-        <%= link_to @summary["auction"]["bought_month_cnt"].to_s + "件", "", \
+        <%= link_to @summary["auction"]["bought_month_cnt"].to_s + "件", "javascript:;", \
             id: "link-auction-bought-month", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["auction"]["bought_month_amount"]) %>円</td>
@@ -139,12 +139,12 @@
     <tr>
       <th>今年(<%= Date.today.year %>年)</th>
       <td class="text-right">
-        <%= link_to @summary["auction"]["sold_year_cnt"].to_s + "件", "", \
+        <%= link_to @summary["auction"]["sold_year_cnt"].to_s + "件", "javascript:;", \
             id: "link-auction-sold-year", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["auction"]["sold_year_amount"]) %>円</td>
       <td class="text-right">
-        <%= link_to @summary["auction"]["bought_year_cnt"].to_s + "件", "", \
+        <%= link_to @summary["auction"]["bought_year_cnt"].to_s + "件", "javascript:;", \
             id: "link-auction-bought-year", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["auction"]["bought_year_amount"]) %>円</td>
@@ -152,12 +152,12 @@
     <tr>
       <th>全部</th>
       <td class="text-right">
-        <%= link_to @summary["auction"]["sold_all_cnt"].to_s + "件", "", \
+        <%= link_to @summary["auction"]["sold_all_cnt"].to_s + "件", "javascript:;", \
             id: "link-auction-sold-all", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["auction"]["sold_all_amount"]) %>円</td>
       <td class="text-right">
-        <%= link_to @summary["auction"]["bought_all_cnt"].to_s + "件", "", \
+        <%= link_to @summary["auction"]["bought_all_cnt"].to_s + "件", "javascript:;", \
             id: "link-auction-bought-all", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["auction"]["bought_all_amount"]) %>円</td>
@@ -182,11 +182,11 @@
     <tr>
       <th>今月(<%= Date.today.month %>月)</th>
       <td class="text-right">
-        <%= link_to @summary["custom"]["auction_month"].to_s + "件", "", \
+        <%= link_to @summary["custom"]["auction_month"].to_s + "件", "javascript:;", \
             id: "link-custom-auction-month", class: "" %>
       </td>
       <td class="text-right">
-        <%= link_to @summary["custom"]["general_month"].to_s + "件", "", \
+        <%= link_to @summary["custom"]["general_month"].to_s + "件", "javascript:;", \
             id: "link-custom-general-month", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["custom"]["general_month_sum"]) %>円</td>
@@ -194,11 +194,11 @@
     <tr>
       <th>今年(<%= Date.today.year %>年)</th>
       <td class="text-right">
-        <%= link_to @summary["custom"]["auction_year"].to_s + "件", "", \
+        <%= link_to @summary["custom"]["auction_year"].to_s + "件", "javascript:;", \
             id: "link-custom-auction-year", class: "" %>
       </td>
       <td class="text-right">
-        <%= link_to @summary["custom"]["general_year"].to_s + "件", "", \
+        <%= link_to @summary["custom"]["general_year"].to_s + "件", "javascript:;", \
             id: "link-custom-general-year", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["custom"]["general_year_sum"]) %>円</td>
@@ -206,11 +206,11 @@
     <tr>
       <th>全部</th>
       <td class="text-right">
-        <%= link_to @summary["custom"]["auction_all"].to_s + "件", "", \
+        <%= link_to @summary["custom"]["auction_all"].to_s + "件", "javascript:;", \
             id: "link-custom-auction-all", class: "" %>
       </td>
       <td class="text-right">
-        <%= link_to @summary["custom"]["general_all"].to_s + "件", "", \
+        <%= link_to @summary["custom"]["general_all"].to_s + "件", "javascript:;", \
             id: "link-custom-general-all", class: "" %>
       </td>
       <td class="text-right"><%=commas_help(@summary["custom"]["general_all_sum"]) %>円</td>
@@ -233,33 +233,33 @@
     <tr>
       <th>今月(<%= Date.today.month %>月)</th>
       <td class="text-right">
-        <%= link_to @summary["shipment"]["shipment_sending_month"].to_s + "件", "", \
+        <%= link_to @summary["shipment"]["shipment_sending_month"].to_s + "件", "javascript:;", \
             id: "link-shipment-sending-month", class: "" %>
       </td>
       <td class="text-right">
-        <%= link_to @summary["shipment"]["shipment_arrived_month"].to_s + "件", "", \
+        <%= link_to @summary["shipment"]["shipment_arrived_month"].to_s + "件", "javascript:;", \
             id: "link-shipment-arrived-month", class: "" %>
       </td>
     </tr>
     <tr>
       <th>今年(<%= Date.today.year %>年)</th>
       <td class="text-right">
-        <%= link_to @summary["shipment"]["shipment_sending_year"].to_s + "件", "", \
+        <%= link_to @summary["shipment"]["shipment_sending_year"].to_s + "件", "javascript:;", \
             id: "link-shipment-sending-year", class: "" %>
       </td>
       <td class="text-right">
-        <%= link_to @summary["shipment"]["shipment_arrived_year"].to_s + "件", "", \
+        <%= link_to @summary["shipment"]["shipment_arrived_year"].to_s + "件", "javascript:;", \
             id: "link-shipment-arrived-year", class: "" %>
       </td>
     </tr>
     <tr>
       <th>全部</th>
       <td class="text-right">
-        <%= link_to @summary["shipment"]["shipment_sending_all"].to_s + "件", "", \
+        <%= link_to @summary["shipment"]["shipment_sending_all"].to_s + "件", "javascript:;", \
             id: "link-shipment-sending-all", class: "" %>
       </td>
       <td class="text-right">
-        <%= link_to @summary["shipment"]["shipment_arrived_all"].to_s + "件", "", \
+        <%= link_to @summary["shipment"]["shipment_arrived_all"].to_s + "件", "javascript:;", \
             id: "link-shipment-arrived-all", class: "" %>
       </td>
     </tr>
@@ -284,33 +284,33 @@
     <tr>
       <th>未売数</th>
       <td class="text-right">
-        <%= link_to @summary["undeal_product"]["domesitc_unsale_cnt"].to_s + "件", "", \
+        <%= link_to @summary["undeal_product"]["domesitc_unsale_cnt"].to_s + "件", "javascript:;", \
             id: "link-product-domestic-unsale", class: "" %>
       </td>
       <td class="text-right">
-        <%= link_to @summary["undeal_product"]["offshore_unsale_cnt"].to_s + "件", "", \
+        <%= link_to @summary["undeal_product"]["offshore_unsale_cnt"].to_s + "件", "javascript:;", \
             id: "link-product-offshore-unsale", class: "" %>
       </td>
     </tr>
     <tr>
       <th>売済数</th>
       <td class="text-right">
-        <%= link_to @summary["undeal_product"]["domesitc_sold_cnt"].to_s + "件", "", \
+        <%= link_to @summary["undeal_product"]["domesitc_sold_cnt"].to_s + "件", "javascript:;", \
             id: "link-product-domestic-sold", class: "" %>
       </td>
       <td class="text-right">
-        <%= link_to @summary["undeal_product"]["offshore_sold_cnt"].to_s + "件", "", \
+        <%= link_to @summary["undeal_product"]["offshore_sold_cnt"].to_s + "件", "javascript:;", \
             id: "link-product-offshore-sold", class: "" %>
       </td>
     </tr>
     <tr>
       <th>未済</th>
       <td class="text-right">
-        <%= link_to @summary["undeal_product"]["domestic_no_cost_cnt"].to_s + "件", "", \
+        <%= link_to @summary["undeal_product"]["domestic_no_cost_cnt"].to_s + "件", "javascript:;", \
             id: "link-product-domestic-no-cost", class: "" %>
       </td>
       <td class="text-right">
-        <%= link_to @summary["undeal_product"]["offshore_sending_cnt"].to_s + "件", "", \
+        <%= link_to @summary["undeal_product"]["offshore_sending_cnt"].to_s + "件", "javascript:;", \
             id: "link-product-offshore-sending", class: "" %>
       </td>
     </tr>
@@ -343,21 +343,21 @@
     <tr>
       <th>区分未登録</th>
       <td class="text-right">
-        <%= link_to @summary["undeal_auction"]["operation_unregist"].to_s + "件", "", \
+        <%= link_to @summary["undeal_auction"]["operation_unregist"].to_s + "件", "javascript:;", \
             id: "link-auction-operation-unregist", class: "" %>
       </td>
     </tr>
     <tr>
       <th>商品未登録</th>
       <td class="text-right">
-        <%= link_to @summary["undeal_auction"]["product_unregist"].to_s + "件", "", \
+        <%= link_to @summary["undeal_auction"]["product_unregist"].to_s + "件", "javascript:;", \
             id: "link-auction-product-unregist", class: "" %>
       </td>
     </tr>
     <tr>
       <th>カス未登録</th>
       <td class="text-right">
-        <%= link_to @summary["undeal_auction"]["custom_unregist"].to_s + "件", "", \
+        <%= link_to @summary["undeal_auction"]["custom_unregist"].to_s + "件", "javascript:;", \
             id: "link-auction-custom-unregist", class: "" %>
       </td>
     </tr>
@@ -385,7 +385,7 @@
     <tr>
       <td>未処置</td>
       <td class="text-right">
-        <%= link_to @summary["undeal_custom"]["product_unregist"].to_s + "件", "", \
+        <%= link_to @summary["undeal_custom"]["product_unregist"].to_s + "件", "javascript:;", \
             id: "link-product-unregist", class: "" %>
       </td>
     </tr>
@@ -405,14 +405,14 @@
     <tr>
       <th>発送中</th>
       <td class="text-right">
-        <%= link_to @summary["shipment_status"]["sending"].to_s + "件", "", \
+        <%= link_to @summary["shipment_status"]["sending"].to_s + "件", "javascript:;", \
             id: "link-shipment-sending", class: "" %>
       </td>
     </tr>
     <tr>
       <th>到着済</th>
       <td class="text-right">
-        <%= link_to @summary["shipment_status"]["arrived"].to_s + "件", "", \
+        <%= link_to @summary["shipment_status"]["arrived"].to_s + "件", "javascript:;", \
             id: "link-shipment-arrived", class: "" %>
       </td>
     </tr>
