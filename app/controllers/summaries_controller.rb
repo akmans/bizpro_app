@@ -60,26 +60,28 @@ class SummariesController < ApplicationController
     # start year month
     if !condition["year_s"].blank? && !condition["month_s"].blank? && !condition["is_domestic"].blank?
       date_s = Date::strptime(condition["year_s"] + condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d")
-      # condition for offshore
-      product = product.where(product_id: Sold.where("sold_date >= :sold_date", \
-                {:sold_date => date_s}).pluck(:product_id)) \
-                if condition["is_domestic"] == "0"
-      # condition for domestic
-      product = product.where(product_id: PaMap.where(auction_id: Auction.where("end_time >= :end_time", \
-                {:end_time => date_s}).pluck(:auction_id)).pluck(:product_id)) \
-                if condition["is_domestic"] == "1"
+      product = product.where("sold_date >= :sold_date", {:sold_date => date_s})
+#      # condition for offshore
+#      product = product.where(product_id: Sold.where("sold_date >= :sold_date", \
+#                {:sold_date => date_s}).pluck(:product_id)) \
+#                if condition["is_domestic"] == "0"
+#      # condition for domestic
+#      product = product.where(product_id: PaMap.where(auction_id: Auction.where("end_time >= :end_time", \
+#                {:end_time => date_s}).pluck(:auction_id)).pluck(:product_id)) \
+#                if condition["is_domestic"] == "1"
     end
     # end year month
     if !condition["year_e"].blank? && !condition["month_e"].blank? && !condition["is_domestic"].blank?
       date_e = Date::strptime(condition["year_e"] + condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
-      # condition for offshore
-      product = product.where(product_id: Sold.where("sold_date <= :sold_date", \
-                {:sold_date => date_e.end_of_month}).pluck(:product_id))\
-                if condition["is_domestic"] == "0"
-      # condition for domestic
-      product = product.where(product_id: PaMap.where(auction_id: Auction.where("end_time <= :end_time", \
-                {:end_time => date_e.end_of_month}).pluck(:auction_id)).pluck(:product_id)) \
-                if condition["is_domestic"] == "1"
+      product = product.where("sold_date <= :sold_date", {:sold_date => date_e.end_of_month})
+#      # condition for offshore
+#      product = product.where(product_id: Sold.where("sold_date <= :sold_date", \
+#                {:sold_date => date_e.end_of_month}).pluck(:product_id))\
+#                if condition["is_domestic"] == "0"
+#      # condition for domestic
+#      product = product.where(product_id: PaMap.where(auction_id: Auction.where("end_time <= :end_time", \
+#                {:end_time => date_e.end_of_month}).pluck(:auction_id)).pluck(:product_id)) \
+#                if condition["is_domestic"] == "1"
     end
     # is_domestic
     product = product.where(is_domestic: condition["is_domestic"]) \
