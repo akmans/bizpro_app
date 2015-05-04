@@ -80,7 +80,15 @@ class CustomsController < ApplicationController
 
   # ajax auction percentage
   def ajax_auction_percentage
-    render json: auction_percentage_hash_help(params[:custom_id], params[:auction_id])
+    rtn = {}
+    end_time = {}
+    auction = Auction.find(params[:auction_id])
+    end_time["year"] = auction.end_time.year
+    end_time["month"] = auction.end_time.month
+    end_time["day"] = auction.end_time.day
+    rtn["end_time"] = end_time
+    rtn["percentage"] = auction_percentage_hash_help(params[:custom_id], params[:auction_id])
+    render json: rtn
   end
 
   private

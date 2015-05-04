@@ -181,13 +181,10 @@ class CustomsControllerTest < ActionController::TestCase
   test "get ajax_auction_percentage should get json data when logged in" do
     log_in_as(@user)
     xhr :get, :ajax_auction_percentage, :custom_id => @custom.custom_id, :auction_id => @custom.auction_id
-    expected = {""   => "(空白)",
-     "10" => "１０％",
-     "20" => "２０％",
-     "30" => "３０％",
-     "40" => "４０％",
-     "50" => "５０％"
-    }
+    expected = {
+        "end_time"=>{"year"=>Time.zone.now.year, "month"=>Time.zone.now.month, "day"=>Time.zone.now.day},
+        "percentage"=>{""=>"(空白)", "10"=>"１０％", "20"=>"２０％",
+            "30"=>"３０％", "40"=>"４０％", "50"=>"５０％"}}
     assert_equal expected, JSON.parse(response.body)
   end
 

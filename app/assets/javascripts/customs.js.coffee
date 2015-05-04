@@ -54,8 +54,11 @@ $(document).on "page:change", ->
         type: "GET"
         success: (data) ->
           $("select#custom_percentage").children("option:gt(0)").remove()
-          $.each data, (k, v) ->
+          $.each data.percentage, (k, v) ->
             $("select#custom_percentage").append $("<option>").text(v).attr("value", k) if k != ""
+          $("#custom_regist_date_1i").val(data.end_time.year)
+          $("#custom_regist_date_2i").val(data.end_time.month)
+          $("#custom_regist_date_3i").val(data.end_time.day)
   # bind click event to btn-custom-clear
   $("#btn-custom-clear").bind "click", ->
     $("#custom_name").val('')
