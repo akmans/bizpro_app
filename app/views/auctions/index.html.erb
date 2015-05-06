@@ -1,6 +1,6 @@
 <% provide(:title, '一覧,オークション') %>
 <h3>検索条件</h3>
-<%= render :partial => 'shared/auction_search_form', locals: { condition: @condition } %>
+<%= render :partial => 'auction_search_form', locals: { condition: @condition } %>
 <h3>オークション一覧</h3>
 <div id="total_entries" class="pull-right line-height-22">総件数：<%= @auctions.total_entries %>件</div>
 <%= will_paginate(@auctions, :params => { :controller => "auctions", :action => "index"}) %>

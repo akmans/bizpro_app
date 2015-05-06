@@ -1,6 +1,6 @@
 <% provide(:title, '一覧,商品') %>
 <h3>検索条件</h3>
-<%= render :partial => 'shared/product_search_form', locals: { condition: @condition } %>
+<%= render :partial => 'product_search_form', locals: { condition: @condition } %>
 <h3>商品一覧</h3>
 <div id="total_entries" class="pull-right line-height-22">総件数：<%= @products.total_entries %>件</div>
 <%= will_paginate(@products, :params => { :controller => "products", :action => "index"}) %>
