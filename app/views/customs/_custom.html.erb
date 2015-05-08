@@ -13,7 +13,7 @@
   <div class="col-xs-6 col-md-1">
     <%= custom.product_id.blank? ? custom.regist_status : \
         (link_to custom.product_id, popup_product_path(product_id: custom.product_id), \
-         'remote' => true, 'data-toggle' => "modal", 'data-target' => "#exampleModal", \
+         'remote' => true, 'data-toggle' => "modal", 'data-target' => "#popupModal", \
          'class' => "") %>
   </div>
   <div class="col-xs-6 col-md-2 text-right">

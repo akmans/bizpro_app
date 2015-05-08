@@ -11,6 +11,13 @@ $gray-medium-light: #eaeaea;
   box-sizing:         border-box;
 }
 
+.modal.modal-wide .modal-dialog {
+  width: 90%;
+}
+.modal-wide .modal-body {
+  overflow-y: auto;
+}
+
 .custom-normal {
   text-decoration: none;
   font-weight: normal; 
