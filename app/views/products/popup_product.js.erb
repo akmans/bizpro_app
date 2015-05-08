@@ -1,0 +1,4 @@
+$('.modal-body').html("<%= j (render :partial => 'product_show', locals: { product: @product, \
+    auctions: @auctions, customs: @customs, shipment_details: @shipment_details, \
+    solds: @solds}) %>");
+

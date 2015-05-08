@@ -6,7 +6,8 @@
     <%= auction.auction_id %>
   </div>
   <div class="col-sm-7">
-    <%= link_to auction.auction_name, auction.url, :target => '_blank' %>
+    <%= link_to auction.auction_name, auction.url, :target => '_blank' unless auction.url.blank? %>
+    <%= auction.auction_name if auction.url.blank? %>
   </div>
   <div class="col-sm-2 text-right">
     <%= commas_help(auction_total_cost_help(auction).to_i) %>円

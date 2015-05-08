@@ -2,6 +2,7 @@
 
 class ProductsController < ApplicationController
   before_action :logged_in_user
+  respond_to :html, :js
 
   # index action
   def index
@@ -84,6 +85,22 @@ class ProductsController < ApplicationController
     @products = search_product(@condition, 1)
     # render index page
     render 'index'
+  end
+
+  # ajax popup product
+  def ajax_popup_product
+    # get product data by product_id.
+    @product = Product.find(params[:product_id])
+    # get auction data
+    @auctions = Auction.where(:auction_id => PaMap.where(product_id: params[:product_id])).all
+    # get custom data
+    @customs = Custom.where(:custom_id => PcMap.where(product_id: params[:product_id])).all
+    # get shipment data
+    @shipment_details = ShipmentDetail.where(:product_id => params[:product_id]).all
+    # get sold data
+    @solds = Sold.where(product_id: @product.product_id)
+    # render page
+    render 'popup_product'
   end
 
   private

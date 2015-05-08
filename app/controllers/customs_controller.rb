@@ -99,37 +99,37 @@ class CustomsController < ApplicationController
                     :net_cost, :tax_cost, :other_cost, :memo, :regist_date)
     end
 
-  # search custom
-  def search_custom(condition, page_ix)
-    # construct where condition
-    custom = Custom.select("customs.custom_id, custom_name, auction_id, " \
-        + "regist_date, pc_maps.product_id, " \
-        + "CASE WHEN pc_maps.custom_id is null THEN '未' ELSE '-' END as regist_status") \
-        .joins("LEFT OUTER JOIN pc_maps ON customs.custom_id = pc_maps.custom_id")
-    # custom_name
-    custom = custom.where("custom_name like :custom_name", \
-              {:custom_name => "%#{condition['custom_name']}%"}) \
-              unless condition["custom_name"].blank?
-    # is_auction
-    custom = custom.where(is_auction: condition["is_auction"]) \
-              unless condition["is_auction"].blank?
-    # product_unregist
-    custom = custom.where("pc_maps.custom_id is null") if condition["product_unregist"] == '0'
-    custom = custom.where("pc_maps.custom_id is not null") if condition["product_unregist"] == '1'
-    # start year month
-    if !condition["year_s"].blank? && !condition["month_s"].blank?
-      date_s = Date::strptime(condition["year_s"] + condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d")
-      custom = custom.where("customs.regist_date >= :created_at", {:created_at => date_s})
+    # search custom
+    def search_custom(condition, page_ix)
+      # construct where condition
+      custom = Custom.select("customs.custom_id, custom_name, auction_id, " \
+          + "regist_date, pc_maps.product_id, " \
+          + "CASE WHEN pc_maps.custom_id is null THEN '未' ELSE '-' END as regist_status") \
+          .joins("LEFT OUTER JOIN pc_maps ON customs.custom_id = pc_maps.custom_id")
+      # custom_name
+      custom = custom.where("custom_name like :custom_name", \
+                {:custom_name => "%#{condition['custom_name']}%"}) \
+                unless condition["custom_name"].blank?
+      # is_auction
+      custom = custom.where(is_auction: condition["is_auction"]) \
+                unless condition["is_auction"].blank?
+      # product_unregist
+      custom = custom.where("pc_maps.custom_id is null") if condition["product_unregist"] == '0'
+      custom = custom.where("pc_maps.custom_id is not null") if condition["product_unregist"] == '1'
+      # start year month
+      if !condition["year_s"].blank? && !condition["month_s"].blank?
+        date_s = Date::strptime(condition["year_s"] + condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d")
+        custom = custom.where("customs.regist_date >= :created_at", {:created_at => date_s})
+      end
+      # end year month
+      if !condition["year_e"].blank? && !condition["month_e"].blank?
+        date_e = Date::strptime(condition["year_e"] + condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
+        custom = custom.where("customs.regist_date <= :created_at", {:created_at => date_e.end_of_month})
+      end
+      # auction_id
+      custom = custom.where("customs.auction_id = :auction_id", {:auction_id => condition["auction_id"]}) \
+          unless condition["auction_id"].blank?
+      # paginate
+      custom.paginate(page: page_ix, per_page: 15)
     end
-    # end year month
-    if !condition["year_e"].blank? && !condition["month_e"].blank?
-      date_e = Date::strptime(condition["year_e"] + condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
-      custom = custom.where("customs.regist_date <= :created_at", {:created_at => date_e.end_of_month})
-    end
-    # auction_id
-    custom = custom.where("customs.auction_id = :auction_id", {:auction_id => condition["auction_id"]}) \
-        unless condition["auction_id"].blank?
-    # paginate
-    custom.paginate(page: page_ix, per_page: 15)
-  end
 end

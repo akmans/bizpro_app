@@ -12,7 +12,9 @@
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-6 col-md-1">
     <%= custom.product_id.blank? ? custom.regist_status : \
-        (link_to custom.product_id, product_path(custom.product_id), class: "") %>
+        (link_to custom.product_id, popup_product_path(product_id: custom.product_id), \
+         'remote' => true, 'data-toggle' => "modal", 'data-target' => "#exampleModal", \
+         'class' => "") %>
   </div>
   <div class="col-xs-6 col-md-2 text-right">
     <%= commas_help(custom_total_cost_help(custom.custom_id)) %>円
