@@ -89,16 +89,8 @@ class ProductsController < ApplicationController
 
   # ajax popup product
   def ajax_popup_product
-    # get product data by product_id.
-    @product = Product.find(params[:product_id])
-    # get auction data
-    @auctions = Auction.where(:auction_id => PaMap.where(product_id: params[:product_id])).all
-    # get custom data
-    @customs = Custom.where(:custom_id => PcMap.where(product_id: params[:product_id])).all
-    # get shipment data
-    @shipment_details = ShipmentDetail.where(:product_id => params[:product_id]).all
-    # get sold data
-    @solds = Sold.where(product_id: @product.product_id)
+    # call show
+    show
     # render page
     render 'popup_product'
   end

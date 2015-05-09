@@ -27,3 +27,5 @@
 </div>
 <%= render :partial => 'auction', :collection => @auctions %>
 <%= will_paginate(@auctions, :params => { :controller => "auctions", :action => "index"}) %>
+
+<%= render 'shared/popup' %>

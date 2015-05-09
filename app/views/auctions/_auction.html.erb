@@ -18,7 +18,8 @@
   </div>
   <div class="col-xs-6 col-md-1 text-right">
     <%= link_to ope_flg_name_help(auction.ope_flg).to_s + auction_regist_status_help(auction.auction_id).to_s, \
-        product_path(auction.product_id), class: '' unless auction.product_id.blank? %>
+        popup_product_path(product_id: auction.product_id), 'remote' => true, 'data-toggle' => "modal", \
+        'data-target' => "#popupModal", 'class' => "" unless auction.product_id.blank? %>
     <%= ope_flg_name_help(auction.ope_flg).to_s + auction_regist_status_help(auction.auction_id).to_s \
         if auction.ope_flg == 1 && auction.product_id.blank? %>
     <%= link_to ope_flg_name_help(auction.ope_flg).to_s + custom_percentage_help(auction.auction_id).to_s, \

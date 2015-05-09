@@ -91,6 +91,14 @@ class CustomsController < ApplicationController
     render json: rtn
   end
 
+  # ajax popup custom
+  def ajax_popup_custom
+    # call show
+    show
+    # render page
+    render 'popup_custom'
+  end
+
   private
     # strong parameters method.
     def custom_params

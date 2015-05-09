@@ -6,7 +6,10 @@
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-12 col-md-1 cell-no-padding">
-    <%= custom.auction_id.blank? ? "-" : (link_to custom.auction_id, auction_path(custom.auction_id)) %>
+    <%= custom.auction_id.blank? ? "-" : \
+        (link_to custom.auction_id, popup_auction_path(auction_id: custom.auction_id), \
+         'remote' => true, 'data-toggle' => "modal", 'data-target' => "#popupModal", \
+         'class' => "") %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>

@@ -3,7 +3,9 @@
     <%= auction.end_time.nil? ? "-" : auction.end_time.strftime("%F") %>
   </div>
   <div class="col-sm-2">
-    <%= auction.auction_id %>
+    <%= link_to auction.auction_id, popup_auction_path(auction_id: auction.auction_id), \
+        'remote' => true, 'data-toggle' => "modal", 'data-target' => "#popupModal", \
+        'class' => "" %>
   </div>
   <div class="col-sm-7">
     <%= link_to auction.auction_name, auction.url, :target => '_blank' unless auction.url.blank? %>

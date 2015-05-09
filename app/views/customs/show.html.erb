@@ -1,47 +1,9 @@
 <% provide(:title, '表示,カスタム') %>
 <h3>カスタム表示</h3>
-<div class="form-horizontal">
-  <div class="form-group grid">
-    <div class="col-sm-1 header">ID</div>
-    <div class="col-sm-2"><%= @custom.custom_id %></div>
-    <div class="col-sm-1 header">名称</div>
-    <div class="col-sm-5"><%= @custom.custom_name %></div>
-    <div class="col-sm-1 header">登録日</div>
-    <div class="col-sm-2"><%= @custom.regist_date.nil? ? "-" : @custom.regist_date %></div>
-  </div>
+<%= render :partial => 'custom_show', locals: {custom: @custom} %>
 
-  <div class="form-group grid">
-    <div class="col-sm-1 header">オーク品</div>
-    <div class="col-sm-2"><%= is_auction_name_help(@custom.is_auction) %></div>
-    <div class="col-sm-1 header">オーク名</div>
-    <div class="col-sm-5">
-      <%= @custom.auction_id.blank? ? "-" : auction_name_help(@custom.auction_id) %>
-    </div>
-    <div class="col-sm-1 header">比率</div>
-    <div class="col-sm-2"><%= percentage_name_help(@custom.percentage) %></div>
-  </div>
-
-  <div class="form-group grid">
-    <div class="col-sm-1 header">単価</div>
-    <div class="col-sm-2 text-right"><%= commas_help(@custom.net_cost.to_i) %>円</div>
-    <div class="col-sm-1 header">消費税</div>
-    <div class="col-sm-2 text-right"><%= commas_help(@custom.tax_cost.to_i) %>円</div>
-    <div class="col-sm-1 header">その他</div>
-    <div class="col-sm-2 text-right"><%= commas_help(@custom.other_cost.to_i) %>円</div>
-    <div class="col-sm-1 header">総額</div>
-    <div class="col-sm-2 text-right"><%= commas_help(custom_total_cost_help(@custom.custom_id)) %>円</div>
-  </div>
-
-  <div class="form-group grid row_last">
-    <div class="col-sm-1 header memo">メモ</div>
-    <div class="col-sm-11">
-      <%= @custom.memo.blank? ? "-" : simple_format(@custom.memo, class: 'memo-data') %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-12 text-right">
-      <%= link_to "戻る", customs_path, class: "btn btn-default" %>
-    </div>
+<div class="form-group">
+  <div class="col-sm-12 text-right">
+    <%= link_to "戻る", customs_path, class: "btn btn-default" %>
   </div>
 </div>

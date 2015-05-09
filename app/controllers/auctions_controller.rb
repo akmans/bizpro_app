@@ -132,6 +132,14 @@ class AuctionsController < ApplicationController
     render :json => auctions_hash_help(params[:auction_id])
   end
 
+  # ajax popup auction
+  def ajax_popup_auction
+    # call show
+    show
+    # render page
+    render 'popup_auction'
+  end
+
   private
     # strong parameters method.
     def auction_params

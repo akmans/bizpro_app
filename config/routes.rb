@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   post   '/shipments/search'        => 'shipments#search'
   post   '/summaries/search'        => 'summaries#search'
   get    '/popup/product'           => 'products#ajax_popup_product', as: 'popup_product'
+  get    '/popup/auction'           => 'auctions#ajax_popup_auction', as: 'popup_auction'
+  get    '/popup/custom'            => 'customs#ajax_popup_custom',   as: 'popup_custom'
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
