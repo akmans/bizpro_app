@@ -1,3 +1,4 @@
 $('.modal-body').html("<%= j (render :partial => 'custom_show', \
     locals: { custom: @custom}) %>");
 $('#popupModalLabel').html("カスタム情報");
+$('.modal-body .popup').removeAttr( "data-toggle" ).removeAttr( "data-target" );
