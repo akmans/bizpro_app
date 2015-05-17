@@ -9,12 +9,16 @@
     <%= commas_help(sold.sold_price.round(3)) %>元
   </div>
   <div class="col-xs-6 col-md-2 text-right">
-    <%= commas_help(sold.ship_charge.round(3)) unless sold.ship_charge.nil? %>元
+    <%= commas_help(sold.ship_charge.round(3)) unless sold.ship_charge.blank? %>
+    <%= 0 if sold.ship_charge.blank? %>
+    元
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-6 col-md-2 text-right">
-    <%= commas_help(sold.other_charge.round(3)) unless sold.other_charge.nil? %>元
+    <%= commas_help(sold.other_charge.round(3)) unless sold.other_charge.blank? %>
+    <%= 0 if sold.other_charge.blank? %>
+    元
   </div>
   <div class="col-xs-6 col-md-2 text-right">
     <%= commas_help(sold_total_price_help(sold).round(3)) %>元
