@@ -9,7 +9,7 @@
     <%= commas_help(sold.sold_price.round(3)) %>元
   </div>
   <div class="col-xs-6 col-md-2 text-right">
-    <%= commas_help(sold.ship_charge.round(3)) unless sold.other_charge.nil? %>元
+    <%= commas_help(sold.ship_charge.round(3)) unless sold.ship_charge.nil? %>元
   </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
