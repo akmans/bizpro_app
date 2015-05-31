@@ -8,6 +8,8 @@ class DashboardsController < ApplicationController
   # show action
   def show
     @summary = {}
+    # cash flow info
+    @summary["cash_flow_domestic"] = domestic_cash_flow_info
     # sell info
     @summary["domestic"] = domestic_sold_info
     @summary["offshore"] = offshore_sold_info
@@ -39,6 +41,36 @@ class DashboardsController < ApplicationController
   # nil
 
   private
+    # get domestic cash flow data info
+    def domestic_cash_flow_info
+      domestic = {}
+      # all (sold_flg: 0-bought, data_type: 0-all)
+      all_bought_auction = sum_auction(0, 0)
+      # all (is_auction: 0-not auction, data_type: 0-all)
+      all_bought_custom = sum_custom(0, 0)
+      domestic["bought_all_amount"] = all_bought_auction + all_bought_custom
+      # year (sold_flg: 0-bought, data_type: 1-year)
+      year_bought_auction = sum_auction(0, 1)
+      # year (is_auction: 0-not auction, data_type: 1-year)
+      year_bought_custom = sum_custom(0, 1)
+      domestic["bought_year_amount"] = year_bought_auction + year_bought_custom
+      # month (sold_flg: 0-bought, data_type: 2-month)
+      month_bought_auction = sum_auction(0, 2)
+      # month (is_auction: 0-not auction, data_type: 2-month)
+      month_bought_custom = sum_custom(0, 2)
+      domestic["bought_month_amount"] = month_bought_auction + month_bought_custom
+      # all (sold_flg: 1-sold, data_type: 0-all)
+      all_sold_auction = sum_auction(1, 0)
+      domestic["sold_all_amount"] = all_sold_auction
+      # year (sold_flg: 1-sold, data_type: 1-year)
+      year_sold_auction = sum_auction(1, 1)
+      domestic["sold_year_amount"] = year_sold_auction
+      # month (sold_flg: 1-sold, data_type: 2-month)
+      month_sold_auction = sum_auction(0, 2)
+      domestic["sold_month_amount"] = month_sold_auction
+      return domestic
+    end
+
     # get offshore sold data info
     def offshore_sold_info
       t = Time.now
