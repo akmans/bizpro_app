@@ -41,37 +41,37 @@ class DashboardsController < ApplicationController
   # nil
 
   private
-    # get domestic cash flow data info
+    # domestic_cash_flow_info function
     def domestic_cash_flow_info
       domestic = {}
-      # all (sold_flg: 0-bought, data_type: 0-all)
-      all_bought_auction = sum_auction(0, 0)
+      # all (sold_flg: 0-bought, data_type: 0-all, domestic_flg: 1-domestic)
+      all_bought_auction = sum_auction(0, 0, 1)
       # all (is_auction: 0-not auction, data_type: 0-all)
       all_bought_custom = sum_custom(0, 0)
       domestic["bought_all_amount"] = all_bought_auction + all_bought_custom
-      # year (sold_flg: 0-bought, data_type: 1-year)
-      year_bought_auction = sum_auction(0, 1)
+      # year (sold_flg: 0-bought, data_type: 1-year, domestic_flg: 1-domestic)
+      year_bought_auction = sum_auction(0, 1, 1)
       # year (is_auction: 0-not auction, data_type: 1-year)
       year_bought_custom = sum_custom(0, 1)
       domestic["bought_year_amount"] = year_bought_auction + year_bought_custom
-      # month (sold_flg: 0-bought, data_type: 2-month)
-      month_bought_auction = sum_auction(0, 2)
+      # month (sold_flg: 0-bought, data_type: 2-month, domestic_flg: 1-domestic)
+      month_bought_auction = sum_auction(0, 2, 1)
       # month (is_auction: 0-not auction, data_type: 2-month)
       month_bought_custom = sum_custom(0, 2)
       domestic["bought_month_amount"] = month_bought_auction + month_bought_custom
-      # all (sold_flg: 1-sold, data_type: 0-all)
-      all_sold_auction = sum_auction(1, 0)
+      # all (sold_flg: 1-sold, data_type: 0-all, domestic_flg: 1-domestic)
+      all_sold_auction = sum_auction(1, 0, 1)
       domestic["sold_all_amount"] = all_sold_auction
-      # year (sold_flg: 1-sold, data_type: 1-year)
-      year_sold_auction = sum_auction(1, 1)
+      # year (sold_flg: 1-sold, data_type: 1-year, domestic_flg: 1-domestic)
+      year_sold_auction = sum_auction(1, 1, 1)
       domestic["sold_year_amount"] = year_sold_auction
-      # month (sold_flg: 1-sold, data_type: 2-month)
-      month_sold_auction = sum_auction(0, 2)
+      # month (sold_flg: 1-sold, data_type: 2-month, domestic_flg: 1-domestic)
+      month_sold_auction = sum_auction(1, 2, 1)
       domestic["sold_month_amount"] = month_sold_auction
       return domestic
     end
 
-    # get offshore sold data info
+    # offshore_sold_info function
     def offshore_sold_info
       t = Time.now
       offshore = {}
@@ -108,7 +108,7 @@ class DashboardsController < ApplicationController
       return offshore
     end
 
-    # get domesitc sold data info
+    # domesitc_sold_info function
     def domestic_sold_info
       t = Time.now
       domestic = {}
@@ -145,33 +145,33 @@ class DashboardsController < ApplicationController
       return domestic
     end
 
-    # get auction data info
+    # auction_info function
     def auction_info
       auction = {}
       # ------------- sold data --------------------
       # all auction data(sold)
       auction["sold_all_cnt"] = count_auction(1, 0)
-      auction["sold_all_amount"] = sum_auction(1, 0)
+      auction["sold_all_amount"] = sum_auction(1, 0, 2)
       # auction data of current year(sold)
       auction["sold_year_cnt"] = count_auction(1, 1)
-      auction["sold_year_amount"] = sum_auction(1, 1)
+      auction["sold_year_amount"] = sum_auction(1, 1, 2)
       # auction date of current month(sold)
       auction["sold_month_cnt"] = count_auction(1, 2)
-      auction["sold_month_amount"] = sum_auction(1, 2)
+      auction["sold_month_amount"] = sum_auction(1, 2, 2)
       # ------------- bought data --------------------
       # all auction data(bought)
       auction["bought_all_cnt"] = count_auction(0, 0)
-      auction["bought_all_amount"] = sum_auction(0, 0)
+      auction["bought_all_amount"] = sum_auction(0, 0, 2)
       # auction data of current year(bought)
       auction["bought_year_cnt"] = count_auction(0, 1)
-      auction["bought_year_amount"] = sum_auction(0, 1)
+      auction["bought_year_amount"] = sum_auction(0, 1, 2)
       # auction date of current month(bought)
       auction["bought_month_cnt"] = count_auction(0, 2)
-      auction["bought_month_amount"] = sum_auction(0, 2)
+      auction["bought_month_amount"] = sum_auction(0, 2, 2)
       return auction
     end
 
-    # get custom data info
+    # custom_info function
     def custom_info
       custom = {}
       # --------- auction data --------------------
@@ -194,7 +194,7 @@ class DashboardsController < ApplicationController
       return custom
     end
 
-    # get shipment data info
+    # shipment_info function
     def shipment_info
       shipment = {}
       # shipment sending all
@@ -212,7 +212,7 @@ class DashboardsController < ApplicationController
       return shipment
     end
 
-    # get undeal product data info
+    # undeal_product_info function
     def undeal_product_info
       product = {}
       # total 
@@ -241,7 +241,7 @@ class DashboardsController < ApplicationController
       return product
     end
 
-    # get undeal auction data info
+    # undeal_auction_info function
     def undeal_auction_info
       auction = {}
       # ope_flg is null
@@ -261,7 +261,7 @@ class DashboardsController < ApplicationController
       return auction
     end
 
-    # get undeal custom data info
+    # undeal_custom_info function
     def undeal_custom_info
       custom = {}
       # product unregist
@@ -271,7 +271,7 @@ class DashboardsController < ApplicationController
       return custom
     end
 
-    # get shipment status info
+    # shipment_status_info function
     def shipment_status_info
       shipment = {}
       # shipment sending
@@ -282,7 +282,9 @@ class DashboardsController < ApplicationController
     end
 
     # ---------------------- utilities function(LEVEL 1) --------------------------
-    # count auction(date_type 0:all 1:year 2:month)
+    # count_auction function
+    # * sold_flg 0:bought 1:sold
+    # * date_type 0:all 1:year 2:month
     def count_auction(sold_flg, date_type)
       # all
       return Auction.where(sold_flg: sold_flg).all.count if date_type == 0
@@ -297,26 +299,40 @@ class DashboardsController < ApplicationController
           .where("end_time <= :date_e", {:date_e => end_date}).all.count
     end
 
-    # sum auction(date_type 0:all 1:year 2:month)
-    def sum_auction(sold_flg, date_type)
+    # sum auction
+    # * sold_flg 0:bought, 1:sold
+    # * date_type 0:all 1:year 2:month
+    # * domestic_flg 0:offshore, 1:domestic, 2:both
+    def sum_auction(sold_flg, date_type, domestic_flg)
+      # use plus if bought
+      auction = Auction.select("SUM(price * (tax_rate + 100) / 100 + " \
+          + "COALESCE(payment_cost, 0) + COALESCE(shipment_cost, 0)) as amount") if sold_flg == 0
+      # use minus if sold
+      auction = Auction.select("SUM(price * (tax_rate + 100) / 100 - " \
+          + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) as amount") if sold_flg == 1
+      # for domestic_flg
+      auction = auction.joins(" LEFT OUTER JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
+          .joins(" LEFT JOIN products ON pa_maps.product_id = products.product_id ") if domestic_flg != 2
+      # for domestic_flg
+      auction = auction.where(" (products.is_domestic is null or products.is_domestic != 0) ") if domestic_flg == 1
+      auction = auction.where(" products.is_domestic = 0 ") if domestic_flg == 0
+      # for sold_flg
+      auction = auction.where(sold_flg: sold_flg)
       # all
-      return Auction.select("SUM(price * (tax_rate + 100) / 100 + " \
-          + "COALESCE(payment_cost, 0) + COALESCE(shipment_cost, 0)) as amount") \
-          .where(sold_flg: sold_flg).reorder('').first.amount.to_i if date_type == 0
+      return auction.reorder('').first.amount.to_i if date_type == 0
       # date interval
       beginning_date = Time.zone.now.beginning_of_year
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
       # year or month
-      return Auction.select("SUM(price * (tax_rate + 100) / 100 + " \
-          + "COALESCE(payment_cost, 0) + COALESCE(shipment_cost, 0)) as amount") \
-          .where(sold_flg: sold_flg) \
-          .where("end_time >= :date_s", {:date_s => beginning_date}) \
+      return auction.where("end_time >= :date_s", {:date_s => beginning_date}) \
           .where("end_time <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_i
     end
 
-    # count custom(date_type 0:all 1:year 2:month)
+    # count_custom fuction
+    # * is_auction 0:not_auction 1:auction
+    # * date_type 0:all 1:year 2:month
     def count_custom(is_auction, date_type)
       # all
       return Custom.where(is_auction: is_auction).all.count if date_type == 0
@@ -331,7 +347,9 @@ class DashboardsController < ApplicationController
           .where("regist_date <= :date_e", {:date_e => end_date}).all.count
     end
 
-    # sum custom(date_type 0:all 1:year 2:month)
+    # sum_custom function
+    # * is_auction 0:not_auction 1:auction
+    # * date_type 0:all 1:year 2:month
     def sum_custom(is_auction, date_type)
       # all
       return Custom.select("SUM(COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) " \
@@ -349,7 +367,9 @@ class DashboardsController < ApplicationController
           .where("created_at <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_i
     end
 
-    # count shipment(date_type 0:all 1:year 2:month)
+    # count_shipment function
+    # * date_flg 0:sent_date 1:arrived_date
+    # * date_type 0:all 1:year 2:month
     def count_shipment(date_flg, date_type)
       # all
       return Shipment.all.count if date_type == 0
@@ -368,5 +388,4 @@ class DashboardsController < ApplicationController
           if date_flg == 1
       return count
     end
-
 end

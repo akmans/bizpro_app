@@ -81,7 +81,7 @@
     </thead>
     <tbody>
     <tr>
-      <th>今月(<span id="month-id"><%= Date.today.month %></span>月)</th>
+      <th>今月(<span><%= Date.today.month %></span>月)</th>
       <td class="text-right cell-no-padding">
         ###0
       </td>
@@ -90,7 +90,7 @@
       <td class="text-right">&nbsp;</td>
     </tr>
     <tr>
-      <th>今年(<span id="year-id"><%= Date.today.year %></span>年)</th>
+      <th>今年(<span><%= Date.today.year %></span>年)</th>
       <td class="text-right cell-no-padding">
         ###0
       </td>
@@ -134,7 +134,7 @@
     </thead>
     <tbody>
     <tr>
-      <th>今月(<span id="month-id"><%= Date.today.month %></span>月)</th>
+      <th>今月(<span><%= Date.today.month %></span>月)</th>
       <td class="text-right cell-no-padding">
         <%= link_to @summary["domestic"]["sold_month_cnt"].to_s + "件", "javascript:;", \
             id: "link-domestic-sold-month", class: "" %>
@@ -144,7 +144,7 @@
       <td class="text-right"><%=@summary["domestic"]["sold_month_profit_rate"] %>%</td>
     </tr>
     <tr>
-      <th>今年(<span id="year-id"><%= Date.today.year %></span>年)</th>
+      <th>今年(<span><%= Date.today.year %></span>年)</th>
       <td class="text-right cell-no-padding">
         <%= link_to @summary["domestic"]["sold_year_cnt"].to_s + "件", "javascript:;", \
             id: "link-domestic-sold-year", class: "" %>
