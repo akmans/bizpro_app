@@ -354,7 +354,7 @@ class DashboardsController < ApplicationController
     def sum_custom(is_auction, date_type, cancel_flg)
       custom = Custom.select("SUM(COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) " \
           + " + COALESCE(other_cost, 0)) as amount").where(is_auction: is_auction)
-      custom = custom.where(" (cancel_flg is null or cancel_flg == 0) ") if cancel_flg == 2
+      custom = custom.where(" (cancel_flg is null or cancel_flg = 0) ") if cancel_flg == 2
       custom = custom.where(cancel_flg: 1) if cancel_flg == 1
       # all
       return custom.reorder('').first.amount.to_i if date_type == 0
