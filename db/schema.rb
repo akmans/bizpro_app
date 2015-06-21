@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150416134625) do
+ActiveRecord::Schema.define(version: 20150621030259) do
 
   create_table "auctions", id: false, force: true do |t|
     t.string   "auction_id",    limit: 20,  null: false
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20150416134625) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.date     "regist_date"
+    t.integer  "cancel_flg",  limit: 1
   end
 
   add_index "customs", ["auction_id"], name: "index_customs_on_auction_id"

@@ -2,7 +2,9 @@
   <div class="col-xs-4 col-md-1">
     <%= custom.regist_date.nil? ? "-" : custom.regist_date.strftime("%m/%d/%y") %>
   </div>
-  <div class="col-xs-8 col-md-5 hide-text-overflow"><%= custom.custom_name %></div>
+  <div class="col-xs-8 col-md-5 hide-text-overflow <%= 'text-danger' if custom.cancel_flg == 1 %>">
+    <%= custom.custom_name %>
+  </div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-12 col-md-1 cell-no-padding">

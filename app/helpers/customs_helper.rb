@@ -41,10 +41,11 @@ module CustomsHelper
     key.blank? ? "-" : percentage_hash_help[key.to_s]
   end
 
-  # is_auction_name
-  def is_auction_name_help(key)
-     key.blank? ? "-" : (key == 1 ? "オークション品" : "-")
-  end
+# delete 2015.06.21 reason: not shown on page custom show
+#  # is_auction_name
+#  def is_auction_name_help(key)
+#     key.blank? ? "-" : (key == 1 ? "オークション品" : "-")
+#  end
 
   # custom_total_cost
   def custom_total_cost_help(custom_id)

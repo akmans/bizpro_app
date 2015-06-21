@@ -3,20 +3,33 @@
     <div class="col-sm-1 header">ID</div>
     <div class="col-sm-2"><%= custom.custom_id %></div>
     <div class="col-sm-1 header">名称</div>
-    <div class="col-sm-5"><%= custom.custom_name %></div>
-    <div class="col-sm-1 header">登録日</div>
-    <div class="col-sm-2"><%= custom.regist_date.nil? ? "-" : custom.regist_date %></div>
+    <div class="col-sm-8">
+      <%if custom.cancel_flg == 1 %>
+        <span class="text-danger">【赤計上】</span>
+      <% end %>
+      <%= custom.custom_name %>
+    </div>
   </div>
 
   <div class="form-group grid">
-    <div class="col-sm-1 header">オーク品</div>
-    <div class="col-sm-2"><%= is_auction_name_help(custom.is_auction) %></div>
-    <div class="col-sm-1 header">オーク名</div>
-    <div class="col-sm-5">
-      <%= custom.auction_id.blank? ? "-" : auction_name_help(custom.auction_id) %>
+    <div class="col-sm-1 header">登録日</div>
+    <div class="col-sm-2"><%= custom.regist_date.nil? ? "-" : custom.regist_date %></div>
+    <div class="col-sm-1 header">オークID</div>
+    <div class="col-sm-2">
+      <%= custom.auction_id.blank? ? "-" : \
+          (link_to custom.auction_id, popup_auction_path(auction_id: custom.auction_id), \
+           'remote' => true, 'data-toggle' => "modal", 'data-target' => "#popupModal", \
+           'class' => "popup") %>
     </div>
     <div class="col-sm-1 header">比率</div>
     <div class="col-sm-2"><%= percentage_name_help(custom.percentage) %></div>
+    <div class="col-sm-1 header">商品ID</div>
+    <div class="col-sm-2">
+      <%= @product_id.blank? ? '-' : \
+          (link_to @product_id, popup_product_path(product_id: @product_id), \
+           'remote' => true, 'data-toggle' => "modal", 'data-target' => "#popupModal", \
+           'class' => "") %>
+    </div>
   </div>
 
   <div class="form-group grid">
@@ -37,3 +50,5 @@
     </div>
   </div>
 </div>
+
+<%= render 'shared/popup' %>

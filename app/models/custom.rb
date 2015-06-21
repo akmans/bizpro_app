@@ -16,6 +16,10 @@ class Custom < ActiveRecord::Base
   validates :tax_cost, numericality: { only_integer: true }, allow_blank: true
   validates :other_cost, numericality: { only_integer: true }, allow_blank: true
   validates :memo, length: { maximum: 200}, allow_blank: true
+  validates :cancel_flg, allow_blank: true, 
+            :numericality => {:only_integer => true,
+                              :greater_than_or_equal_to => 0,
+                              :less_than_or_equal_to => 1 }
 
   before_create do
     self.custom_id = generate_custom_id if custom_id.blank?

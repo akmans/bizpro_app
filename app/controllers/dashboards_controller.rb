@@ -47,17 +47,17 @@ class DashboardsController < ApplicationController
       # all (sold_flg: 0-bought, data_type: 0-all, domestic_flg: 1-domestic)
       all_bought_auction = sum_auction(0, 0, 1)
       # all (is_auction: 0-not auction, data_type: 0-all)
-      all_bought_custom = sum_custom(0, 0)
+      all_bought_custom = sum_custom(0, 0, 2)
       domestic["bought_all_amount"] = all_bought_auction + all_bought_custom
       # year (sold_flg: 0-bought, data_type: 1-year, domestic_flg: 1-domestic)
       year_bought_auction = sum_auction(0, 1, 1)
       # year (is_auction: 0-not auction, data_type: 1-year)
-      year_bought_custom = sum_custom(0, 1)
+      year_bought_custom = sum_custom(0, 1, 2)
       domestic["bought_year_amount"] = year_bought_auction + year_bought_custom
       # month (sold_flg: 0-bought, data_type: 2-month, domestic_flg: 1-domestic)
       month_bought_auction = sum_auction(0, 2, 1)
       # month (is_auction: 0-not auction, data_type: 2-month)
-      month_bought_custom = sum_custom(0, 2)
+      month_bought_custom = sum_custom(0, 2, 2)
       domestic["bought_month_amount"] = month_bought_auction + month_bought_custom
       # all (sold_flg: 1-sold, data_type: 0-all, domestic_flg: 1-domestic)
       all_sold_auction = sum_auction(1, 0, 1)
@@ -184,13 +184,13 @@ class DashboardsController < ApplicationController
       # --------- general data --------------------
       # all custom data(general)
       custom["general_all"] = count_custom(0, 0)
-      custom["general_all_sum"] = sum_custom(0, 0)
+      custom["general_all_sum"] = sum_custom(0, 0, 0)
       # custom data of current year(general)
       custom["general_year"] = count_custom(0, 1)
-      custom["general_year_sum"] = sum_custom(0, 1)
+      custom["general_year_sum"] = sum_custom(0, 1, 0)
       # custom date of current month(general)
       custom["general_month"] = count_custom(0, 2)
-      custom["general_month_sum"] = sum_custom(0, 2)
+      custom["general_month_sum"] = sum_custom(0, 2, 0)
       return custom
     end
 
@@ -350,20 +350,21 @@ class DashboardsController < ApplicationController
     # sum_custom function
     # * is_auction 0:not_auction 1:auction
     # * date_type 0:all 1:year 2:month
-    def sum_custom(is_auction, date_type)
+    # * cancel_flg 0:all 1:only cancel, 2:cancel excluded
+    def sum_custom(is_auction, date_type, cancel_flg)
+      custom = Custom.select("SUM(COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) " \
+          + " + COALESCE(other_cost, 0)) as amount").where(is_auction: is_auction)
+      custom = custom.where(" (cancel_flg is null or cancel_flg == 0) ") if cancel_flg == 2
+      custom = custom.where(cancel_flg: 1) if cancel_flg == 1
       # all
-      return Custom.select("SUM(COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) " \
-          + " + COALESCE(other_cost, 0)) as amount") \
-          .where(is_auction: is_auction).reorder('').first.amount.to_i if date_type == 0
+      return custom.reorder('').first.amount.to_i if date_type == 0
       # date interval
       beginning_date = Time.zone.now.beginning_of_year
       beginning_date = Time.zone.now.beginning_of_month if date_type == 2
       end_date = Time.zone.now.end_of_year
       end_date = Time.zone.now.end_of_month if date_type == 2
       # year or month
-      return Custom.select("SUM(COALESCE(net_cost, 0) + COALESCE(tax_cost, 0) " \
-          + " + COALESCE(other_cost, 0)) as amount").where(is_auction: is_auction) \
-          .where("created_at >= :date_s", {:date_s => beginning_date}) \
+      return custom.where("created_at >= :date_s", {:date_s => beginning_date}) \
           .where("created_at <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_i
     end
 

@@ -144,6 +144,32 @@ class CustomTest < ActiveSupport::TestCase
     assert_not @custom.valid?
   end
 
+  # test field cancel_flg
+  test "cancel_flg should allow blank" do
+    @custom.cancel_flg = nil
+    assert @custom.valid?
+  end
+
+  test "cancel_flg should be numericality" do
+    @custom.cancel_flg = "a"
+    assert_not @custom.valid?
+  end
+
+  test "cancel_flg should be integer" do
+    @custom.cancel_flg = 0.2
+    assert_not @custom.valid?
+  end
+
+  test "cancel_flg should be more than 0" do
+    @custom.cancel_flg = -1
+    assert_not @custom.valid?
+  end
+
+  test "cancel_flg should be less than 2" do
+    @custom.cancel_flg = 2
+    assert_not @custom.valid?
+  end
+
   # test ORDER BY
   test "order should be newest regist_date first" do
     assert_equal Custom.first, customs(:two)

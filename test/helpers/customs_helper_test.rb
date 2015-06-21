@@ -51,12 +51,12 @@ class CustomsHelperTest < ActionView::TestCase
     assert_equal "９０％", percentage_name_help(90)
   end
 
-  # test is_auction_name_help
-  test "test is auction name help" do
-    assert_equal "-", is_auction_name_help(nil)
-    assert_equal "-", is_auction_name_help(0)
-    assert_equal "オークション品", is_auction_name_help(1)
-  end
+#  # test is_auction_name_help
+#  test "test is auction name help" do
+#    assert_equal "-", is_auction_name_help(nil)
+#    assert_equal "-", is_auction_name_help(0)
+#    assert_equal "オークション品", is_auction_name_help(1)
+#  end
 
   # test custom_total_cost_help
   test "test custom total cost help" do

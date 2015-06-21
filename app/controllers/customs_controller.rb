@@ -16,6 +16,8 @@ class CustomsController < ApplicationController
   def show
     # get custom data by custom_id.
     @custom = Custom.find(params[:custom_id])
+    pc_maps = PcMap.where(custom_id: params[:custom_id]).first
+    @product_id = pc_maps.product_id unless pc_maps.nil?
   end
 
   # new action
@@ -104,14 +106,14 @@ class CustomsController < ApplicationController
     def custom_params
       params.require(:custom)
             .permit(:custom_name, :is_auction, :auction_id,:percentage,
-                    :net_cost, :tax_cost, :other_cost, :memo, :regist_date)
+                    :net_cost, :tax_cost, :other_cost, :memo, :regist_date, :cancel_flg)
     end
 
     # search custom
     def search_custom(condition, page_ix)
       # construct where condition
       custom = Custom.select("customs.custom_id, custom_name, auction_id, " \
-          + "regist_date, pc_maps.product_id, " \
+          + "regist_date, pc_maps.product_id, customs.cancel_flg, " \
           + "CASE WHEN pc_maps.custom_id is null THEN '未' ELSE '-' END as regist_status") \
           .joins("LEFT OUTER JOIN pc_maps ON customs.custom_id = pc_maps.custom_id")
       # custom_name
