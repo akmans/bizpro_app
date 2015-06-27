@@ -26,4 +26,5 @@ SELECT
   0,
   1 as is_domestic
 FROM customs
-WHERE is_auction = 0;
+WHERE is_auction = 0
+AND (cancel_flg is null OR cancel_flg = 0);
