@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   get    '/ajax/auction_percentage' => 'customs#ajax_auction_percentage'
   get    '/auth/:provider/callback' => 'auctions#callback' #戻り先
   get    '/auth/:provider/logout'   => 'auctions#logout'   #ログアウト
-  get    '/auctions/initload'        => 'auctions#initload' #ロード画面初期化
+  get    '/auctions/initload'       => 'auctions#initload' #ロード画面初期化
   get    '/auth/:provider/loaddata1'=> 'auctions#load_won_data' #ロードデータ
   get    '/auth/:provider/loaddata2'=> 'auctions#load_closed_data' #ロードデータ
+  post   '/cashflows/search'        => 'cashflows#search'
   post   '/auctions/search'         => 'auctions#search'
   post   '/products/search'         => 'products#search'
   post   '/customs/search'          => 'customs#search'
@@ -22,6 +23,7 @@ Rails.application.routes.draw do
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
+  resources :cashflows, :only => [:index]
   resources :auctions, param: :auction_id
   resources :brands, param: :brand_id, :except => [:show] do
     resources :modus, param: :modu_id, :except => [:show]

@@ -191,6 +191,34 @@ class ApplicationController < ActionController::Base
       return condition
     end
 
+    # remember cashflows search condition
+    def refresh_cashflows_search_condition_help(par)
+      # new condition hash
+      condition = {}
+      # refresh condition
+      unless par.nil?
+        # get previous condition from session
+        condition = session[:cashflows_search_form] unless session[:cashflows_search_form].nil?
+        # is_in
+        condition["is_in"] = par[:is_in] unless par[:is_in].nil?
+        # is_auction
+        condition["is_auction"] = par[:is_auction] unless par[:is_auction].nil?
+        # year start
+        condition["year_s"] = par[:year_s] unless par[:year_s].nil?
+        # month start
+        condition["month_s"] = par[:month_s] unless par[:month_s].nil?
+        # year end
+        condition["year_e"] = par[:year_e] unless par[:year_e].nil?
+        # month end
+        condition["month_e"] = par[:month_e] unless par[:month_e].nil?
+#        # page index
+#        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
+        # refresh session
+        session[:cashflows_search_form] = condition
+      end
+      return condition
+    end
+
     # offshore sold product
     def offshore_sold_product(condition)
       beginning_date = end_date = nil

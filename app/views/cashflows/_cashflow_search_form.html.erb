@@ -1,0 +1,35 @@
+<%= form_tag("/cashflows/search", method: "post") do %>
+<div class="form-horizontal">
+  <div class="form-group grid row_last">
+    <div class="col-sm-1 header">区分</div>
+    <div class="col-sm-2">
+      <%= select_tag(:is_in, options_for_select(is_in_hash_help.invert,
+            selected: condition["is_in"] ), {:class => 'form-control form-field'}) %>
+    </div>
+    <div class="col-sm-1 header">オーク品</div>
+    <div class="col-sm-2">
+      <%= select_tag(:is_auction, options_for_select(is_auction_hash_help.invert,
+            selected: condition["is_auction"] ), {:class => 'form-control form-field'}) %>
+    </div>
+    <div class="col-sm-1 header">発生日</div>
+    <div class="col-sm-5">
+      <%= select_tag(:year_s, options_for_select(year_hash_help.invert,
+            selected: condition["year_s"] ), {:class => 'form-control form-field select-inline'}) %>
+      <%= select_tag(:month_s, options_for_select(month_hash_help.invert,
+            selected: condition["month_s"] ), {:class => 'form-control form-field select-inline'}) %>
+      〜
+      <%= select_tag(:year_e, options_for_select(year_hash_help.invert,
+            selected: condition["year_e"] ), {:class => 'form-control form-field select-inline'}) %>
+      <%= select_tag(:month_e, options_for_select(month_hash_help.invert,
+            selected: condition["month_e"] ), {:class => 'form-control form-field select-inline'}) %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-12 text-right">
+      <%= button_tag "Clear", type: 'button', id: "btn-cashflow-clear", class: "btn btn-default" %>
+      <%= submit_tag("Search", {:class => 'btn btn-primary'}) %>
+    </div>
+  </div>
+</div>
+<% end %>

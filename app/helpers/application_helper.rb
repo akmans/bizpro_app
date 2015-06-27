@@ -42,6 +42,11 @@ module ApplicationHelper
     return year
   end
 
+  # generate is in hash
+  def is_in_hash_help
+    {"" => "(全部)", "0" => "OUT", "1" => "IN"}
+  end
+
   # generate is auction hash
   def is_auction_hash_help
     {"" => "(全部)", "0" => "非オーク品", "1" => "オーク品"}

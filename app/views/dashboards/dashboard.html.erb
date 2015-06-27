@@ -7,10 +7,10 @@
 <div class="table-responsive col-md-6 cell-no-padding">
   <table class="table table-hover" style="border:0">
     <col width="20%">
-    <col width="15%">
     <col width="25%">
     <col width="25%">
-    <col width="15%">
+    <col width="25%">
+    <col width="5%">
     <thead>
       <th class="">国内</th>
       <th class="text-right">収入額</th>
@@ -22,10 +22,14 @@
     <tr>
       <th>今月(<span id="month-id"><%= Date.today.month %></span>月)</th>
       <td class="text-right">
-        <%=commas_help(@summary["cash_flow_domestic"]["sold_month_amount"].to_i) %>円
+        <%= link_to commas_help(@summary["cash_flow_domestic"]["sold_month_amount"].to_i) \
+            + "円", "javascript:;", id: "link-cashflow-in-month", class: "" 
+         %>
       </td>
       <td class="text-right cell-no-padding">
-        <%=commas_help(@summary["cash_flow_domestic"]["bought_month_amount"].to_i) %>円
+        <%= link_to commas_help(@summary["cash_flow_domestic"]["bought_month_amount"].to_i) \
+            + "円", "javascript:;", id: "link-cashflow-out-month", class: "" 
+         %>
       </td>
       <td class="text-right">
         <%=commas_help(@summary["cash_flow_domestic"]["sold_month_amount"].to_i \
@@ -36,10 +40,14 @@
     <tr>
       <th>今年(<span id="year-id"><%= Date.today.year %></span>年)</th>
       <td class="text-right">
-        <%=commas_help(@summary["cash_flow_domestic"]["sold_year_amount"].to_i) %>円
+        <%= link_to commas_help(@summary["cash_flow_domestic"]["sold_year_amount"].to_i) \
+            + "円", "javascript:;", id: "link-cashflow-in-year", class: "" 
+         %>
       </td>
       <td class="text-right cell-no-padding">
-        <%=commas_help(@summary["cash_flow_domestic"]["bought_year_amount"].to_i) %>円
+        <%= link_to commas_help(@summary["cash_flow_domestic"]["bought_year_amount"].to_i) \
+            + "円", "javascript:;", id: "link-cashflow-out-year", class: "" 
+         %>
       </td>
       <td class="text-right">
         <%=commas_help(@summary["cash_flow_domestic"]["sold_year_amount"].to_i \
@@ -50,10 +58,14 @@
     <tr>
       <th>全部</th>
       <td class="text-right">
-        <%=commas_help(@summary["cash_flow_domestic"]["sold_all_amount"].to_i) %>円
+        <%= link_to commas_help(@summary["cash_flow_domestic"]["sold_all_amount"].to_i) \
+            + "円", "javascript:;", id: "link-cashflow-in-all", class: "" 
+         %>
       </td>
       <td class="text-right cell-no-padding">
-        <%=commas_help(@summary["cash_flow_domestic"]["bought_all_amount"].to_i) %>円
+        <%= link_to commas_help(@summary["cash_flow_domestic"]["bought_all_amount"].to_i) \
+            + "円", "javascript:;", id: "link-cashflow-out-all", class: "" 
+         %>
       </td>
       <td class="text-right">
         <%=commas_help(@summary["cash_flow_domestic"]["sold_all_amount"].to_i \
@@ -68,10 +80,10 @@
 <div class="table-responsive col-md-6 cell-no-padding">
   <table class="table table-hover" style="border:0">
     <col width="20%">
-    <col width="15%">
     <col width="25%">
     <col width="25%">
-    <col width="15%">
+    <col width="25%">
+    <col width="5%">
     <thead>
       <th class="">海外</th>
       <th class="text-right">支出額</th>

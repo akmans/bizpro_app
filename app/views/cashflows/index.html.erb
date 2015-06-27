@@ -1,0 +1,22 @@
+<% provide(:title, '一覧,商品') %>
+<h3>検索条件</h3>
+<%= render :partial => 'cashflow_search_form', locals: { condition: @condition } %>
+<h3>キャッシュフロー一覧</h3>
+<div id="total_entries" class="pull-right line-height-22">総件数：<%= @cashflows.total_entries %>件</div>
+<%= will_paginate(@cashflows, :params => { :controller => "cashflows", :action => "index"}) %>
+<div class="clearfix"></div>
+<div class="row header">
+  <div class="col-xs-4 col-md-1">発生日</div>
+  <div class="col-xs-8 col-md-2">ID</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-12 col-md-7">名称</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-6 col-md-1 text-center">区分</div>
+  <div class="col-xs-6 col-md-1 text-center">総額</div>
+</div>
+<%= render @cashflows %>
+<%= will_paginate(@cashflows, :params => { :controller => "cashflows", :action => "index"}) %>
+
+<%= render 'shared/popup' %>
