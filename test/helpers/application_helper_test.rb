@@ -25,4 +25,16 @@ class ApplicationHelperTest < ActionView::TestCase
     key = 123456789
     assert_equal "1-2345-6789", hiffen_help(key)
   end
+
+  # test is_domestic_hash_help
+  test "test is domestic hash help" do
+    expected = {"0" => "海外", "1" => "国内", "2" => "発送中"}
+    assert_equal expected, is_domestic_hash_help
+  end
+
+  # test is_domestic_name_help
+  test "test is domestic name help" do
+    assert_equal "海外", is_domestic_name_help(0)
+    assert_equal "国内", is_domestic_name_help(1)
+  end
 end

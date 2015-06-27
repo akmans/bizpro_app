@@ -47,9 +47,9 @@ class CashflowsController < ApplicationController
       # is_in
       cashflow = cashflow.where(is_in: condition["is_in"].to_i) \
                  unless condition["is_in"].blank?
-      # is_auction
-      cashflow = cashflow.where(is_auction: condition["is_auction"].to_i) \
-                 unless condition["is_auction"].blank?
+      # is_domestic
+      cashflow = cashflow.where(is_domestic: condition["is_domestic"].to_i) \
+                 unless condition["is_domestic"].blank?
       # start year month
       if !condition["year_s"].blank? && !condition["month_s"].blank?
         date_s = Date::strptime(condition["year_s"] + condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d")

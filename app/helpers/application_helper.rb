@@ -42,6 +42,16 @@ module ApplicationHelper
     return year
   end
 
+  # return is domestic hash
+  def is_domestic_hash_help
+    {"0" => "海外", "1" => "国内", "2" => "発送中"}
+  end
+
+  # return is domestic name by key
+  def is_domestic_name_help(key)
+    key.blank? ? "-" : is_domestic_hash_help[key.to_s]
+  end
+
   # generate is in hash
   def is_in_hash_help
     {"" => "(全部)", "0" => "OUT", "1" => "IN"}

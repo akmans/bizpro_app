@@ -6,7 +6,7 @@ $(document).on "page:change", ->
   # bind click event to #btn-cashflow-clear
   $("#btn-cashflow-clear").bind "click", ->
     $("#is_in").val('')
-    $("#is_auction").val('')
+    $("#is_domestic").val('1')
     $("#year_s").val('')
     $("#month_s").val('')
     $("#year_e").val('')

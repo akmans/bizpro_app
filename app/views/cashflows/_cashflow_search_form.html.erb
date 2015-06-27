@@ -1,15 +1,15 @@
 <%= form_tag("/cashflows/search", method: "post") do %>
 <div class="form-horizontal">
   <div class="form-group grid row_last">
-    <div class="col-sm-1 header">区分</div>
+    <div class="col-sm-1 header">内外区分</div>
+    <div class="col-sm-2">
+      <%= select_tag(:is_domestic, options_for_select(is_domestic_hash_help.invert,
+            selected: condition["is_domestic"] ), {:class => 'form-control form-field'}) %>
+    </div>
+    <div class="col-sm-1 header">IN/OUT</div>
     <div class="col-sm-2">
       <%= select_tag(:is_in, options_for_select(is_in_hash_help.invert,
             selected: condition["is_in"] ), {:class => 'form-control form-field'}) %>
-    </div>
-    <div class="col-sm-1 header">オーク品</div>
-    <div class="col-sm-2">
-      <%= select_tag(:is_auction, options_for_select(is_auction_hash_help.invert,
-            selected: condition["is_auction"] ), {:class => 'form-control form-field'}) %>
     </div>
     <div class="col-sm-1 header">発生日</div>
     <div class="col-sm-5">

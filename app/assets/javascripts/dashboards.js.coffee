@@ -23,32 +23,32 @@ $(document).on "page:change", ->
   # ------------------ cashflow relate --------------------
   $("#link-cashflow-in-month").bind "click", ->
     # do post action
-    doPost('/cashflows/search', {is_in: '1', \
+    doPost('/cashflows/search', {is_in: '1', is_domestic: '1', \
            year_s: $("#year-id").text(), month_s: $("#month-id").text(), \
            year_e: $("#year-id").text(), month_e: $("#month-id").text() })
   $("#link-cashflow-out-month").bind "click", ->
     # do post action
-    doPost('/cashflows/search', {is_in: '0', \
+    doPost('/cashflows/search', {is_in: '0', is_domestic: '1', \
            year_s: $("#year-id").text(), month_s: $("#month-id").text(), \
            year_e: $("#year-id").text(), month_e: $("#month-id").text() })
   $("#link-cashflow-in-year").bind "click", ->
     # do post action
-    doPost('/cashflows/search', {is_in: '1', \
+    doPost('/cashflows/search', {is_in: '1', is_domestic: '1', \
            year_s: $("#year-id").text(), month_s: 1, \
            year_e: $("#year-id").text(), month_e: 12 })
   $("#link-cashflow-out-year").bind "click", ->
     # do post action
-    doPost('/cashflows/search', {is_in: '0', \
+    doPost('/cashflows/search', {is_in: '0', is_domestic: '1', \
            year_s: $("#year-id").text(), month_s: 1, \
            year_e: $("#year-id").text(), month_e: 12 })
   $("#link-cashflow-in-all").bind "click", ->
     # do post action
-    doPost('/cashflows/search', {is_in: '1', \
+    doPost('/cashflows/search', {is_in: '1', is_domestic: '1', \
            year_s: '', month_s: '', \
            year_e: '', month_e: '' })
   $("#link-cashflow-out-all").bind "click", ->
     # do post action
-    doPost('/cashflows/search', {is_in: '0', \
+    doPost('/cashflows/search', {is_in: '0', is_domestic: '1', \
            year_s: '', month_s: '', \
            year_e: '', month_e: '' })
 

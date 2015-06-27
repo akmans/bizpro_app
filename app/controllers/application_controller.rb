@@ -201,8 +201,8 @@ class ApplicationController < ActionController::Base
         condition = session[:cashflows_search_form] unless session[:cashflows_search_form].nil?
         # is_in
         condition["is_in"] = par[:is_in] unless par[:is_in].nil?
-        # is_auction
-        condition["is_auction"] = par[:is_auction] unless par[:is_auction].nil?
+        # is_domestic
+        condition["is_domestic"] = par[:is_domestic] unless par[:is_domestic].nil?
         # year start
         condition["year_s"] = par[:year_s] unless par[:year_s].nil?
         # month start
