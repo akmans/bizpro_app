@@ -28,7 +28,7 @@
       <%= @product_id.blank? ? '-' : \
           (link_to @product_id, popup_product_path(product_id: @product_id), \
            'remote' => true, 'data-toggle' => "modal", 'data-target' => "#popupModal", \
-           'class' => "") %>
+           'class' => "popup") %>
     </div>
   </div>
 
@@ -51,4 +51,4 @@
   </div>
 </div>
 
-<%= render 'shared/popup' %>
+<!--%= render 'shared/popup' %-->
