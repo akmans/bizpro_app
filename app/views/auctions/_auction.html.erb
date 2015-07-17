@@ -37,6 +37,6 @@
   <div class="col-xs-12 col-md-2 text-right">
     <%= link_to "Dis", auction_path(auction.auction_id), class: "btn btn-default" %>
     <%= link_to "Edi", edit_auction_path(auction.auction_id), class: "btn btn-default" %>
-    <%= link_to "Del", auction, method: :delete, data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
+    <%= link_to "Del", auction_path(auction.auction_id), method: :delete, data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
   </div>
 </div>
