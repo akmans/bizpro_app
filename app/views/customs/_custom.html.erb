@@ -29,7 +29,7 @@
   <div class="col-xs-12 col-md-2 text-right">
     <%= link_to "Dis", custom_path(custom.custom_id), class: "btn btn-default" %>
     <%= link_to "Edi", edit_custom_path(custom.custom_id), class: "btn btn-default" %>
-    <%= link_to "Del", custom, method: :delete, \
+    <%= link_to "Del", custom_path(custom.custom_id), method: :delete, \
                 data: { confirm: "削除しますか?" }, class: "btn btn-default" %>
   </div>
 </div>

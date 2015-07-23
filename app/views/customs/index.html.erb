@@ -21,7 +21,7 @@
     <%= link_to "New", new_custom_path, class: "btn btn-default" %>
   </div>
 </div>
-<%= render @customs %>
+<%= render :partial => 'custom', :collection => @customs %>
 <%= will_paginate(@customs, :params => { :controller => "customs", :action => "index"}) %>
 
 <%= render 'shared/popup' %>
