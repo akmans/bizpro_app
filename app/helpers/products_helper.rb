@@ -93,4 +93,35 @@ module ProductsHelper
       end
       return info
   end
+
+  # return product profit
+  def product_profit_help(product)
+    info = {}
+    # JPY cost
+    cost = 0
+    cost = cost + product.auc_cost unless product.auc_cost.nil?
+    cost = cost + product.cus_cost unless product.cus_cost.nil?
+    cost = cost + product.shipment_cost_jpy unless product.shipment_cost_jpy.nil?
+    # RMB cost
+    cost_rmb = 0
+    cost_rmb = cost * (product.exchange_rate == 0 ? 100 : product.exchange_rate) / 100 if product.is_domestic == 0
+    cost_rmb = cost_rmb + product.shipment_cost_rmb unless product.shipment_cost_rmb.nil?
+    # JPY income
+    income = 0
+    income = income + product.auc_in unless product.auc_in.nil?
+    # RMB income
+    income_rmb = 0
+    income_rmb = product.sold_rmb unless product.sold_rmb.nil?
+    # calculation
+    info["profit_amount"] = income + cost if product.is_domestic == 1
+    info["profit_amount"] = income_rmb + cost_rmb if product.is_domestic == 0
+    info["profit_rate"] = 0
+    if product.is_domestic == 1
+      info["profit_rate"] = (income + cost) * -100 / cost unless cost == 0
+    end
+    if product.is_domestic == 0
+      info["profit_rate"] = (income_rmb + cost_rmb) * -100 / cost_rmb unless cost_rmb == 0
+    end
+    return info
+  end
 end

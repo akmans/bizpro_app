@@ -19,5 +19,5 @@
     <%= link_to "New", new_product_path, class: "btn btn-default" %>
   </div>
 </div>
-<%= render @products %>
+<%= render :partial => 'product', :collection => @products %>
 <%= will_paginate(@products, :params => { :controller => "products", :action => "index"}) %>
