@@ -113,14 +113,14 @@ module ProductsHelper
     income_rmb = 0
     income_rmb = product.sold_rmb unless product.sold_rmb.nil?
     # calculation
-    info["profit_amount"] = income + cost if product.is_domestic == 1
-    info["profit_amount"] = income_rmb + cost_rmb if product.is_domestic == 0
+    info["profit_amount"] = income - cost if product.is_domestic == 1
+    info["profit_amount"] = income_rmb - cost_rmb if product.is_domestic == 0
     info["profit_rate"] = 0
     if product.is_domestic == 1
-      info["profit_rate"] = (income + cost) * -100 / cost unless cost == 0
+      info["profit_rate"] = (income - cost) * 100 / cost unless cost == 0
     end
     if product.is_domestic == 0
-      info["profit_rate"] = (income_rmb + cost_rmb) * -100 / cost_rmb unless cost_rmb == 0
+      info["profit_rate"] = (income_rmb - cost_rmb) * 100 / cost_rmb unless cost_rmb == 0
     end
     return info
   end

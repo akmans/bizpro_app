@@ -15,7 +15,7 @@ SELECT
  (select count(*) from pc_maps pc where pc.product_id = pro.product_id) as custom_cnt,
  (select count(*) from shipment_details sd where sd.product_id = pro.product_id) as shipment_cnt,
  (select count(*) from solds ss where ss.product_id = pro.product_id) as sold_cnt,
- (select sum((-1) * auc.price * (COALESCE(auc.tax_rate, 0) + 100) / 100 - COALESCE(auc.payment_cost, 0) - COALESCE(auc.shipment_cost, 0))
+ (select sum(auc.price * (COALESCE(auc.tax_rate, 0) + 100) / 100 + COALESCE(auc.payment_cost, 0) + COALESCE(auc.shipment_cost, 0))
   from auctions auc
   where auc.sold_flg = 0 and auc.auction_id in (select auction_id from pa_maps pa where pa.product_id = pro.product_id)) as auc_cost,
  (select sum(auc.price - COALESCE(auc.payment_cost, 0) - COALESCE(auc.shipment_cost, 0))
@@ -24,10 +24,10 @@ SELECT
   (select
     sum(CASE
         WHEN COALESCE(cus.is_auction, 0) = 0
-        THEN (-1) * (COALESCE(cus.net_cost, 0) + COALESCE(cus.tax_cost, 0) + COALESCE(cus.other_cost, 0))
+        THEN (COALESCE(cus.net_cost, 0) + COALESCE(cus.tax_cost, 0) + COALESCE(cus.other_cost, 0))
         ELSE cus.percentage * (select CASE
                                       WHEN COALESCE(auc.sold_flg, 0) = 0
-                                      THEN (-1) * auc.price * (COALESCE(auc.tax_rate, 0) + 100) / 100 - COALESCE(auc.payment_cost, 0) - COALESCE(auc.shipment_cost, 0)
+                                      THEN auc.price * (COALESCE(auc.tax_rate, 0) + 100) / 100 + COALESCE(auc.payment_cost, 0) + COALESCE(auc.shipment_cost, 0)
                                       ELSE auc.price - COALESCE(auc.payment_cost, 0) - COALESCE(auc.shipment_cost, 0)
                                       END as price from auctions auc where auc.auction_id = cus.auction_id) / 100
         END)
