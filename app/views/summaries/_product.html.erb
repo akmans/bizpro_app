@@ -1,4 +1,4 @@
-<% info = profit_hash_help(product.product_id) %>
+<% info = product_profit_help(product) %>
 <div class="row">
   <div class="col-xs-4 col-md-1">
     <%= product.sold_date.nil? ? "-" : product.sold_date.strftime("%m/%d/%y") %>
