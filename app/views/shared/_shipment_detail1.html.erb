@@ -1,6 +1,9 @@
 <div class="row">
   <div class="col-sm-7">
-    【<%= shipment_detail1.product_id %>】
+    <%= link_to shipment_detail1.product_id, popup_product_path(product_id: shipment_detail1.product_id), \
+        'remote' => true, 'data-toggle' => "modal", 'data-target' => "#popupModal", \
+        'class' => "popup" %>
+    &nbsp;
     <%= product_name_help(shipment_detail1.product_id) %>
   </div>
   <div class="col-sm-1 text-right">
