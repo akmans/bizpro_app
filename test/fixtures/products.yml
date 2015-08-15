@@ -13,7 +13,7 @@ one:
 two:
   product_id: Two2
   product_name: MyString
-  is_domestic: 2
+  is_domestic: 3
   exchange_rate: 8.8
   created_at: <%= Time.zone.now - 1 %>
 

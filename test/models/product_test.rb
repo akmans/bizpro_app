@@ -65,8 +65,8 @@ class ProductTest < ActiveSupport::TestCase
     assert_not @product.valid?
   end
 
-  test "is_domestic should be less than 3" do
-    @product.is_domestic = 3
+  test "is_domestic should be less than 4" do
+    @product.is_domestic = 4
     assert_not @product.valid?
   end
 

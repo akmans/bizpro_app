@@ -44,7 +44,7 @@ module ApplicationHelper
 
   # return is domestic hash
   def is_domestic_hash_help
-    {"0" => "海外", "1" => "国内", "2" => "発送中"}
+    {"0" => "海外(共)", "1" => "国内", "2" => "海外(兄)", "3" => "発送中"}
   end
 
   # return is domestic name by key

@@ -28,13 +28,15 @@ class ApplicationHelperTest < ActionView::TestCase
 
   # test is_domestic_hash_help
   test "test is domestic hash help" do
-    expected = {"0" => "海外", "1" => "国内", "2" => "発送中"}
+    expected = {"0" => "海外(共)", "1" => "国内", "2" => "海外(兄)", "3" => "発送中"}
     assert_equal expected, is_domestic_hash_help
   end
 
   # test is_domestic_name_help
   test "test is domestic name help" do
-    assert_equal "海外", is_domestic_name_help(0)
+    assert_equal "海外(共)", is_domestic_name_help(0)
     assert_equal "国内", is_domestic_name_help(1)
+    assert_equal "海外(兄)", is_domestic_name_help(2)
+    assert_equal "発送中", is_domestic_name_help(3)
   end
 end

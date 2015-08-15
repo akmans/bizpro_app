@@ -11,7 +11,8 @@ module ProductsHelper
   # return products hash
   def products_hash_help(product_id = nil)
     p_hash = {"" => "(空白)"}
-    Product.where(is_domestic: 2).each do |product|
+    # only show data for shipping(3: 発送中)
+    Product.where(is_domestic: 3).each do |product|
       akey = product.product_id
       avalue = product.product_name
       new_hash = { akey => avalue}
