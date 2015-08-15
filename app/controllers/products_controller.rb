@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
   # show action
   def show
     # get product data by product_id.
-    @product = Product.find(params[:product_id])
+    @product = VProduct.where(:product_id => params[:product_id]).first
     # get auction data
     @auctions = Auction.where(:auction_id => PaMap.where(product_id: params[:product_id])).all
     # get custom data
@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
     # get shipment data
     @shipment_details = ShipmentDetail.where(:product_id => params[:product_id]).all
     # get sold data
-    @solds = Sold.where(product_id: @product.product_id)
+    @solds = Sold.where(:product_id => params[:product_id])
   end
 
   # new action

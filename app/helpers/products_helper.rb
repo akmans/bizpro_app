@@ -56,43 +56,43 @@ module ProductsHelper
   end
 
   # return profit hash
-  def profit_hash_help(product_id)
-      info = {}
+#  def profit_hash_help(product_id)
+#      info = {}
       # get product
-      product = Product.where(product_id: product_id).first
+#      product = Product.where(product_id: product_id).first
       # amount(bought) function defined at application helper
-      cost = cost_calculate({"product_id" => product.product_id, \
-          "is_domestic" => product.is_domestic}, nil, nil)
-      info["cost_amount"] = -1 * cost["amount"]
-      info["cost_amount_jp"] = (info["cost_amount"] || 0) if product.is_domestic == 1
-      info["cost_amount_jp"] = (info["cost_amount"] || 0) * 100 / (product.exchange_rate || 100) \
-          unless product.is_domestic == 1
+#      cost = cost_calculate({"product_id" => product.product_id, \
+#          "is_domestic" => product.is_domestic}, nil, nil)
+#      info["cost_amount"] = -1 * cost["amount"]
+#      info["cost_amount_jp"] = (info["cost_amount"] || 0) if product.is_domestic == 1
+#      info["cost_amount_jp"] = (info["cost_amount"] || 0) * 100 / (product.exchange_rate || 100) \
+#          unless product.is_domestic == 1
       # sold count
-      cnt = Product.where(product_id: product_id).where.not(sold_date: nil).count
-      if cnt == 0
+#      cnt = Product.where(product_id: product_id).where.not(sold_date: nil).count
+#      if cnt == 0
         # amount(sold) = profit amount = profit rate
-        info["sold_amount"] = info["profit_amount"] = info["profit_rate"] = 0
-      else
+#        info["sold_amount"] = info["profit_amount"] = info["profit_rate"] = 0
+#      else
         # amount(demestic sold)
-        info["sold_amount"] = Auction.select("SUM(price * (tax_rate + 100) / 100 - " \
-            + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) as amount") \
-            .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
-            .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-            .where("products.product_id = :product_id", {:product_id => product_id}) \
-            .where(sold_flg: 1).reorder('').first.amount.to_f if product.is_domestic == 1
+#        info["sold_amount"] = Auction.select("SUM(price * (tax_rate + 100) / 100 - " \
+#            + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) as amount") \
+#            .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
+#            .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
+#            .where("products.product_id = :product_id", {:product_id => product_id}) \
+#            .where(sold_flg: 1).reorder('').first.amount.to_f if product.is_domestic == 1
         # amount(offshore sold)
-        info["sold_amount"] = Sold.select("SUM(COALESCE(sold_price, 0))" \
-            + " - SUM(COALESCE(ship_charge, 0)) - SUM(COALESCE(other_charge, 0)) as amount") \
-            .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
-            .where("products.product_id = :product_id", {:product_id => product_id}) \
-            .reorder('').first.amount.to_f if product.is_domestic == 0
+#        info["sold_amount"] = Sold.select("SUM(COALESCE(sold_price, 0))" \
+#            + " - SUM(COALESCE(ship_charge, 0)) - SUM(COALESCE(other_charge, 0)) as amount") \
+#            .joins("LEFT JOIN products ON solds.product_id = products.product_id") \
+#            .where("products.product_id = :product_id", {:product_id => product_id}) \
+#            .reorder('').first.amount.to_f if product.is_domestic == 0
         # profit amount
-        info["profit_amount"] = info["sold_amount"] + info["cost_amount"]
+#        info["profit_amount"] = info["sold_amount"] + info["cost_amount"]
         # profit rate
-        info["profit_rate"] = (info["cost_amount"] != 0 ? (info["profit_amount"] * 100 / info["cost_amount"]).round(2) * -1 : 0)
-      end
-      return info
-  end
+#        info["profit_rate"] = (info["cost_amount"] != 0 ? (info["profit_amount"] * 100 / info["cost_amount"]).round(2) * -1 : 0)
+#      end
+#      return info
+#  end
 
   # return product profit
   def product_profit_help(product)
