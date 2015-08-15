@@ -200,54 +200,33 @@ class AuctionsController < ApplicationController
   # search auction
   def search_auction(condition, page_ix)
     # construct where condition
-#    auction = Auction.select("auctions.auction_id, auctions.end_time, auctions.auction_name," \
-#        + "auctions.url, auctions.sold_flg, auctions.ope_flg, " \
-#        + "CASE WHEN COALESCE(sold_flg, 0) = 0 THEN (-1) * auctions.price * " \
-#        + "(COALESCE(auctions.tax_rate, 0) + 100) / 100 - COALESCE(auctions.payment_cost, 0) - " \
-#        + "COALESCE(auctions.shipment_cost, 0) ELSE auctions.price - COALESCE(auctions.payment_cost, 0) - " \
-#        + "COALESCE(auctions.shipment_cost, 0) END as price, cat.category_name, pa.product_id") \
-#        .joins("LEFT OUTER JOIN categories cat ON auctions.category_id = cat.category_id") \
-#        .joins("LEFT OUTER JOIN pa_maps pa ON auctions.auction_id = pa.auction_id")
     search = VAuction
     # undeal auction (product unregist: 1)
-#    auction = auction.joins("LEFT OUTER JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id") \
-#          .where("pa_maps.product_id is null").where(ope_flg: 1) if condition["undeal_auction"] == '1'
     search = search.where("pa_maps.product_id is null").where(ope_flg: 1) if condition["undeal_auction"] == '1'
     # category_id
-#    auction = auction.where(category_id: condition["category_id"]) unless condition["category_id"].blank?
     search = search.where(category_id: condition["category_id"]) unless condition["category_id"].blank?
     # auction_name
-#    auction = auction.where("auction_name like :auction_name", \
-#              {:auction_name => "%#{condition['auction_name']}%"}) unless condition["auction_name"].blank?
     search = search.where("auction_name like :auction_name", \
               {:auction_name => "%#{condition['auction_name']}%"}) unless condition["auction_name"].blank?
     # start year month
     if !condition["year_s"].blank? && !condition["month_s"].blank?
       date_s = Date::strptime(condition["year_s"] + condition["month_s"].to_s.rjust(2, '0') + "01", "%Y%m%d")
-#      auction = auction.where("end_time >= :end_time", {:end_time => date_s})
       search = search.where("end_time >= :end_time", {:end_time => date_s})
     end
     # end year month
     if !condition["year_e"].blank? && !condition["month_e"].blank?
       date_e = Date::strptime(condition["year_e"] + condition["month_e"].to_s.rjust(2, '0') + "01", "%Y%m%d")
-#      auction = auction.where("end_time <= :end_time", {:end_time => date_e.end_of_month})
       search = search.where("end_time <= :end_time", {:end_time => date_e.end_of_month})
     end
     # sold_type
-#    auction = auction.where(sold_flg: condition["sold_type"]) unless condition["sold_type"].blank?
     search = search.where(sold_flg: condition["sold_type"]) unless condition["sold_type"].blank?
     # undeal auction(ope_flg is nil: 0)
-#    auction = auction.where(ope_flg: nil) if condition["undeal_auction"] == '0'
     search = search.where(ope_flg: nil) if condition["undeal_auction"] == '0'
     # undeal auction(custom unregist: 2)
-#    auction = auction.where(ope_flg: 0).where.not(auction_id: Custom.select("auction_id, SUM(percentage)") \
-#          .where("auction_id is not null").reorder('').group("auction_id") \
-#          .having("SUM(percentage) = 100").pluck(:auction_id)) if condition["undeal_auction"] == '2'
     search = search.where(ope_flg: 0).where.not(auction_id: Custom.select("auction_id, SUM(percentage)") \
           .where("auction_id is not null").reorder('').group("auction_id") \
           .having("SUM(percentage) = 100").pluck(:auction_id)) if condition["undeal_auction"] == '2'
     # paginate
-#    auction.paginate(page: page_ix, per_page: 15)
     search.paginate(page: page_ix, per_page: 15)
   end
 end

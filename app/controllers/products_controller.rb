@@ -106,19 +106,10 @@ class ProductsController < ApplicationController
   def search_product(condition, page_ix)
     # construct where condition
     product = VProduct
-#    product = Product
     # no_cost
-#    product = product.joins("LEFT OUTER JOIN (SELECT DISTINCT pa_maps.product_id FROM auctions " \
-#        + " LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id " \
-#        + " AND auctions.sold_flg = 0) ap ON products.product_id = ap.product_id" ) \
-#        .joins("LEFT OUTER JOIN (SELECT DISTINCT pc_maps.product_id FROM customs " \
-#        + " LEFT JOIN pc_maps ON customs.custom_id = pc_maps.custom_id) as cp " \
-#        + " ON products.product_id = cp.product_id")
     # no_cost = 1
-#    product = product.where("ap.product_id is null and cp.product_id is null") if condition["no_cost"] == '1'
     product = product.where("(auction_cost_cnt + custom_cnt) = 0") if condition["no_cost"] == '1'
     # no_cost = 0
-#    product = product.where("ap.product_id is not null or cp.product_id is not null") if condition["no_cost"] == '0'
     product = product.where("(auction_cost_cnt + custom_cnt) > 0") if condition["no_cost"] == '0'
     # category_id
     product = product.where(category_id: condition["category_id"]) \
