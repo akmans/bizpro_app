@@ -271,9 +271,9 @@ class ApplicationController < ActionController::Base
         # income(rmb)
         info["sold_amount"] = cost.income_rmb
         # cost
-        info["cost_amount"] = cost.cost_rmb.round(2) 
+        info["cost_amount"] = cost.cost_rmb.to_i
         info["cost_amount_jp"] = cost.cost_jp
-        info["cost_amount_cn"] = cost.cost_rmb.round(2) 
+        info["cost_amount_cn"] = cost.cost_rmb.to_i
         # profit amount
         info["profit_amount"] = info["sold_amount"] - info["cost_amount"]
         # profit rate
