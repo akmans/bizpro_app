@@ -336,7 +336,7 @@ class ApplicationController < ActionController::Base
         # cost
         info["cost_amount"] = cost.cost_jp
         info["cost_amount_jp"] = cost.cost_jp
-        info["cost_amount_cn"] = cost.cost_rmb
+        info["cost_amount_cn"] = 0
 #        p "sold_amount=#{info['sold_amount']}@cost_amount=#{info['cost_amount']}"
         # profit amount
         info["profit_amount"] = info["sold_amount"] - info["cost_amount"]

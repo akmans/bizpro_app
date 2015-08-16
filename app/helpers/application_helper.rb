@@ -118,6 +118,8 @@ module ApplicationHelper
               + "COALESCE(shipment_cost_rmb, 0)) as cost_rmb, " \
               + "SUM(COALESCE(auc_in, 0)) as income_jp, " \
               + "SUM(COALESCE(sold_rmb, 0)) as income_rmb")
+    # is_domesitc
+    product = product.where(is_domesitc: condition["is_domestic"])
     # sold_flg
     product = product.where(sold_date: nil) if condition["sold_flg"] == '0'
     product = product.where.not(sold_date: nil) if condition["sold_flg"] == '1'
