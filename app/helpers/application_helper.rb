@@ -133,7 +133,7 @@ module ApplicationHelper
     # end date
     product = product.where("sold_date <= :date_e", {:date_e => end_date}) \
         unless end_date.blank?
-    return product.first
+    return product.reorder('').first
   end
 #  # cost calculate(date_type 0:all 1:year 2:month)
 #  def cost_calculate(condition, beginning_date, end_date)
