@@ -235,7 +235,7 @@ class ApplicationController < ActionController::Base
       # for return
       info = {}
       # set is_domestic
-#      info["is_domestic"] = condition["is_domestic"]
+      info["is_domestic"] = condition["is_domestic"]
       # count product
       info["sold_cnt"] = count_product(condition, beginning_date, end_date)
       # sold data count is 0
@@ -271,7 +271,7 @@ class ApplicationController < ActionController::Base
         # income(rmb)
         info["sold_amount"] = cost.income_rmb
         # cost
-        info["cost_amount"] = cost.cost_total
+        info["cost_amount"] = cost.cost_rmb
         info["cost_amount_jp"] = cost.cost_jp
         info["cost_amount_cn"] = cost.cost_rmb
         # profit amount
@@ -298,7 +298,7 @@ class ApplicationController < ActionController::Base
       # for return
       info = {}
       # set is_domestic
-#      info["is_domestic"] = condition["is_domestic"]
+      info["is_domestic"] = condition["is_domestic"]
       # count
       info["sold_cnt"] = count_product(condition, beginning_date, end_date)
       # sold data count is 0
@@ -334,7 +334,7 @@ class ApplicationController < ActionController::Base
         # income(jp)
         info["sold_amount"] = cost.income_jp
         # cost
-        info["cost_amount"] = cost.cost_total
+        info["cost_amount"] = cost.cost_jp
         info["cost_amount_jp"] = cost.cost_jp
         info["cost_amount_cn"] = cost.cost_rmb
 #        p "sold_amount=#{info['sold_amount']}@cost_amount=#{info['cost_amount']}"

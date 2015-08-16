@@ -110,11 +110,12 @@ module ApplicationHelper
   # cost_calculate(date_type 0:all 1:year 2:month)
   def cost_calculate(condition, beginning_date, end_date)
     product = VProduct.select("SUM(COALESCE(auc_cost, 0) + COALESCE(cus_cost, 0) + " \
-              + "COALESCE(shipment_cost_jpy, 0) + COALESCE(shipment_cost_rmb, 0) * " \
-              + "(CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) / 100) as cost_total, " \
-              + "SUM(COALESCE(auc_cost, 0) + COALESCE(cus_cost, 0) + " \
-              + "COALESCE(shipment_cost_jpy, 0)) as cost_jp, " \
-              + "SUM(COALESCE(shipment_cost_rmb, 0)) as cost_rmb, " \
+              + "COALESCE(shipment_cost_jpy, 0) + COALESCE(shipment_cost_rmb, 0) * 100 / " \
+              + "(CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END)) as cost_jp, " \
+              + "SUM((COALESCE(auc_cost, 0) + COALESCE(cus_cost, 0) + " \
+              + "COALESCE(shipment_cost_jpy, 0)) * " \
+              + "(CASE is_domestic WHEN 1 THEN 100 ELSE exchange_rate END) / 100 + " \
+              + "COALESCE(shipment_cost_rmb, 0)) as cost_rmb, " \
               + "SUM(COALESCE(auc_in, 0)) as income_jp, " \
               + "SUM(COALESCE(sold_rmb, 0)) as income_rmb")
     # sold_flg
