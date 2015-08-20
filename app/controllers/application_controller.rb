@@ -53,8 +53,6 @@ class ApplicationController < ActionController::Base
         condition["sold_type"] = par[:sold_type] unless par[:sold_type].nil?
         # undeal auction
         condition["undeal_auction"] = par[:undeal_auction] unless par[:undeal_auction].nil?
-#        # page index
-#        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
         # refresh session
         session[:auctions_search_form] = condition
       end
@@ -87,8 +85,6 @@ class ApplicationController < ActionController::Base
         condition["sold_flg"] = par[:sold_flg] unless par[:sold_flg].nil?
         # no_cost
         condition["no_cost"] = (par[:no_cost].nil? ? '' : par[:no_cost] )
-#        # page index
-#        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
         # refresh session
         session[:products_search_form] = condition
       end
@@ -119,8 +115,6 @@ class ApplicationController < ActionController::Base
         condition["month_e"] = par[:month_e] unless par[:month_e].nil?
         # auction_id
         condition["auction_id"] = par[:auction_id] unless par[:auction_id].nil?
-#        # page index
-#        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
         # refresh session
         session[:customs_search_form] = condition
       end
@@ -151,8 +145,6 @@ class ApplicationController < ActionController::Base
         condition["date_type"] = par[:date_type] unless par[:date_type].nil?
         # shipment_status
         condition["shipment_status"] = par[:shipment_status] unless par[:shipment_status].nil?
-#        # page index
-#        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
         # refresh session
         session[:shipments_search_form] = condition
       end
@@ -183,8 +175,6 @@ class ApplicationController < ActionController::Base
         condition["is_domestic"] = par[:is_domestic] unless par[:is_domestic].nil?
         # sold_flg
         condition["sold_flg"] = par[:sold_flg] unless par[:sold_flg].nil?
-#        # page index
-#        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
         # refresh session
         session[:summaries_search_form] = condition
       end
@@ -211,8 +201,6 @@ class ApplicationController < ActionController::Base
         condition["year_e"] = par[:year_e] unless par[:year_e].nil?
         # month end
         condition["month_e"] = par[:month_e] unless par[:month_e].nil?
-#        # page index
-#        condition["page_ix"] = (par[:page].nil? ? (condition["page_ix"].nil? ? 1 : condition["page_ix"]) : par[:page])
         # refresh session
         session[:cashflows_search_form] = condition
       end
@@ -243,30 +231,7 @@ class ApplicationController < ActionController::Base
         # amount(sold) = profit amount = profit rate
         info["sold_amount"] = info["profit_amount"] = info["profit_rate"] = 0
       else
-#        # amount(sold)
-#        sold = Sold.select("SUM(COALESCE(sold_price, 0))" \
-#            + " - SUM(COALESCE(ship_charge, 0)) - SUM(COALESCE(other_charge, 0)) as amount") \
-#            .joins("LEFT JOIN products ON solds.product_id = products.product_id")
-#        sold = sold.where("products.is_domestic = :is_domestic", \
-#            is_domestic: condition["is_domestic"]) unless condition["is_domestic"].blank?
-#        # sold_flg
-#        sold = sold.where("products.sold_date is null") if condition["sold_flg"] == '0'
-#        sold = sold.where("products.sold_date is not null") if condition["sold_flg"] == '1'
-#        # category_id
-#        sold = sold.where("products.category_id = :category_id", \
-#            category_id: condition["category_id"]) unless condition["category_id"].blank?
-#        # product_name
-#        sold = sold.where("products.product_name like :product_name", \
-#            {:product_name => "%#{condition['product_name']}%"}) \
-#            unless condition["product_name"].blank?
-#        # beginning date
-#        sold = sold.where("products.sold_date >= :date_s", {:date_s => beginning_date}) \
-#            unless beginning_date.blank?
-#        # end date
-#        sold = sold.where("products.sold_date <= :date_e", {:date_e => end_date}) \
-#            unless end_date.blank?
-#        info["sold_amount"] = sold.reorder('').first.amount.to_f
-        # amount(bought) git(sold_flg, date_type, is_domestic)
+        # amount(bought)(sold_flg, date_type, is_domestic)
         cost = cost_calculate(condition, beginning_date, end_date)
         # income(rmb)
         info["sold_amount"] = cost.income_rmb
@@ -277,7 +242,8 @@ class ApplicationController < ActionController::Base
         # profit amount
         info["profit_amount"] = info["sold_amount"] - info["cost_amount"]
         # profit rate
-        info["profit_rate"] = (info["cost_amount"] != 0 ? (info["profit_amount"] * 100 / info["cost_amount"]).round(2) : 0)
+        info["profit_rate"] = (info["cost_amount"] != 0 ? (info["profit_amount"] \
+                              * 100 / info["cost_amount"]).round(2) : 0)
       end
       return info
     end
@@ -306,29 +272,6 @@ class ApplicationController < ActionController::Base
         # amount(sold) = profit amount = profit rate
         info["sold_amount"] = info["profit_amount"] = info["profit_rate"] = 0
       else
-#        # amount(sold)
-#        auction = Auction.select("SUM(price * (tax_rate + 100) / 100 - " \
-#            + "COALESCE(payment_cost, 0) - COALESCE(shipment_cost, 0)) as amount") \
-#            .joins("LEFT JOIN pa_maps ON auctions.auction_id = pa_maps.auction_id ") \
-#            .joins("LEFT JOIN products ON pa_maps.product_id = products.product_id") \
-#            .where("products.is_domestic = 1").where(sold_flg: 1)
-#        # sold_flg
-#        auction = auction.where("products.sold_date is null") if condition["sold_flg"] == '0'
-#        auction = auction.where("products.sold_date is not null") if condition["sold_flg"] == '1'
-#        # category_id
-#        auction = auction.where("products.category_id = :category_id", \
-#            category_id: condition["category_id"]) unless condition["category_id"].blank?
-#        # product_name
-#        auction = auction.where("products.product_name like :product_name", \
-#            {:product_name => "%#{condition['product_name']}%"}) \
-#            unless condition["product_name"].blank?
-#        # beginning date
-#        auction = auction.where("sold_date >= :date_s", {:date_s => beginning_date}) \
-#            unless beginning_date.blank?
-#        # end date
-#        auction = auction.where("sold_date <= :date_e", {:date_e => end_date}) \
-#            unless end_date.blank?
-#        info["sold_amount"] = auction.reorder('').first.amount.to_i
         # amount(bought) (sold_flg, date_type, is_domestic)
         cost = cost_calculate(condition, beginning_date, end_date)
         # income(jp)
@@ -337,11 +280,11 @@ class ApplicationController < ActionController::Base
         info["cost_amount"] = cost.cost_jp
         info["cost_amount_jp"] = cost.cost_jp
         info["cost_amount_cn"] = 0
-#        p "sold_amount=#{info['sold_amount']}@cost_amount=#{info['cost_amount']}"
         # profit amount
         info["profit_amount"] = info["sold_amount"] - info["cost_amount"]
         # profit rate
-        info["profit_rate"] = (info["cost_amount"] != 0 ? (info["profit_amount"] * 100 / info["cost_amount"]).round(2) : 0)
+        info["profit_rate"] = (info["cost_amount"] != 0 ? (info["profit_amount"] \
+                              * 100 / info["cost_amount"]).round(2) : 0)
       end
       return info
     end

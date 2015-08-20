@@ -1,7 +1,7 @@
 <% info = product_profit_help(product) %>
 <div class="row">
   <div class="col-xs-4 col-md-2">
-    <%= commas_help(product_total_cost_help(product.product_id).to_i) %>
+    <%= commas_help(info["cost_amount_jp"]) %>
     円
   </div>
   <div class="col-xs-4 col-md-2 text-center">
