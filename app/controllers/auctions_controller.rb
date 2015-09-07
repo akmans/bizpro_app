@@ -202,7 +202,7 @@ class AuctionsController < ApplicationController
     # construct where condition
     search = VAuction
     # undeal auction (product unregist: 1)
-    search = search.where("pa_maps.product_id is null").where(ope_flg: 1) if condition["undeal_auction"] == '1'
+    search = search.where("product_id is null").where(ope_flg: 1) if condition["undeal_auction"] == '1'
     # category_id
     search = search.where(category_id: condition["category_id"]) unless condition["category_id"].blank?
     # auction_name
