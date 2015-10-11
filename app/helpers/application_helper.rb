@@ -57,6 +57,11 @@ module ApplicationHelper
     {"" => "(全部)", "0" => "OUT", "1" => "IN"}
   end
 
+  # generate is in name by key
+  def is_in_name_help(key)
+    key.blank? ? "-" : is_in_hash_help[key.to_s]
+  end
+
   # generate is auction hash
   def is_auction_hash_help
     {"" => "(全部)", "0" => "非オーク品", "1" => "オーク品"}

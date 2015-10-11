@@ -1,0 +1,8 @@
+$('#cashes').html("<%= j (render @cashes) %>");
+$('#cash-form').slideUp(350);
+
+$('#messages').html("<%= j (render 'layouts/messages') %>");
+
+$('#pagination_top').html("<%= j (will_paginate(@cashes, :params => { :controller => "cashes", :action => "index" })) %>");
+$('#total_entries').text("<%= "総件数：#{@cashes.total_entries}件" %>");
+$('#pagination_bottom').html("<%= j (will_paginate(@cashes, :params => { :controller => "cashes", :action => "index" })) %>");

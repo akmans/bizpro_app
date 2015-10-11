@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cash_id: MyString1
+  remark: MyString1
+  is_domestic: 1
+  is_in: 1
+  exchange_rate: 9.99
+  memo: MyString
+
+two:
+  cash_id: MyString2
+  remark: MyString2
+  is_domestic: 1
+  is_in: 1
+  exchange_rate: 9.99
+  memo: MyString

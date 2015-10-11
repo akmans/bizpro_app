@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-xs-2 col-md-2"><%= cash.regist_date %></div>
+  <div class="col-xs-10 col-md-2"><%= cash.remark %></div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-2 col-md-1"><%= is_domestic_name_help(cash.is_domestic) %></div>
+  <div class="col-xs-10 col-md-1"><%= is_in_name_help(cash.is_in) %></div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-2 col-md-1"><%= cash.exchange_rate %></div>
+  <div class="col-xs-10 col-md-3"><%= cash.memo %></div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-md-2 text-right">
+    <%= link_to "Edi", edit_cash_path(cash.cash_id), remote: true,
+                class: "btn btn-default" %>
+    <%= link_to "Del", cash, method: :delete, data: { confirm: "削除しますか?" }, remote: true,
+                class: "btn btn-default" %>
+  </div>
+</div>

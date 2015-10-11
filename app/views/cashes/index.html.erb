@@ -1,0 +1,31 @@
+<% provide(:title, '一覧,キャッシュ管理') %>
+<h3>キャッシュ一覧</h3>
+<div id="total_entries" class="pull-right line-height-22">総件数：<%= @cashes.total_entries %>件</div>
+<div id="pagination_top">
+<%= will_paginate %>
+</div>
+<div class="clearfix"></div>
+<div class="row header">
+  <div class="col-xs-2 col-md-2">年月日</div>
+  <div class="col-xs-10 col-md-2">リマーク</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-2 col-md-1">内外区分</div>
+  <div class="col-xs-10 col-md-1">IN/OUT</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-2 col-md-1">為替</div>
+  <div class="col-xs-10 col-md-3">メモ</div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-md-2 text-right">
+    <%= link_to "New", new_cash_path, remote: true, class: "btn btn-default" %>
+  </div>
+</div>
+<div class="row" id="cash-form" style="display:none;"></div>
+<div id="cashes">
+<%= render @cashes %>
+</div>
+<div id="pagination_bottom">
+<%= will_paginate %>
+</div>

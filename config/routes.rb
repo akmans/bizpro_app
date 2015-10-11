@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     resources :pc_maps, param: :custom_id, :except => [:edit, :update, :show]
     resources :solds
   end
+  resources :cashes, param: :cash_id, :except => [:show]
   resources :shipments, param: :shipment_id do
     resources :shipment_details, param: :id, :except => [:show]
   end

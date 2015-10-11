@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150621030259) do
+ActiveRecord::Schema.define(version: 20150923151457) do
 
   create_table "auctions", id: false, force: true do |t|
     t.string   "auction_id",    limit: 20,  null: false
@@ -54,6 +54,21 @@ ActiveRecord::Schema.define(version: 20150621030259) do
   end
 
   add_index "brands", ["brand_id"], name: "index_brands_on_brand_id", unique: true
+
+  create_table "cashes", id: false, force: true do |t|
+    t.string   "cash_id",       limit: 20,  null: false
+    t.string   "remark",        limit: 200, null: false
+    t.integer  "is_domestic",   limit: 1
+    t.integer  "is_in",         limit: 1
+    t.decimal  "exchange_rate"
+    t.string   "memo",          limit: 200
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.date     "regist_date"
+  end
+
+  add_index "cashes", ["cash_id"], name: "index_cashes_on_cash_id", unique: true
+  add_index "cashes", ["remark"], name: "index_cashes_on_remark"
 
   create_table "categories", id: false, force: true do |t|
     t.string   "category_id",   limit: 4,   null: false

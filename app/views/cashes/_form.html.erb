@@ -1,0 +1,33 @@
+<%= form_for @cash, remote: true do |f|   %>
+  <%= render 'shared/error_messages', object: f.object %>
+<div class="col-md-2">
+  <%= f.date_select :regist_date,
+      options = { :order => [:year, :month, :day],
+                  :prompt => { :day => '(D)', :month => '(M)', :year => '(Y)' },
+                  :use_two_digit_numbers => true,
+                  :start_year => 2011, :end_year => 2015
+      },
+      html_options = {:class => "form-control form-field select-inline"}
+  %>
+</div>
+<div class="col-md-2">
+  <%= f.text_field :remark, class: 'form-control' %>
+</div>
+<div class="col-md-1">
+  <%= collection_select :cash, :is_domestic, is_domestic_hash_help, :first, :last, {}, \
+      {selected: @cash.is_domestic, :class => 'form-control form-field'} %>
+</div>
+<div class="col-md-1">
+  <%= collection_select :cash, :is_in, is_in_hash_help, :first, :last, {}, \
+      {selected: @cash.is_in, :class => 'form-control form-field'} %>
+</div>
+<div class="col-md-1">
+  <%= f.text_field :exchange_rate, class: 'form-control' %>
+</div>
+<div class="col-md-3">
+  <%= f.text_field :memo, class: 'form-control' %>
+</div>
+<div class="col-md-2 text-right">
+  <%= f.submit "実行", class: "btn btn-default" %>
+</div>
+<% end %>
