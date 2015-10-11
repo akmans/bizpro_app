@@ -1,6 +1,6 @@
 <%= form_for @cash, remote: true do |f|   %>
   <%= render 'shared/error_messages', object: f.object %>
-<div class="col-md-2">
+<div class="col-md-1">
   <%= f.date_select :regist_date,
       options = { :order => [:year, :month, :day],
                   :prompt => { :day => '(D)', :month => '(M)', :year => '(Y)' },
@@ -24,10 +24,13 @@
 <div class="col-md-1">
   <%= f.text_field :exchange_rate, class: 'form-control' %>
 </div>
-<div class="col-md-3">
+<div class="col-md-2">
+  <%= f.text_field :amount, class: 'form-control' %>
+</div>
+<div class="col-md-2">
   <%= f.text_field :memo, class: 'form-control' %>
 </div>
-<div class="col-md-2 text-right">
+<div class="col-md-3 text-right">
   <%= f.submit "実行", class: "btn btn-default" %>
 </div>
 <% end %>

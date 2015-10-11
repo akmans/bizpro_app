@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-2 col-md-2"><%= cash.regist_date %></div>
+  <div class="col-xs-2 col-md-1"><%= cash.regist_date.strftime("%m/%d/%y") %></div>
   <div class="col-xs-10 col-md-2"><%= cash.remark %></div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
@@ -8,7 +8,11 @@
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-xs-2 col-md-1"><%= cash.exchange_rate %></div>
-  <div class="col-xs-10 col-md-3"><%= cash.memo %></div>
+  <div class="col-xs-2 col-md-1"><%= cash.amount %></div>
+  <!-- Add the extra clearfix for only the required viewport -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-8 col-md-1"><%= yen_amount_help(cash) %></div>
+  <div class="col-xs-8 col-md-2"><%= cash.memo %></div>
   <!-- Add the extra clearfix for only the required viewport -->
   <div class="clearfix visible-xs-block"></div>
   <div class="col-md-2 text-right">

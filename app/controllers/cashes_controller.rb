@@ -77,6 +77,6 @@ class CashesController < ApplicationController
 
     # cash params
     def cash_params
-      params.require(:cash).permit(:regist_date, :remark, :is_domestic, :is_in, :exchange_rate, :memo)
+      params.require(:cash).permit(:regist_date, :remark, :is_domestic, :is_in, :exchange_rate, :memo, :amount)
     end
 end

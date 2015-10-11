@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150923151457) do
+ActiveRecord::Schema.define(version: 20151011124929) do
 
   create_table "auctions", id: false, force: true do |t|
     t.string   "auction_id",    limit: 20,  null: false
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20150923151457) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.date     "regist_date"
+    t.decimal  "amount"
   end
 
   add_index "cashes", ["cash_id"], name: "index_cashes_on_cash_id", unique: true
