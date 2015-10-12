@@ -1,7 +1,7 @@
 class Cash < ActiveRecord::Base
   self.primary_key = "cash_id"
 
-#  default_scope -> { order('case when regist_date is null then 1 else 0 end, regist_date desc') }
+  default_scope -> { order('case when regist_date is null then 1 else 0 end, regist_date desc') }
 
   validates :cash_id , # presence: true,
                          length: { maximum: 20},

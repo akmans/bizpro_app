@@ -3,13 +3,15 @@
     <%= cashflow.happen_date.nil? ? "-" : cashflow.happen_date.strftime("%m/%d/%y") %>
   </div>
   <div class="col-xs-8 col-md-2">
-    <%= cashflow.is_auction == 1 ? \
-        (link_to cashflow.flow_id, popup_auction_path(auction_id: cashflow.flow_id), \
+    <%= (link_to cashflow.flow_id, popup_auction_path(auction_id: cashflow.flow_id), \
          'remote' => true, 'data-toggle' => "modal", 'data-target' => "#popupModal", \
-         'class' => "popup") :
-        (link_to cashflow.flow_id, popup_custom_path(custom_id: cashflow.flow_id), \
+         'class' => "popup") if cashflow.is_auction == 1
+       %>
+    <%= (link_to cashflow.flow_id, popup_custom_path(custom_id: cashflow.flow_id), \
          'remote' => true, 'data-toggle' => "modal", 'data-target' => "#popupModal", \
-         'class' => "popup") 
+         'class' => "popup") if cashflow.is_auction == 0
+       %>
+    <%= cashflow.flow_id if cashflow.is_auction == 2
        %>
   </div>
   <!-- Add the extra clearfix for only the required viewport -->

@@ -48,26 +48,38 @@ class DashboardsController < ApplicationController
       all_bought_auction = sum_auction(0, 0, 1)
       # all (is_auction: 0-not auction, data_type: 0-all)
       all_bought_custom = sum_custom(0, 0, 2)
-      domestic["bought_all_amount"] = all_bought_auction + all_bought_custom
+      # all (is_in: 0-out, data_type: 0-all, is_domestic: 1-yes)
+      all_out_cash = sum_cash(0, 0, 1)
+      domestic["bought_all_amount"] = all_bought_auction + all_bought_custom + all_out_cash
       # year (sold_flg: 0-bought, data_type: 1-year, domestic_flg: 1-domestic)
       year_bought_auction = sum_auction(0, 1, 1)
       # year (is_auction: 0-not auction, data_type: 1-year)
       year_bought_custom = sum_custom(0, 1, 2)
-      domestic["bought_year_amount"] = year_bought_auction + year_bought_custom
+      # year (is_in: 0-out, data_type: 1-year, is_domestic: 1-yes)
+      year_out_cash = sum_cash(0, 1, 1)
+      domestic["bought_year_amount"] = year_bought_auction + year_bought_custom + year_out_cash
       # month (sold_flg: 0-bought, data_type: 2-month, domestic_flg: 1-domestic)
       month_bought_auction = sum_auction(0, 2, 1)
       # month (is_auction: 0-not auction, data_type: 2-month)
       month_bought_custom = sum_custom(0, 2, 2)
-      domestic["bought_month_amount"] = month_bought_auction + month_bought_custom
+      # month (is_in: 0-out, data_type: 2-month, is_domestic: 1-yes)
+      month_out_cash = sum_cash(0, 2, 1)
+      domestic["bought_month_amount"] = month_bought_auction + month_bought_custom + month_out_cash
       # all (sold_flg: 1-sold, data_type: 0-all, domestic_flg: 1-domestic)
       all_sold_auction = sum_auction(1, 0, 1)
-      domestic["sold_all_amount"] = all_sold_auction
+      # all (is_in: 1-in, data_type: 0-all, is_domestic: 1-yes)
+      all_in_cash = sum_cash(1, 0, 1)
+      domestic["sold_all_amount"] = all_sold_auction + all_in_cash
       # year (sold_flg: 1-sold, data_type: 1-year, domestic_flg: 1-domestic)
       year_sold_auction = sum_auction(1, 1, 1)
-      domestic["sold_year_amount"] = year_sold_auction
+      # year (is_in: 1-in, data_type: 1-year, is_domestic: 1-yes)
+      year_in_cash = sum_cash(1, 1, 1)
+      domestic["sold_year_amount"] = year_sold_auction + year_in_cash
       # month (sold_flg: 1-sold, data_type: 2-month, domestic_flg: 1-domestic)
       month_sold_auction = sum_auction(1, 2, 1)
-      domestic["sold_month_amount"] = month_sold_auction
+      # month (is_in: 1-in, data_type: 2-month, is_domestic: 1-yes)
+      month_in_cash = sum_cash(1, 2, 1)
+      domestic["sold_month_amount"] = month_sold_auction + month_in_cash
       return domestic
     end
 
@@ -389,4 +401,26 @@ class DashboardsController < ApplicationController
           if date_flg == 1
       return count
     end
+
+    # sum_cash function
+    # * is_in 0:out 1:in
+    # * date_type 0:all 1:year 2:month
+    # * is_domestic 0:bro 1:domestic, 2:both
+    def sum_cash(is_in, date_type, is_domestic)
+      cash = Cash.select("SUM(COALESCE(amount, 0)) as amount") if is_domestic == 1
+      cash = Cash.select("SUM(COALESCE(amount, 0) * 100 " \
+              + "/ COALESCE(exchange_rate, 100) as amount") unless is_domestic == 1
+      cash = cash.where(is_in: is_in)
+      # all
+      return cash.reorder('').first.amount.to_i if date_type == 0
+      # date interval
+      beginning_date = Time.zone.now.beginning_of_year
+      beginning_date = Time.zone.now.beginning_of_month if date_type == 2
+      end_date = Time.zone.now.end_of_year
+      end_date = Time.zone.now.end_of_month if date_type == 2
+      # year or month
+      return cash.where("regist_date >= :date_s", {:date_s => beginning_date}) \
+          .where("regist_date <= :date_e", {:date_e => end_date}).reorder('').first.amount.to_i
+    end
+
 end

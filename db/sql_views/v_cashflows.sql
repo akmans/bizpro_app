@@ -27,4 +27,17 @@ SELECT
   1 as is_domestic
 FROM customs
 WHERE is_auction = 0
-AND (cancel_flg is null OR cancel_flg = 0);
+AND (cancel_flg is null OR cancel_flg = 0)
+union
+SELECT
+  cash_id as flow_id,
+  remark || ' ' || memo as flow_name,
+  regist_date as happen_date,
+  is_in,
+  CASE WHEN COALESCE(is_domestic, 0) = 1
+    THEN amount
+    ELSE amount * 100 / COALESCE(exchange_rate, 100) END as amount,
+  2 as is_auction,
+  is_domestic
+FROM cashes
+WHERE is_domestic = 1;
