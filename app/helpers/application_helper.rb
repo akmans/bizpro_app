@@ -36,7 +36,7 @@ module ApplicationHelper
   # generate year hash
   def year_hash_help
     year = {"" => "(年)"}
-    (2011..2015).each do |y|
+    (2011..Time.now.year.to_i).each do |y|
       year[y] = "#{y}年"
     end
     return year

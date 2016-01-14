@@ -121,7 +121,7 @@
             options = { :order => [:year, :month, :day],
                     :prompt => { :day => '(D)', :month => '(M)', :year => '(Y)' },
                     :use_two_digit_numbers => true,
-                    :start_year => 2011, :end_year => 2015
+                    :start_year => 2011, :end_year => Time.now.year.to_i
             },
             html_options = {:class => "form-control form-field select-inline"}
         %>
