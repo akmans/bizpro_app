@@ -76,8 +76,19 @@ class AuctionsController < ApplicationController
 
   # destroy action
   def destroy
-    Auction.find(params[:auction_id]).destroy
-    flash[:success] = "削除完了しました。"
+    # get all auction map data related to custom.
+    pa_maps = PaMap.where(auction_id: params[:auction_id]).count
+    # get all custom map data related to custom.
+    customs = Custom.where(auction_id: params[:auction_id]).count
+    if pa_maps == 0 && customs == 0
+      # delete auction
+      Auction.find(params[:auction_id]).destroy
+      # flash message
+      flash[:success] = "削除完了しました。"
+    else
+      # flash message
+      flash[:danger] = "関連データがあるため、削除失敗しました。"
+    end
     redirect_to auctions_path
   end
 

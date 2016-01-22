@@ -4,7 +4,8 @@ require 'test_helper'
 class ShipmentsIndexTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:one)
-    @shipment = shipments(:one)
+    @shipment = shipments(:two)
+
   end
   
   test "index including pagination and new/show/edit/delete links" do

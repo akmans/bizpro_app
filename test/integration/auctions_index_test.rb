@@ -4,7 +4,7 @@ require 'test_helper'
 class AuctionsIndexTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:one)
-    @auction = auctions(:one)
+    @auction = auctions(:five)
   end
   
   test "index including pagination and new/show/edit/delete links" do

@@ -69,10 +69,23 @@ class ProductsController < ApplicationController
 
   # delete action
   def destroy
-    # delete product
-    Product.find(params[:product_id]).destroy
-    # flash message
-    flash[:success] = "削除完了しました。"
+    # get all auction map data related to product.
+    pa_maps = PaMap.where(product_id: params[:product_id]).count
+    # get all custom map data related to product.
+    pc_maps = PcMap.where(product_id: params[:product_id]).count
+    # get all shipment details data related to product.
+    shipment_details = ShipmentDetail.where(product_id: params[:product_id]).count
+    # get all sold data related to product.
+    solds = Sold.where(product_id: params[:product_id]).count
+    if pa_maps == 0 && pc_maps == 0 && shipment_details == 0 && solds == 0
+      # delete product
+      Product.find(params[:product_id]).destroy
+      # flash message
+      flash[:success] = "削除完了しました。"
+    else
+      # flash message
+      flash[:danger] = "関連データがあるため、削除失敗しました。"
+    end
     # redirect to product list page
     redirect_to products_path
   end

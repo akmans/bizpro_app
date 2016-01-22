@@ -5,6 +5,7 @@ class ProductsControllerTest < ActionController::TestCase
   def setup
     @user = users(:one)
     @product = products(:one)
+    @product2 = products(:product_P101)
   end
 
   # test index action
@@ -151,7 +152,7 @@ class ProductsControllerTest < ActionController::TestCase
   test "should destroy product when logged in" do
     log_in_as(@user)
     assert_difference 'Product.count', -1 do
-      delete :destroy, product_id: @product
+      delete :destroy, product_id: @product2
     end
     assert_redirected_to products_path
     assert_equal '削除完了しました。', flash[:success]

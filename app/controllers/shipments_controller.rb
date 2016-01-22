@@ -56,8 +56,17 @@ class ShipmentsController < ApplicationController
 
   # destroy action
   def destroy
-    Shipment.find(params[:shipment_id]).destroy
-    flash[:success] = "削除完了しました。"
+    # get all custom map data related to custom.
+    shipment_details = ShipmentDetail.where(shipment_id: params[:shipment_id]).count
+    if shipment_details == 0
+      # delete shipment
+      Shipment.find(params[:shipment_id]).destroy
+      # flash message
+      flash[:success] = "削除完了しました。"
+    else
+      # flash message
+      flash[:danger] = "関連データがあるため、削除失敗しました。"
+    end
     redirect_to shipments_path
   end
 

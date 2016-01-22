@@ -59,8 +59,17 @@ class CustomsController < ApplicationController
 
   # destroy action
   def destroy
-    Custom.find(params[:custom_id]).destroy
-    flash[:success] = "削除完了しました。"
+    # get all custom map data related to custom.
+    pc_maps = PcMap.where(custom_id: params[:custom_id]).count
+    if pc_maps == 0
+      # delete custom
+      Custom.find(params[:custom_id]).destroy
+      # flash message
+      flash[:success] = "削除完了しました。"
+    else
+      # flash message
+      flash[:danger] = "関連データがあるため、削除失敗しました。"
+    end
     redirect_to customs_path
   end
 

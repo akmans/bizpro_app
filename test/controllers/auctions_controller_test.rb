@@ -18,6 +18,7 @@ class AuctionsControllerTest < ActionController::TestCase
     @auth = OmniAuth.config.mock_auth[:yahoojp]
     @user = users(:one)
     @auction = auctions(:one)
+    @auction5 = auctions(:five)
   end
 
   def teardown
@@ -157,7 +158,7 @@ class AuctionsControllerTest < ActionController::TestCase
   test "should destroy auction when logged in" do
     log_in_as(@user)
     assert_difference 'Auction.count', -1 do
-      delete :destroy, auction_id: @auction
+      delete :destroy, auction_id: @auction5
     end
     assert_redirected_to auctions_path
     assert_equal '削除完了しました。', flash[:success]

@@ -4,7 +4,7 @@ require 'test_helper'
 class ProductsIndexTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:one)
-    @product = products(:one)
+    @product = products(:product_P101)
   end
   
   test "index including pagination and new/show/edit/delete links" do
